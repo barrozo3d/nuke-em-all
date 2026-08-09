@@ -1,0 +1,9 @@
+tutorials/frames/
+cookies.txt
+references/*.pdf
+
+cookies.txt.stale-disabled
+__pycache__/
+_nuke_urls.txt
+*_batch_ingest.log
+batch_ingest_*.log
