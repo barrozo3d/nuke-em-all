@@ -6,7 +6,15 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 **To add a book chapter:** paste the content and say "ingest this chapter from [Book Title]".
 **To search:** look for tags matching the technique or app you need.
 
-*(Empty — add your first entry by saying "ingest this: [URL]")*
+### Skill Up with Nuke | How To Think Like A Pro Compositor
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=tLQfGjHpsd8
+- **Author:** Foundry
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/skill-up-with-nuke-how-to-think-like-a-pro-compositor.md
 
 ---
 
