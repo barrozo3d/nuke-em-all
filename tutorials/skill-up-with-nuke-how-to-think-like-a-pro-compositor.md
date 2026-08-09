@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=tLQfGjHpsd8
 author: Foundry
 ingested: 2026-08-09
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke + Nuke Studio"
+version: "not specified on screen (ACES 1.1 OCIO config consistent with recent Nuke 15.x-17.x)"
+tags: [compositing, nuke-studio, color-management, ocio, tracking, keying, roto, grading, defocus, edge-extend, chromatic-aberration, editorial, conform, beginner, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 13
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Skill Up with Nuke | How To Think Like A Pro Compositor
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py skill-up-with-nuke-how-to-think-like-a-pro-compositor <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -737,30 +733,62 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [5:19] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_000.jpg
+- [9:08] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_001.jpg
+- [10:44] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_002.jpg
+- [12:48] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_003.jpg
+- [15:58] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_004.jpg
+- [18:09] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_005.jpg
+- [20:00] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_006.jpg
+- [21:50] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_007.jpg
+- [25:10] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_008.jpg
+- [27:26] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_009.jpg
+- [28:57] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_010.jpg
+- [29:50] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_011.jpg
+- [33:27] tutorials/frames/skill-up-with-nuke-how-to-think-like-a-pro-compositor/frame_012.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+An official Foundry-commissioned video (by compositor/director Peter Timberlake) teaching a **problem-solving framework** for compositing rather than a single technique — five "survival skills" (use what you know → Google relentlessly → ask forums/Discord when Google fails → use real-world reference → read the information already present in the plate → critique your own work relentlessly → seek mentorship) — applied live across a real multi-element shot build (sky replacement, CG flag integration, stabilization, shadow/focus/lensing matching) using Peter Timberlake's own free downloadable practice plates and the community-made "Nuke Survival Toolkit" gizmo pack.
 
 ### Summary
-[PENDING EXTRACTION]
+Introduces free practice plates (petertimberlake.com) designed for compositors to build a reel, plus the "Nuke Survival Toolkit" (GitHub: creativelyons/nuke-survival-toolkit) — a community gizmo pack used throughout. States the five survival skills up front, then covers **Nuke Studio** project setup: exporting an XML from editorial (Premiere/Resolve/Avid) into Nuke Studio's timeline, a token-based project/export naming convention (Sequence/Shot/Track/Version tokens like `SEQ010`/`SH0070`/`BG01`/`0001` driving both the EXR export path and an auto-generated Nuke script with pre-wired Read/Write nodes), and the payoff — **Build Track from Export Structure** later re-imports completed VFX renders straight back into the Nuke Studio timeline for review, a task the video says can otherwise take hours of manual path-matching per shot. Sets project color management to **OCIO / ACES 1.1** (confirms ACEScg and Scene-Linear are the same colorspace within the ACES OCIO config) before any comp work, since footage reads flat/greenish under the wrong colorspace. Applies the five skills live on two shots: **Shot 60** — diagnoses handheld-camera mismatched motion between plates ("swimming" on a naive over) by reasoning from first principles (Skill 1) that stabilizing each plate first would fix it, then Googles "how to stabilize in Nuke" (Skill 1B) and uses a `Tracker` node (multiple tracking points via Ctrl+Alt+Click, Transform export set to Translate/Rotate) to stabilize — noting the forums/Discord fallback (Skill 1C, e.g. the Foundry forums or the presenter's own "Nuke Coven" Discord) for when tracking alone doesn't fully solve residual swimming at the frame edges. **Shot 70** (the main build) — establishes a back-to-front compositing order (sky → distant plates → tablecloth → boy, furthest-to-nearest in Z), starting from an empty `Reformat` node matched to the plate format, then **Crop**ped to the viewport to avoid Nuke calculating far more data than needed. White-balances the lady plate using the toolkit's `WhiteBalanceTL` gizmo as a reversible "neutral grade" (disable the gizmo while color-picking a should-be-white area, re-enable — picking with it live re-adapts and gives wrong results), explicitly treated as invertible later to recover the true original grade; copies the same neutral grade to the other plates. Removes the sky via a **Luma key** (inverted so buildings read white/opaque), supplemented with a `Roto` node (B-spline shapes preferred over Bezier for flexibility, edges feathered with `E`) to patch key gaps, followed by a **Premult** to make the alpha edit visible in RGB. After merging a replacement sky, applies **Skill 2 (reference)** — Google-Images research on the real shoot location (Skopje, Macedonia), explicitly avoiding over-color-corrected reference images, extracting a pattern (more saturated/blue near the top, brighter/less saturated toward the horizon) and re-grading the sky to match (repositioning/scaling the HDRI, feathered horizon/top-of-frame color corrections, gamma/gain adjustments) rather than trusting the eye alone. For a CG flag element rendered without alpha (a deliberate "real-world experience" callout — bad lighter output happens on real jobs) keys and premultiplies it in, then applies **Skill 3 (read the plate)** — a side-by-side comparison against a real red umbrella already in the plate to correct the CG's oversaturated red, matches white balance, and identifies four more plate-vs-CG mismatches to fix: (1) shadow/contrast (a `Grade` + garbage matte darkens/desaturates the shadowed side, desaturating *before* the Grade specifically because desaturating redistributes red-channel information into green/blue so those channels have something to actually grade), (2) focus mismatch — samples the real focus falloff from the background plate, builds an `IconVOL`-based defocus control mask (inverted, since the tool's default treats center as most-defocused when the opposite was needed) to drive a Defocus/blur matched to the plate's focus falloff, (3) a harsh black edge from the flag's key — fixed with the Nukepedia `Lens Edge Extend` gizmo (RGB into Source, alpha into its "Edges" input, alpha recopied back afterward) plus a black-point lift, (4) mismatched chromatic aberration — matched using a toolkit chromatic-aberration gizmo (`K Chromatic`), correcting for the tool's default color-fringe orientation being backwards relative to the plate's real orange-left/turquoise-right fringing. Closes with **Skill 4 (self-critique)**: the presenter reviews his own intentionally time-boxed, imperfect comp on camera, listing concrete flaws (shadows should be darker, white balance drifting pink/turquoise, ragged key edges, a retiming artifact where a lamp gets visually "pushed" by the running boy, residual keying issues) as a demonstration of the critique habit itself rather than a finished result — and **Skill 5 (mentorship)**, pointing to Foundry forums, the presenter's Discord, and AccessVFX (accessvfx.org) for formal mentor pairing.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Set project color management: `S` (project settings) → Color Management → OCIO → OCIO Config → **ACES 1.1** (fixes flat/greenish-looking Read nodes; confirms ACEScg = Scene-Linear within this config).
+2. Install the community **Nuke Survival Toolkit** (GitHub: creativelyons/nuke-survival-toolkit) — verify install via a red Swiss-army-knife icon on its gizmos.
+3. **Nuke Studio project setup:** import an XML export from editorial → set up a token-based naming/export structure (Sequence/Shot/Track/Version) → Export to generate per-shot EXR plates + pre-wired Nuke scripts (Read node pointed at the exported plates, Write node pre-pathed per the export structure).
+4. **Stabilize mismatched-motion plates:** `Tracker` node → place multiple tracking points (Ctrl+Alt+Click) → select all → export Transform (Translate + Rotate) → apply to stabilize each plate independently before compositing them together.
+5. **Compositing order:** build back-to-front in Z-depth (sky first, then progressively closer elements) starting from an empty `Reformat` node matched to plate format, `Crop`ped to the working viewport/format to limit unnecessary calculation.
+6. **Reversible neutral grade:** `WhiteBalanceTL` (survival toolkit) → disable the gizmo → color-pick a should-be-neutral-white area of the plate → re-enable → copy the same grade to other plates sharing the same lighting; keep it invertible for later.
+7. **Sky replacement:** `Luma` key on the original sky plate (invert so the subject/buildings read opaque) → patch key gaps with a `Roto` node (B-spline shapes, feathered edges via `E`) → `Premult` → merge the replacement sky over.
+8. **Reference-driven sky grading:** research real photos of the shoot location, avoid heavily-graded reference images, extract a color pattern (saturation/brightness gradient top-to-horizon) → reposition/scale the sky HDRI and grade top vs. horizon regions separately (feathered garbage mattes + gamma/gain) to match.
+9. **CG element cleanup:** key + `Premult` a no-alpha CG render → compare directly against a matching real object already in the plate (e.g. a red umbrella) to correct color/saturation.
+10. **Shadow/contrast matching:** desaturate the CG element *before* a `Grade` (redistributes channel information for more effective grading), grade with a garbage matte to darken/reduce contrast on the shadowed side to match the plate's directional lighting.
+11. **Focus matching:** sample the plate's real focus falloff → build an inverted `IconVOL`-driven defocus control mask (sharpest at the correct depth, softer outward) → apply Defocus to the CG element accordingly.
+12. **Edge cleanup:** Nukepedia's `Lens Edge Extend` gizmo (RGB → Source input, alpha → its Edges input, recopy alpha afterward) to push RGB outward along the alpha edge and remove harsh black fringing; lift the black point further if needed.
+13. **Chromatic aberration matching:** apply a toolkit CA gizmo (`K Chromatic`), correct its default fringe-color orientation to match the plate's actual left/right color-fringe direction, mix to taste.
+14. **Self-critique pass:** review the finished (intentionally time-boxed) comp against the original diagnostic list — shadow darkness, white balance, key edge quality, retiming artifacts — as an explicit, repeatable habit rather than a one-time step.
+15. **Shot re-integration:** back in Nuke Studio, select the edit → **Build Track from Export Structure** → point at the Write node's output path → auto-populates a new timeline track with completed VFX renders for review; export the reviewed edit as full-sequence or per-shot MOVs (or any supported format/XML) via Export → Process as Shots/Sequence.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+`Tracker` (multi-point stabilization, Translate+Rotate export), `Reformat`, `Crop`, `WhiteBalanceTL` (Nuke Survival Toolkit gizmo), `Luma` key, `Invert`, `Roto` (B-spline shapes, feather), `Premult`, `Grade` (with garbage mattes, pre-desaturation trick), `Saturation`, `IconVOL` (defocus control-mask tool, by "Adrian"), `Defocus`, `Lens Edge Extend` (Nukepedia gizmo), `K Chromatic` (Nuke Survival Toolkit chromatic-aberration gizmo), OCIO / ACES 1.1 color management, Nuke Studio (Timeline, token-based Export structure, Build Track from Export Structure, Export → Process as Shots/Sequence).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner-to-intermediate technically (individual nodes are standard/well-known), but the actual content — a repeatable problem-diagnosis methodology — is valuable at any experience level; several steps assume comfort installing/using third-party gizmo packs (Nuke Survival Toolkit, Nukepedia tools).
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke + Nuke Studio (version not stated on screen or in narration; ACES 1.1 OCIO config and the described UI are consistent with a recent Nuke 15.x/16.x/17.x release).
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, nuke-studio, color-management, ocio, tracking, keying, roto, grading, defocus, edge-extend, chromatic-aberration, editorial, conform, beginner, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+None yet — first Nuke tutorial in this library. Cross-link future compositing-fundamentals or Nuke Studio workflow tutorials here.
