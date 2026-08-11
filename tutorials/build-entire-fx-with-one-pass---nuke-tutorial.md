@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=WBqp4UbqPJ0
 author: Voxyde VFX
 ingested: 2026-08-11
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX"
+version: "not specified"
+tags: [compositing, cryptomatte, st-map, merge, channels, aovs, grading, gizmo, procedural-texture, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/build-entire-fx-with-one-pass---nuke-tutorial/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Build Entire FX with ONE Pass - Nuke Tutorial
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py build-entire-fx-with-one-pass---nuke-tutorial <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -513,30 +509,66 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:35] tutorials/frames/build-entire-fx-with-one-pass---nuke-tutorial/frame_000.jpg
+- [8:20] tutorials/frames/build-entire-fx-with-one-pass---nuke-tutorial/frame_001.jpg
+- [12:30] tutorials/frames/build-entire-fx-with-one-pass---nuke-tutorial/frame_002.jpg
+- [18:20] tutorials/frames/build-entire-fx-with-one-pass---nuke-tutorial/frame_003.jpg
+- [31:55] tutorials/frames/build-entire-fx-with-one-pass---nuke-tutorial/frame_004.jpg
+- [39:10] tutorials/frames/build-entire-fx-with-one-pass---nuke-tutorial/frame_005.jpg
+- [56:05] tutorials/frames/build-entire-fx-with-one-pass---nuke-tutorial/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Using the World Position (P) AOV in Nuke to drive procedural, 3D-space-aware texture mapping, region masking, and an animated pulsating-ring energy effect — entirely in 2D comp, without re-rendering the 3D scene.
 
 ### Summary
-[PENDING EXTRACTION]
+Starting from a flat CG beauty render (rebuilt from Karma AOVs) and its World Position pass, Voxyde VFX layers up surface breakup (multi-scale procedural noise driven by 3D position, plus real textures projected via a fake-UV STMap trick built from World Position X/Z), isolates specific regions of the render by height or by Cryptomatte ID, fakes indirect-light bounce, and finally builds a pulsating expanding-ring FX layer around a logo using a World-Position-derived radial distance gradient, an animated repeating ramp, god rays and glow. It closes with bonus scanline/diagonal-waffle patterns made from raw World Position channels — demonstrating that a single AOV (P) is enough to drive most position-aware compositing tricks without touching the 3D scene again.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Rebuild the beauty from split AOVs (Shuffle diffuse/glossy-reflection dome passes, Merge with Plus) as the base for every layer that follows.
+2. Break up surface detail with `P_NoiseAdvanced` (Nukepedia / Nuke Survival Toolkit gizmo), feeding the World Position AOV directly into its position input — this generates noise mapped in true 3D space, independent of UVs. Stack 2 copies at different size/gain, merge with Multiply, tame with Grade (gamma).
+3. Fake UVs from World Position when real UVs are missing: Shuffle the P pass so X→red, Z→green; feed that into an `STMap` node's UV input with a real texture (e.g. a scratches map) plugged into Source.
+4. Fix STMap's 0–1 range requirement with Expression nodes: `abs(r)`/`abs(g)` kill negative coordinates, then `r%1`/`g%1` wrap everything back into 0–1 for seamless tiling. A Grade's gain before the STMap controls tiling frequency — its "black clamp" must be unchecked or it destroys the coordinate data.
+5. Multiply the mapped texture with a contrast-boosted copy of the beauty before merging it back with Plus, so added detail still respects the original lighting.
+6. Isolate a height band (e.g. only the floor) using P's Y channel as an alpha mask: Shuffle P.y → alpha, Grade to threshold/offset the band, then use it as a mask input (invert as needed) on a Grade/Merge to confine a texture layer to that region only.
+7. Isolate a specific object (the logo) with Cryptomatte: Merge operation `in`/`out` against the crypto alpha masks a texture onto just that object; multiply with the shuffled AO pass to ground it in the existing shading.
+8. Fake indirect-light bounce: Merge (operation = `difference`) between a combined AOV (diffuse or reflection) and its dome-only contribution isolates the light's indirect contribution; Plus it back on top. Animate a believable flicker via a Grade `mix` expression: `random(frame/5)` — larger divisor = slower flicker; reuse the identical expression on a second node for synced flicker, or add an offset to the frame for a different seed.
+9. Build the pulsating-ring base: `AP_Matte` (Nukepedia / Survival Toolkit) fed the World Position pass generates a radial distance gradient from world origin (0,0,0) with a radius/falloff control. Remap that gradient through an `STMap` sourced from a horizontal black→white `Ramp`, using `alpha%1` (same wrap trick as step 4) so the gradient becomes a repeating band pattern instead of a single falloff.
+10. Animate the pulse via an expression on the remap Grade's offset — `frame/50` (or `/100` for slower) — and add a secondary pulse by duplicating that Grade with `offset+0.5`, then Merge (Multiply) the two for pulses-between-pulses.
+11. Composite the ring: base gradient colored orange, a sharp "leading edge" copy merged in Plus, `P_NoiseAdvanced` breakup multiplied in for crunch, a `GodRays` node (position/steps/2-color falloff) for streaks, `AP_Glow` (the exponential glow gizmo used throughout all this author's tutorials) for bloom — merged Plus onto the main chain; mask with the logo Cryptomatte so the ring reads as emitting from the logo, and fade it with distance via a second AP_Matte radius used as an exponential-decay multiply mask.
+12. Add screen-space distortion below the FX layer (only warping the geometry, not the ring): two `Noise` nodes (red channel = X offset, green = Y offset, different Z seed per channel, offset pushed negative for a +/- range), shuffled into a custom "distortion" layer, fed to `IDistort`'s UV channels at high UV-scale (~100); blur/multiply the distortion by the FX mask so it's confined to the ring area.
+13. Add a cheap chromatic-aberration look: split the composited result into 3 separate R/G/B-only streams, nudge each channel's distortion slightly differently, recombine with Plus.
+14. Bonus: raw World Position channels make other patterns for free — Shuffle P.x or P.z directly into alpha (Grade black-clamp off, black point ≈ -1 to normalize the negative range) gives vertical/horizontal scanlines instead of a radial gradient; Multiply two *separately streamed* directional gradients (not the same stream twice) together produces a diagonal "waffle" grid.
+15. Finish with standard post: contrast bump, `Diffusion`, `AP_Vignette`, "Chromatic Spin" (Survival Toolkit), grain.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** Shuffle, Merge (`plus`/`multiply`/`difference`/`in`/`out`, invert option), Grade (gain/gamma/offset/mix, masked, black-clamp toggle), STMap, IDistort, Noise, Ramp, Crop, Expression
+- **Nukepedia / Nuke Survival Toolkit gizmos:** `P_NoiseAdvanced` (3D-position-driven procedural noise), `AP_Matte` (world-position-driven radial/directional distance matte), `AP_Glow` (exponential glow), `GodRays`, `AP_Vignette`, "Chromatic Spin"
+- **AOVs used:** World Position (P), Cryptomatte, Ambient Occlusion (AO), combined diffuse / glossy-reflection dome passes
+- **Key expressions:**
+```
+abs(r)                  # kill negative UV coordinates before STMap
+r % 1                   # wrap/repeat coordinates into 0-1 range
+mix = random(frame/5)   # synced flicker on indirect-emission Grade
+offset = frame/50       # animated ring-expansion driver
+```
+- **Render source note:** Karma-rendered AOVs; author notes Karma didn't populate the expected "combined emission" layer directly, requiring the difference-of-doms workaround (step 8) instead.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — assumes solid familiarity with core Nuke workflows (the author explicitly builds on his free "Intro to Nuke for 3D Artists" course); individual techniques (STMap tiling, world-position matting) are simple once explained, but the full pipeline stacks many interlocking layers.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX — works with the free non-commercial version per the author. Specific version number not stated in the transcript or visible on screen.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, cryptomatte, st-map, merge, channels, aovs, grading, gizmo, procedural-texture, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Skill Up with Nuke | How To Think Like A Pro Compositor](skill-up-with-nuke-how-to-think-like-a-pro-compositor.md) — shares `compositing`, `grading`, and use of the same community Nuke Survival Toolkit gizmo pack; a general problem-solving framework vs. this tutorial's single-AOV technique deep-dive.
