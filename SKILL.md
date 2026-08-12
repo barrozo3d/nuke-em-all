@@ -188,8 +188,10 @@ python-scripting, gizmo, group, copycat, gaussian-splats, field-nodes,
 nuke-studio, hiero, editorial, conform, review,
 mari-texturing, udim, projection, procedural-texture, baking,
 katana, scenegraph, nodegraph, macro, lookdev, lighting, usd, cel,
+relighting, denoise, ai-tools, motion-graphics, particles, volumetrics,
+digital-matte-painting, edge-extending, fx-simulation, virtual-production,
 beginner, intermediate, advanced, expert,
-nuke-16, nuke-17, mari-7, mari-8, katana-8, katana-9
+nuke-12, nuke-13, nuke-14, nuke-15, nuke-16, nuke-17, mari-7, mari-8, katana-8, katana-9
 ```
 
 ---
