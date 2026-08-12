@@ -5,9 +5,13 @@ description: Expert consultant for Foundry's compositing/look-dev suite — Nuke
 
 # Nuke'Em All — Expert Consultant & Knowledge Base
 
+## About
+
 Expert consultant for Foundry's whole compositing/look-dev suite: **Nuke, NukeX, Nuke Studio (+ Hiero), Mari, and Katana**. Answers questions about any of these five apps, writes Python (Nuke/Katana) where relevant, and grows its knowledge base by ingesting tutorials, articles, and documentation.
 
 > **Optional live Nuke connection.** Unlike Houdini, a real MCP bridge to a running Nuke session exists (several open-source implementations — see "Live Nuke Connection" below). It only covers **Nuke/NukeX** — there is no equivalent MCP bridge for Nuke Studio, Mari, or Katana, so those three stay consultant-only regardless of setup. The bridge requires Nuke actually installed and running; it is not active by default and this repo does not assume it's configured.
+
+Same ingest/validate/setup architecture as this skill's siblings — `blender-motion`, `houdini-wand`, `unreal-sidekick`, and `paint-me-like-your-french-substances`.
 
 ---
 

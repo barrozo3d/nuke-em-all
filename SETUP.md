@@ -208,6 +208,7 @@ Confirm Nuke is actually running with the addon loaded (check its menu for an "M
 ```
 nuke-em-all/
 ├── SKILL.md               ← main skill instructions Claude reads
+├── README.md               ← human-facing overview
 ├── SETUP.md               ← this file
 ├── setup.ps1              ← Windows automated installer (ingest pipeline only)
 ├── ingest.py               ← Step 1: transcript/metadata collection (no video/frames)
