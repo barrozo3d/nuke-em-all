@@ -1,10 +1,10 @@
 # Nuke'Em All
 
-A Claude Code skill: an expert consultant for Foundry's compositing/look-dev suite — Nuke, NukeX, Nuke Studio (+ Hiero), Mari, and Katana — that also builds its own knowledge base by ingesting tutorials, and can optionally drive a real, running Nuke session over MCP.
+An expert consultant for Foundry's compositing/look-dev suite — Nuke, NukeX, Nuke Studio (+ Hiero), Mari, and Katana — that also builds its own knowledge base by ingesting tutorials, and can optionally drive a real, running Nuke session over MCP.
 
 ## What it does
 
-Ask it a question about any of Foundry's five apps and it answers from a growing library of ingested tutorials plus a hand-written reference knowledge base covering compositing nodes, keying, deep compositing, Cryptomatte/ST maps, color management (OCIO/ACES), Nuke Python scripting, Nuke Studio/Hiero editorial workflows, Mari texture painting/UDIMs, and Katana lookdev/lighting/USD. It can also write Nuke or Katana Python for you directly. The knowledge base currently holds 2 fully-extracted tutorials plus one cross-reference stub pointing to a shared Houdini/Nuke fire-FX breakdown extracted in full over in `houdini-wand`.
+Ask it a question about any of Foundry's five apps and it answers from a growing library of ingested tutorials plus a hand-written reference knowledge base covering compositing nodes, keying, deep compositing, Cryptomatte/ST maps, color management (OCIO/ACES), Nuke Python scripting, Nuke Studio/Hiero editorial workflows, Mari texture painting/UDIMs, and Katana lookdev/lighting/USD. It can also write Nuke or Katana Python for you directly.
 
 ## Quick start
 
@@ -20,7 +20,7 @@ Then just ask Claude Code a question — it reads `SKILL.md` automatically. Full
 
 ## The Ingest Pipeline, in full detail
 
-This is the part of the skill you'd actually touch to extend it — point it at a new source, tune its quality checks, or teach it a new safeguard. It's three scripts, run in a fixed order, each doing one job well rather than one script doing everything.
+This is the part of the skill you'd actually touch to extend it: give it a video, an article, or any source of technical knowledge and the skill will trigger the steps to extract, read, organize, cross-reference and push it.
 
 ```
 ingest.py  ──►  select_frames.py  ──►  Claude Code (extraction)  ──►  validate.py
