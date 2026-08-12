@@ -60,4 +60,4 @@ Same ingest/validate/setup architecture as this skill's siblings — `blender-mo
 
 ## Status
 
-Public personal project, no warranty. 2 tutorials ingested as of 2026-08-12.
+Public personal project, no warranty. **2 tutorials ingested** (count auto-updates on every `ingest.py` run — do not hand-edit this line).
