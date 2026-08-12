@@ -210,6 +210,7 @@ nuke-em-all/
 ├── SKILL.md               ← main skill instructions Claude reads
 ├── README.md               ← human-facing overview
 ├── SETUP.md               ← this file
+├── CODE_OF_CONDUCT.md     ← purpose/ethics statement
 ├── setup.ps1              ← Windows automated installer (ingest pipeline only)
 ├── ingest.py               ← Step 1: transcript/metadata collection (no video/frames)
 ├── select_frames.py        ← Step 2: content-aware frame capture (Claude picks timestamps)
