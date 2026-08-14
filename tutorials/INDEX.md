@@ -504,6 +504,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/moire-patterns-nuke-tutorial-intermediate.md
 
+
+### I Brought a Greenscreen in Arctic Conditions for this Film
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=EDPoJuffubU
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/i-brought-a-greenscreen-in-arctic-conditions-for-this-film.md
+
 ---
 
 ## Tag Reference
