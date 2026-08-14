@@ -862,11 +862,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=GTfxuJftv_I
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** compositing, grading, relighting, aovs, digital-matte-painting, fx-simulation, intermediate
+- **Summary:** Version-by-version (A-H) walkthrough of a car-crash/explosion shot from slap comp to final, teaching the decision-making behind the nodes rather than the nodes themselves: block-in before refine, deliberate gradient-hunting, diagnosing "not sitting together" as fill-vs-highlight ratio mismatches, suppressing unjustified highlights, mixing thick+thin elements to avoid cut-out silhouettes, using glow/diffusion to blend edges (via local black-level lift), multi-light-pass occlusion tricks for new FX elements, clamping QC, and choosing physical plausibility (overexposure) over personal preference. Core lesson: "the nodes are easy — developing the image is not easy."
 - **File:** tutorials/high-level-vfx-compositing-that-nobody-shows-on-youtube.md
+- **Related:** 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`), This ONE Step Makes CG Look Cinematic (Most Artists Skip It) (`this-one-step-makes-cg-look-cinematic-most-artists-skip-it.md`), How I Use Compositing to Skip THOUSANDS of Hours Rendering (`how-i-use-compositing-to-skip-thousands-of-hours-rendering.md`).
 
 ---
 

@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=GTfxuJftv_I
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [compositing, grading, relighting, aovs, digital-matte-painting, fx-simulation, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/high-level-vfx-compositing-that-nobody-shows-on-youtube/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # High Level VFX Compositing that Nobody Shows on Youtube
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py high-level-vfx-compositing-that-nobody-shows-on-youtube <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -267,30 +263,61 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:50] tutorials/frames/high-level-vfx-compositing-that-nobody-shows-on-youtube/frame_000.jpg
+- [4:08] tutorials/frames/high-level-vfx-compositing-that-nobody-shows-on-youtube/frame_001.jpg
+- [4:55] tutorials/frames/high-level-vfx-compositing-that-nobody-shows-on-youtube/frame_002.jpg
+- [6:24] tutorials/frames/high-level-vfx-compositing-that-nobody-shows-on-youtube/frame_003.jpg
+- [7:59] tutorials/frames/high-level-vfx-compositing-that-nobody-shows-on-youtube/frame_004.jpg
+- [11:50] tutorials/frames/high-level-vfx-compositing-that-nobody-shows-on-youtube/frame_005.jpg
+- [13:20] tutorials/frames/high-level-vfx-compositing-that-nobody-shows-on-youtube/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Walks through the real version-by-version iteration (A through H) of a car-crash/explosion VFX shot from a rough "slap comp"/"bash comp" (studio terms for version zero) to final delivery, using each version diff to teach the underlying decision-making principles compositors use — not just the node techniques — condensed from a 6-hour full course.
 
 ### Summary
-[PENDING EXTRACTION]
+Starting from version zero — a single ungraded smoke layer with a rough orange gradient and no background — the video tracks the recurring judgment calls a compositor makes across versions: (1) establish a rough contrast block-in first ("you can't refine what you haven't blocked in," compared to sculpting clay), and deliberately look for reasons to add gradients across a shot (an offscreen flare lifting one side, light fading into shadow) because flat, ungradated images read as less interesting; (2) diagnose "elements not sitting together" as a contrast-ratio problem — specifically the ratio between fill light and highlight/spec light on different elements (e.g. a shirt lit brightly while a chair stays dark) — fixed by bringing the mismatched element's fill up or down to match, not just eyeballing brightness; (3) hunt down and suppress "impossible" light — e.g. a reflective highlight on an edge that shouldn't be lit given the established light logic (an occluding chair blocking that light path) — via edge suppression plus a touch of manual shadow gradient; (4) fix small (5-10%) color-temperature mismatches between elements (pinkish vs. orange tones) early, since these compound visually; (5) avoid "cut out" looking elements (hard-edged smoke/cloud silhouettes) by mixing a thick element with a thinner, softer one behind/around it so some edge detail survives, and note that both added glow/diffusion AND a bright adjacent highlight can reduce perceived edge contrast (a highlight's glow lifts the local black level, which is why diffusion/glow "blend" cut-out edges but can be overdone); (6) always ask "does this light make sense" for background elements too — an extremely blown-out background CG reflection with no justified light source is not just wrong, it actively steals viewer attention from the intended focal point (the actor), so attention has to be actively directed away from unintended hotspots and toward the subject; (7) use a very soft, huge-radius blur (200-300px) mixed back in at a low percentage as a "cheat" to help black levels visually sit together across composited layers — but only after doing proper black-level matching first, not as a substitute for it; (8) once particle/ember elements are added, revisit the same light/light-direction/ratio principles shot-wide — the author frames this as the single most important recurring lesson: "light, light direction, and the ratio of fill vs. highlight — if you can remember those, you can do a lot of complex composites"; (9) exploit a multi-light-pass render setup (lights rendered as separate elements) to occlude individual light contributions with animated textures so newly-added FX elements (embers, fire) interact correctly with the existing lighting, without re-rendering; (10) add scattering/glow interaction between new light sources and existing atmosphere/smoke elements so additions feel physically connected to the scene rather than pasted on top; (11) watch for accidental clamping between versions (an accidentally clamped node crushed the highlight range in one version) — always cross-check highlight range across versions during QC; (12) accept "losing detail" in favor of physical plausibility — a very thick foreground smoke/atmosphere layer should overexpose/wash out background detail when raytraced light passes through it, and a compositor has to be willing to blow out an area even if a lower-exposure version "looked cooler," because the overexposed version is what would actually happen physically; (13) final pass is dedicated purely to invisible-on-YouTube-but-critical QC — small black edges/holdout errors from element layering that would read on a cinema screen even if unnoticed on a compressed web video. Conclusion: "the nodes are easy — developing the image is not easy," i.e. the technical toolset is not the bottleneck, the perceptual/decision-making skill is.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Block in a rough version-zero comp (single main element, rough grade, basic gradient) before attempting any refinement — establishes the baseline discrepancies to solve.
+2. Deliberately look for a justified reason to add a gradient across the frame (offscreen flare, falloff into shadow) rather than leaving flat, undifferentiated light.
+3. Diagnose "not sitting together" elements as fill-vs-highlight ratio mismatches between them, and bring the outlier element's fill level up or down to match its neighbor rather than adjusting contrast globally.
+4. Identify and suppress any highlight/reflection that doesn't match the established light-logic of the scene (e.g. light hitting an area that should be occluded) via edge suppression, edge blur, and a manual shadow-gradient touch.
+5. Match small (5-10%) color-temperature discrepancies between elements early (e.g. pinkish vs. orange) — desaturate/rebalance toward a shared neutral base tone.
+6. For hard "cut out" looking silhouetted elements, mix in a thinner, softer secondary element behind/around the thick one to retain some edge detail instead of a flat silhouette.
+7. Track down any "impossible" or unjustified extreme highlight (e.g. a blown-out background CG reflection) and suppress it — an unmotivated hotspot competes with and steals attention from the actual subject.
+8. Apply a very soft (200-300px), low-opacity global blur as a late "cheat" to help black levels visually cohere across layers — only after proper black-level matching, never as a replacement for it.
+9. When adding particle/ember/fire elements, re-apply the light/light-direction/fill-vs-highlight-ratio check across the whole shot again — new elements reset the balance.
+10. Where lights were rendered as separate passes/elements (a multi-light setup), use that separation to occlude individual light contributions with animated textures so new FX elements interact correctly with existing lighting without a re-render.
+11. Add scattering/glow interaction between new bright elements and existing atmosphere/smoke so additions read as physically connected to the environment, not composited on top.
+12. QC for accidental clamping between comp versions by comparing highlight range across versions — a clamped node can silently crush highlight detail.
+13. Be willing to intentionally overexpose/blow out a foreground atmosphere element when it's physically correct (thick smoke really would wash out background light), even if a lower-exposure alternative "looks cooler" — physical plausibility over personal preference.
+14. Do a dedicated final QC pass hunting for small black edges/holdout errors from element layering — invisible on compressed web video but visible at cinema scale.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- Version-comparison workflow: a row of `Read` nodes (one per comp version, A through H) feeding into a switch/selector so versions can be directly A/B compared in the Viewer — shown as a thumbnail strip and as a row of colored Read nodes in the node graph.
+- Multi-light-pass setup — lights rendered as separate elements/AOVs so individual light contributions can be independently occluded/adjusted per new FX element without re-rendering the base CG.
+- Large-radius, low-opacity blur — used as a black-level-blending "cheat" late in the comp (200-300px blur, mixed back at a low percentage).
+- Particle system + surface-projected embers — embers added both as a 2D particle system and projected onto CG geometry surfaces for grounded interaction.
+- Glow/diffusion — used deliberately to reduce perceived edge contrast on cut-out-looking silhouettes (works by lifting local black levels), balanced against overuse.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate/Advanced — the techniques themselves (grading, blurs, glow, roto/masking) are straightforward, but the judgment about *when and why* to apply them across dozens of iterative versions is the actual subject, aimed at compositors past the beginner stage who already know the node toolset.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke; exact version not stated on-screen.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, grading, relighting, aovs, digital-matte-painting, fx-simulation, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — shares `relighting`, `compositing`; overlapping "getting elements to sit together" methodology.
+- This ONE Step Makes CG Look Cinematic (Most Artists Skip It) (`this-one-step-makes-cg-look-cinematic-most-artists-skip-it.md`) — shares `grading`, `aovs`, `compositing`; both about first-read/attention-direction and light-group-driven selective grading.
+- How I Use Compositing to Skip THOUSANDS of Hours Rendering (`how-i-use-compositing-to-skip-thousands-of-hours-rendering.md`) — shares `compositing`; same channel's methodology-over-technique teaching style.
