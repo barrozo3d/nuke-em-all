@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=lpyZsAoiFMc
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX (3D camera tracking/CameraTracker require NukeX; 2D Tracker and PlanarTracker are Nuke-tier)"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [tracking, camera-tracking, 3d-system, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/tracking-concepts-in-nuke-for-beginners/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Tracking Concepts in Nuke for Beginners
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py tracking-concepts-in-nuke-for-beginners <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -253,30 +249,57 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:47] tutorials/frames/tracking-concepts-in-nuke-for-beginners/frame_000.jpg
+- [2:03] tutorials/frames/tracking-concepts-in-nuke-for-beginners/frame_001.jpg
+- [3:05] tutorials/frames/tracking-concepts-in-nuke-for-beginners/frame_002.jpg
+- [4:32] tutorials/frames/tracking-concepts-in-nuke-for-beginners/frame_003.jpg
+- [6:21] tutorials/frames/tracking-concepts-in-nuke-for-beginners/frame_004.jpg
+- [7:15] tutorials/frames/tracking-concepts-in-nuke-for-beginners/frame_005.jpg
+- [9:57] tutorials/frames/tracking-concepts-in-nuke-for-beginners/frame_006.jpg
+- [12:15] tutorials/frames/tracking-concepts-in-nuke-for-beginners/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A conceptual (no node-build) primer on the three tracking methods available in Nuke — 2D point tracking, planar tracking, and full 3D camera tracking — explained through the underlying concept of parallax and triangulation, plus a decision framework (free-move vs. nodal-pan camera motion) for picking the fastest adequate tracking method for a given shot rather than defaulting to a full 3D track.
 
 ### Summary
-[PENDING EXTRACTION]
+Explained entirely through animated diagrams (cubes/parallax word demo, top-down scene views, a live "Triangulation & Camera Solve" point graph) rather than a live Nuke build. Establishes parallax as the foundation concept: closer objects appear to move faster across frame than distant objects as a camera moves, and this differential motion is what any tracker measures. 2D tracking (the `Tracker` node) follows a single point in one plane and doesn't account for other planes of parallax. Planar tracking follows an entire textured surface/pattern (needs some surface detail like a brick wall or applied tracking markers) as one plane — good for sticking a flat texture onto a surface even if its near/far edges technically move at slightly different speeds. Full 3D camera tracking works by running thousands of individual 2D point trackers simultaneously across frame, then measuring the relative parallax differences between all of them to infer depth and solve both a 3D point cloud and the camera's own 3D motion — a process called triangulation, which mathematically requires a minimum of 3 simultaneously-tracked points at any given frame (6+ recommended) to solve reliably; points not visible at the same time have their relative distance inferred rather than directly measured. The video then teaches a decision framework for picking the right/fastest tool: a "free move" camera (has both translation and rotation, e.g. a person walking with a camera) generally requires a full 3D track if elements at different depths need separate treatment — but if only one flat, single-parallax-plane region needs replacing (e.g. only the mountains, which move together with little internal parallax), a much faster 2D or planar track of just that region is sufficient, skipping the full 3D solve entirely. A "nodal pan" camera (rotation only around a fixed center point, no translation) has effectively zero parallax between objects at different depths, meaning ordinary 2D tracking usually suffices everywhere in frame — except when points need to persist beyond the frame edges (e.g. replacing a sky where tracked points eventually leave frame), in which case a "nodal pan 3D track" (essentially many simultaneous 2D trackers solved into a 3D camera, without needing real parallax data) is used instead, purely to keep persistent off-screen point data rather than to resolve depth.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Recognize parallax as the core concept underlying every tracking method: nearer objects move faster across frame than farther objects when a camera moves, and trackers measure this differential motion.
+2. Use a 2D `Tracker` when only a single point/plane of motion needs to be followed and there's no need to account for other parallax planes in the scene.
+3. Use a planar tracker when an entire flat, textured surface needs a texture/element stuck to it (e.g. replacing signage or wall texture) — requires the surface to have enough visual texture/pattern (brick, graffiti, applied tracking markers) for the algorithm to lock onto.
+4. Use a full 3D camera track (`CameraTracker`) when multiple depths/planes of parallax in the scene need to be resolved together, understanding internally that it works by running thousands of 2D point trackers and triangulating their relative motion into a 3D point cloud + solved camera.
+5. Ensure at least 3 (ideally 6+) simultaneously-tracked points are visible at all times for a reliable triangulation solve — fewer good points risks an inaccurate camera solve that won't match the real camera's motion, breaking the illusion of inserted 3D elements sticking to the plate.
+6. Before tracking, classify the shot's camera motion: "free move" (translation + rotation present, e.g. camera physically moving through the scene) generally implies real parallax between depth planes and likely needs a full 3D track if multiple depths must be treated independently.
+7. Even on a free-move shot, check whether the actual task only touches one low-parallax region (e.g. replacing just a background mountain range that moves together as one plane) — if so, a much cheaper 2D or planar track of just that region can replace a full 3D solve.
+8. Classify a "nodal pan" shot (camera rotating only around a fixed point, no translation) as having effectively no parallax between objects at different depths — ordinary 2D tracking of points anywhere in frame is typically sufficient for the whole scene.
+9. On a nodal pan shot, fall back to a "nodal pan 3D track" specifically when a 2D-tracked point would otherwise leave frame before the task is done (e.g. sky replacement) — this uses the 3D camera tracker's many-simultaneous-2D-point approach purely to maintain persistent tracking data beyond the visible frame, not because real depth/parallax needs solving.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Tracker` — Nuke's 2D point tracking node; tracks a single point/plane of motion.
+- Planar tracker (e.g. `PlanarTracker`) — tracks an entire flat, textured surface as one plane rather than individual points.
+- `CameraTracker` — NukeX's 3D camera-tracking node; internally runs many simultaneous 2D point trackers and triangulates them into a solved 3D camera + point cloud.
+- Camera motion vocabulary used as Nuke terminology when configuring CameraTracker: "free move" (translation + rotation) vs. "nodal pan" (rotation-only around a fixed center).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — explicitly framed as the first lesson on 3D cameras/parallax in the presenter's tracking curriculum; conceptual grounding before hands-on node work.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX — 3D camera tracking (`CameraTracker`) is a NukeX-tier feature; 2D `Tracker` and planar tracking are available in base Nuke. Version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+tracking, camera-tracking, 3d-system, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Why your VFX Tracks aren't "Sticking" (and how to Fix it) (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — shares `tracking`, `camera-tracking`; that video's troubleshooting builds directly on this one's triangulation/point-count fundamentals.
+- Rotoscoping in Nuke Tutorial | 5 Beginner Tips (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`) — shares `tracking`, `camera-tracking`, `beginner`; that video's stabilize-before-roto technique depends on the same 2D-tracking fundamentals taught here.
+- Ray Render in Nuke Tutorial | Compositing 3d Reflections (`ray-render-in-nuke-tutorial-compositing-3d-reflections.md`) — shares `3d-system`, `camera-tracking`; that video's proxy-geometry projection setup assumes the solved 3D camera track this video explains the mechanics of.
+- Re-lighting Real Footage | Nuke Compositing [Advanced] (`re-lighting-real-footage-nuke-compositing-advanced.md`) — shares `3d-system`, `camera-tracking`; same relationship — depends on a solved 3D track this video explains from first principles.

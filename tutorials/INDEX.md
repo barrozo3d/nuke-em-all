@@ -475,11 +475,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=lpyZsAoiFMc
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (3D camera tracking requires NukeX)
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** tracking, camera-tracking, 3d-system, beginner
+- **Summary:** Conceptual primer (diagrams, no node build) on 2D tracking, planar tracking, and full 3D camera tracking, explained through parallax and triangulation (minimum 3, ideally 6+, simultaneous points needed for a reliable 3D solve). Teaches a decision framework: "free move" camera motion (translation + rotation) usually needs a full 3D track unless only one low-parallax region needs replacing; "nodal pan" motion (rotation only) has near-zero parallax so 2D tracking usually suffices, except when points leave frame, requiring a "nodal pan 3D track" purely for persistent off-screen data.
 - **File:** tutorials/tracking-concepts-in-nuke-for-beginners.md
+- **Related:** Why your VFX Tracks aren't "Sticking" (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`), Rotoscoping in Nuke Tutorial | 5 Beginner Tips (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`) — shares `tracking`, `camera-tracking`; Ray Render in Nuke Tutorial (`ray-render-in-nuke-tutorial-compositing-3d-reflections.md`), Re-lighting Real Footage (`re-lighting-real-footage-nuke-compositing-advanced.md`) — shares `3d-system`, `camera-tracking`.
 
 
 ### This FREE Tool Warps Images in a Way You’ve Never Seen
