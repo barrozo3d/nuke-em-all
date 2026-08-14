@@ -98,6 +98,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-tutorial-keying-with-math-expressions-intermediate.md
 
+
+### Why your VFX Tracks aren't "Sticking" (and how to Fix it)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=ntx0Tm4ZYds
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md
+
 ---
 
 ## Tag Reference
