@@ -816,10 +816,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=giI8elFp4QQ
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Nuke 12+ (new Shuffle node UI explicitly referenced; 2021 upload, Nuke 13.0 era)
+- **Tags:** compositing, channels, aovs, grading, digital-matte-painting, roto, rotopaint, beginner, intermediate
+- **Summary:** Visual explainer of the Shuffle node: layers/channel-set fundamentals, per-channel routing, pulling CG AOVs (reflection/refraction/depth) into RGB for independent grading, manufacturing a solid alpha for footage that lacks one, and — the intermediate payoff — carrying hidden custom channels (denoised plates, prepped elements) silently down the comp's B-pipe for later retrieval instead of re-copying node chains.
 - **File:** tutorials/shuffle-and-channel-management-nuke-compositing-beginner-intermediate.md
 
 

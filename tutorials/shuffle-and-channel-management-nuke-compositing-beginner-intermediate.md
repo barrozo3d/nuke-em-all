@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=giI8elFp4QQ
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "Nuke 12+ (new Shuffle node UI explicitly referenced; 2021 upload, Nuke 13.0 era — see version-tracker.md)"
+tags: [compositing, channels, aovs, grading, digital-matte-painting, roto, rotopaint, beginner, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/shuffle-and-channel-management-nuke-compositing-beginner-intermediate/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Shuffle and Channel Management | Nuke Compositing [Beginner / Intermediate]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py shuffle-and-channel-management-nuke-compositing-beginner-intermediate <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -344,30 +340,65 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:15] tutorials/frames/shuffle-and-channel-management-nuke-compositing-beginner-intermediate/frame_000.jpg
+- [3:50] tutorials/frames/shuffle-and-channel-management-nuke-compositing-beginner-intermediate/frame_001.jpg
+- [4:35] tutorials/frames/shuffle-and-channel-management-nuke-compositing-beginner-intermediate/frame_002.jpg
+- [6:30] tutorials/frames/shuffle-and-channel-management-nuke-compositing-beginner-intermediate/frame_003.jpg
+- [8:10] tutorials/frames/shuffle-and-channel-management-nuke-compositing-beginner-intermediate/frame_004.jpg
+- [9:15] tutorials/frames/shuffle-and-channel-management-nuke-compositing-beginner-intermediate/frame_005.jpg
+- [13:00] tutorials/frames/shuffle-and-channel-management-nuke-compositing-beginner-intermediate/frame_006.jpg
+- [21:15] tutorials/frames/shuffle-and-channel-management-nuke-compositing-beginner-intermediate/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A visual, from-first-principles explanation of the (new-style, Nuke 12+) `Shuffle` node: what layers/channel sets are, how Shuffle routes individual color channels between input pipes and the output RGBA layer, and — the intermediate payoff — how to use Shuffle (and `Copy`) to "carry" arbitrary extra channels (depth, a denoised plate, a custom layer) silently down through a comp's B-pipe for later retrieval, instead of re-copying whole node chains.
 
 ### Summary
-[PENDING EXTRACTION]
+Opens with Nuke interface fundamentals for true beginners: a rendered EXR isn't just RGB — it stores multiple "layers"/channel sets (reflection, refraction, depth, specular, etc.) accessible via the layer dropdown, plus a separate, less-obvious "alpha channel" sub-selector that lets the alpha slot display a different stored channel (e.g. depth) without altering the actual alpha data — a common beginner confusion point the video explicitly untangles. Demonstrates the `Shuffle` node's core mechanic with its line-diagram UI: by default every channel passes straight through to itself (a no-op); clicking a channel's black button disconnects/deletes it (e.g. removing red turns the image cyan); channels can be deliberately cross-wired (e.g. blue into red) to scramble colors, purely to prove how the routing works. The main practical use in CG compositing: pull a stored EXR layer (e.g. "refraction") into the main RGB output layer via Shuffle's second/"A" input and per-channel output picker, so it can be graded directly — real production comps stack many such Shuffles (reflection, specular, specular indirect, etc.), each isolating one AOV for independent color correction before recombining everything with a `Merge` (plus/add operation). A second beginner use: fixing footage that has no real alpha channel (plain video, no CG render) — a naive `Roto` mask over such footage merges incorrectly (a "plus"-looking double-image artifact) because Nuke has no opacity information; the fix is a `Shuffle` with its alpha button set to solid/white, giving the plate a constant alpha of 1 so subsequent roto/premult/merge behaves correctly (equivalent to a Roto node with alpha output + Premult, but demonstrating that Shuffle itself can manufacture alpha channels). The intermediate section covers "carrying channels down the pipe": a `Shuffle` can copy any channel (e.g. a depth channel, `depth.Z`) from a secondary "A" input into a new/custom output layer of the main B-pipe stream, without altering the visible RGB image at that point in the script — the data rides along silently and can be pulled back out with a second `Shuffle` later downstream, whenever needed, without re-fetching or re-copying earlier node chains. Two practical applications: (1) storing a de-grained/denoised version of a plate in a hidden custom layer (e.g. named "denoise") early in the script, so any later clean-plate/paint work can pull the denoised version back out via Shuffle, work on it, then merge the result back over the original — avoiding repeated denoise operations or copy-pasted setups; (2) a more complex real-shot example (a sign with light-bulb trim occluded by foreground wires): a custom "strip lights" layer is built from a roto'd checkerboard/light pattern, stored via Shuffle into its own hidden layer, then correctly matted by the wires' alpha using a `ChannelMerge` (stencil operation) which writes the result into `striplights.alpha` — later in the script that fully-prepped hidden layer is shuffled back out, premultiplied, glowed, and plussed over the final comp, avoiding a large duplicated/re-masked copy of the earlier node chain.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Understand layer/channel-set fundamentals: a rendered EXR stores multiple named layers (color, reflection, refraction, depth, specular, etc.), selectable via the viewer's layer dropdown; a separate sub-selector controls what's actually displayed when viewing the "alpha channel" slot (can show something other than true alpha, e.g. depth, without changing the underlying data).
+2. Create a `Shuffle` node and observe its default line-diagram: red→red, green→green, blue→blue, alpha→alpha — a complete no-op until channels are rewired.
+3. Delete a channel by clicking its black disconnect button (e.g. remove red → image reads cyan); reconnect to restore.
+4. Cross-wire channels (e.g. blue into red's output slot) to scramble/rearrange colors — demonstrates routing but isn't typically useful on its own.
+5. For the main CG-compositing use case: on the Shuffle's "A" input dropdown, select a stored EXR layer (e.g. "refraction"); the output RGB then displays that layer's red/green/blue instead of the original beauty render.
+6. Grade the isolated layer independently (e.g. boost a reflection layer's intensity with a `Grade`), then recombine all the separately-graded layer-shuffles with a `Merge` set to Plus/Add — each layer's correction only affects that layer's contribution to the final image.
+7. For footage lacking a real alpha (plain video, not CG): add a `Shuffle`, set its alpha output to the solid/white toggle instead of passing through the (nonexistent) source alpha — gives the plate a constant, correct alpha of 1 so downstream `Roto`/`Premult`/`Merge` composites cleanly instead of producing a double-image "plus" artifact.
+8. To carry a channel downstream: add a `Shuffle`, plug the source footage into its "A" input, select the desired channel/layer on the A side (e.g. `depth.Z`), create/select a custom output layer name (Nuke will auto-generate the required channels for a new layer name), and drag that channel into the corresponding output slot — the main RGBA output is left untouched, but the extra data now rides invisibly in the stream.
+9. Retrieve a carried channel later in the script with a second `Shuffle`: select the custom layer on its "A" input and route it into whatever output channel is needed (e.g. back into Alpha, or into RGB for viewing/editing).
+10. Practical pattern — hidden denoised plate: shuffle a denoised/de-grained version of the footage into a custom layer (e.g. "denoise") early in the comp; anywhere later that the clean version is needed (clean-plating, painting, keying), shuffle it back out, do the work (e.g. `RotoPaint` with alpha driven from brush strokes via "AlphaMaskRGBA.alpha", `Premult`), then `Merge` the result back over the main image — regrain afterward to match if needed.
+11. Practical pattern — occluded element isolation: build a custom element (e.g. a roto'd light-strip pattern) in its own hidden layer via Shuffle; use `ChannelMerge` (a stencil/matte operation) to correctly occlude that hidden layer's alpha by a foreground element's own alpha (e.g. wires in front of a sign), writing the result back into that custom layer's alpha; later, shuffle the fully-matted hidden layer back out, premultiply, add a glow, and `Merge` (plus) it into the final comp — avoids duplicating and re-masking a large chunk of the earlier script.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Shuffle` (new-style, Nuke 12+) — core node throughout; per-channel line-diagram routing between input(s) and output RGBA; black button disconnects/deletes a channel, white button forces solid/constant value; second "A" input lets a different layer/channel set be selected and routed into the output alongside/instead of the primary "B" input
+- Layer/channel-set dropdown (viewer + node "layer" knobs) — selects which stored EXR layer is being viewed or operated on (reflection, refraction, depth, specular, custom layers, etc.)
+- Alpha-channel display sub-selector — lets the viewer's alpha slot show an arbitrary stored channel (e.g. depth) for inspection without altering the real alpha data
+- `Grade` — used per-isolated-layer to color-correct a single AOV (e.g. reflection) independently after it's been shuffled into RGB
+- `Merge` (Plus/Add) — recombines independently-graded layer-shuffles back into the final composite
+- `Roto` / `RotoPaint` — mask/paint source; alpha can be explicitly set to "AlphaMaskRGBA.alpha" to drive alpha from brush strokes; used with a shuffled-out denoised plate for clean-plating
+- `Premult` — standard premultiply step after manufacturing or restoring an alpha channel
+- `ChannelMerge` — used as a stencil operation to matte one hidden custom layer's alpha by another element's alpha (e.g. occluding wires), writing the result into the custom layer
+- `Copy` — mentioned as an alternative to Shuffle for simple single-channel copies (e.g. alpha to alpha), though Shuffle is preferred for its broader layer-management flexibility
+- Custom output layers — created via the Shuffle's "new layer" option (auto-generates the required channel set for a given layer name, e.g. "denoise" or "striplights")
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner (channel/layer fundamentals, basic Shuffle routing, alpha-fixing) progressing to Intermediate (carrying channels downstream, hidden-layer production patterns)
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (native `Shuffle`, `Grade`, `Merge`, `Roto`/`RotoPaint`, `Premult`, `ChannelMerge`, `Copy` — no third-party gizmos). Explicitly references "the new Nuke 12 shuffle node" as the one being taught (vs. an older, more confusing Shuffle UI in earlier versions). Video published 2021 — falls in the Nuke 13.0 era (13.0 released 2021-03-17); see `references/version-tracker.md`.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, channels, aovs, grading, digital-matte-painting, roto, rotopaint, beginner, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Nuke Tutorial | Keying with Math Expressions [Intermediate]](nuke-tutorial-keying-with-math-expressions-intermediate.md) — shares the channel-math/expression fundamentals theme, working directly with individual RGBA channels rather than stock tools.
+- [Create 3D Noise | Nuke Compositing](create-3d-noise-nuke-compositing.md) — shares `channels`/`aovs`; both pull position/utility-pass channels out of a CG render's stored layers to drive further comp work, the same layer-access fundamentals this video explains.
+- [360 Spherical LatLong Textures | Nuke Tutorial](360-spherical-latlong-textures-nuke-tutorial.md) — shares `compositing`, `digital-matte-painting`; both are toolset/fundamentals-style explainer videos aimed at demystifying a commonly-misunderstood Nuke concept.
+- [Nuke Compositing an Advanced CG Shockwave | VFX (LookDev)](nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md) — shares `channels`, `aovs`; that video's deep-compositing/AOV-heavy workflow depends on exactly the layer-shuffling fundamentals taught here.

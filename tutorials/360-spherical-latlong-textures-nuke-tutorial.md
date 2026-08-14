@@ -298,4 +298,6 @@ compositing, 3d-system, digital-matte-painting, roto, rotopaint, intermediate
 
 - A new way to design VFX | Virtual Reality | Gravity Sketch + Nuke Tutorial (`a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial.md`), Mixed Medium VFX P1 (`mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md`), Nuke Compositing an Advanced CG Shockwave (`nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md`), and [1/3] Nuke Tutorial Series (`13-nuke-tutorial-series-practical-sfx-lighting-script-overview.md`) — all also use the `PolarDistort` gizmo, each for a different purpose than this tutorial's sphere-wrapping.
 
+- Shuffle and Channel Management | Nuke Compositing [Beginner / Intermediate] (`shuffle-and-channel-management-nuke-compositing-beginner-intermediate.md`) — shares `compositing`, `digital-matte-painting`; both are toolset/fundamentals-style explainer videos aimed at demystifying a commonly-misunderstood Nuke concept.
+
 No other existing knowledge-base entries share enough tags for a strong cross-link yet. Revisit once other `digital-matte-painting` or `3d-system` tutorials (e.g. the 2024 "Blender + Nuke A.I Enhanced Digital Matte Painting Workflow" video, once ingested) land in the index.
