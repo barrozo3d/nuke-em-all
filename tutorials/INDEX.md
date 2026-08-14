@@ -74,6 +74,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/transform-your-flat-green-screen-into-cinematic-lighting.md
 
+
+### Physics of Light for VFX Artists [Updated]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=goTeNehxrhY
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/physics-of-light-for-vfx-artists-updated.md
+
 ---
 
 ## Tag Reference
