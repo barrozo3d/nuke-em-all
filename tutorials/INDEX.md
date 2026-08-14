@@ -659,6 +659,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/render-world-position-in-blender-for-nuke.md
 
+
+### Can I Create a Speeder Chase on a TINY Greenscreen?
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=KLNmQtwj5Pc
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md
+
 ---
 
 ## Tag Reference
