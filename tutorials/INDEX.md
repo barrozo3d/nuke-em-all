@@ -337,11 +337,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=DFb9dnOWTxw
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** relighting, grading, roto, compositing, digital-matte-painting, intermediate
+- **Summary:** Two CG-integration techniques on a real tabletop shot with a hidden CG cup/coins: "paint with light" — roto shapes tracked onto a single nodal-pan CG frame for layered contact shadows, `RotateNormals`-driven directional highlight mattes, desaturated highlights, faked reflections from real photo reference, and luma-keyed (not flat-brightened) surface-texture detail — and "finding connection points," a disciplined scan-and-compare methodology across shadow softness/DOF/exposure/hue/texture, while guarding against the trap of matching brightness 1:1 between materials that legitimately reflect light differently (a dark book vs. a bright table).
 - **File:** tutorials/2-expert-vfx-tips-to-perfectly-blend-cg.md
+- **Related:** Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`) — shares normals-derived directional relighting mattes. How I Use Compositing to Skip THOUSANDS of Hours Rendering (`how-i-use-compositing-to-skip-thousands-of-hours-rendering.md`) — shares the nodal-pan single-frame render optimization.
 
 
 ### Nuke Compositing Artistic Basics (6/8): Whitepoint and white balance
@@ -364,6 +365,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** [PENDING]
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-compositing-artistic-basics-78-glows.md
+
+
+### Nuke Compositing Artistic Basics (8/8): Camera Artifacts
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=bmwOCLwiYM0
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-artistic-basics-88-camera-artifacts.md
 
 ---
 
