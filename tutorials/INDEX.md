@@ -205,6 +205,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md
 
+
+### How I Made a FULL Star Wars Cinematic from JUST One Screenshot
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=6hArU1CgJUA
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot.md
+
 ---
 
 ## Tag Reference
