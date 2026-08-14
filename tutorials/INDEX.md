@@ -188,10 +188,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=8Aki1VR_tX8
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (3D system for projections)
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** 3d-system, rotopaint, roto, compositing, intermediate
+- **Summary:** Two clean-plate-projection habits: (1) don't re-project the whole frame through undistort→project→re-distort — paint only the bad area with `RotoPaint`, enable its easy-to-miss output-mask dropdown (`RGBA.alpha`) so brushstrokes carry alpha, then `Premult` to isolate just that patch before projecting, preserving quality everywhere else; (2) switch `LensDistort`/`ScanlineRender`/re-distort filtering from default Cubic to a sharper filter to reduce cumulative resample softening.
 - **File:** tutorials/preserve-quality-projections-in-nuke.md
 
 

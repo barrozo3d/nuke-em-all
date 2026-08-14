@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=8Aki1VR_tX8
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX (3D system for projections)"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [3d-system, rotopaint, roto, compositing, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/preserve-quality-projections-in-nuke/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Preserve Quality | Projections in Nuke
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py preserve-quality-projections-in-nuke <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -113,30 +109,51 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:39] tutorials/frames/preserve-quality-projections-in-nuke/frame_000.jpg
+- [2:42] tutorials/frames/preserve-quality-projections-in-nuke/frame_001.jpg
+- [2:59] tutorials/frames/preserve-quality-projections-in-nuke/frame_002.jpg
+- [3:09] tutorials/frames/preserve-quality-projections-in-nuke/frame_003.jpg
+- [4:17] tutorials/frames/preserve-quality-projections-in-nuke/frame_004.jpg
+- [4:40] tutorials/frames/preserve-quality-projections-in-nuke/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Two small but high-value habits for cleaner clean-plate projections in Nuke's 3D system: (1) limit a re-projected patch to only the pixels actually needing replacement (via a RotoPaint alpha mask + premult) instead of re-projecting the whole frame, and (2) switch filtering away from the default Cubic to reduce resampling softness through the undistort → project → re-distort chain.
 
 ### Summary
-[PENDING EXTRACTION]
+Working example: removing unwanted leaves off a staircase using a tracked clean-plate projection setup (undistort → project onto rough 3D geometry via ScanlineRender → re-distort). The presenter points out a common beginner mistake — projecting the *entire* frame onto the geometry re-samples/filters the whole image (undistort, `ScanlineRender`, re-distort each resample pixels), causing a visible softening even where nothing needed fixing. The fix: paint the clean-plate replacement only over the bad areas with `RotoPaint`, then reveal that RotoPaint node's often-missed "output mask" dropdown/arrow — setting it to `rgba.alpha` makes every brushstroke also write an alpha, so a `Premult` after it isolates just the painted patch areas. Projecting that isolated, pre-multiplied patch instead of the full frame preserves image quality everywhere else in the shot. Second tip: every transform/resample stage (`LensDistort`, `ScanlineRender`, re-distort) defaults to Cubic filtering, which introduces its own softening; switching all three to a sharper filter option (referred to on-screen, unclear exact pronunciation — appears to be a Lanczos-family or "Sinc"-type filter) preserves more sharpness through the chain, though the presenter notes 100% lossless quality isn't achievable through any resample.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Build a standard 3D clean-plate projection setup: undistort the plate (`LensDistort`), project it via `Project3D`/`ScanlineRender` onto rough tracked geometry (e.g. a simple card/cube standing in for the staircase), then re-distort the render back to match the original lens.
+2. Recognize the problem: projecting the *entire* frame through this chain re-samples every pixel (not just the area being fixed), softening the whole image slightly — visible when A/B-comparing original vs. round-tripped footage zoomed in.
+3. Instead of projecting the whole frame, use `RotoPaint` to hand-paint just the clean-plate replacement over the bad area (e.g. sampling clean staircase texture to paint out leaves).
+4. In the RotoPaint node, find the small black arrow/dropdown for output mask and set it to `RGBA.alpha` — by default a RotoPaint used purely for painting produces no alpha; enabling this makes every brushstroke area register in the alpha channel.
+5. Add a `Premult` node after the RotoPaint so only the painted patch pixels survive with real values elsewhere zeroed — this isolates the replacement to exactly the touched pixels.
+6. Feed this isolated, pre-multiplied patch (instead of the full frame) into the projection setup — the re-projected result now only affects the painted area, leaving the rest of the frame untouched at full original quality.
+7. Additionally, to reduce resample softening in the areas that do need to go through the projection chain: open `LensDistort`, `ScanlineRender`, and the re-distort node and change the Filter parameter from the default Cubic to a sharper alternative filter (all three nodes should match) — improves sharpness retention through the round-trip, though some softening is unavoidable with any resample.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `LensDistort` — undistort/re-distort the plate; Filter parameter changed from default Cubic to a sharper filter option.
+- `ScanlineRender` (or `Project3D`) — projects the clean-plate patch onto rough tracked 3D geometry; same Filter parameter change applies.
+- `RotoPaint` — used to hand-paint the clean-plate replacement; **output mask dropdown (small black arrow) set to `RGBA.alpha`** is the key, easy-to-miss setting that makes brushstrokes generate an alpha channel.
+- `Premult` — applied after the RotoPaint's alpha is enabled, isolating only the painted patch for projection.
+- Filter setting — changed uniformly across LensDistort/ScanlineRender/re-distort from Cubic to a sharper option (name unclear from audio, likely a Lanczos/Sinc-family filter) to reduce cumulative resample blur.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — assumes prior familiarity with Nuke's 3D system and clean-plate projection workflows (explicitly stated as a prerequisite, pointing to the presenter's own "Nuke 202: 3D Compositing Masterclass").
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX (3D system/projection setup implies NukeX). Version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+3d-system, rotopaint, roto, compositing, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+[No existing tutorials in the knowledge base share 2+ tags yet — will be cross-linked as more 3D-system/projection-focused entries are ingested.]
