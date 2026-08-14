@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=7cYK2CKjp2k
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (ACES OCIO config; consistent with Nuke 15.x-17.x)"
+tags: [relighting, ai-tools, gizmo, compositing, roto, grading, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/transform-your-flat-green-screen-into-cinematic-lighting/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Transform your FLAT Green Screen into Cinematic Lighting
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py transform-your-flat-green-screen-into-cinematic-lighting <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -200,30 +196,52 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:42] tutorials/frames/transform-your-flat-green-screen-into-cinematic-lighting/frame_000.jpg
+- [1:54] tutorials/frames/transform-your-flat-green-screen-into-cinematic-lighting/frame_001.jpg
+- [3:23] tutorials/frames/transform-your-flat-green-screen-into-cinematic-lighting/frame_002.jpg
+- [3:44] tutorials/frames/transform-your-flat-green-screen-into-cinematic-lighting/frame_003.jpg
+- [5:16] tutorials/frames/transform-your-flat-green-screen-into-cinematic-lighting/frame_004.jpg
+- [7:20] tutorials/frames/transform-your-flat-green-screen-into-cinematic-lighting/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+AI-generated PBR/normals passes (via the Beeble/Bevel tool + its Nuke plugin) let you relight already-shot green-screen footage in comp — casting new directional/point/environment light from any angle without returning to set or 3D — and separately build a controllable mirror-style reflection pass with ReflectionBuddy for compositing reflective elements (like an explosion) onto the subject.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy shows how Beeble Studio's AI processing derives a full PBR pass set (Albedo, Normal, Roughness, Specular, Metallic, Depth, rough roto matte) from ordinary green-screen footage, in both 1080p/2K and a more detailed 4K "Studio" tier. Bevel's Nuke plugin packages those passes into a single node with per-pass intensity multipliers, feeding directional/point/environment Bevel lights to relight the plate. The second half builds an alternate, free approach using the community ReflectionBuddy gizmo (Nucopedia) fed an HDRI and the Bevel normals to create a steerable mirror reflection (2D XY selector to aim it, blur to control roughness/glossiness per-material — sharp for eyes, soft for a helmet, diffused for cloth) so a CG explosion element can be reflected convincingly and material-matched across different surfaces on the same subject, finishing with manual roto/paint touch-ups to break up overly perfect highlights.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Process green-screen plate through Beeble Studio (local GPU or cloud web portal) to generate Albedo/Normal/Roughness/Specular/Metallic/Depth/roto passes.
+2. Load the PBR pass bundle into Nuke via the Bevel Nuke plugin node, which exposes per-pass exposure/intensity multipliers (source blend, roughness, specular, metallic).
+3. Feed the PBR node into a Bevel light node (`BevelEnvironmentLight`, or the Directional/Point variants) to relight the plate — Intensity, Diffuse Intensity, Specular Intensity, Horizontal/Vertical Rotation knobs.
+4. Alternative/supplemental path: feed the Bevel Normal pass + an HDRI into the free `ReflectionBuddy` gizmo to build a mirror-like reflection instead of a diffuse relight.
+5. Use ReflectionBuddy's 2D on-viewer selector (drag over the normals) to steer where the reflection sits on the surface.
+6. Blur the HDRI input to ReflectionBuddy to soften the reflection per target material (sharp for eyes/metal, soft for a helmet, heavily diffused for cloth) — build several ReflectionBuddy passes at different blur levels and key-mix them together by material region.
+7. Composite a practical element (e.g. an explosion plate) through the reflection passes so it reflects convincingly and in sync with the source footage's real timing.
+8. Manual roto/paint pass to break up unnaturally smooth relit highlights (e.g. add noise/grain to a shirt) so the result doesn't read as "plastic."
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `BevelEnvironmentLight` (and Directional/Point variants) — Light Control: Intensity, Diffuse Intensity, Specular Intensity, Horizontal Rotation, Vertical Rotation
+- `PBRController` node — Source Blend, Roughness Exposure, Specular Exposure, Metallic Exposure (per-pass multipliers on the Bevel PBR bundle)
+- `ReflectionBuddy` (free Nucopedia gizmo) — takes Normal pass + HDRI/environment image, on-viewer 2D XY selector to aim the reflection, blur input for roughness control
+- Multiple `Read` nodes for the Beeble PBR pass bundle (Albedo, Normal, Roughness, Specular, Metallic, Depth, roto/alpha)
+- Roto/keying + manual grade touch-ups to break up overly clean relit highlights
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (compositing environment for the Bevel plugin and ReflectionBuddy gizmo). No on-screen Nuke version banner; ACES OCIO config visible in Read node metadata is consistent with a recent Nuke 15.x-17.x setup. Beeble/Bevel is a third-party AI relighting tool (web portal + local GPU processing + Nuke plugin), not a native Foundry feature — no Nuke 17.x native-splat/relight overlap here, this is a separate AI-relighting pipeline.
 
 ### Tags
-[PENDING EXTRACTION]
+relighting, ai-tools, gizmo, compositing, roto, grading, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+None yet in the knowledge base share the `relighting` + `ai-tools` combination — first entry establishing these tags. Future AI-relighting or normals-based relighting tutorials (e.g. "The BEST Way to Use Normals to Relight in Nuke") should cross-link here.

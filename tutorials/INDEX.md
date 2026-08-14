@@ -68,11 +68,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=7cYK2CKjp2k
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (ACES OCIO config; consistent with Nuke 15.x-17.x)
+- **Tags:** relighting, ai-tools, gizmo, compositing, roto, grading, intermediate
+- **Summary:** Uses the Beeble/Bevel AI tool to derive a full PBR pass set (Albedo, Normal, Roughness, Specular, Metallic, Depth, roto) from ordinary green-screen footage, then relights it in Nuke via Bevel's plugin node (`PBRController` + `BevelEnvironmentLight`/Directional/Point lights). Also builds a free alternative using the community `ReflectionBuddy` gizmo fed the Bevel normals + an HDRI to create a steerable, per-material mirror reflection (sharp for eyes/metal, soft for cloth) so a CG explosion element reflects convincingly on the subject, finished with manual roto touch-ups to avoid an over-clean "plastic" relit look.
 - **File:** tutorials/transform-your-flat-green-screen-into-cinematic-lighting.md
+- **Related:** Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`), Physics of Light for VFX Artists [Updated] (`physics-of-light-for-vfx-artists-updated.md`) — shares `relighting`, `grading`.
 
 
 ### Physics of Light for VFX Artists [Updated]
