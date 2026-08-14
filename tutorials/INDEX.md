@@ -762,6 +762,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/did-corridor-crew-solve-greenscreen.md
 
+
+### Creating a 3D Hole using Nuke + Photoshop A.I (Firefly) Tutorial
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=8QEGlRX-kH4
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial.md
+
 ---
 
 ## Tag Reference
