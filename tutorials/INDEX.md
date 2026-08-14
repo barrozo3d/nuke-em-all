@@ -146,6 +146,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/create-3d-noise-nuke-compositing.md
 - **Related:** Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`), Nuke Tutorial | Compositing a Rainbow [Intermediate] (`nuke-tutorial-compositing-a-rainbow-intermediate.md`) — shares `compositing`, `channels`, `procedural-texture`, `intermediate`.
 
+
+### This Forgotten VFX Trick Is Still Shockingly Effective
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=8yOyb0Uyq6s
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/this-forgotten-vfx-trick-is-still-shockingly-effective.md
+
 ---
 
 ## Tag Reference
