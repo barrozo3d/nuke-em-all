@@ -264,6 +264,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-compositing-artistic-basics-18-roles-of-production.md
 
+
+### How I Use Compositing to Skip THOUSANDS of Hours Rendering
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=PNE9YMD64xM
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/how-i-use-compositing-to-skip-thousands-of-hours-rendering.md
+
 ---
 
 ## Tag Reference
