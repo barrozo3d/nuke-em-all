@@ -133,6 +133,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/create-a-movie-quality-sci-fi-laser-effect-in-nuke.md
 
+
+### Create 3D Noise | Nuke Compositing
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=4uHLGGcQzzM
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/create-3d-noise-nuke-compositing.md
+
 ---
 
 ## Tag Reference
