@@ -916,6 +916,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/houdini-fx-solaris-nuke---full-vfx-course.md
 
+
+### The BLUEPRINT for Cinematic Light (VFX)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=zGfcWyqDzgE
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/the-blueprint-for-cinematic-light-vfx.md
+
 ---
 
 ## Tag Reference
