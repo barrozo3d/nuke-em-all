@@ -647,6 +647,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/23-nuke-tutorial-series-cracks-keentools-smartvectors.md
 
+
+### Render World Position in Blender for Nuke
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=vrar9ALWG_g
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/render-world-position-in-blender-for-nuke.md
+
 ---
 
 ## Tag Reference
