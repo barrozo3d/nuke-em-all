@@ -480,6 +480,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/tracking-concepts-in-nuke-for-beginners.md
 
+
+### This FREE Tool Warps Images in a Way You’ve Never Seen
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=y3tFCa0U9Yo
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/this-free-tool-warps-images-in-a-way-youve-never-seen.md
+
 ---
 
 ## Tag Reference
