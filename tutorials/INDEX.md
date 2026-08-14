@@ -857,6 +857,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/compositing-epic-vfx-godrays-nuke-tutorial.md
 
+
+### High Level VFX Compositing that Nobody Shows on Youtube
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=GTfxuJftv_I
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/high-level-vfx-compositing-that-nobody-shows-on-youtube.md
+
 ---
 
 ## Tag Reference
