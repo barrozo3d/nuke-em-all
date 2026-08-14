@@ -229,6 +229,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/ray-render-in-nuke-tutorial-compositing-3d-reflections.md
 
+
+### How to use NUKE to Composite Blender Renders
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=peygC-ZxaP8
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/how-to-use-nuke-to-composite-blender-renders.md
+
 ---
 
 ## Tag Reference
