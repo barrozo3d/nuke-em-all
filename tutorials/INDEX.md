@@ -87,6 +87,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/physics-of-light-for-vfx-artists-updated.md
 - **Related:** Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`) — shares `relighting`, `grading`, `digital-matte-painting`.
 
+
+### Nuke Tutorial | Keying with Math Expressions [Intermediate]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=uEzjEizAi3o
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-tutorial-keying-with-math-expressions-intermediate.md
+
 ---
 
 ## Tag Reference
