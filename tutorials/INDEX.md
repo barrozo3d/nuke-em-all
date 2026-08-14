@@ -389,6 +389,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/how-i-faked-a-200m-movie-scene-in-my-driveway.md
 
+
+### A new way to design VFX | Virtual Reality | Gravity Sketch + Nuke Tutorial
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=wEHiUNE66fk
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial.md
+
 ---
 
 ## Tag Reference
