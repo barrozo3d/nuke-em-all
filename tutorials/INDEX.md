@@ -623,7 +623,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** compositing, roto, rotopaint, grading, fx-simulation, digital-matte-painting, intermediate
 - **Summary:** Part 1/3 of a flagship demo-reel-shot series (a cracking clay/plaster bust with glowing energy effects). Covers the compositing-iteration mindset (fixing competing highlights, saturation, flatness across versions), practical effects (real modeling-clay + Halloween face-paint sculpt) and practical Rembrandt two-light + bounce-card lighting used to shoot the base plate, a tour of the paid project's stock LookDev-library assets (liquid/nebula/ember sims, a cloth UV pass, Tilt-Brush flow-path geometry, KeenTools-tracked 3D face geo), and a guided click-through of the finished script's structure — SmartVector skin/body tracking, a "darken-then-Plus" habit for every crack-glow effect, IDistort perspective warps to bend 2D elements along the body's form, "Daisy chain" precomp organization for reused stock elements, 3D vs. 2D crack treatment based on parallax, UV-space lighting-stabilized texture integration via the KeenTools track, and `PolarDistort`-wrapped eye effects. Sets up Parts 2 and 3, which cover each technique in node-level detail.
 - **File:** tutorials/13-nuke-tutorial-series-practical-sfx-lighting-script-overview.md
-- **Related:** [2/3] and [3/3] Nuke Tutorial Series (once ingested) — direct continuations of this same shot/project. 360 Spherical LatLong Textures (`360-spherical-latlong-textures-nuke-tutorial.md`) and others — share the `PolarDistort` gizmo.
+- **Related:** [2/3] Nuke Tutorial Series (`23-nuke-tutorial-series-cracks-keentools-smartvectors.md`) and [3/3] Nuke Tutorial Series (`33-nuke-tutorial-series-flow-paths-fx-integration-design.md`) — direct continuations of this same shot/project. 360 Spherical LatLong Textures (`360-spherical-latlong-textures-nuke-tutorial.md`) and others — share the `PolarDistort` gizmo.
 
 
 ### Nuke Compositing Technique | Card3D + PixelsToPos [Beginners]
@@ -687,11 +687,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=_Fu8yl_p0vM
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (cross-platform: Google Tilt Brush VR for flow-path geometry, otherwise pure Nuke)
+- **Version:** Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)
+- **Tags:** compositing, 3d-system, projection, st-map, gizmo, fx-simulation, rotopaint, grading, expert
+- **Summary:** Part 3/3, the series finale. Wraps stock energy textures onto heavily-curved paths via Tilt Brush's "Tapered Flat" brush (auto-normalizes UVs to 0–1, unlike other brushes that tile) instead of hand grid-warping; kitbashes multiple stock elements by using one as an organic reveal mask for another rather than stacking additively; a NaN-pixel diagnosis/fix trick for combining bright elements; a TimeEcho-lagged-highlight "lingering flame" technique to soften hard CG-silhouette edges; physically-motivated ember/cloth-energy design with UV-pass-driven multi-pass element integration; individually keyframed animated RotoPaint strokes for organic crack-reveal timing; and interactive 2D point-lights (Plus) plus multiply-based element interaction (smoke visibly lit by nearby glow) so every layer visibly affects its neighbors.
 - **File:** tutorials/33-nuke-tutorial-series-flow-paths-fx-integration-design.md
+- **Related:** [1/3] and [2/3] Nuke Tutorial Series — direct prequels; Nuke Compositing an Advanced CG Shockwave (`nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md`) — shared stock-effects kitbashing philosophy; A new way to design VFX | Gravity Sketch + Nuke (`a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial.md`) — shared "texture in Nuke, geometry in VR app, back to Nuke" pipeline shape.
 
 
 ### A BETTER way to Color Grade in Nuke
@@ -704,6 +705,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** Introduces CA_HueQualifier2, a free gizmo porting DaVinci Resolve's visual Hue Qualifier into Nuke: sample a color, get a linked hue/saturation/luminance range graph, drag to expand/narrow, Add Range to merge a second sample, lock ranges for a cleaner key, Analyze Input for HDR footage. Solves cases (e.g. mountain vs. sky) where hue alone can't separate two regions, unlike the stock HSV tool's disconnected range knobs.
 - **File:** tutorials/a-better-way-to-color-grade-in-nuke.md
 - **Related:** EASY TRICK: Improve your Color Grading skills (`easy-trick-improve-your-color-grading-skills.md`), I Made VFX Relighting WAY Better in Nuke (`i-made-vfx-relighting-way-better-in-nuke.md`) — share `grading`/`gizmo`, `compositing`.
+
+
+### UVs and UV Passes in Nuke: PART 1 [Beginner]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=wb1WjHlXbn0
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/uvs-and-uv-passes-in-nuke-part-1-beginner.md
 
 ---
 
