@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=8QEGlRX-kH4
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX (cross-platform: Adobe Photoshop with Firefly generative fill for texture generation, otherwise pure Nuke camera-projection/DMP work)"
+version: "Nuke 14.x (2023 upload, part of the same DMP mini-series as the '3D Laser Effect' video confirmed Nuke-14-era; Classic 3D system)"
+tags: [projection, 3d-system, digital-matte-painting, ai-tools, grading, roto, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Creating a 3D Hole using Nuke + Photoshop A.I (Firefly) Tutorial
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -198,30 +194,53 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:45] tutorials/frames/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial/frame_000.jpg
+- [2:33] tutorials/frames/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial/frame_001.jpg
+- [3:50] tutorials/frames/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial/frame_002.jpg
+- [5:20] tutorials/frames/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial/frame_003.jpg
+- [6:41] tutorials/frames/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial/frame_004.jpg
+- [7:25] tutorials/frames/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial/frame_005.jpg
+- [8:42] tutorials/frames/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Digital-matte-painting via camera projection in Nuke, sourcing the projected textures from Adobe Photoshop's Firefly generative-fill AI instead of hand-painting — including using the AI to generate a *second* projection from a different virtual angle specifically to counteract the stretching a single flat-card/single-angle projection always develops as the camera moves away from its reference frame.
 
 ### Summary
-[PENDING EXTRACTION]
+Part 2 of a DMP mini-series (Part 1 = a separate clean-plate/projection tutorial, cross-referenced repeatedly as "Nuke 202" / "the clean-planting tutorial two videos ago"). Starting from a clean-plated grass patch render (upscaled with `TVIScale`, chosen over a plain `Reformat` because it gives generative AI more resolution to work with, downscaled later), the author builds up a "hole in the ground" texture entirely in Photoshop using Firefly generative fill: iterative prompting ("deep hole in the ground, artillery hole, grass hanging on the edge, chunks of dirt"), rejecting bad generations (an unwanted rock), scaling up the hole via rough clone-stamp placement (soft/unintegrated edges are fine at this stage — "we just need to hint at the eye") then re-generating on top to auto-blend the edge (frame_000/002). This first-pass texture is projected in Nuke onto the same flattened LiDAR scan (or even just a flat card) used in the prior video's clean-plate work; playing the projection forward immediately reveals the classic projection problem — visible horizontal stretching as the camera moves away from the projection's source frame (frame_001) — which the author frames as an opportunity: rather than manually painting a second reference angle (standard DMP practice), **generate the second angle with AI too**, to save time. A render of the stretched projection is extended in Photoshop with more generative fill to invent what's below the hole's lip (back wall + floor) and add a third overlapping "edge wall" layer specifically for parallax — the author notes 2 layers (back wall + floor) reads flat, but 3 overlapping layers (edge wall added) reads convincingly 3D — using the same "cut a good chunk out, flip it, place it at an edge, generate around it" trick from the prior video to get clean blends (frame_003). This second image is projected too, and now needs actual 3D depth to break up the projection rather than sit flat: a `Cylinder` lined up against the existing LiDAR geometry catches the wall projection, `DisplaceGeo` fed noise patterns roughens/breaks up its silhouette so it doesn't read as a smooth CG primitive, a second cylinder serves as the hole's floor via `MergeGeo`, and a displaced `Card` positioned closer to camera adds a nearer parallax layer (frame_004) — merging these reveals the hole's interior, which then needs the original top-surface grass patched back over the rim (frame_005). That top patch is itself pulled from a second area of the *first* generated image (branched off before the original projection), isolated with a simple Luma key (the grass in that generation happened to sit over a dark background, making a clean garbage-matte-free key trivial) and solidified/pre-multiplied for compositing. A recurring edge artifact — dark fringing on the semi-transparent grass edges, caused by matte compositing over black — is fixed with the standard **un-premult → RotoPaint (RGB-only clone/paint) → re-premult** edge-extension workflow, the same technique referenced from the author's paid "Keen" class. A second anti-stretch trick closes the tutorial: rather than projecting onto a perfectly flat card (which stretches as the camera moves off-angle), `DisplaceGeo` the card using a black-to-white `Ramp` so only part of the card bends — a partial, deliberate curvature that changes the projection's apparent perspective over time and measurably reduces the stretching versus a flat surface, alongside other distortion options (IDistort/EyeTransform-family nodes) mentioned as alternatives from the earlier clean-plate video. The rest of the script is corrective patches and cross-fade dissolves using techniques already covered in Part 1.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Clean-plate the base surface and upscale it (`TVIScale`, not a plain `Reformat`) before sending to Photoshop, so generative AI has more resolution to work with; downscale the AI result afterward if needed.
+2. In Photoshop, iteratively prompt Firefly generative fill to create the primary texture (here: a hole in the ground) — reject bad results, rough-clone-stamp to scale up an accepted result (edges can stay soft/unintegrated at this stage), then generate again directly over that rough edge to let the AI auto-blend it.
+3. Project this first texture in Nuke onto the existing clean-plate geometry (flattened LiDAR scan or a flat card) from its reference frame; play the projection forward to confirm it stretches as the camera departs the reference angle — expected behavior, not a mistake.
+4. Instead of manually painting a corrective second-angle reference (traditional DMP practice), render the *stretched* projection frame out of Nuke and hand it back to Photoshop: generative-fill in what should be visible from that new angle (here: the hole's back wall and floor), and deliberately add a third, nearer overlapping layer (an "edge wall") purely for parallax — 2 flat layers reads 2D, 3 overlapping layers reads 3D.
+5. Project the second image too; correct its perspective/brightness to match, then cut it out with a `Roto` alpha and `Multiply`.
+6. Build actual 3D depth to receive this second projection: a `Cylinder` aligned to the existing scan geometry for the walls, `DisplaceGeo` with noise patterns to break up its edge so it doesn't read as a smooth primitive, a second cylinder `MergeGeo`'d in as the floor, and a nearer displaced `Card` for an additional close parallax layer.
+7. Patch the top/rim surface back over the now-visible interior using a second region cut from the *original* (first) generated image — key it out (Luma key sufficed here because the region happened to sit over a dark background), solidify/pre-multiply, and merge as a patch layer on the flat top plane.
+8. Fix dark edge fringing on semi-transparent matte edges (a near-universal DMP/projection artifact): un-premult, `RotoPaint`/clone-paint in RGB only (not alpha) to extend color past the edge, then re-premult.
+9. To reduce projection stretching over time without hand-animating a full corrective reprojection: `DisplaceGeo` the receiving card using a black-to-white `Ramp` so only part of it bends — a small deliberate curvature changes the apparent perspective as the camera moves, measurably reducing stretch versus a perfectly flat card. (Other options noted: IDistort/EyeTransform-family distortion nodes from the earlier clean-plate video.)
+10. Finish with standard corrective patches and `Dissolve` cross-fades between projection layers, per the techniques already established in Part 1.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke/NukeX:** `TVIScale` (preferred over `Reformat` for AI-upscale prep), camera `Project3D` workflow onto flattened LiDAR/clean-plate geometry, `Cylinder`, `Card`, `DisplaceGeo` (noise-driven edge breakup; ramp-driven partial-bend anti-stretch trick), `MergeGeo`, `Roto`/`RotoPaint`, Luma keying, `Unpremult`/`Premult` (edge-fringe fix), `Ramp` (as a displacement driver), `Dissolve` (corrective cross-fades)
+- **Cross-app / non-Nuke:** **Adobe Photoshop with Firefly generative fill** — the actual texture-generation engine for this whole workflow; iterative prompting, rough placement + regenerate-over-the-seam for auto-blending, cutting/flipping/regenerating-around existing good regions for clean edge matches (technique carried over from the author's prior "last video")
+- **Cross-referenced techniques (covered in the prequel, not repeated here):** the full clean-plate/Nuke-202 camera-projection fundamentals, IDistort/EyeTransform-family distortion options, and the Photoshop generative-fill workflow basics
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — assumes the viewer already has camera-projection/DMP fundamentals (explicitly deferred to the prequel video), but the AI-generation and multi-layer-parallax judgment calls are approachable without deep Nuke 3D-system expertise.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX for all projection/compositing work; Adobe Photoshop (with Firefly generative fill) for texture generation — genuinely cross-platform, with the Nuke side being the majority of runtime and the reason it's extracted fully here. Nuke version not stated numerically; per this skill's version-tracker and the sibling "3D Laser Effect" video from the same 2023 batch (explicitly Nuke-14-era), this falls in the Nuke 14.x window. Uses only the Classic 3D system — predates the 14.0-beta USD 3D overhaul, though they shipped in the same version window.
 
 ### Tags
-[PENDING EXTRACTION]
+projection, 3d-system, digital-matte-painting, ai-tools, grading, roto, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+No existing knowledge-base entries currently cover camera-projection DMP or AI-generative-fill texture workflows — this is the first. Revisit once this video's explicitly-referenced prequel ("Nuke 202" clean-plate/projection tutorial, and the separate AI-generative-fill Photoshop workflow video) and its own DMP-series companions from this same 2023 batch (e.g. "Cleanplate Projections") are ingested.
