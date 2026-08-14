@@ -636,6 +636,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-compositing-technique-card3d-pixelstopos-beginners.md
 
+
+### [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=dLrJhqqNMrk
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/23-nuke-tutorial-series-cracks-keentools-smartvectors.md
+
 ---
 
 ## Tag Reference
