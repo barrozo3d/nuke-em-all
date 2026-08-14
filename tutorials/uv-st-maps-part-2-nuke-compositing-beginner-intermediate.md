@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=0A-DC41U09M
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (2021 upload, Nuke 13.0 era — see version-tracker.md)"
+tags: [compositing, st-map, channels, procedural-texture, 3d-system, roto, grading, digital-matte-painting, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/uv-st-maps-part-2-nuke-compositing-beginner-intermediate/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # UV / ST Maps [Part 2] | Nuke Compositing [Beginner / Intermediate]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py uv-st-maps-part-2-nuke-compositing-beginner-intermediate <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction to ST Map Expression [0:00]
@@ -242,30 +238,69 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:55] tutorials/frames/uv-st-maps-part-2-nuke-compositing-beginner-intermediate/frame_000.jpg
+- [3:50] tutorials/frames/uv-st-maps-part-2-nuke-compositing-beginner-intermediate/frame_001.jpg
+- [5:20] tutorials/frames/uv-st-maps-part-2-nuke-compositing-beginner-intermediate/frame_002.jpg
+- [6:35] tutorials/frames/uv-st-maps-part-2-nuke-compositing-beginner-intermediate/frame_003.jpg
+- [9:20] tutorials/frames/uv-st-maps-part-2-nuke-compositing-beginner-intermediate/frame_004.jpg
+- [11:00] tutorials/frames/uv-st-maps-part-2-nuke-compositing-beginner-intermediate/frame_005.jpg
+- [15:05] tutorials/frames/uv-st-maps-part-2-nuke-compositing-beginner-intermediate/frame_006.jpg
+- [17:15] tutorials/frames/uv-st-maps-part-2-nuke-compositing-beginner-intermediate/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Generating a UV-coordinate gradient purely with an `Expression` node (no CG render needed), then using it two ways: (1) as a 2D warp/morph "coordinate map" fed through `STMap` to remap any picture, and (2) — the most production-useful application — projecting that coordinate map onto existing 3D geometry with `Project3D`, pre-comping the result into a lightweight 2D "tracking" element, and using it via `STMap` to make roto/grade masks stick perfectly to a moving CG camera without a live 3D projection setup in the final script.
 
 ### Summary
-[PENDING EXTRACTION]
+Direct sequel to Part 1, shifting from CG-rendered UV passes to a purely procedural, expression-generated UV coordinate pattern: `(x + 0.5) / width` into the red channel and `(y + 0.5) / height` into the green channel produces the same red/green gradient look as a rendered UV pass, but needs no 3D render at all. Demonstrated first as an abstract concept — a grid picture run through this expression, warped with a `GridWarp` and `Transform`, then piped through `STMap`: whatever distortion is applied to the coordinate-pattern picture gets applied identically to any other image plugged into the STMap's second input, because the STMap is reading pixel *positions* from the pattern, not its colors. Three practical applications follow: (1) Blending morphs — two different `GridWarp`-distorted versions of the coordinate pattern, connected through a `Dissolve` animated between them, produce a seamless morph between two pre-determined warp states when read through an `STMap` (useful for complex predetermined-position morphing). (2) Lens distortion profiles — the same red/green coordinate-pattern convention is the standard format used by 3D tracking software (3DEqualizer, SynthEyes, Blender, etc.) to export solved lens distortion; feeding that exported pattern through an `STMap` removes (or can apply) lens distortion to match footage. (3) A creative/glitch use — blurring the coordinate pattern itself through an animated noise pattern (rather than blurring the final image) and reading it through `STMap` produces holographic/warping glitch effects, differently from blurring the image directly. The main event is the "projecting ST maps" workflow: for a CG environment shot with a moving camera (e.g. a helicopter flyover), secondary grading/roto (vignettes, brightening a subject, darkening empty areas) normally needs to be re-tracked or projected live each time to stick to the moving 3D scene — expensive and slow to iterate. Instead: generate the expression-based UV coordinate pattern, add an overscan `Crop` (pulled outside frame bounds) before projecting so there's coverage beyond the camera's exact view, force a solid alpha via a `Shuffle` (alpha set to 1 — critical for clean projection), then use `Project3D` to project this pattern onto the actual 3D geometry from a chosen reference frame — with the geometry's own Crop-to-format option turned OFF (important gotcha) and projection restricted to the front of the geometry only. The projected result is pre-comped/rendered out as a plain 2D image sequence at 32-bit float with no compression (both settings called out as necessary for the positional math to survive) — after that, the heavy 3D scene never needs to be loaded again. Any roto shape, radial, or 2D texture can then be positioned anywhere and piped through `STMap` (fed by this precomp) to automatically inherit the CG scene's exact camera-relative motion and perspective — verified by testing a checkerboard image and confirming it "sticks" through the whole camera move. A second gotcha: roto/radial shapes drawn partially outside the frame need "no clip" set (rather than the default clip-to-format), or they'll stretch incorrectly once projected. Limitation explicitly called out: with significantly overlapping/occluding 3D geometry, the projection has no real occlusion awareness — a roto shape can incorrectly project through foreground geometry onto background geometry behind it; the fix is separating the offending geometry out or using an ID-based exclusion. Works well for soft grades, isolated rocks/pebbles, and simple scenes; less reliable with heavy geometric overlap.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Build the base UV coordinate pattern with an `Expression` node: red channel = `(x + 0.5) / width`, green channel = `(y + 0.5) / height` — produces the same red/green gradient as a CG-rendered UV pass, without any 3D render.
+2. For simple 2D remapping: warp/distort a copy of this coordinate pattern (e.g. with `GridWarp` + `Transform`), then plug the warped pattern into an `STMap`'s first input and any target picture into the second — the target picture inherits the exact same warp/distortion as the pattern.
+3. For morphing between predetermined warp states: create multiple independently-warped coordinate patterns, connect them through a `Dissolve` with keyframed mix values, and feed the dissolve's output into `STMap` — produces a seamless procedural morph.
+4. For lens distortion: obtain (or export from a 3D tracking package like 3DEqualizer/SynthEyes/Blender) a coordinate-pattern image encoding the solved lens distortion, then feed it through `STMap` to apply/remove that distortion to/from footage.
+5. For glitch/holographic effects: blur the coordinate pattern itself (not the final image) through an animated procedural noise pattern before the `STMap` — produces a fundamentally different, warping-coordinates effect versus blurring the target image directly.
+6. For the production "sticky projection" workflow: build the expression-based coordinate pattern, add a `Crop` that extends beyond the frame edges (check with the overlay/`Q` key) to give overscan room before projecting.
+7. Force a solid alpha on the pattern with a `Shuffle` (set alpha to constant 1) — required for clean projection results.
+8. `Project3D` the coordinate pattern onto the existing 3D geometry (same geometry used to render the CG scene) from a chosen reference frame; turn OFF the geometry's "crop" option (a common gotcha — leaving it on truncates the pattern once the camera moves off the reference frame) and restrict projection to the front of the geometry only; leave other projection options at their defaults to avoid artifacts.
+9. Pre-comp/render the projected pattern out to a flat 2D image sequence at 32-bit float, compression set to None (both settings necessary — this is a positional-data pass, not a beauty pass) — after this, the 3D scene never needs reloading for iteration.
+10. Feed that precomp into an `STMap` (channels set to RGB) and plug any 2D element (roto mask, checkerboard test texture, etc.) into the STMap's second input — it will automatically track/stick to the CG scene's camera motion and perspective.
+11. Apply this to real grading/roto work: use the STMap'd result as a mask input into `Grade`/`Merge` nodes to make brightening/darkening/vignette shapes track the moving CG scene without a live 3D setup in the working script.
+12. Gotcha: set any roto shape or radial drawn partially outside frame bounds to "No Clip" (not the default Clip to format) — otherwise projected shapes will stretch/distort incorrectly.
+13. Be aware of the occlusion limitation: with significantly overlapping 3D geometry, a roto shape can incorrectly project through foreground objects onto background geometry; separate the geometry or use an ID mask to work around it.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Expression` — generates the UV coordinate pattern: red = `(x + 0.5) / width`, green = `(y + 0.5) / height`
+- `GridWarp` — used to distort copies of the coordinate pattern for the 2D-remap and morph-blending use cases
+- `STMap` — the workhorse read node throughout; channels set to RGB; reads pixel positions from the coordinate-pattern input to remap whatever's plugged into its second input
+- `Dissolve` — animated mix between two differently-warped coordinate patterns for seamless procedural morphing
+- Procedural noise (animated) + `Blur` — applied to the coordinate pattern itself (not the target image) for glitch/holographic STMap effects
+- `Crop` — overscan crop pulled beyond frame bounds, applied to the coordinate pattern before projecting, to avoid edge truncation once the camera moves
+- `Shuffle` — forces a solid/constant alpha of 1 on the coordinate pattern, required for clean `Project3D` results
+- `Project3D` — projects the coordinate pattern onto the existing 3D geometry from a chosen reference frame; key settings: geometry's own Crop option OFF, project on Front only, other projection options left default
+- Render/precomp settings: 32-bit float, compression = None — explicitly required for the positional data to survive the roundtrip
+- `Grade` / `Merge` — final consumers of the STMap'd roto/radial masks for secondary grading that sticks to the CG scene
+- `Roto` / `Radial` — masks positioned freely in 2D, made to track the CG scene via the STMap chain; must be set to "No Clip" if drawn partially outside frame bounds
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner/Intermediate (the video explicitly notes the final "projecting ST maps" section is useful even for senior compositors)
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (native `Expression`, `GridWarp`, `STMap`, `Dissolve`, `Crop`, `Shuffle`, `Project3D`, `Grade`, `Merge`, `Roto`/`Radial` — no third-party gizmos required). No on-screen version number visible in the captured frames and none stated in the transcript. Video published 2021 — falls in the Nuke 13.0 era (13.0 released 2021-03-17); see `references/version-tracker.md`.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, st-map, channels, procedural-texture, 3d-system, roto, grading, digital-matte-painting, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [UVs and UV Passes in Nuke: PART 1 [Beginner]](uvs-and-uv-passes-in-nuke-part-1-beginner.md) — direct prequel (Part 1/2), covers the CG-rendered UV pass and `STMap` fundamentals this video extends into a purely procedural, expression-driven approach.
+- [Parallax HAX | Nuke Compositing [Advanced]](parallax-hax-nuke-compositing-advanced.md) — explicitly references this video's "blending morphs" and UV-coordinate-system technique as a prerequisite for its own `STMap`-based overscan crop step.
+- [Compositing in UV space with Projections | Nuke [Advanced]](compositing-in-uv-space-with-projections-nuke-advanced.md) — the advanced-tier follow-up building further on this video's exact "project a UV coordinate pattern, precomp it, use STMap for sticky roto/grading" workflow, extended to full ScanlineRender-based UV-space compositing.
+- [Nuke Compositing Technique | Card3D + PixelsToPos [Beginners]](nuke-compositing-technique-card3d-pixelstopos-beginners.md) — shares the goal of making a 2D element (correction/element) stick to a moving 3D scene without a live per-frame projection setup, via a different mechanism (Card3D-distance anchoring vs. this video's precomped UV-projection).
+- [Preserve Quality | Projections in Nuke](preserve-quality-projections-in-nuke.md) — shares the `3d-system`/`Project3D` theme and the render-settings-matter-for-quality lesson (there: filter/re-project-area choice; here: 32-bit float + no compression).

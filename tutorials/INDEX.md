@@ -745,10 +745,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=0A-DC41U09M
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2021 upload, Nuke 13.0 era)
+- **Tags:** compositing, st-map, channels, procedural-texture, 3d-system, roto, grading, digital-matte-painting, intermediate
+- **Summary:** Part 2/2: generates a UV coordinate pattern purely with an Expression node (no CG render), then uses it for 2D warps/morphs, lens-distortion round-trips, and — the key production technique — projecting it onto existing 3D geometry with Project3D, pre-comping the result, and using STMap so any roto/grade mask sticks perfectly to a moving CG camera without a live 3D projection setup.
 - **File:** tutorials/uv-st-maps-part-2-nuke-compositing-beginner-intermediate.md
 
 

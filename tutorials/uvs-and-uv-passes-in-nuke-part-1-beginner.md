@@ -368,7 +368,7 @@ compositing, st-map, channels, 3d-system, digital-matte-painting, beginner
 ---
 
 ## Related Tutorials
-- [UV / ST Maps [Part 2] | Nuke Compositing [Beginner/Intermediate]](uv-st-maps-part-2-nuke-compositing-beginnerintermediate.md) — direct sequel (Part 2/2), continues into intermediate UV-expression techniques for generating UV patterns.
+- [UV / ST Maps [Part 2] | Nuke Compositing [Beginner / Intermediate]](uv-st-maps-part-2-nuke-compositing-beginner-intermediate.md) — direct sequel (Part 2/2), continues into intermediate UV-expression techniques for generating UV patterns.
 - [Compositing in UV space with Projections | Nuke [Advanced]](compositing-in-uv-space-with-projections-nuke-advanced.md) — the advanced-tier follow-up this series builds toward, applying UV-space compositing to full projection/relighting workflows.
 - [Parallax HAX | Nuke Compositing [Advanced]](parallax-hax-nuke-compositing-advanced.md) — uses an ST map/UV-coordinate remap as a prerequisite step, referencing this series' UV fundamentals directly.
 - [Nuke Compositing Technique | Card3D + PixelsToPos [Beginners]](nuke-compositing-technique-card3d-pixelstopos-beginners.md) — shares the beginner-level "avoid going back into 3D" time-saving compositing philosophy, applied via a different mechanism (tracked-camera anchoring instead of UV remapping).
