@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=mEeCZFjpO8s
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX (cross-platform: Blender for hole-filling scan geometry, Polycam/iPhone LiDAR for scan capture; the compositing/projection work is pure Nuke)"
+version: "Nuke 14.x (2023 upload, prequel to the Nuke-14-era 'Creating a 3D Hole' video; Classic 3D system)"
+tags: [projection, 3d-system, digital-matte-painting, roto, gizmo, grading, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/cleanplate-projections-nuke-compositing-guide/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Cleanplate Projections | Nuke Compositing Guide
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py cleanplate-projections-nuke-compositing-guide <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -217,30 +213,53 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:22] tutorials/frames/cleanplate-projections-nuke-compositing-guide/frame_000.jpg
+- [1:44] tutorials/frames/cleanplate-projections-nuke-compositing-guide/frame_001.jpg
+- [3:30] tutorials/frames/cleanplate-projections-nuke-compositing-guide/frame_002.jpg
+- [5:03] tutorials/frames/cleanplate-projections-nuke-compositing-guide/frame_003.jpg
+- [7:15] tutorials/frames/cleanplate-projections-nuke-compositing-guide/frame_004.jpg
+- [9:52] tutorials/frames/cleanplate-projections-nuke-compositing-guide/frame_005.jpg
+- [10:26] tutorials/frames/cleanplate-projections-nuke-compositing-guide/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Feature-film-level clean-plate methodology via multi-angle camera projection: build real 3D geometry (not a flat card) for everything the object-to-be-removed sits in front of, hole out and fill the geometry where the removed object was, project from *multiple* camera angles to restore only real captured detail (never invent it), dissolve between overlapping projection patches to hide geometry imperfections and perspective drift, and fake infinite-parallax surfaces (like grass) at the edges where a real projection would visibly break.
 
 ### Summary
-[PENDING EXTRACTION]
+Positions clean-plating as genuinely invisible work — done correctly, the audience never notices an object was removed — and lays out a repeatable process rather than one node recipe. **Establish 3D first** (frame_000, the source shot: a can sitting in grass/rocks to be removed): everything the removed object occludes or sits near needs real 3D geometry — a ground plane plus vertical/proper geometry for anything with depth (here, rocks) — because projecting the whole plate onto a single flat card discards that depth and produces the telltale beginner mistake of a visibly *stretched* projection as the camera moves. Three viable 3D-reconstruction methods are compared: (1) simple **cards** placed and angled by eye to roughly match ground/vertical surfaces from a camera-tracked point cloud; (2) **baking geometry from the point-cloud itself** — select vertices, Group → Create Group → "Bake Selected Group to Mesh" — better for organic/irregular surfaces than flat cards (frame_001, the resulting green baked-mesh chunks over the point cloud); (3) a **LiDAR scan** (via Polycam on an iPhone Pro's built-in LiDAR sensor, or Polycam's photogrammetry mode without a scanner) for the most accurate reconstruction, good for both large-environment alignment and detailed hero assets. For this project a LiDAR scan was used: the object being removed must be deleted from the scan geometry (done in Blender, works the same in Maya) and the resulting hole's border vertices merged to a single point to close the gap into one continuous, project-able mesh (frame_002/003) — the scan's own baked-in texture is irrelevant and left stretched/ignored since it's never actually rendered, only the geometry's shape matters. **The core discipline — "use what's real, use multiple projections":** a single projection from one frame necessarily has to *invent* detail for anything only visible from other angles (frame_003 shows the frame-held, RotoPaint'd source patch feeding a `Project3D` sandwiched before an `Undistort`/`Distort` pair — skipped here since the iPhone lens has low distortion and the added blur from sampling wasn't worth it for this shot's low-detail grass); instead, identify which real frames/angles actually show a given rock/detail uncovered (frame_004 compares the covered vs. uncovered angle of the same rock) and build a separate projection patch per angle, layering them `A over B` so every restored pixel traces back to something the camera genuinely saw, never a guess. **Dissolving patches:** because tracked/reconstructed geometry is never perfectly aligned, a single patch projection typically only holds up correctly for a limited frame range before perspective drift becomes visible (a corner reading flatter than the real plate, frame_005/006 show a small isolated rock-shaped patch precomp used exactly this way) — the fix is to find the last good frame for a given patch, then either nudge the patch with a 2D perspective-correction trick (an `EyeTransform` gizmo from Nukepedia, or a `GridWarp`, applied just before the `Project3D`) or bring in a second projection from a different source frame and `Dissolve`/`KeyMix` between the two so the transition is imperceptible — sometimes a patch is only valid for a handful of frames (the video cites a 5-frame patch) before needing to hand off to the next one. **Hiding parallax breakup:** surfaces like grass have effectively infinite micro-parallax (every blade overlaps the next), which no single flat projection can fully replicate without full CG grass replacement; two mitigations: a heavily-subdivided `Card` pushed around with a small-scale-noise `DisplaceGeo` to fake a bit of that layered bumpiness, or — the approach used here — breaking up the *edge* of the patch itself with a noise-perturbed alpha (a Nukepedia `FractalBlur`-style roto-edge-breakup gizmo) so the eye can't pin down exactly where the real footage ends and the CG/projected patch begins, rather than a hard, obviously-clean roto edge. **Project from maximum resolution:** always choose the source frame where the target surface is largest/closest to camera (most pixels = most detail) to project from — projecting from a wide/distant angle and then pushing in on that projection reveals blur, so pick the closest usable angle and fall back to the dissolve-between-patches technique for any frame range where perspective changes too much for one projection to hold.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Identify which real-world surfaces the removed object interacts with (sits on, is occluded by, etc.) and build actual 3D geometry for all of them — never rely on a single flat card for anything with real depth.
+2. Choose a 3D-reconstruction method per situation: hand-placed `Card`s for simple flat/vertical surfaces; baked point-cloud mesh (select vertices → Group → Create Group → Bake Selected Group to Mesh) for organic/irregular shapes; a LiDAR scan (Polycam + iPhone LiDAR, or Polycam photogrammetry) for maximum accuracy on complex environments or hero assets.
+3. If using a scan: delete the removed object's geometry from the scan (Blender or Maya), then merge the resulting hole's border vertices to a point to close it into one continuous mesh you can safely project onto (the scan's baked texture doesn't matter and can stay stretched/unused).
+4. Never invent detail from a single angle: identify every real frame/angle where a given surface region is actually visible uncovered, and build a separate `Project3D` patch (frame-held source, painted/roto'd) per usable angle.
+5. Layer these angle-specific patches `A over B`, prioritizing whichever patch shows the most real, correctly-perspective'd detail for each region of the frame.
+6. Where a patch's projection perspective starts visibly drifting from the real plate (imperfect geometry alignment showing through), either 2D-correct it just before the `Project3D` with an `EyeTransform` gizmo or `GridWarp`, or bring in a second angle's projection and `Dissolve`/`KeyMix` between the two across the frame range where the first patch breaks down.
+7. For infinite-micro-parallax surfaces (grass, gravel, foliage) that no projection can fully replicate: either subdivide a `Card` heavily and `DisplaceGeo` it with small-scale noise to fake layered bumpiness, or — often simpler — break up the patch's *edge* with a noise-perturbed alpha (Nukepedia `FractalBlur`-style edge-breakup gizmo) so the eye can't localize the seam between real and projected footage.
+8. Always project from the frame/angle where the target surface occupies the most screen pixels (closest usable distance) to preserve maximum resolution; if the camera's perspective on that surface changes too much across the shot for one projection, fall back to the dissolve-between-multiple-patches technique instead of stretching one projection too far.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke/NukeX:** `Project3D`, `Card`, `DisplaceGeo` (noise-driven, small-scale, for fake grass-parallax bumpiness), `FrameHold`, `RotoPaint`, `Undistort`/`Distort` pair (skippable for low-distortion lenses on low-detail regions — explicitly a judgment call, not a rule), `Dissolve`/`KeyMix` (patch-to-patch perspective-drift blending), `GridWarp`
+- **Nukepedia gizmos:** `EyeTransform` (2D perspective-nudge correction applied just before a `Project3D`), a `FractalBlur`-style roto-edge-breakup gizmo (noise-perturbed alpha edge to hide patch seams on high-parallax surfaces)
+- **Cross-app / capture tools:** **Polycam** (iPhone Pro LiDAR scanning or photogrammetry mode — sponsor-mentioned but framed as the author's genuine long-term tool), **Blender** (or Maya) for deleting/hole-filling scan geometry — vertex-merge-to-center technique to close a hole into one solid mesh
+- **Point-cloud-to-mesh workflow:** select vertices → Group → Create Group → "Bake Selected Group to Mesh" (Nuke's built-in point-cloud tools, not a plugin)
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — no exotic nodes, but real competency requires practiced judgment (recognizing when a patch's perspective has drifted, choosing dissolve points, picking the right 3D-reconstruction method per surface type) that the author explicitly says is learned by hands-on repetition, not from watching a video alone.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX for all compositing/projection work; Polycam (iPhone LiDAR/photogrammetry) and Blender/Maya only for scan capture and geometry hole-filling, not covered in Nuke-relevant depth. Nuke version not stated numerically; per this skill's version-tracker, a 2023 upload and this video's role as prequel to the confirmed-Nuke-14-era "Creating a 3D Hole" video place it in the Nuke 14.x window. Uses only the Classic 3D system (Card, Project3D, point-cloud baking, DisplaceGeo) — predates the 14.0-beta USD 3D overhaul, though they shipped in the same version window. Project files for this tutorial are bundled with the author's paid "Nuke 202" 3D-system course.
 
 ### Tags
-[PENDING EXTRACTION]
+projection, 3d-system, digital-matte-painting, roto, gizmo, grading, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Creating a 3D Hole using Nuke + Photoshop A.I (Firefly) Tutorial (`creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial.md`) — direct sequel; that video explicitly builds on this one's clean-plate/projection fundamentals ("Nuke 202," "the clean-planting tutorial two videos ago") and reuses its "use what's real, use multiple projections" + dissolve-patches + DisplaceGeo-for-anti-stretch techniques, sourcing its projected textures from Firefly generative fill instead of hand-painting.
+- How to DENOISE your CG in POST (`how-to-denoise-your-cg-in-post-blender-nuke-tutorial.md`) and [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors) (`23-nuke-tutorial-series-cracks-keentools-smartvectors.md`) — share the "flatten to UV/projection space, work there, project back" and multi-technique-per-region judgment philosophy.

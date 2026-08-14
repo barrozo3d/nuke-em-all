@@ -243,4 +243,6 @@ projection, 3d-system, digital-matte-painting, ai-tools, grading, roto, intermed
 ---
 
 ## Related Tutorials
-No existing knowledge-base entries currently cover camera-projection DMP or AI-generative-fill texture workflows — this is the first. Revisit once this video's explicitly-referenced prequel ("Nuke 202" clean-plate/projection tutorial, and the separate AI-generative-fill Photoshop workflow video) and its own DMP-series companions from this same 2023 batch (e.g. "Cleanplate Projections") are ingested.
+- Cleanplate Projections | Nuke Compositing Guide (`cleanplate-projections-nuke-compositing-guide.md`) — direct prequel, explicitly referenced ("Nuke 202," "the clean-planting tutorial two videos ago"); this video builds on its "use what's real, use multiple projections," patch-dissolving, and DisplaceGeo-for-anti-stretch techniques, sourcing projected textures from Firefly generative fill instead of hand-painting.
+
+Revisit for further cross-links once the separate AI-generative-fill Photoshop workflow video (referenced as "the last video I just posted" for the Photoshop side) is identified/ingested from the channel's catalog.
