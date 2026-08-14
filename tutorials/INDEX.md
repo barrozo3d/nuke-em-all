@@ -590,6 +590,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/i-made-vfx-relighting-way-better-in-nuke.md
 - **Related:** Direct follow-up to Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`) and 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — share `relighting`.
 
+
+### How SMART is State of the Art A.I Rotoscoping?
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=AinQkgdR6b8
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/how-smart-is-state-of-the-art-ai-rotoscoping.md
+
 ---
 
 ## Tag Reference
