@@ -899,10 +899,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=Ub0MmjYy0b0
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Nuke 15.x (2024 upload)
+- **Tags:** edge-extending, compositing, roto, rotopaint, channels, defocus, beginner
+- **Summary:** Why you can't roto-and-stencil a defocused/motion-blurred CG element directly over a plate (semi-transparent blurred edges always carry color contamination) and the fix: erode a sharp roto's alpha to discard the contaminated edge, `EdgeExtend` clean interior color outward to fill it, copy the correctly-blurred alpha back on top (color and alpha treated as two independent problems throughout), premultiply, then merge the result as a masked patch limited to just the CG region — not the whole frame, to avoid doubling detail/creating new seams. Covers the halo artifact from insufficient patch coverage, and edge-extend's failure case on very fine details (twigs, hair) fixed instead with RGB-only RotoPaint that leaves the existing alpha untouched.
 - **File:** tutorials/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending.md
 
 

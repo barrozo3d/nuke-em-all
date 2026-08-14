@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=Ub0MmjYy0b0
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "Nuke 15.x (2024 upload)"
+tags: [edge-extending, compositing, roto, rotopaint, channels, defocus, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # The Secret to Perfectly Merge CGI with Live Action | (Edge Extending)
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Overview of Edge Extending [0:00]
@@ -272,30 +268,55 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:22] tutorials/frames/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending/frame_000.jpg
+- [3:47] tutorials/frames/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending/frame_001.jpg
+- [4:56] tutorials/frames/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending/frame_002.jpg
+- [5:36] tutorials/frames/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending/frame_003.jpg
+- [6:53] tutorials/frames/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending/frame_004.jpg
+- [7:05] tutorials/frames/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending/frame_005.jpg
+- [9:16] tutorials/frames/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending/frame_006.jpg
+- [10:03] tutorials/frames/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Never cut a defocused/motion-blurred CG element out with a sharp roto matte and stencil it directly over the plate — semi-transparent blurred edges always carry color contamination from whatever is behind them. Instead, build an **edge-extended color patch** (erode a sharp roto's alpha inward, `EdgeExtend` the color out to fill the gap, restore the *defocused* alpha on top of that extended color, pre-multiply) and layer it as a *mask-limited patch* over just the region where the CG element sits — not the whole frame.
 
 ### Summary
-[PENDING EXTRACTION]
+The core diagnosis (frame_000, the failure case shown directly: a sharp-edged gray sphere silhouette pasted straight over a blurred forest tree — a hard, obviously-fake cutout with visible color bleed at the boundary): a defocused or motion-blurred edge is semi-transparent by nature, so any pixel near that edge is already a blend of the object's real color and whatever's behind it — cutting that edge out with a sharp alpha and compositing a sharp CG object behind it leaves the "wrong" background color contaminating the boundary, because the roto only ever captures the *shape*, not the true edge color. Sharp, fully-in-focus edges don't have this problem (a clean roto is fine), but out-of-focus/blurred edges always will. **The fix, in four parts:** (1) don't roto-and-stencil a defocused edge directly — that's the mistake to avoid; (2) build the edge-extend node setup: take the *in-focus* source picture, `Roto` a sharp shape around the object being replaced (no defocus applied yet), `Shuffle` in a solid alpha, `Erode` the roto's alpha inward slightly (frame_001/002 show this pinched-in white alpha shape) and use *that* eroded alpha to mask/cut the color — chopping off exactly the blurred-contaminated edge pixels; feed the result into Nuke's built-in `EdgeExtend` node (default, no custom gizmo needed, though Nukepedia has alternatives that sometimes do a better job), which pushes the remaining clean interior color outward to fill the eroded-away edge region (frame_003 shows the edge-extended patch — a solid, unblurred colored blob with no defocus yet); (3) `Defocus` that same original roto shape separately (its own branch) and `Copy` just that defocused alpha back onto the edge-extended color stream — critically, color and alpha are treated as two entirely separate problems here: all the erode/edge-extend work only ever touches RGB, then the correctly-blurred alpha gets copied in afterward, and only then is the result `Premultiply`'d to combine them into a usable patch; (4) **merge the patch as a masked patch, not a blanket overlay** (frame_004/005): layering order is background → CG render → patch, and the patch itself is masked by the CG element's own (slightly eroded) alpha so it only covers the region actually needing the fix — patching the whole frame would double up unaffected detail (e.g. duplicating parts of the tree) and just create a new visible seam. A common artifact from this masking step is a **halo** around the patch edge if the patch's coverage doesn't extend slightly past the CG render's actual silhouette (frame_005 shows this exact test/comparison) — fixed by eroding the mask outward a bit more, roto-stenciling manually, or adding extra roto coverage to the patch alpha as needed; there's no single fixed recipe, just "make sure the patch covers a bit more than the CG shape requires." **Where EdgeExtend fails** (frame_006/007, a thin, slightly-defocused twig against green leaves): edge-extend can't rescue extremely fine/thin details, because there isn't enough clean interior color to erode-and-pull from in the first place — eroding into a twig only a few pixels wide just erodes past the object entirely, so the "grab clean color, push it out" strategy has nothing to work with. The fix for this case is **not** edge-extend but a **manual RGB-only RotoPaint**: because color and alpha are kept separate throughout this whole workflow, a paint stroke can be set to affect RGB channels only (not alpha), so painting the correct brown color directly over the green-contaminated twig pixels fixes the color without touching the existing (already-correct) defocused alpha shape — frame-held for a still example, but would need tracking for a moving shot. Re-premultiplying afterward shows the fix; disabling `EdgeExtend` entirely on the full comp reveals how many small regions across the shot actually needed it, even at fairly mild defocus amounts. Framed with a production-reality note: this level of edge fidelity is exactly what's required for VFX seen on a huge cinema screen (the author name-checks Dune and Avatar) — problems invisible on a phone screen become obvious at that scale, so these techniques matter beyond YouTube-sized demos. A caution against overuse: not every edge needs edge-extending, and beginners tend to over-apply it as soon as they learn it exists; more advanced despill/edge techniques exist beyond this scope (referenced to the author's paid KeenTools/advanced courses).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Identify whether the edge in question is sharp/in-focus (a plain roto is fine) or defocused/motion-blurred (needs this whole workflow) — never roto-and-stencil a blurred edge directly.
+2. On the *in-focus* source image, `Roto` a sharp shape around the object being replaced/patched; `Shuffle` a solid alpha into the picture.
+3. `Erode` that roto's alpha inward slightly and use the eroded alpha to mask/cut the color, discarding the outer ring of blur-contaminated edge pixels.
+4. Feed the eroded-color result into Nuke's built-in `EdgeExtend` node to push clean interior color outward and fill the gap left by the erosion — adjustable to taste ("push the erode up and down until you get the color you want").
+5. Separately `Defocus` the same original roto shape on its own branch, producing the correctly-blurred alpha.
+6. `Copy` just that defocused alpha back into the edge-extended color stream (color and alpha are worked on as two independent problems the whole time), then `Premultiply` to combine them into the final usable patch.
+7. Merge the layers in this order: background plate → CG render → the edge-extend patch on top, masked by the CG element's own alpha (slightly eroded/expanded as needed) so the patch only covers the region actually being fixed, not the whole frame.
+8. If a halo appears around the patch edge, expand the patch's mask coverage slightly further than the CG element's exact silhouette (via extra erode, roto stencil, or added roto shapes) until it's gone.
+9. For very fine/thin details where there isn't enough clean interior color for `EdgeExtend` to erode-and-pull from (twigs, hair, etc.): abandon edge-extend for that region and instead use `RotoPaint` set to affect **RGB channels only** (not alpha) to manually paint the correct color directly over the contaminated pixels — the existing correct alpha shape is left untouched; frame-hold for stills, track for moving shots.
+10. Re-`Premultiply` after any RGB-only paint fix and compare with/without the fix to confirm the contamination is resolved.
+11. Use edge-extend selectively — don't apply it to every edge in a comp by default; reserve it for edges that actually show measurable contamination.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** `Roto`, `Shuffle` (solid alpha), `Erode`/`Dilate` (both for the color-extraction mask and for expanding a patch's coverage), `EdgeExtend` (default built-in node, no custom gizmo required — Nukepedia alternatives exist and are sometimes better, but not needed to understand the concept), `Defocus`, `Copy` (alpha channel only, from a separate blurred-alpha branch), `Premultiply`, `Merge` (masked patch layering), `RotoPaint` (set to RGB-only output — critical trick for fixing fine-detail contamination without disturbing the existing alpha)
+- **Core workflow principle:** treat color (RGB) and alpha as two independent problems throughout — all erode/edge-extend manipulation happens on color only; the correct (defocused) alpha is copied back in afterward, and only pre-multiplied at the very end — explicitly contrasted with Photoshop/After Effects workflows where RGB and alpha are rarely separated this cleanly
+- **Layering order for any live-action + CG composite using this technique:** background → CG render → edge-extend patch (masked to just the fix region) on top
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — foundational compositing technique explicitly aimed at people just starting to layer CG over live action; the RGB-only RotoPaint fix for edge-extend's failure case is the one detail likely to be new even to some intermediate viewers.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. No version-specific features used — `EdgeExtend`, `Erode`, `Defocus`, and RGB-only `RotoPaint` output have been stable across many releases. Per this skill's version-tracker, a 2024 upload falls in the Nuke 15.x window.
 
 ### Tags
-[PENDING EXTRACTION]
+edge-extending, compositing, roto, rotopaint, channels, defocus, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+No existing knowledge-base entries currently cover edge-extending as a dedicated topic — this is the first. Revisit once other foundational compositing-technique tutorials from this channel (e.g. any dedicated despill/edge tutorials) are ingested and can be checked for shared `edge-extending`/`defocus` tags.
