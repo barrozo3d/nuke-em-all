@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=1lmyihzZHio
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [compositing, channels, procedural-texture, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-tutorial-compositing-a-rainbow-intermediate/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Tutorial | Compositing a Rainbow [Intermediate]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-tutorial-compositing-a-rainbow-intermediate <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction to nuke rainbows [0:00]
@@ -153,30 +149,57 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:08] tutorials/frames/nuke-tutorial-compositing-a-rainbow-intermediate/frame_000.jpg
+- [2:47] tutorials/frames/nuke-tutorial-compositing-a-rainbow-intermediate/frame_001.jpg
+- [4:14] tutorials/frames/nuke-tutorial-compositing-a-rainbow-intermediate/frame_002.jpg
+- [5:10] tutorials/frames/nuke-tutorial-compositing-a-rainbow-intermediate/frame_003.jpg
+- [5:47] tutorials/frames/nuke-tutorial-compositing-a-rainbow-intermediate/frame_004.jpg
+- [7:34] tutorials/frames/nuke-tutorial-compositing-a-rainbow-intermediate/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Building a true full-spectrum rainbow gradient procedurally by converting a black-to-white `Ramp` into HSV space, remapping value into hue, and forcing saturation/value to 1 — then optionally polar-warping it into a circular rainbow with a Nukepedia `PolarDistort` node.
 
 ### Summary
-[PENDING EXTRACTION]
+Nuke has no built-in multicolor-gradient tool (unlike Photoshop), and the built-in `Flare` node's "LG Rainbow" preset doesn't cover the full color spectrum. Instead, the video builds a true rainbow from scratch using an HSV round-trip trick: a linear black-to-white `Ramp` is converted to HSV via `Colorspace`, its resulting Value channel (blue, holding the 0-1 gradient) is shuffled into the Hue channel (red), and Saturation/Value are forced to solid 1 so colors don't darken — then a second `Colorspace` set to HSV→linear (swap direction) converts it back, producing a full rainbow gradient. A Nukepedia `PolarDistort` node (Daniel Velikov, 2015 — Nuke's answer to After Effects' Polar Coordinates) can bend this linear ramp into a circular rainbow ring; a `Grade` node's gamma before the HSV conversion shifts the color order along the ring, and black/white point can create multiple repeating rainbow bands. Finishes with a stylistic pass (blur + multiply through noise) to fake the effect appearing in cloud/mist/volume, and a side-by-side comparison against the built-in `Flare` "LG Rainbow" preset to show why it falls short (limited color range).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Create a `Ramp` node (linear black-to-white vertical gradient) as the base gradient driving the rainbow.
+2. Add a `Colorspace` node set to convert `linear → HSV`. In HSV mode, Hue lands in the red channel, Saturation in green, Value (luminance) in blue — on a black/white ramp, only the Value/blue channel has meaningful data (0 to 1); hue and saturation are empty.
+3. Add a `Shuffle` node: shuffle the Value/blue channel into the Hue/red channel (so the ramp's brightness range becomes a full hue sweep), and force green (saturation) and blue (value) channels to solid 1 so the rainbow stays fully saturated and bright rather than darkening toward one end.
+4. Add a second `Colorspace` node, again set to HSV, but with the conversion direction swapped (`HSV → linear`) to convert the manipulated HSV data back into a viewable RGB rainbow gradient.
+5. (Optional, circular rainbow) Add the Nukepedia `PolarDistort` node (Daniel Velikov, 2015 — free download, Nuke equivalent of After Effects' Polar Coordinates) after the rainbow ramp to remap it into a circular/ring shape.
+6. Before the polar distort, add two `Crop` nodes in sequence: the first crops the ramp down to where the desired rainbow band ends (removing the outer flat red); the second re-establishes the crop's bounding box out to the full frame edge (a Nuke quirk — the first crop's bounding box doesn't reach the frame, which breaks the polar remap without this second crop).
+7. If the color order comes out wrong (e.g. red should be on the outside, purple at the bottom, but isn't), insert a `Grade` node before the first `Colorspace` and adjust gamma to rotate/shift the hue order around the spectrum; black point/white point can be pushed further to create multiple concentric rainbow rings.
+8. To make the rainbow band thinner, shrink the source `Ramp` region and re-adjust the crop region accordingly before the polar distort.
+9. Optional finishing: blur and multiply the rainbow through a noise pattern, then transform/position it, to fake it appearing within cloud, mist, or volumetric haze in a shot.
+10. For comparison: the built-in `Flare` node → Presets → "LG Rainbow" gives a quick fake rainbow with controls like chroma shift, but does not cover the full color spectrum — fine for a lens-flare-style effect, not a true rainbow.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Ramp` — base linear black-to-white gradient (the "canvas" the rainbow is built from).
+- `Colorspace` (used twice) — first instance: `linear → HSV`; second instance: `HSV → linear` (direction swapped) to convert back to viewable RGB after the hue manipulation.
+- `Shuffle` — moves the HSV Value/blue channel into the Hue/red channel; sets green (saturation) and blue (value) channels to solid 1.
+- `PolarDistort` — third-party Nukepedia gizmo by Daniel Velikov (2015), free download; performs polar-coordinate remapping (linear gradient → circular/ring rainbow), equivalent to After Effects' Polar Coordinates effect.
+- `Crop` (x2, stacked) — first limits the ramp to the desired rainbow band; second forces the bounding box back out to the full frame so the polar distort doesn't clip incorrectly.
+- `Grade` — inserted before the first Colorspace; gamma shifts color order around the spectrum, black/white point can multiply the rainbow into repeating bands.
+- `Flare` node, "LG Rainbow" preset — the built-in alternative shown for comparison; has chroma-shift controls but incomplete color spectrum.
+- Finishing touches (unnamed in transcript): Blur + Multiply through a noise source to integrate the rainbow into cloud/mist/volume; Transform to reposition.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — requires understanding of HSV color space and channel manipulation via Shuffle, though the node chain itself is short.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, channels, procedural-texture, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `compositing`, `channels`, `procedural-texture`, `intermediate`.

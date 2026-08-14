@@ -572,3 +572,4 @@ compositing, cryptomatte, st-map, merge, channels, aovs, grading, gizmo, procedu
 
 ## Related Tutorials
 - [Skill Up with Nuke | How To Think Like A Pro Compositor](skill-up-with-nuke-how-to-think-like-a-pro-compositor.md) — shares `compositing`, `grading`, and use of the same community Nuke Survival Toolkit gizmo pack; a general problem-solving framework vs. this tutorial's single-AOV technique deep-dive.
+- [Nuke Tutorial | Compositing a Rainbow [Intermediate]](nuke-tutorial-compositing-a-rainbow-intermediate.md) — shares `compositing`, `channels`, `procedural-texture`, `intermediate`; both build procedural color/pattern effects purely from channel manipulation.

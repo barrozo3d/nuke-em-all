@@ -115,11 +115,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=1lmyihzZHio
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** compositing, channels, procedural-texture, intermediate
+- **Summary:** Builds a true full-spectrum rainbow procedurally via an HSV round-trip: a `Ramp` converted to HSV (`Colorspace`), its Value channel shuffled into Hue with Saturation/Value forced to 1 (`Shuffle`), then converted back to linear. Optionally bent into a circular rainbow with the Nukepedia `PolarDistort` gizmo, with `Grade` gamma controlling color order and `Crop` fixing bounding-box edge cases. Compares favorably to the built-in `Flare` "LG Rainbow" preset, which lacks the full color spectrum.
 - **File:** tutorials/nuke-tutorial-compositing-a-rainbow-intermediate.md
+- **Related:** Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `compositing`, `channels`, `procedural-texture`, `intermediate`.
 
 ---
 
