@@ -92,10 +92,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=uEzjEizAi3o
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** keying, compositing, intermediate
+- **Summary:** Pulls a clean single-hue isolation matte (saturated red tail-light glow) using an `Expression` node instead of a standard `Keyer` or manual channel-subtraction chain. Two formulas: `r-((g+b)/2)` (difference-from-average key) and an adjustable `r-g*control` variant driven by a custom user slider — the latter also useful for isolating on-set tracking markers of a strong saturated color.
 - **File:** tutorials/nuke-tutorial-keying-with-math-expressions-intermediate.md
 
 

@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=uEzjEizAi3o
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [keying, compositing, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-tutorial-keying-with-math-expressions-intermediate/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Tutorial | Keying with Math Expressions [Intermediate]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-tutorial-keying-with-math-expressions-intermediate <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -65,30 +61,52 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:29] tutorials/frames/nuke-tutorial-keying-with-math-expressions-intermediate/frame_000.jpg
+- [1:18] tutorials/frames/nuke-tutorial-keying-with-math-expressions-intermediate/frame_001.jpg
+- [2:07] tutorials/frames/nuke-tutorial-keying-with-math-expressions-intermediate/frame_002.jpg
+- [3:35] tutorials/frames/nuke-tutorial-keying-with-math-expressions-intermediate/frame_003.jpg
+- [4:22] tutorials/frames/nuke-tutorial-keying-with-math-expressions-intermediate/frame_004.jpg
+- [5:00] tutorials/frames/nuke-tutorial-keying-with-math-expressions-intermediate/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Pulling a clean single-color isolation matte (e.g. saturated red tail-lights) with a channel-math `Expression` node instead of a standard Keyer, HSV isolation, or manual channel-subtraction chain.
 
 ### Summary
-[PENDING EXTRACTION]
+Working shot: a car with over-saturated red tail-light glow needs a desaturating hue correction, which requires a clean alpha mask of just that red glow area. The obvious approaches — a `Keyer` isolating green+blue, or a manual red-suppress-and-subtract chain (invert, minus, shuffle red into alpha) — either grab unwanted background (sky, bokeh) or take too many nodes for a mediocre result. The presenter instead plugs an `Expression` node and writes two small channel-math formulas directly against the RGB channels to isolate the target hue with far fewer nodes and cleaner edges, then shows a second, more general-purpose variant with a user-added slider for interactive control — useful for isolating other saturated markers (e.g. pink tracking dots) too.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Identify the problem area: a highly saturated single-hue region (red tail-light glow) needs its own alpha for a downstream Grade/HueCorrect fix, and is bleeding into the sky/background with a standard `Keyer`.
+2. Try the "intuitive" approaches first (for comparison): `Keyer` with green+blue checked, and a red-suppress/invert/`Merge` (minus)/`Shuffle`-red-to-alpha chain — both work partially but are noisy or overly long.
+3. Add an `Expression` node. Formula 1 (channel-difference key): compute the average of green and blue — `(g+b)/2` — then subtract that average from the red channel: `r-((g+b)/2)`. This isolates the "most red" content in the scene into a clean grayscale key, comparable in quality to the manual hue-correct chain but in one node.
+4. Formula 2 (adjustable variant): `r-g*control` — red minus green, multiplied by a user-defined slider. Add the slider via the node's User tab → Manage User Knobs → New → Floating Point Slider, named `control`.
+5. Animate/scrub the `control` slider to interactively tighten or loosen the isolation — can be pushed beyond a value of 1 for extra-aggressive isolation.
+6. Note the general use case for formula 2: isolating on-set tracking markers of a strongly saturated color (e.g. pink markers, which are the "opposite" of chroma green) for removal/paint work.
+7. Feed the resulting Expression-node alpha into the downstream correction (HueCorrect/Grade via a `Merge` "minus"/mask setup) instead of the alpha from the standard Keyer chain.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Expression` node — the core tool; channel-math formulas entered per output channel: `r-((g+b)/2)` (difference-from-average key) and `r-g*control` (adjustable variant using a custom slider).
+- User Knob: custom `Floating Point Slider` named `control`, added via Manage User Knobs, driving the second expression's aggressiveness (can exceed 1.0).
+- `Keyer` (luminance/HSV key, labeled `Keyer2 (luminance key)` in the node graph) — shown as the standard/intuitive first attempt for comparison.
+- `HueCorrect` — used for the actual desaturation/hue fix once a clean alpha mask exists.
+- `Merge` (operation "minus", with invert/Shift+X input-swap) — used in the manual red-suppress comparison chain.
+- `Shuffle` — used to move the isolated red channel into the alpha channel in the manual comparison chain.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — requires comfort with Nuke's `Expression` node syntax and per-channel math, though the formulas themselves are simple.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+keying, compositing, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+[No existing tutorials in the knowledge base share 2+ tags yet — will be cross-linked as more keying-focused entries are ingested.]
