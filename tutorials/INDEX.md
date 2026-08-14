@@ -571,22 +571,24 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=p7_PYigrOgM
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified on screen; 2021 upload, close to the Nuke 13.0 launch (2021-03-17) — likely Nuke 12.2/13.0-era
+- **Tags:** compositing, grading, roto, relighting, intermediate
+- **Summary:** Methodology clip (from a longer "Nuke 505" course) showing how to visually diagnose and sketch fixes for a keyed character not yet sitting into a night cityscape plate: RotoPaint annotations flag problems, then rough Grade tests explore fixes — lifted blacks, missing motivated rim light, unnatural inherited highlights, "value conflict" (extreme bright against extreme dark pulling the eye), and coincidental edge alignment creating a false bad-key look. Stresses matching foreground/background dynamic range, meeting halfway rather than only pushing one side, and saving broad grades for last.
 - **File:** tutorials/nuke-compositing-tutorial-integration-sketching.md
+- **Related:** Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`) — shares `grading`, `relighting`; 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — shares `relighting`, `grading`, `roto`, `compositing`.
 
 
 ### I Made VFX Relighting WAY Better in Nuke
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=H7dBKDLXwPo
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified — third-party gizmo ("CA Relight"), NOT Nuke's native Gaussian Splat relighting (SplatRender Direct/Point/Spot, added in Nuke 17.1)
+- **Tags:** relighting, gizmo, compositing, 3d-system, intermediate
+- **Summary:** Custom gizmo "CA Relight" extends screen-space normals-based relighting with depth+normals-derived self-shadowing/occlusion (a gap pure normals relighting can't fill), a top-down multi-light placement UI (vs. raw XYZ knobs, with keyframing and Shift-drag height control), and HDRI Reflect/Diffuse modes with a 3D dome visualization + "flat floor" reprojection option for physically accurate parallax. Validated against a test sphere and ray-traced render. **Version note: this is a third-party plugin, unrelated to Nuke 17.1's native SplatRender relighting feature** — do not conflate the two.
 - **File:** tutorials/i-made-vfx-relighting-way-better-in-nuke.md
+- **Related:** Direct follow-up to Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`) and 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — share `relighting`.
 
 ---
 

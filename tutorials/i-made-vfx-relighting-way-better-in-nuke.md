@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=H7dBKDLXwPo
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified — third-party gizmo (CA Relight), not Nuke's native Gaussian Splat relighting toolset (SplatRender Direct/Point/Spot, Nuke 17.1+); see Foundry App & Version note below"
+tags: [relighting, gizmo, compositing, 3d-system, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/i-made-vfx-relighting-way-better-in-nuke/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # I Made VFX Relighting WAY Better in Nuke
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py i-made-vfx-relighting-way-better-in-nuke <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -155,30 +151,55 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:14] tutorials/frames/i-made-vfx-relighting-way-better-in-nuke/frame_000.jpg
+- [2:20] tutorials/frames/i-made-vfx-relighting-way-better-in-nuke/frame_001.jpg
+- [3:18] tutorials/frames/i-made-vfx-relighting-way-better-in-nuke/frame_002.jpg
+- [3:25] tutorials/frames/i-made-vfx-relighting-way-better-in-nuke/frame_003.jpg
+- [4:08] tutorials/frames/i-made-vfx-relighting-way-better-in-nuke/frame_004.jpg
+- [5:40] tutorials/frames/i-made-vfx-relighting-way-better-in-nuke/frame_005.jpg
+- [7:17] tutorials/frames/i-made-vfx-relighting-way-better-in-nuke/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A custom gizmo ("CA Relight," branded on-screen as "RELIGHT") extends screen-space normals-based relighting with a depth-aware occlusion model (self-shadowing from depth+normals combined, without a real 3D scene), an intuitive top-down light-placement UI (instead of raw XYZ knobs), a multi-light manager, and HDRI reflect/diffuse/dome modes with a "flat floor" reprojection option for more accurate parallax — patching gaps the author found in pure normals-based relighting (no shadows/occlusion) across a real production.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy releases "CA Relight," a custom gizmo built to patch gaps found in the channel's earlier normals-based relighting technique after using it extensively on a real production. Two production shots motivate the tool: a vehicle driving past small blue light sources (needing subtle, animatable point lights with parallax) and a much harder shot with explosions flying past a character (needing actual self-shadowing/occlusion — e.g. the character's arm correctly occluding light from reaching the face — which normals alone cannot produce, since normals only encode surface direction, not depth-aware blocking). The tool's multi-light mode gives a top-down 2D interface (actor placed at a representative depth value, e.g. 0.5, with lights positioned/rotated around it visually) instead of raw XYZ knob entry, supports keyframing lights flying past, holding Shift to adjust light height, adding/removing lights, and controlling per-light softness/falloff — and combines a generated depth map with normals to derive real occlusion in screen space (no actual 3D geometry needed), producing markedly more realistic results than flat normals relighting (demonstrated by toggling occlusion off to show the "fake" flat look). A separate HDRI mode offers Reflect (mirror-like) and Diffuse response from a rendered 360° cube map (e.g. exported from Blender with correct emission values) applied back onto the actor's normals/depth — useful for automated, less hands-on relighting from many small/flickering light sources rather than manually placing each one. Results are validated by comparing the tool's reflection placement against a sphere and a full ray-traced render for correctness. A "3D dome" mode visualizes/aligns where the HDRI is positioned relative to the actor, and a "flat floor" option reprojects the HDRI onto a dome closer to the actor (rather than an infinitely distant sphere) for more physically accurate parallax, since the ground plane in reality sits much closer to a character than a distant horizon. The video recommends layering multiple modes together (e.g. multi-light for occlusion/shadow, HDRI reflect for metallic bits, HDRI diffuse for flatter response) rather than relying on just one.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Diagnose the limitation of pure normals-based relighting: it can add directional light/highlights but cannot produce real self-shadowing/occlusion (e.g. an arm blocking light from reaching a face), since normals encode surface direction only, not depth-based blocking.
+2. Use the tool's multi-light top-down UI instead of manual XYZ knob entry: the actor is represented at a fixed depth value (e.g. 0.5 out of a 0-1 depth map) and lights are placed/rotated visually around that point.
+3. Keyframe light position/rotation directly in the top-down view to animate lights flying past a character (e.g. explosions), and hold Shift while dragging to adjust a light's height instead of its horizontal position.
+4. Add/remove lights via the multi-light manager as needed per shot; adjust per-light softness/falloff independently.
+5. Enable occlusion (combining the generated depth map with the normals pass) so lights correctly self-shadow against the character's own geometry in screen space — compare with occlusion disabled to see the flatter, more obviously fake normals-only result.
+6. For scenes with many small/animated light sources (e.g. flickering background lights passing by) where manual multi-light placement is impractical, switch to HDRI mode instead: render a 360° cube map from the 3D scene (e.g. Blender) with correct emission values, capturing all light source variation automatically.
+7. Choose HDRI Reflect mode for a mirror-like response (useful for metallic surface bits, blurrable to soften) or HDRI Diffuse mode for a flatter, more diffuse light response; key-mix reflect and diffuse together per-material (metallic vs. diffuse regions) as covered in the author's other relighting video.
+8. Validate HDRI relighting accuracy by comparing the reflection placement on a test sphere and against a full ray-traced render of the same setup, confirming the normals-driven result matches.
+9. Use "3D dome" mode to visualize and align exactly where the HDRI's light sources sit relative to the actor, making HDRI placement intuitive rather than guesswork.
+10. Enable "flat floor" mode to reproject the HDRI onto a dome positioned closer to the actor (rather than treating it as an infinitely distant sphere) — since a real ground plane is much closer than a distant horizon, this produces more physically accurate parallax and reflection placement.
+11. Combine modes deliberately per shot: multi-light for shadow/occlusion-critical scenarios, HDRI reflect/diffuse for automated ambient/many-light scenarios, and even use the multi-light tool purely as an occlusion mask layered onto HDRI-mode results if only the shadowing behavior is needed.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- "CA Relight" / "RELIGHT" gizmo (custom, Compositing Academy's own tool, paid/link-gated) — multi-light top-down placement UI, per-light softness/falloff, Shift-drag height control, depth+normals-derived screen-space occlusion, HDRI Reflect/Diffuse modes, 3D dome visualization, flat-floor HDRI reprojection
+- Depth map (0-1, generated) + Normals pass — combined inside the gizmo to derive self-shadowing/occlusion without real 3D geometry
+- 360° HDRI cube map (rendered from the 3D scene, e.g. Blender, with correct emission values) — automated multi-light-source relighting input
+- Sphere/ray-render comparison — validation method to confirm relight accuracy against ground truth
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. This is a third-party custom gizmo ("CA Relight"), not Nuke's native Gaussian Splat relighting toolset — Nuke 17.1 (2026-07-02 open beta) added native splat relighting via `SplatRender`'s Direct/Point/Spot light support (see `references/release-notes-nuke-17.1.md`), which is a completely different, splat-geometry-based feature from this screen-space normals+depth occlusion gizmo. No on-screen general Nuke version banner or OCIO metadata visible in the captured frames — version not specified, and this video should not be cited as evidence of native Nuke 17.x relighting behavior.
 
 ### Tags
-[PENDING EXTRACTION]
+relighting, gizmo, compositing, 3d-system, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Direct follow-up to Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`), referenced explicitly in this video as "my other video" on normals-based relighting and metallic/diffuse key-mixing. Shares `relighting` with 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`).
