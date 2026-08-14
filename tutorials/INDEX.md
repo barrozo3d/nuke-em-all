@@ -182,6 +182,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nobodys-ever-made-vfx-this-way-new-tech.md
 
+
+### Preserve Quality | Projections in Nuke
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=8Aki1VR_tX8
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/preserve-quality-projections-in-nuke.md
+
 ---
 
 ## Tag Reference
