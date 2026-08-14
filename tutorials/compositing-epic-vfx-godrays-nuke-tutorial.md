@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=PqbqxnBFOHg
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "Nuke 14.x (2023 upload, same batch as the '3D Laser Effect' video which explicitly cross-references this tutorial; Classic 3D system)"
+tags: [3d-system, projection, particles, grading, procedural-texture, motion-graphics, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/compositing-epic-vfx-godrays-nuke-tutorial/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Compositing EPIC VFX Godrays | Nuke Tutorial
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py compositing-epic-vfx-godrays-nuke-tutorial <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -349,30 +345,58 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:41] tutorials/frames/compositing-epic-vfx-godrays-nuke-tutorial/frame_000.jpg
+- [3:27] tutorials/frames/compositing-epic-vfx-godrays-nuke-tutorial/frame_001.jpg
+- [5:37] tutorials/frames/compositing-epic-vfx-godrays-nuke-tutorial/frame_002.jpg
+- [6:20] tutorials/frames/compositing-epic-vfx-godrays-nuke-tutorial/frame_003.jpg
+- [8:38] tutorials/frames/compositing-epic-vfx-godrays-nuke-tutorial/frame_004.jpg
+- [11:12] tutorials/frames/compositing-epic-vfx-godrays-nuke-tutorial/frame_005.jpg
+- [13:57] tutorials/frames/compositing-epic-vfx-godrays-nuke-tutorial/frame_006.jpg
+- [16:02] tutorials/frames/compositing-epic-vfx-godrays-nuke-tutorial/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Making God Rays interact convincingly with the surface they land on — instead of a light source alone dictating ray shape, build the *ground-contact matte first* (an animated noise pattern flowing across the position pass) and feed that same matte into `GodRays` so each visible ray traces back to, and lands exactly on, its own pool of light — plus dust/particle layering, negative-alpha God Rays for objects passing through light, and edge-softening tricks for a more natural falloff.
 
 ### Summary
-[PENDING EXTRACTION]
+Starts from the naive baseline: a hand-painted/punched alpha (frame_000) fed straight into a `GodRays` (or `VolumeRays`) node, center placed at the light source, scaled/noise-adjusted for ray size — visually fine, but the rays and any "pools of light" on the ground below are unrelated, since nothing ties them together. The actual technique **flips the setup**: build the ground-interaction matte *first*. In the simple 2D case, a `Noise` pattern is corner-pinned onto the ground plane, then `GodRays`'d — but with its center placed *above* (at the light source) and scaled *down* toward the ground, so the same noise pattern that will show as pools on the ground also defines the ray shafts above it (frame_001, showing the "Ground Interaction" branch feeding into the ray shape). Gamma-ing that matte down isolates bright pool-spots at the bottom while the rays above naturally share the same source pattern, so when the noise animates, the rays read as if they're actively casting those specific pools of light. For a full CG environment, the same idea is built from the render's **position pass**: an `Expression` node with `noise(r,g,b)` typed into the alpha channel generates a static noise pattern that follows the 3D surface's shape (frame_002) rather than being flat/screen-space; a `Grade` node just before it must have **black clamp unchecked** (position-pass data includes negative values that clamp would otherwise destroy) and its `offset` animated to make the noise actually flow/crawl across the surface over time (frame_003) — the `X`/`Y`/`Z` offset/scale channels can be driven independently to bias flow direction (e.g. offsetting only one channel makes the pattern flow in one direction only, good for a "cloud passing over" look). A `Clamp` after the expression is required since animated offsets can push the noise into negative alpha territory, which is invalid; a final `Shuffle` (alpha → all of R/G/B/A) cleans the result into a uniform grayscale matte ready to feed `GodRays`. Building the final look (frame_004 shows the God Ray shafts on a rocky CG surface, frame_005 the underlying multi-branch noise/color node stack): mask out background gray with the scene's own alpha; add `GodRays` with `steps` raised well above default (e.g. 10) for smoothness; apply the interactive matte twice — once inverted+gained-down to darken everything *except* the lit spots, once non-inverted+gained-up to brighten just the pools — merge the God Ray layer over the masked beauty with `Merge` (`over`, not `plus`, so highlights aren't blown out further); tune noise size for bigger/more convincing pools, nudge the color slightly warm to match the CG material rather than leaving rays pure white, and use `GodRays`' built-in from/to color fade so the effect reads as falling off from a source instead of a flat linear ray. Harsh, blocky ray edges (a side effect of the noise pattern used) are softened by `Blur`-ing the ray alpha and merging that blurred copy back over itself for a "foggy" broadened look (frame_006 shows the blurred, colorized result on a night scene) without fully losing shape definition. Multiple independently-offset noise layers (a broad sweeping one, animated over time to feel like a moving light source such as a helicopter searchlight) can be stacked for complexity. For **objects passing through the light** (frame not separately captured beyond the general pipeline), a second, *negative* God Ray is built directly from that object's own alpha — `GodRays` applied to a silhouette shape produces a shadow-ray cutting into the main ray, and RotoPaint-sharpening or a stencil mix controls whether the object reads as sitting behind the ray (full negative ray) or being cut by it (full stencil) — tunable/animatable per shot, especially for objects genuinely moving through the beam. **Dust/particle layering** (frame_007) is the final realism pass: bring in real dust-element footage sized appropriately for the implied particle scale (fine indoor dust vs. big cloud/steam wisps — matching real-world particle size to the environment matters), grade it (slightly warm), and `Multiply` it against a precomp of the finished God Ray layer so the dust only lights up where rays actually are — layering several dust clips at different depths (including deliberately out-of-focus foreground passes) sells scale and distance. A closing practical note: since YouTube/Vimeo compression tends to destroy fine particle detail, the author deliberately over-sharpens the dust pass beyond what would look correct at full quality, anticipating platform compression loss.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. **Baseline (what not to rely on alone):** feed a hand-made alpha or basic noise pattern into `GodRays`/`VolumeRays`, center at the light source, adjust size/contrast via noise scale and grade — produces rays with no relationship to what's on the ground.
+2. **Build the interactive matte first (2D proof of concept):** corner-pin a `Noise` pattern onto the ground plane; feed that same noise into `GodRays` with its center placed *above* at the light source and scaled *down* toward the ground, so ray shafts and ground pools share one source pattern; `Gamma` the matte to isolate bright pool spots.
+3. **CG version — generate a position-pass-driven flowing noise:** on the render's position pass, add an `Expression` node with `noise(r,g,b)` in the alpha box; precede it with a `Grade` (black clamp OFF, since position data has negative values) whose `offset` is animated to make the noise crawl across the actual 3D surface over time; bias flow direction by animating only one of the X/Y/Z offset channels.
+4. `Clamp` the result to a valid 0–1 alpha (animated offsets can push values negative); `Shuffle` alpha into all of R/G/B/A for a clean uniform grayscale matte.
+5. Mask the scene's own gray background using its alpha; add `GodRays`, raise `steps` well above default (e.g. 10) for smoothness, position/scale the center at the implied light source.
+6. Apply the interactive matte twice for the final look: inverted + gained-down to darken everything except the lit spots, and non-inverted + gained-up to brighten just the pools; `Merge` (`over`) the God Ray pass onto the masked beauty.
+7. Dial in look: tune noise size for bigger/more convincing pools of light, warm the color slightly to match the CG material rather than pure white, use `GodRays`' from/to color fade for a believable source-falloff instead of a flat linear ray.
+8. Soften harsh/blocky ray edges: `Blur` a copy of the ray alpha and merge it back over the sharp version for a broader, foggier look.
+9. Stack multiple independently-offset/animated noise/GodRay layers (e.g. one broad sweeping pattern animated over time) for a moving-light-source effect (clouds passing, a searchlight sweeping).
+10. For objects passing through the light: build a second, negative `GodRays` pass directly from that object's own alpha; use RotoPaint-sharpening or a stencil mix to control (and animate) whether the object reads as behind the ray or cut by it.
+11. Add dust/particle realism: bring in dust footage sized to match the implied particle scale of the environment, grade it slightly warm, `Multiply` it against a precomp of the finished God Ray layer so dust only illuminates within actual ray/pool regions; layer several clips at different depths including an out-of-focus foreground pass for scale.
+12. For web delivery, deliberately over-sharpen fine particle passes beyond what looks correct at full res, since YouTube/Vimeo compression destroys small high-frequency detail.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** `GodRays`/`VolumeRays` (center position, scale, steps, from/to color fade), `Noise`, `CornerPin` (2D ground-plane placement), `Expression` (`noise(r,g,b)` on the alpha channel, driven from a position pass), `Grade` (black-clamp toggle critical for position-pass data; animated offset for flow), `Clamp` (valid 0–1 alpha after expression), `Shuffle` (alpha → RGBA), `Merge` (`over` preferred over `plus` to avoid blown highlights), `Blur` (edge-softening via self-merge), `RotoPaint`/stencil (negative-ray object cutout)
+- **Position-pass-driven procedural noise:** same underlying "AOV-driven expression noise" pattern referenced elsewhere on this channel (cross-linked as a dedicated tool-building tutorial) — here applied specifically to drive ground-interactive light pools rather than surface texture breakup
+- **Asset layering:** real dust/particle stock footage, multiplied against a God-Ray precomp; multiple depth layers including deliberately defocused foreground passes
+- **Delivery note:** intentional over-sharpening of fine-detail passes to survive YouTube/Vimeo compression
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — the core "matte first, then GodRays" flip and position-pass expression trick are conceptually simple once explained, but tuning the full look (noise scale, color, edge softening, dust layering, negative-ray object interaction) requires iterative judgment.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. Version not stated numerically, but this tutorial is explicitly cross-referenced by the "3D Laser Effect | Nuke Compositing Tutorial (Higx Point Render)" video from the same 2023/Nuke-14.x batch as "the same technique" for its own screen-space beam effect — placing this firmly in the Nuke 14.x window per this skill's version-tracker. Uses only the Classic 3D system (position pass, no explicit 3D geometry needed) — predates the 14.0-beta USD 3D overhaul.
 
 ### Tags
-[PENDING EXTRACTION]
+3d-system, projection, particles, grading, procedural-texture, motion-graphics, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- 3D Laser Effect | Nuke Compositing Tutorial (Higx Point Render) (`3d-laser-effect-nuke-compositing-tutorial-higx-point-render.md`) — that video explicitly cross-references this one, reusing its GodRays technique (there: driven by sparse Higx Point Render points with a camera-tracked center, instead of position-pass-driven noise) for its screen-space "laser beam" pass.
+- Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) and Create 3D Noise | Nuke Compositing (`create-3d-noise-nuke-compositing.md`) — both share the position/world-pass-driven `noise()` expression technique used here to generate the CG-surface-flowing matte.

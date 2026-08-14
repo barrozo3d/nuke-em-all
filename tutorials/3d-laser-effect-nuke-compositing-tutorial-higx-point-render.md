@@ -364,4 +364,5 @@ Nuke / NukeX (RayRender's Ambient Occlusion pass is NukeX-only). Version not sta
 ---
 
 ## Related Tutorials
-No existing knowledge-base entries currently use the Higx Point Render plugin or the camera-parented-sphere-as-projection-mask technique — this is the first tutorial covering either. Revisit once "Compositing EPIC VFX Godrays" (explicitly cross-referenced by this video as covering the underlying GodRays technique in more depth) is ingested from this same 2023 batch.
+No existing knowledge-base entries currently use the Higx Point Render plugin or the camera-parented-sphere-as-projection-mask technique — this is the first tutorial covering either.
+- Compositing EPIC VFX Godrays | Nuke Tutorial (`compositing-epic-vfx-godrays-nuke-tutorial.md`) — explicitly cross-referenced by this video as covering the underlying GodRays technique in more depth (there: position-pass-driven noise; here: sparse Higx Point Render points, both feeding GodRays with an animated/tracked center).

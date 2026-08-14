@@ -276,7 +276,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** compositing, 3d-system, digital-matte-painting, denoise, grading, gizmo, intermediate
 - **Summary:** Six render-cost-saving compositing techniques: match real flicker to CG lights via `CurveTool` data copied into a desaturated multiply `Constant`; fake small bokeh lights with eroded `Checkerboard` + `Noise` (or the `ScreenFX` plugin); half-res render defocused elements; substitute 2.5D card projections for distant/nodal-pan-only 3D elements (single frame reused); denoise flickering specular by projecting the render back onto geometry and blending frames; mix a slow path-traced hero pass with a fast real-time-engine pass for cheap extra detail on secondary defocused elements.
 - **File:** tutorials/how-i-use-compositing-to-skip-thousands-of-hours-rendering.md
-- **Related:** How to DENOISE your CG in POST | Blender & Nuke Tutorial (`how-to-denoise-your-cg-in-post-blender-nuke-tutorial.md`) — covers technique 4 in full. Shares `3d-system`/`ScreenFX` with Create a Movie Quality Sci-Fi Laser Effect in Nuke and How I Made a FULL Star Wars Cinematic from JUST One Screenshot.
+- **Related:** How to DENOISE your CG in POST | Blender & Nuke Tutorial (`how-to-denoise-your-cg-in-post-blender-nuke-tutorial.md`) — covers technique 4 in full. Shares `3d-system`/`ScreenFX` with Create a Movie Quality Sci-Fi Laser Effect in Nuke and How I Made a FULL Star Wars Cinematic from JUST One Screenshot. High Level VFX Compositing that Nobody Shows on Youtube (`high-level-vfx-compositing-that-nobody-shows-on-youtube.md`) — shares `compositing`; same channel's methodology-over-technique teaching style.
 
 
 ### Nuke Compositing Artistic Basics (2/8): 3 Point Lighting
@@ -851,11 +851,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=PqbqxnBFOHg
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Nuke 14.x (2023 upload, explicitly cross-referenced by the Nuke-14-era "3D Laser Effect" video)
+- **Tags:** 3d-system, projection, particles, grading, procedural-texture, motion-graphics, intermediate
+- **Summary:** Makes God Rays interact with their landing surface by building the ground-contact matte first, then feeding it into GodRays so rays and pools of light share one source: an `Expression` node's `noise(r,g,b)` on a CG render's position pass (Grade with black-clamp OFF, animated offset for flow, Clamp for valid alpha) generates a matte that crawls across the actual 3D surface; applied twice (inverted-darken / non-inverted-brighten) and merged `over` the masked beauty. Covers edge-softening via self-blurred alpha, negative GodRays built from an object's own alpha for objects passing through light, and a dust/particle multiply-layering pass with realistic particle-size judgment and intentional over-sharpening for compression survival.
 - **File:** tutorials/compositing-epic-vfx-godrays-nuke-tutorial.md
+- **Related:** 3D Laser Effect | Nuke Compositing Tutorial (Higx Point Render) (`3d-laser-effect-nuke-compositing-tutorial-higx-point-render.md`) — that video explicitly reuses this GodRays technique; Build Entire FX with ONE Pass (`build-entire-fx-with-one-pass---nuke-tutorial.md`), Create 3D Noise (`create-3d-noise-nuke-compositing.md`) — share the position-pass-driven `noise()` expression technique.
 
 
 ### High Level VFX Compositing that Nobody Shows on Youtube
