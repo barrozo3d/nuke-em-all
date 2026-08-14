@@ -199,11 +199,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=2V7eYe8D3nY
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (cross-platform with Blender + AI upscaling; EmberGen appears in Part 2, not here)
+- **Version:** Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated; Classic 3D system only)
+- **Tags:** compositing, 3d-system, procedural-texture, gizmo, ai-tools, digital-matte-painting, advanced
+- **Summary:** Experimental "2D→3D→2D→3D" pipeline: reverse-engineers an AI concept image into Nuke procedural textures (`CellNoise`, `Glass` gizmos), displaces them onto Blender geometry and renders in Cycles, then re-imports that render into Nuke to abstract further via tiling + `PolarDistort` into radial "eye" patterns, re-projects onto a 3D Cylinder for an animated fractal element, and finishes with targeted-highlight grading plus a Topaz Gigapixel AI-upscale pass to recover detail lost from repeated resampling. Part 1 of a two-part "Stormy Crystal Skull" project.
 - **File:** tutorials/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md
+- **Related:** Stormy Crystal Skull Part 2 (once ingested) — direct continuation; 360 Spherical LatLong Textures | Nuke Tutorial (`360-spherical-latlong-textures-nuke-tutorial.md`) — shares the `PolarDistort` gizmo used for a different purpose.
 
 
 ### How I Made a FULL Star Wars Cinematic from JUST One Screenshot

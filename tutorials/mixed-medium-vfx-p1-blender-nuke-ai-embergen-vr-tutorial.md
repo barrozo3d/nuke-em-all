@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=2V7eYe8D3nY
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: needs-review
+app: "Nuke (cross-platform: Blender + AI image generation + Nuke 2D/3D pipeline; EmberGen mentioned as a topic but not actually used in this Part 1 — appears in Part 2)"
+version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated; Classic 3D system only)"
+tags: [compositing, 3d-system, procedural-texture, gizmo, ai-tools, digital-matte-painting, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Mixed Medium VFX P1 | Blender, Nuke, Ai, Embergen, VR Tutorial
@@ -23,20 +24,13 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-## Ingest Safeguard Report
+Frames captured — see "Captured Frames" section below.
 
-_Auto-generated at ingest/frame-capture time — explains why `extraction_status` may be `needs-review`. Safe to delete once reviewed._
-
-- **CRITICAL:** Empty transcript in chapter 'Part 2'
-
----
-
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+> Reviewed: the "empty transcript in chapter 'Part 2'" safeguard warning refers to
+> an 8-second sliver at the very end of the video (26:10-26:18) where the author
+> just says a one-line sign-off into the actual Part 2 topic ("we'll start talking
+> about the CG [skull] in this") with no further narrated content in this video —
+> not a transcription failure. The full 26-minute Part 1 content is intact above.
 
 
 ### Introduction [0:00]
@@ -361,30 +355,54 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [3:00] tutorials/frames/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial/frame_000.jpg
+- [7:00] tutorials/frames/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial/frame_001.jpg
+- [14:15] tutorials/frames/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial/frame_002.jpg
+- [18:55] tutorials/frames/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial/frame_003.jpg
+- [20:35] tutorials/frames/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial/frame_004.jpg
+- [21:05] tutorials/frames/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial/frame_005.jpg
+- [24:30] tutorials/frames/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+An experimental "2D → 3D → 2D → 3D" pipeline: AI-generated concept art is reverse-engineered into Nuke procedural noise patterns, displaced onto Blender geometry and rendered, then the render itself is re-imported into Nuke and abstracted further with tiling/polar-distort/cylinder-projection tricks to generate fractal-like VFX elements — finished with an AI upscaler (Topaz Gigapixel) to recover detail lost from repeated resampling.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy's self-described "sandbox" video (frame 000 shows the messy, unstructured node-graph browser used throughout) walks through building one frame of a larger "Stormy Crystal Skull" piece (see Part 2 / the separate "Stormy Crystal Skull" video). Starting from an AI-generated reference image, the author breaks its visual patterns down into primitive shapes he can recreate procedurally (Voronoi-like cells, warped grids), builds them in Nuke with the Nukepedia `CellNoise` gizmo (frame 001 shows the resulting sprawling noise-experimentation node tree) rather than Blender's material editor — reasoning that Nuke gives finer procedural control and it's a workflow he already knows. Those 2D textures get displaced onto simple Blender geometry (frame 002: a subdivided plane with a displacement/geo-node modifier visible in the outliner) and lit/rendered in Cycles at different camera angles to get physically-plausible reflections. The Blender render is then pulled back into Nuke's 2D side and abstracted further: cropped, tiled, flipped-and-tiled, and pushed through a Nukepedia `PolarDistort` node to fold the tiled render into an iris/eye-like radial pattern (frame 003 — the red/orange radial "Sauron eye" result), then that same distorted texture is wrapped onto a 3D cylinder and a camera flown through it to generate an animated fractal render (frames 005–006 — cyan/blue radial ring and kaleidoscope-style renders used as sci-fi "portal"/"eye" elements). A duplicated, offset cylinder pair adds cheap parallax. The chain finishes with color grading (targeted highlight desaturation to preserve a feeling of dynamic range rather than a flat overall desaturate+tint), subtle glow from the render's own emissive light layers, and — because the image had been resampled/reprojected so many times that fine edges went soft — a pass through Topaz Gigapixel AI upscaler, key-mixed back in only where edge sharpness needed restoring, plus a slight defocus to hide the seam since that area was meant to fall out of focus anyway.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Break an AI-generated reference image into recognizable procedural primitives (Voronoi/cell patterns, warped grids) by eye — this is a concepting/analysis step, not a node operation.
+2. Build matching procedural textures in Nuke rather than a 3D app's material editor: Nukepedia `CellNoise` as the base pattern, pushed through Grade (contrast) to sharpen cell definition, layered with a second Noise multiplied in for surface breakup, and `Posterize` for illustrative circular-ring variants.
+3. Warp organic edge variation into an otherwise-regular pattern using the Nukepedia `Glass` node, distorting one noise pattern with another so edges read as organic rather than perfectly circular/gridded.
+4. Export these 2D textures out of Nuke to use as **displacement maps** on simple geometry in Blender; light and render in Cycles, checking multiple camera angles since a highly reflective/glass-like material is extremely angle-of-incidence sensitive (lower camera angle = more Fresnel-driven surface reflection read).
+5. Bring the Blender render back into Nuke's 2D side: crop to isolate a region, `Tile`/repeat it, flip-and-tile for symmetry, then `PolarDistort` (Nukepedia) to fold the tiled pattern into a radial "iris/eye" composition — tile-count and distort settings directly control how abstract/fractal the result reads.
+6. Go back to 3D a second time: re-apply `PolarDistort` to flatten the pattern into texture space, then project/wrap it onto a **Cylinder** in Nuke's 3D system and fly a `Camera` through it — this produces an animated radial/fractal element (the "eye" shapes used later as a Stormy Crystal Skull element) purely from re-projected 2D texture, no new 3D modeling.
+7. Add cheap parallax: duplicate the cylinder, offset it slightly so the two overlapping radial layers separate visually as the camera moves, avoiding a flat 2D look.
+8. Color-finish: multiple `Grade`/`ColorCorrect` passes (partially in ACES), targeted highlight desaturation instead of a global desaturate+tint (preserves a sense of dynamic range), plus subtle `Glow` sourced from the render's own emissive/light elements.
+9. Recover fine detail lost from repeated resampling/reprojection: run the frame through **Topaz Gigapixel** (external AI upscaler, not a Nuke node), then `Merge`/key-mix the upscaled pass back in only around soft edges, adding a touch of defocus to blend the seam in the area that was going to be out of focus anyway.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** Grade, Noise, Posterize, Crop, Merge (key-mix), Transform, Camera (3D), Cylinder (3D geometry), ScanlineRender (implied for the 3D cylinder fly-through)
+- **Nukepedia gizmos:** `CellNoise` (Voronoi/cell-pattern generator — author notes Nuke's native noise options are more limited than dedicated 3D packages like Cinema 4D), `Glass` (distortion/warp using a second image as a displacement source), `PolarDistort` (rectangular↔polar remap — same gizmo family as the "360 Spherical LatLong Textures" tutorial, used here for an artistic radial-abstraction effect rather than sphere-wrapping)
+- **External / cross-app tools:** AI image generator (unnamed, for concept reference only), Blender (Cycles render engine, displacement modifiers, camera framing for Fresnel-driven reflections), Topaz Gigapixel (AI upscaler, used as a detail-recovery pass, not part of the Nuke graph)
+- **Workflow shorthand the author repeats throughout:** "2D → 3D → 2D → 3D" — procedural texture (Nuke) → displaced render (Blender) → abstraction via tiling/polar-distort (Nuke) → re-projection onto new 3D geometry (Nuke 3D) — a repeatable pattern for turning a single render into many derived VFX elements.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced — not because any single node is complex, but because the workflow chains speculative, iterative decisions across three tools with no fixed end goal; following along requires comfort experimenting rather than a fixed recipe.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Primarily Nuke, with Blender (Cycles) for the intermediate 3D render and an external AI upscaler (Topaz Gigapixel) — genuinely cross-platform, not a stub case, since the Nuke-side techniques (CellNoise/Glass/PolarDistort procedural texturing, the 2D-to-3D cylinder re-projection trick) are the majority of the runtime and are Nuke-specific enough to be the primary extraction target here. EmberGen (mentioned in the video title) does not actually appear in this Part 1 — it belongs to Part 2 ("Stormy Crystal Skull... Part 2", prhQhQ5AnNM), the direct continuation of this same project. Nuke version not stated on screen; per this skill's version-tracker, a 2022 upload falls in the 13.1 (Nov 2021) → 13.2 (Apr 2022) window. Uses only the Classic 3D system (Cylinder/Camera/ScanlineRender) — predates the 14.0-beta USD 3D overhaul.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, 3d-system, procedural-texture, gizmo, ai-tools, digital-matte-painting, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Stormy Crystal Skull | Nuke, Blender, Ai, Embergen, Mixed VFX Medium Part 2 (`stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2.md`, once ingested) — direct continuation of this project (Part 2), covering the CG skull itself and the EmberGen work referenced in this video's title.
+- 360 Spherical LatLong Textures | Nuke Tutorial (`360-spherical-latlong-textures-nuke-tutorial.md`) — shares the Nukepedia `PolarDistort` gizmo, used there for sphere-wrapping and here for artistic radial abstraction; useful to read together to see the same node used for two very different purposes.
