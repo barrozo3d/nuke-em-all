@@ -103,11 +103,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=ntx0Tm4ZYds
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** tracking, camera-tracking, compositing, roto, gizmo, intermediate
+- **Summary:** Diagnoses why a seemingly good 2D/planar track "slides" on hard edges — usually uncorrected lens distortion plus a shot-varying vignette, not a bad track. Shows the stabilize-and-invert diagnostic trick to reveal footage warp, prefers planar over single-point 2D tracking to reduce slip, hand-fixes remainders with the free `EyeTransform` gizmo, and manually roto-darkens frame edges over time to compensate for the vignette instead of trying to bake it into a static CG grade.
 - **File:** tutorials/why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md
+- **Related:** first entry tagged `tracking`/`camera-tracking` — future tracking tutorials should cross-link here.
 
 ---
 
