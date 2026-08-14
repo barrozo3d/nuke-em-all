@@ -635,6 +635,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** compositing, camera-tracking, 3d-system, gizmo, grading, roto, beginner
 - **Summary:** Beginner shortcut for sticking 2D color corrections/elements to a tracked 3D scene using the "ImagePlane" (Card3D-based) and "Pixels2Position" Nukepedia gizmos instead of full ST-map projections — sample a 3D point, dial in the card's distance, done.
 - **File:** tutorials/nuke-compositing-technique-card3d-pixelstopos-beginners.md
+- **Related:** Normally it costs $50,000+ For This Camera Move (`normally-it-costs-50000-for-this-camera-move.md`) — shares `3d-system`, `camera-tracking`; that video's Blender ImagePlane tool explicitly replicates this Card3D workflow.
 
 
 ### [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors)
@@ -658,6 +659,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** compositing, channels, grading, 3d-system, digital-matte-painting, beginner
 - **Summary:** Blender-side material setup (Geometry→Separate RGB→axis-swizzled Combine RGB→Emission gated by Light Path) to render a Nuke-Y-up-correct world-position pass, then uses it in Nuke via the "P_Mask" gizmo to pick-a-point-and-mask a local correction without rotoscoping.
 - **File:** tutorials/render-world-position-in-blender-for-nuke.md
+- **Related:** Normally it costs $50,000+ For This Camera Move (`normally-it-costs-50000-for-this-camera-move.md`) — shares cross-app Blender-to-Nuke pipeline pattern, `3d-system`.
 
 
 ### Can I Create a Speeder Chase on a TINY Greenscreen?
@@ -669,7 +671,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** compositing, relighting, gizmo, digital-matte-painting, projection, fx-simulation, virtual-production, intermediate
 - **Summary:** Full-pipeline BTS case study: Iceland volcano drone photogrammetry → CG vehicle built to a 3D-scanned actor's dimensions (practical rig was just bike parts on a broomstick against a garage greenscreen) → Nuke map painting/multi-camera projection to blend photography onto CG terrain → FX element compositing (smoke, debris, template sparks/lasers) → final integration via the CA_Relight self-shadowing gizmo. Nuke UI shown on-screen only once (the CA_Relight graph); mostly narrated pipeline montage.
 - **File:** tutorials/can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md
-- **Related:** I Made VFX Relighting WAY Better in Nuke (`i-made-vfx-relighting-way-better-in-nuke.md`), Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`), I Brought a Greenscreen in Arctic Conditions for this Film (`i-brought-a-greenscreen-in-arctic-conditions-for-this-film.md`), The BEST Way to Use Normals to Relight in Nuke (NEW Toolset) (`the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md`) — shares `relighting`, `gizmo`, `digital-matte-painting`.
+- **Related:** I Made VFX Relighting WAY Better in Nuke (`i-made-vfx-relighting-way-better-in-nuke.md`), Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`), I Brought a Greenscreen in Arctic Conditions for this Film (`i-brought-a-greenscreen-in-arctic-conditions-for-this-film.md`), The BEST Way to Use Normals to Relight in Nuke (NEW Toolset) (`the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md`) — shares `relighting`, `gizmo`, `digital-matte-painting`. Normally it costs $50,000+ For This Camera Move (`normally-it-costs-50000-for-this-camera-move.md`) — shares the same "speeder" vehicle CG asset and Iceland/action-sequence project.
 
 
 ### Parallax HAX | Nuke Compositing [Advanced]
@@ -802,11 +804,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=mEeCZFjpO8s
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (cross-platform: Polycam/iPhone LiDAR + Blender for scan capture/hole-filling; compositing is pure Nuke)
+- **Version:** Nuke 14.x (2023 upload, prequel to the Nuke-14-era "Creating a 3D Hole" video)
+- **Tags:** projection, 3d-system, digital-matte-painting, roto, gizmo, grading, intermediate
+- **Summary:** Feature-film clean-plate methodology: build real 3D geometry (cards, baked point-cloud mesh, or a LiDAR scan via Polycam) for everything the removed object occludes rather than projecting onto a flat card (causes visible stretching); hole out and vertex-merge scan geometry where the object was; project from multiple real angles so restored detail is never invented ("use what's real"); dissolve/EyeTransform-correct between overlapping patches to hide geometry misalignment and perspective drift over time; fake infinite-parallax surfaces like grass with a subdivided+displaced card or a noise-broken-up patch edge (FractalBlur gizmo); and always project from the highest-resolution (closest) usable camera angle.
 - **File:** tutorials/cleanplate-projections-nuke-compositing-guide.md
+- **Related:** Creating a 3D Hole using Nuke + Photoshop A.I (Firefly) Tutorial (`creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial.md`) — direct sequel, builds on these techniques with Firefly-generated projection textures.
 
 ---
 
