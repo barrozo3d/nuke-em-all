@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=ntx0Tm4ZYds
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [tracking, camera-tracking, compositing, roto, gizmo, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/why-your-vfx-tracks-arent-sticking-and-how-to-fix-it/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Why your VFX Tracks aren't "Sticking" (and how to Fix it)
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py why-your-vfx-tracks-arent-sticking-and-how-to-fix-it <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Explaining Tracking Problems in Nuke [0:00]
@@ -199,30 +195,54 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:23] tutorials/frames/why-your-vfx-tracks-arent-sticking-and-how-to-fix-it/frame_000.jpg
+- [2:24] tutorials/frames/why-your-vfx-tracks-arent-sticking-and-how-to-fix-it/frame_001.jpg
+- [4:00] tutorials/frames/why-your-vfx-tracks-arent-sticking-and-how-to-fix-it/frame_002.jpg
+- [4:48] tutorials/frames/why-your-vfx-tracks-arent-sticking-and-how-to-fix-it/frame_003.jpg
+- [5:59] tutorials/frames/why-your-vfx-tracks-arent-sticking-and-how-to-fix-it/frame_004.jpg
+- [6:25] tutorials/frames/why-your-vfx-tracks-arent-sticking-and-how-to-fix-it/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A "sliding" 2D/planar track on CG-integration shots is usually not a tracking error at all — it's uncorrected lens distortion (and a matching vignette) warping the plate, which a single-point or even planar track can't fully compensate for; diagnose it by stabilizing-and-inverting the track, then fix the residual slip with a soft hand-warp gizmo and a manual roto-driven vignette darken.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy diagnoses why a seemingly correct 2D track on a castle plate "slides" at the edges during fast scrubbing: without a lens distortion grid/profile, the footage itself is warping, and the vignette is also silently darkening the black levels shot-to-shot, so a CG grade matched on one frame will drift on others. The fix chain is: prefer a planar track over a single-point 2D track (it captures perspective/shape warp, not just one point), stabilize+invert to reveal residual slip, then hand-correct the last bit of drift with the free Nucopedia `EyeTransform` gizmo (a soft, animatable warp) roto'd to specific edges, and finally roto+manually darken the frame edges over time to compensate for the vignette instead of trying to track/bake a color grade to it.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Judge track type needed first: distant/far-parallax elements can often be treated as a near-nodal pan (2D or planar track) rather than requiring a full 3D track.
+2. Build both a `Tracker` (2D, single-point) and a `PlanarTracker` version of the same track to compare.
+3. QC by scrubbing fast on the timeline and watching hard edges (windows, castle walls) for sliding, not just casual playback.
+4. Diagnose root cause: apply the `MatchMove`/`Stabilize` node from the track, then invert it — this locks the tracked region and reveals that the underlying footage itself is still moving/warping (lens distortion), not the track.
+5. Check for a vignette artifact concurrently: watch black levels (e.g. sky, shadow areas) over time — a vignette darkens differently frame to frame, meaning a static CG grade match will only hold on the reference frame.
+6. Prefer a planar track over single-point 2D tracking as the first-line fix — tracking a whole area/pattern bakes more of the perspective warp into the resulting transform, reducing residual slip.
+7. Hand-fix remaining slip with the free `EyeTransform` gizmo (Nucopedia) — a soft, roto-maskable, animatable warp — applied to specific sliding edges and keyframed over the shot.
+8. Correct the vignette manually rather than tracking it: rough roto on the frame edges, animate a slight darken as the vignette encroaches, instead of trying to bake a moving vignette into a static CG color grade.
+9. Treat vendor-supplied lens distortion profiles skeptically — they're not always 100% accurate and may still need manual warp touch-ups on top.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Tracker` — single-point 2D track (baseline/comparison case that shows the sliding problem clearest)
+- `PlanarTracker` — planar/area track, preferred over single-point 2D for reducing lens-warp-induced slip
+- `MatchMove` / `Stabilize` (from tracker export) — used inverted as a diagnostic to reveal residual footage warp
+- `EyeTransform` (free Nucopedia gizmo) — soft, animatable local warp for hand-correcting residual slip at specific edges
+- `RotoPaint` — rough edge roto for both the hand-warp mask and the manual vignette-darken compensation
+- Lens distortion grid/profile (when available) — root-cause fix; absence of one is the actual cause of most "bad track" symptoms in this video
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (Nuke beginner/intermediate series, part of Compositing Academy's practice-project course). No on-screen version banner or OCIO/ACES metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+tracking, camera-tracking, compositing, roto, gizmo, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+None yet in the knowledge base share the `tracking`/`camera-tracking` tags — first entry establishing these. Future tracking-focused tutorials (2020's "Tracking Concepts in Nuke for Beginners", 2021's "Parallax HAX") should cross-link here once ingested.
