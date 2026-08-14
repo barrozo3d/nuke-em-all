@@ -523,11 +523,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=Nk6iluY4shE
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** gizmo, procedural-texture, digital-matte-painting, compositing, aovs, intermediate
+- **Summary:** Dedicated tutorial for the free `PScatter` gizmo (author's own plugin), which scatters an arbitrary 2D image — not just noise — across a CG surface using an object-space position-reference pass (works from Blender/Houdini/Maya), with density and scatter-scale controls. Demonstrated adding scratch/dirt texture as a masked `Grade` multiply for surface wear, and scattering animated patterns (masked by render alpha) as a look-dev starting point for camouflage/force-field-impact effects.
 - **File:** tutorials/break-up-your-perfect-cg-renders-with-this-free-plugin.md
+- **Related:** Referenced (as a rejected look-dev experiment) in Create a Movie Quality Sci-Fi Laser Effect in Nuke (`create-a-movie-quality-sci-fi-laser-effect-in-nuke.md`) — this is PScatter's dedicated tutorial. Shares position-data-driven texture technique with Create 3D Noise | Nuke Compositing and Build Entire FX with ONE Pass - Nuke Tutorial.
 
 
 ### Compositing in UV space with Projections | Nuke [Advanced]

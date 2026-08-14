@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=Nk6iluY4shE
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [gizmo, procedural-texture, digital-matte-painting, compositing, aovs, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/break-up-your-perfect-cg-renders-with-this-free-plugin/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Break up your "PERFECT CG" Renders with this FREE Plugin
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py break-up-your-perfect-cg-renders-with-this-free-plugin <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -72,30 +68,53 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:55] tutorials/frames/break-up-your-perfect-cg-renders-with-this-free-plugin/frame_000.jpg
+- [1:20] tutorials/frames/break-up-your-perfect-cg-renders-with-this-free-plugin/frame_001.jpg
+- [1:56] tutorials/frames/break-up-your-perfect-cg-renders-with-this-free-plugin/frame_002.jpg
+- [2:14] tutorials/frames/break-up-your-perfect-cg-renders-with-this-free-plugin/frame_003.jpg
+- [2:33] tutorials/frames/break-up-your-perfect-cg-renders-with-this-free-plugin/frame_004.jpg
+- [3:06] tutorials/frames/break-up-your-perfect-cg-renders-with-this-free-plugin/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+The free `PScatter` gizmo scatters an arbitrary 2D image (not just a noise pattern) randomly across a CG surface using a position-reference render pass (object-space P data, from any 3D app), giving art-directable, image-based surface breakup — dirt, scratches, snow, camouflage/impact patterns — instead of a "too perfect" clean CG render.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy releases `PScatter`, a free Nuke plugin the author built after finding no existing tool that scatters arbitrary images (not just noise) across a 3D surface using position data. Fed an object-space position-reference pass (rendered from Blender, but the technique works with position data from Houdini, Maya, or any 3D app since it's a universal pass type), PScatter repeats and randomly places a source image across the model's surface, sticking to it as the object moves. Demonstrated first with a color wheel to show the mechanics (density controls how many points are randomly scattered across the position data; scatter scale controls the size of each scattered instance; results need re-tuning per scene scale, since a large-scale world's position data will scatter oddly at default settings), then practically with a cropped/feathered (softness-controlled) scratch texture from textures.com, used as a `Grade` mask (multiplied) onto the CG beauty to add surface wear — flagged as still needing further breakup (e.g. via position mattes) to avoid looking too uniform. A creative extension scatters an animated pattern (rather than a static texture) across a model, masked by the render's own alpha to remove background bleed, suggested as a starting point for look-dev on effects like camouflage, stealth patterns, or a force-field impact reaction traveling across a CG surface.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Render an object-space (not world-space) position-reference pass from any 3D application (Blender, Houdini, Maya) — this data "sticks" to the model's own surface rather than to world coordinates.
+2. Feed that position pass into `PScatter` along with a source image to scatter (a texture, a scratch/dirt image, or even an animated pattern).
+3. Tune `density` to control how many random scatter points are placed across the position data.
+4. Tune `scatter scale` to control the size of each individual scattered image instance.
+5. Re-tune density/scale per shot — position data from a large-scale world will scatter unexpectedly at default settings tuned for a smaller object, so settings aren't universal across scenes.
+6. For practical surface-wear use: source a texture (e.g. a scratch/dirt image from textures.com), crop it with a softness-feathered edge, and scatter it via PScatter.
+7. Use the scattered result as a `Grade` mask (multiplied onto the CG beauty) to add wear/dirt/scratches without a uniform, obviously-repeated look; combine with additional breakup methods (e.g. position mattes) if the result reads too uniform on its own.
+8. For animated/creative pattern use: scatter an animated source pattern (rather than a static image) across the model, and mask out any background color bleed using the CG render's own alpha channel.
+9. Treat this as a fast look-dev starting point for effects like camouflage/stealth patterns or a traveling force-field/impact reaction across a CG surface — not a finished effect on its own.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `PScatter` (free custom gizmo, author's own plugin) — scatters an arbitrary source image across a 3D surface using an object-space position-reference render pass; controls include density (point count) and scatter scale (instance size)
+- Object-space position-reference (P) pass — universal 3D render pass type (works from Blender, Houdini, Maya, etc.), distinct from world-position; required input for PScatter to stick images to the model's own surface
+- `Crop` (with softness) — feathers the edge of a source texture before scattering
+- `Grade` (masked, multiplied) — applies the scattered result as a wear/dirt breakup mask onto the CG beauty
+- Render alpha — used as a mask to remove background bleed when scattering an animated pattern
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. No on-screen version banner or OCIO metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+gizmo, procedural-texture, digital-matte-painting, compositing, aovs, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+`PScatter` is the same plugin referenced (as a rejected look-dev experiment) in Create a Movie Quality Sci-Fi Laser Effect in Nuke (`create-a-movie-quality-sci-fi-laser-effect-in-nuke.md`) — this video is its dedicated tutorial. Shares position-data-driven procedural texture technique with Create 3D Noise | Nuke Compositing (`create-3d-noise-nuke-compositing.md`) and Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`).
