@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=dbkOqzRvWKY
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (mentioned only — compositing node work not shown on screen)"
+version: "not specified"
+tags: [compositing, roto, digital-matte-painting, camera-tracking, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/how-i-faked-a-200m-movie-scene-in-my-driveway/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # How I Faked a $200M Movie Scene (In my DRIVEWAY!)
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py how-i-faked-a-200m-movie-scene-in-my-driveway <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -154,30 +150,51 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:37] tutorials/frames/how-i-faked-a-200m-movie-scene-in-my-driveway/frame_000.jpg
+- [2:44] tutorials/frames/how-i-faked-a-200m-movie-scene-in-my-driveway/frame_001.jpg
+- [3:22] tutorials/frames/how-i-faked-a-200m-movie-scene-in-my-driveway/frame_002.jpg
+- [3:53] tutorials/frames/how-i-faked-a-200m-movie-scene-in-my-driveway/frame_003.jpg
+- [4:36] tutorials/frames/how-i-faked-a-200m-movie-scene-in-my-driveway/frame_004.jpg
+- [5:24] tutorials/frames/how-i-faked-a-200m-movie-scene-in-my-driveway/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Behind-the-scenes production/planning case study (not a node-by-node Nuke tutorial): a low-budget Templar-cinematic set extension is made feasible mainly through pre-production discipline — real practical costume, kitbashed/simple CG environment matched to a deliberate color palette, and especially a previs-driven drone camera angle chosen specifically so the walking actor's silhouette never breaks the horizon line, eliminating the need for rotoscoping entirely and thereby controlling compositing cost before a single Nuke node is touched.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy documents shooting a medieval/Templar VFX set-extension sequence with no green screen, no built set, and no big lighting rig — just a driveway, a camera, a drone, real practical costume (heavy metal helmet chosen because its imperfect, non-mirror-like reflections don't give away the missing environment; high-quality fabric chosen because cheap fabric's drape and light response reads as fake), and a simple kitbashed CG environment (columns, background architecture) built with a deliberate limited palette (red/white/black/gold, referencing Star Wars: The Last Jedi and Star Trek color-grading choices) so complexity stays low while still reading as high-budget. The standout cost-control technique is previs-driven drone planning: real-world measurements (altitude via laser rangefinder, matched focal lengths plugged into Blender cameras) are used to precisely place the drone so that, from that specific angle, the walking actor's silhouette never breaks the horizon against the snow — meaning the actor can simply be masked out with a projected rectangular roto shape onto the ground plane and blended into the CG environment, with zero character rotoscoping required. Handheld shots are filmed on an FX3 + gimbal without a green screen (avoiding green spill/reflection issues in a windy outdoor environment) for extraction later. The actual Nuke compositing step — described only as "hundreds of small color corrections," 3D color grades on the CG environment, simulated lens characteristics, and highlight boosts on the real footage — is summarized in a single sentence and not demonstrated on screen.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Source real practical costume/props deliberately chosen for how they'll behave optically on camera: a non-mirror-finish metal helmet (won't reveal a missing real environment through reflections) and high-quality fabric (drapes and reflects light convincingly, unlike cheap substitutes).
+2. Build a simple, kitbashed CG environment (repeated architectural elements, simple textures, controlled lighting) rather than a highly detailed one — referencing how even blockbuster films (cited: Dune) achieve cinematic results from simple geometric forms via camera angle, lighting, and level-of-detail control rather than raw complexity.
+3. Choose a deliberate, limited color palette up front (here: red/white/black/gold, inspired by specific reference films) to guide both the CG build and the eventual grade.
+4. Previs the shot: block camera angles against the CG environment in advance to know exactly where to physically stand/place the drone when filming on location.
+5. For drone shots specifically: take precise real-world measurements (laser-measured altitude, matched real lens focal length plugged into the Blender virtual camera) so the previs angle can be reproduced exactly on the day.
+6. Choose the drone's flight angle specifically so the actor's silhouette stays below the horizon line against the background (here, snow) — this is the cost-control trick: at that angle, the actor region can be isolated with a simple projected rectangular roto shape onto the ground rather than requiring full character rotoscoping.
+7. Film handheld/ground shots without a green screen when the background will be fully replaced anyway, to avoid green-spill contamination and to work more easily in an uncontrolled outdoor/windy environment.
+8. Add final CG motion detail cheaply (flags, snow particles, subtle secondary-character animation) rather than complex simulation, with the primary motion/performance coming from the real filmed actor plate.
+9. Finish in Nuke with per-region color correction, 3D-aware color grades on the CG environment, simulated lens characteristics, and highlight boosts on the real footage to unify the look (not demonstrated on screen in this video).
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- No Nuke nodes are shown on screen in this video — compositing is summarized verbally only ("hundreds of small color corrections," 3D color grades, simulated lens characteristics, highlight boosts).
+- Drone-angle rotoscoping-avoidance technique — a planning-level compositing cost-control method: choose camera placement so a moving subject's silhouette never crosses a background edge (here, the horizon), allowing a simple projected roto rectangle on the ground plane to substitute for full rotoscoping.
+- Blender virtual camera setup matched to real lens focal length + laser-measured drone altitude for precise previs-to-production camera matching.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Not applicable at the node level — this is a production-planning/BTS case study; no Nuke compositing technique is demonstrated on screen. The rotoscoping-avoidance planning concept itself is Beginner/Intermediate to apply.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke is named as the finishing tool (color correction, 3D grades on CG, lens simulation, highlight boosts) but no Nuke UI, node graph, or version indicator appears on screen — version not specified, and this entry should not be relied on for any concrete Nuke node technique.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, roto, digital-matte-painting, camera-tracking, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares the BTS/pipeline-case-study format (Nuke mentioned but not shown) with Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`) — both document on-location virtual-production/planning workflows rather than node-level Nuke technique.

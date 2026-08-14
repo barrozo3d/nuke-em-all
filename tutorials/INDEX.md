@@ -383,11 +383,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=dbkOqzRvWKY
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (mentioned only — compositing node work not shown on screen)
+- **Version:** not specified
+- **Tags:** compositing, roto, digital-matte-painting, camera-tracking, intermediate
+- **Summary:** BTS production-planning case study for a low-budget Templar VFX set extension (no green screen, no set, driveway shoot). Key transferable technique: previs-driven drone camera placement (matched real lens focal length in Blender + laser-measured altitude) chosen specifically so the walking actor's silhouette never breaks the horizon — meaning a simple projected roto rectangle substitutes for full character rotoscoping, controlling compositing cost before Nuke work even starts. The actual Nuke finishing pass (color corrections, 3D CG grades, lens simulation) is summarized verbally only, not shown on screen.
 - **File:** tutorials/how-i-faked-a-200m-movie-scene-in-my-driveway.md
+- **Related:** Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`) — shares the BTS/pipeline-case-study format (Nuke mentioned but not demonstrated).
 
 
 ### A new way to design VFX | Virtual Reality | Gravity Sketch + Nuke Tutorial
