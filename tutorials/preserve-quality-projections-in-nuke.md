@@ -158,3 +158,4 @@ Nuke / NukeX (3D system/projection setup implies NukeX). Version not stated on s
 ## Related Tutorials
 - Ray Render in Nuke Tutorial | Compositing 3d Reflections (`ray-render-in-nuke-tutorial-compositing-3d-reflections.md`) — shares `3d-system`; that video's Project3D-heavy proxy-geometry workflow benefits directly from this one's projection-quality tips (limiting re-projected area, filter choice).
 - Compositing in UV space with Projections | Nuke [Advanced] (`compositing-in-uv-space-with-projections-nuke-advanced.md`) — shares `3d-system`; that video's "only re-project the changed area, not the whole frame" step directly echoes this one's core quality-preservation principle.
+- Nuke Compositing Technique | Card3D + PixelsToPos [Beginners] (`nuke-compositing-technique-card3d-pixelstopos-beginners.md`) — shares `3d-system`, `roto`, `gizmo`; a beginner-friendly, gizmo-driven alternative to full projection setups for sticking corrections/elements to a tracked scene.

@@ -157,7 +157,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** 3d-system, compositing, tracking, roto, cryptomatte, digital-matte-painting, intermediate
 - **Summary:** Applies the classic video-game "sprite card" trick (2D texture on a single 3D polygon, convincing up to ~70-90° viewing angle) to merge a practical saliva element onto a CG dragon's mouth via a tracked `Card3D`/`ScanlineRender` card, instead of simulating saliva in CG. Covers aspect-ratio matching, UV flip/flop/turn correction, RotoPaint stencil masking, extending a too-short element with `Retime` in motion/frame mode (subtle reverse-jiggle), and — the key problem-solving beat — abandoning the 3D card system for the handful of frames where the angle breaks the illusion, hand 2D-tracking the source footage directly instead.
 - **File:** tutorials/this-forgotten-vfx-trick-is-still-shockingly-effective.md
-- **Related:** Nuke Compositing Technique | Card3D + PixelsToPos [Beginners] (2021, not yet ingested) — shares `3d-system`, `tracking`, the Card3D/ScanlineRender sprite-card technique.
+- **Related:** Nuke Compositing Technique | Card3D + PixelsToPos [Beginners] (`nuke-compositing-technique-card3d-pixelstopos-beginners.md`) — shares `3d-system`, `camera-tracking`, the Card3D/ScanlineRender sprite-card technique.
 
 
 ### Re-lighting Real Footage | Nuke Compositing [Advanced]
@@ -630,10 +630,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=w5xFpajzC8s
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2021 upload, Nuke 13.0 era)
+- **Tags:** compositing, camera-tracking, 3d-system, gizmo, grading, roto, beginner
+- **Summary:** Beginner shortcut for sticking 2D color corrections/elements to a tracked 3D scene using the "ImagePlane" (Card3D-based) and "Pixels2Position" Nukepedia gizmos instead of full ST-map projections — sample a 3D point, dial in the card's distance, done.
 - **File:** tutorials/nuke-compositing-technique-card3d-pixelstopos-beginners.md
 
 

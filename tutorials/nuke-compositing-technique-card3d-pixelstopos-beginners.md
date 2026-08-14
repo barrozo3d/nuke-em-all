@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=w5xFpajzC8s
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (2021 upload, Nuke 13.0 era — see version-tracker.md)"
+tags: [compositing, camera-tracking, 3d-system, gizmo, grading, roto, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-compositing-technique-card3d-pixelstopos-beginners/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Compositing Technique | Card3D + PixelsToPos [Beginners]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-compositing-technique-card3d-pixelstopos-beginners <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -321,30 +317,65 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:55] tutorials/frames/nuke-compositing-technique-card3d-pixelstopos-beginners/frame_000.jpg
+- [3:05] tutorials/frames/nuke-compositing-technique-card3d-pixelstopos-beginners/frame_001.jpg
+- [4:00] tutorials/frames/nuke-compositing-technique-card3d-pixelstopos-beginners/frame_002.jpg
+- [7:00] tutorials/frames/nuke-compositing-technique-card3d-pixelstopos-beginners/frame_003.jpg
+- [9:40] tutorials/frames/nuke-compositing-technique-card3d-pixelstopos-beginners/frame_004.jpg
+- [10:05] tutorials/frames/nuke-compositing-technique-card3d-pixelstopos-beginners/frame_005.jpg
+- [11:10] tutorials/frames/nuke-compositing-technique-card3d-pixelstopos-beginners/frame_006.jpg
+- [13:50] tutorials/frames/nuke-compositing-technique-card3d-pixelstopos-beginners/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Using the "ImagePlane" Nukepedia gizmo (a wrapped-up `Card3D` that always scales to fill the camera frustum at a given Z-distance) plus a custom "Pixels2Position" gizmo (a more reliable alternative to Nuke's native `PointsTo3D`) to quickly stick 2D color corrections or elements onto a tracked 3D scene, without building a full projection setup.
 
 ### Summary
-[PENDING EXTRACTION]
+A beginner-level alternative to full ST-map/projection-based CG integration (referenced as a more advanced technique from an earlier video). With a 3D camera already tracked, the "ImagePlane" gizmo creates a card that automatically scales outward from the camera to always exactly fill the frustum at whatever Z-distance is set — so positioning a roto shape drawn on a single reference frame just requires dialing in one distance value, and the shape then tracks with the 3D scene as the camera moves. The hard part is knowing the correct distance value; the video shows Nuke's native `PointsTo3D` (three-point triangulation across time) as one option but demonstrates it's unreliable ("hit or miss") on this shot, and prefers the "Pixels2Position" gizmo instead, which achieves an accurate 3D point from just two sampled screen positions (control-click to sample, "Add Point") without the triangulation UI. That 3D point is then used purely as a visual reference to dial in the ImagePlane's distance knob until the card lines up with the target (e.g. the base of a tree). The technique works for both live-action and CG shots, is good for color corrections and adding elements (e.g. masked smoke/fog around a tree base via a `Merge`), and dramatically speeds up rotoscoping since the roto shape only needs to be drawn once on a reference frame. Caveat: because the card always faces the camera and is flat, it only sticks well to roughly-planar/camera-facing surfaces close to the reference point — not curved 3D geometry (shown drifting on the far side of the tree) or wide flat ground planes receding into depth, which still need real 3D geometry and projection.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Track the 3D camera as normal (prerequisite — this technique assumes an existing 3D camera track).
+2. Download/install the "ImagePlane" and "Pixels2Position" gizmos from Nukepedia (both are also bundled in the project's provided script).
+3. Connect the ImagePlane gizmo to the tracked camera and to a roto shape (set to output alpha) used as the correction/element mask.
+4. On the frame you want to draw on, quickly roto a rough shape (e.g. around the base of a tree) — this becomes the "reference frame."
+5. In the ImagePlane gizmo's properties, set the reference frame number to match.
+6. Plug the mask output into a `Grade` (or other correction node) to preview the effect; play through the shot — it will roughly track but drift if the distance value is wrong.
+7. To find the correct distance: either read Nuke's native 3D point cloud from the camera tracker (unreliable/hard to interpret on ambiguous scenes), or use `PointsTo3D` with three manually-set points (A/B/C) spread out in time via "Set Frame" then "Calculate" (can give poor/glitchy results), or — preferred — use the "Pixels2Position" gizmo: plug in the undistorted footage and camera, go to a frame, enable the overlay (hover + `Q`), control-click to sample a screen point, hit "Add Point," repeat on a later frame; it resolves an accurate 3D point from as few as two samples without a full solve.
+8. Open both the ImagePlane's and the Pixels2Position's (or the resulting axis/point) property panels simultaneously so their 3D positions are both visible in the same 3D viewer.
+9. Manually adjust the ImagePlane's Distance knob (arrow keys nudge it) until the card's position lines up with the sampled 3D point.
+10. Once aligned, the roto shape rides the card through the shot, automatically compensating for camera movement — verify accuracy, noting it degrades on non-planar surfaces (e.g. the far side of a rounded tree trunk).
+11. For adding elements instead of corrections: switch the Grade for a `Merge`, scale/mask as needed (e.g. a Noise node masked down) to place an element like smoke around the anchored point.
+12. (Manual-equivalent explanation, not required) The same result can be built manually with `Roto` → `Project3D` (camera held on the reference frame) → scaled `Card` → `ScanlineRender` — heavier and slower per-instance than the gizmo, especially with many instances in a script; the gizmo is purely a convenience/performance wrapper around this exact node chain.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `ImagePlane` (Nukepedia gizmo) — wraps `Card3D`; key knobs: reference frame number, Distance (Z-distance from camera, manually dialed/nudged with arrow keys)
+- `Pixels2Position` (Nukepedia gizmo, called "Pixels2Position3" in the node graph) — inputs: undistorted footage + tracked camera; workflow: hover+`Q` for overlay, Ctrl-click to sample a screen point, "Add Point" button; resolves an accurate 3D point from as few as 2 samples, preferred over native `PointsTo3D` for reliability/speed
+- `PointsTo3D` (native Nuke node, shown as "PointsTo3D2") — three-point (A/B/C) triangulation across time via manual "Set Frame" per point + "Calculate"; called out as inconsistent/"hit or miss" on this shot
+- `Roto` — quick reference-frame shape (set to output Alpha) used as the correction/element mask
+- `Grade` — color-correction node driven by the ImagePlane-projected roto mask
+- `Merge` — swapped in for `Grade` when adding an element (e.g. masked smoke/fog) instead of a color correction
+- `Project3D` + `Card` + `ScanlineRender` — the manual/native equivalent of what the ImagePlane gizmo automates, held on the same reference-frame camera, shown side-by-side for comparison
+- `Camera` (labeled "Camera4" in the node graph) — the existing tracked 3D camera feeding both gizmos
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (core toolset — `Card3D`, `PointsTo3D`, `Project3D`, `ScanlineRender` are all native; ImagePlane and Pixels2Position are third-party Nukepedia gizmos). No on-screen version number visible in the captured frames and none stated in the transcript. Video published 2021 — falls in the Nuke 13.0 era (13.0 released 2021-03-17); see `references/version-tracker.md`.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, camera-tracking, 3d-system, gizmo, grading, roto, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Compositing in UV space with Projections | Nuke [Advanced]](compositing-in-uv-space-with-projections-nuke-advanced.md) — this video explicitly references that earlier, more advanced ST-map/projection-based technique for sticking corrections to CG scenes as the "harder way" this beginner method shortcuts.
+- [Tracking Concepts in Nuke for Beginners](tracking-concepts-in-nuke-for-beginners.md) — shares the underlying camera-tracking/triangulation theory this video applies via `PointsTo3D` and Pixels2Position.
+- [Preserve Quality | Projections in Nuke](preserve-quality-projections-in-nuke.md) — shares the 3D-system/projection theme, alternate approach to sticking paint/roto onto tracked footage.
+- [Ray Render in Nuke Tutorial | Compositing 3d Reflections](ray-render-in-nuke-tutorial-compositing-3d-reflections.md) — shares `3d-system`/`camera-tracking` tags; both build practical tricks on top of a tracked camera setup.
+- [This Forgotten VFX Trick Is Still Shockingly Effective](this-forgotten-vfx-trick-is-still-shockingly-effective.md) — shares the `Card3D`/`ScanlineRender` sprite-card technique this video's ImagePlane gizmo wraps up.
