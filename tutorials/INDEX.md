@@ -321,6 +321,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-compositing-artistic-basics-58---reflections-and-fresnel.md
 
+
+### Rotoscoping in Nuke Tutorial | 5 Beginner Tips
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=rBPz0LL0yF0
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/rotoscoping-in-nuke-tutorial-5-beginner-tips.md
+
 ---
 
 ## Tag Reference
