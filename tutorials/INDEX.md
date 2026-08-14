@@ -653,10 +653,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=vrar9ALWG_g
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Blender (position-pass render setup) + Nuke (P-Mask usage)
+- **Version:** not specified (2021 upload, Nuke 13.0 era)
+- **Tags:** compositing, channels, grading, 3d-system, digital-matte-painting, beginner
+- **Summary:** Blender-side material setup (Geometry→Separate RGB→axis-swizzled Combine RGB→Emission gated by Light Path) to render a Nuke-Y-up-correct world-position pass, then uses it in Nuke via the "P_Mask" gizmo to pick-a-point-and-mask a local correction without rotoscoping.
 - **File:** tutorials/render-world-position-in-blender-for-nuke.md
 
 

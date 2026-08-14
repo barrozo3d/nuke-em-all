@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=vrar9ALWG_g
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Blender (position-pass render setup) + Nuke (P-Mask usage)"
+version: "not specified (2021 upload, Nuke 13.0 era — see version-tracker.md)"
+tags: [compositing, channels, grading, 3d-system, digital-matte-painting, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/render-world-position-in-blender-for-nuke/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Render World Position in Blender for Nuke
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py render-world-position-in-blender-for-nuke <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -108,30 +104,61 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:00] tutorials/frames/render-world-position-in-blender-for-nuke/frame_000.jpg
+- [1:45] tutorials/frames/render-world-position-in-blender-for-nuke/frame_001.jpg
+- [2:20] tutorials/frames/render-world-position-in-blender-for-nuke/frame_002.jpg
+- [3:10] tutorials/frames/render-world-position-in-blender-for-nuke/frame_003.jpg
+- [3:45] tutorials/frames/render-world-position-in-blender-for-nuke/frame_004.jpg
+- [4:15] tutorials/frames/render-world-position-in-blender-for-nuke/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Building a world-space position pass in Blender via a custom material (`Geometry` → `Separate RGB` → channel-swizzled `Combine RGB` → `Emission` gated by a `Light Path` "Is Camera Ray" check into `Mix Shader`), with the axes reordered to match Nuke's Y-up convention, then using that RGB position data in Nuke as a P-Mask (a Nukepedia gizmo, "P_Mask" by FranklinVFX) to drive local, position-based corrections.
 
 ### Summary
-[PENDING EXTRACTION]
+A short cross-application pipeline tutorial: Blender's world axes don't match Nuke's (Blender is Z-up, Nuke expects Y-up), so a naive position pass renders with the wrong axis mapped to each color channel. The fix is a dedicated Blender material assigned to all objects: a `Geometry` node's Position output feeds a `Separate RGB`, whose R/G/B are rewired into a `Combine RGB` with a channel swap (red→blue, green→red, blue→green) to correct the orientation for Nuke. That result feeds an `Emission` node (strength 1) so the pass carries pure position data unaffected by scene lighting, and a `Light Path` node's "Is Camera Ray" output drives a `Mix Shader` so the position data only appears in camera rays (not reflections/shadows/etc.), feeding the material's Surface output. Render settings must use full float color depth (RGB is sufficient; RGBA not required) so negative position values survive — the video notes that black-looking areas in the position pass are actually valid negative values, not a broken render. In Nuke, the rendered position-pass footage is plugged into a "P_Mask" gizmo (from FranklinVFX.com), which offers a color-picker-style pick-a-point-in-3D-space workflow to derive a local alpha/mask from world position — visualized in Nuke's 3D viewer as a sphere at the picked point. That alpha can then drive local corrections (e.g. `Gamma` down on just one turret of a large model) without needing a roto shape or an AOV/Cryptomatte ID mask — referenced as a lighter version of a technique used in an earlier "Nuke 3.0.3" tutorial (title as stated in the video, likely referring to an earlier position-pass darkening tutorial in this creator's catalog).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. In Blender, select all objects that should contribute to the position pass.
+2. Create and assign a new material (named e.g. "position") to those objects.
+3. Add a `Geometry` node and connect its Position output into a `Separate RGB` node.
+4. Rewire the split channels into a `Combine RGB` node with a channel swap: red input → blue output, green input → red output, blue input → green output — this re-orients Blender's Z-up world position data to match Nuke's Y-up convention.
+5. Feed the recombined RGB into an `Emission` node's Color input, strength set to 1, so the position data isn't affected by scene lighting/shading.
+6. Add a `Light Path` node and use its "Is Camera Ray" output to control a `Mix Shader` between the emission shader and nothing — ensures the position pass only renders on primary camera rays.
+7. Plug the `Mix Shader` result into the material's Surface output.
+8. In Blender's render settings, set color depth to Full (RGB channels are sufficient; negative values in the "black" areas are expected/correct for a large scene — not a broken render).
+9. Render out the position pass (as its own render layer/pass if you want it isolated from beauty, or with RGB used directly).
+10. In Nuke, read the rendered position-pass footage and plug it into a "P_Mask" gizmo (Nukepedia, credited to FranklinVFX.com) — it exposes a color-picker-style control to sample a 3D world position directly from the position-pass image and generate a corresponding alpha/mask.
+11. Preview the pick in Nuke's 3D viewer, which shows the sampled point as a 3D sphere alongside the position-pass point cloud, for visual confirmation of what area the mask covers.
+12. Use the resulting alpha to drive a local, non-rotoscoped correction — e.g. plug it as a mask into a `Grade`/`Gamma` node to darken or add contrast to just one region of a large model (demonstrated darkening a turret on a ship-like CG asset).
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- Blender: `Geometry` node (Position output)
+- Blender: `Separate RGB` / `Combine RGB` — used purely as a channel-swizzle (Nuke-style shuffle) to remap Z-up axes into Nuke's Y-up convention: R→B, G→R, B→G
+- Blender: `Emission` shader — Color = the swizzled position data, Strength = 1
+- Blender: `Light Path` node — "Is Camera Ray" output
+- Blender: `Mix Shader` — gated by Is Camera Ray, feeds material Surface output
+- Blender: Render settings — Color Depth = Full (float), RGB channels sufficient (RGBA not required)
+- Nuke: `P_Mask` (Nukepedia gizmo by FranklinVFX.com) — color-picker-driven world-position-to-alpha sampling tool, with a 3D-viewer preview of the picked point
+- Nuke: `Grade`/`Gamma` — masked by the P_Mask alpha to apply a local, position-driven correction without rotoscoping
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Cross-application: Blender (for the position-pass material/render setup — no Blender version stated) feeding Nuke (for the P_Mask gizmo usage — third-party Nukepedia tool, no native-Nuke-only features required). No on-screen version numbers visible in the captured frames and none stated in the transcript. Video published 2021 — falls in the Nuke 13.0 era (13.0 released 2021-03-17); see `references/version-tracker.md`.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, channels, grading, 3d-system, digital-matte-painting, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Create 3D Noise | Nuke Compositing](create-3d-noise-nuke-compositing.md) — shares the position-pass-as-data-carrier theme; that video drives a `noise()` expression from position-pass channels rather than a pick-a-point mask, but both treat a position render as raw XYZ data to be manipulated in Nuke.
+- [Nuke Compositing Technique | Card3D + PixelsToPos [Beginners]](nuke-compositing-technique-card3d-pixelstopos-beginners.md) — shares the theme of deriving a usable mask/anchor from 3D spatial data without rotoscoping, though that video samples 3D points from a tracked camera rather than a rendered position pass.
+- [Planning out a Visual Effects Shot | Blender and Nuke](planning-out-a-visual-effects-shot-blender-and-nuke.md) — shares the Blender-to-Nuke cross-application pipeline theme (`compositing`, `digital-matte-painting`).

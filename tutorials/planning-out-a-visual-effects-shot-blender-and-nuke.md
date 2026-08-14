@@ -249,3 +249,4 @@ digital-matte-painting, compositing, beginner
 ## Related Tutorials
 - Skill Up with Nuke | How To Think Like A Pro Compositor (`skill-up-with-nuke-how-to-think-like-a-pro-compositor.md`) — both are general compositing-methodology/mindset videos rather than node recipes, though that one is hands-on in Nuke while this one is pure pre-production planning.
 - Physics of Light for VFX Artists [Updated] (`physics-of-light-for-vfx-artists-updated.md`) — both are theory/foundations videos with no software-specific node work, aimed at building the art-fundamentals judgment this video explicitly argues compositors need ("learn in a T-shape").
+- Render World Position in Blender for Nuke (`render-world-position-in-blender-for-nuke.md`) — shares the Blender-to-Nuke cross-application pipeline theme, a practical hands-on counterpart to this video's planning-stage discussion.
