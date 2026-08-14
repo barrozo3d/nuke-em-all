@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=VYjmvB6d9NA
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX (3D camera tracking + Real Light node require NukeX)"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [relighting, 3d-system, camera-tracking, channels, aovs, digital-matte-painting, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/re-lighting-real-footage-nuke-compositing-advanced/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Re-lighting Real Footage | Nuke Compositing [Advanced]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py re-lighting-real-footage-nuke-compositing-advanced <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -271,30 +267,60 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:35] tutorials/frames/re-lighting-real-footage-nuke-compositing-advanced/frame_000.jpg
+- [2:11] tutorials/frames/re-lighting-real-footage-nuke-compositing-advanced/frame_001.jpg
+- [5:26] tutorials/frames/re-lighting-real-footage-nuke-compositing-advanced/frame_002.jpg
+- [8:41] tutorials/frames/re-lighting-real-footage-nuke-compositing-advanced/frame_003.jpg
+- [11:05] tutorials/frames/re-lighting-real-footage-nuke-compositing-advanced/frame_004.jpg
+- [13:16] tutorials/frames/re-lighting-real-footage-nuke-compositing-advanced/frame_005.jpg
+- [13:56] tutorials/frames/re-lighting-real-footage-nuke-compositing-advanced/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Deriving synthetic depth, position, and normal utility passes from ordinary live-action footage — using a solved 3D camera track and the `DepthGenerator` node — to relight, fog, and color-grade real footage as if it were CG, entirely without roto or 3D geometry.
 
 ### Summary
-[PENDING EXTRACTION]
+Starting from a ~100-frame drone shot circling a hill (high-parallax footage, 3D camera already tracked/solved), the video shows how `DepthGenerator` synthesizes depth, position, and normal utility passes purely from parallax across frames — the more camera movement/parallax in a shot, the better the derived passes. Three independent techniques are demonstrated: (1) **Fog** — invert and heavily grade the depth pass (black point pushed to ~0.99) into a soft alpha, then use it to mask a `Grade`/lift so distance-based haze appears in a scene that had none, with black-point scrubbing letting the fog "travel" through the volume; (2) **Position-based selection** — shuffle the position pass into RGB/A, then use a custom Nukepedia 3D-position-picker tool (Adrienne Herr, 2016) to sample a point in the colorful position-encoded image and generate a alpha "bubble" around that 3D location (e.g. the top of a hill) that sticks naturally to the surface across the whole shot with no roto/tracking needed, then color-correct through that mask; (3) **Relighting** — shuffle the normals pass into the main image's `normals` channel set via `Shuffle` (copying from stream A into stream B so the Real Light node can read it), then feed a `RealLight` node a material (Basic Material, or presets like Fog/metallic), a Direct light (sun-like), the camera, and the background/color, producing a lightable alpha that can be graded orange for a fake "golden hour" rim/highlight look and re-oriented in 3D by rotating the light. All three passes are combined at the end into a rough demo comp (fog + relight + grade + crop) to fake a sunset atmosphere over the drone footage. Critical technical note: when writing out these utility passes (e.g. as `depth.####.exr`), they must be rendered at **32-bit float** with **no compression**, since they encode real-valued 3D distance/position/direction data that any lossy or lower-precision format would corrupt.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Solve/import a 3D camera track for the shot (a point-cloud/solved scene is a prerequisite) — works best on shots with strong parallax (camera rotating and translating through the scene, not locked-off).
+2. Add a `DepthGenerator` node; plug in the camera and the source footage; leave most sliders (depth detail, noise, matching strength) at default — hover tooltips explain each if tuning is needed.
+3. In the DepthGenerator, keep the default depth output (`1/Z`), and additionally create two new output channel sets via the "New" + RGBA button: one named `position` (world-space XYZ) and one named `normals` (surface normal direction) — these aren't present by default and must be explicitly added.
+4. Run "Analyze Sequence" (takes a couple of minutes) to actually compute the depth/position/normals data across all frames.
+5. Write out each needed pass (e.g. depth) to its own EXR sequence at **32-bit float**, with **compression turned off** — required to preserve the real-valued 3D data without corruption.
+6. **Fog recipe:** Shuffle the depth pass into RGB+A, invert it, then push a `Grade` node's black point up toward ~0.99 (fine-tune with arrow-key nudges) until a soft gradient/faded alpha appears; mask a second `Grade` (lift) by that alpha (set to `rgba.alpha`) to add distance-based haze/fog into footage that had none; scrub the black point value to move the fog "front" through the scene.
+7. **Position-pick recipe:** Shuffle the position pass into RGB+A (produces a strange, colorful image encoding 3D coordinates); use the free Nukepedia position-picker tool (Adrienne Herr, 2016) — hold Ctrl (Windows) / Cmd (Mac) and click-sample a point on the viewer while viewing the position channel to generate an alpha "bubble" centered on that exact 3D location; feed that alpha into a `Grade`/color-correct to isolate and adjust just that surface region (e.g. the crest of a hill), which then sticks accurately to the moving footage across the whole shot with no roto or additional tracking.
+8. **Relight recipe:** Add a `Shuffle` node; set input A to the `normals` channel set and copy it into the main image's `normals` channels in stream B (so the normals data lives in the same stream as the color footage — required for the Real Light node to see it).
+9. Add a `RealLight` node; assign it a Material (e.g. Basic Material, or a Fog-type/metallic-look material), the solved camera, the background/color input, and a Light (Direct light used here, standing in for a sun); in the RealLight node, set the Normal Vectors parameter to the `normals` channel copied in the previous step.
+10. The RealLight node outputs a lighting alpha; feed it into a `Grade` and push warm/orange color to fake directional sunset/golden-hour light hitting the hilltops; rotate the Direct light node in 3D to change which side of the terrain catches the light.
+11. Combine fog + position-based touch-ups + relight + a final overall color grade + a widescreen crop to assemble a rough atmospheric "golden hour" look over the original flat drone footage (acknowledged as a non-final demo — real production work would add longer shadows, more highlights/reflections, and further pinging-highlight detail per the channel's companion grading videos).
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `DepthGenerator` — synthesizes depth/position/normal utility passes from a solved 3D camera + 2D footage via parallax analysis; requires "Analyze Sequence" to run; default depth output is `1/Z`; position/normals must be added as new RGBA channel sets manually.
+- `Shuffle` — used to view/extract passes into RGB+A for grading, and to copy the `normals` channel set from stream A into stream B ahead of the Real Light node.
+- `Grade` — used repeatedly: inverted+black-point-pushed depth for fog; masked lift for fog application; orange push on the RealLight alpha for golden-hour color.
+- Third-party Nukepedia position-picker tool (Adrienne Herr, 2016) — Ctrl/Cmd-click sampling on a position-pass image to generate a 3D-location-based alpha "bubble" that sticks to the surface across the shot.
+- `RealLight` — NukeX 3D relighting node; inputs: Material (Basic Material / Fog / metallic presets), Camera, background Color, and one or more Lights; requires a `Normal Vectors` channel set (the copied `normals` stream) to compute shading.
+- Direct light (3D light type within the Real Light setup) — stands in for a sun; rotatable in 3D to change lighting direction/side.
+- Write node settings: **32-bit float** data type, **compression off** — mandatory when rendering out depth/position/normal utility passes to preserve real-valued 3D data.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced — combines 3D camera tracking, multi-channel AOV/utility-pass workflows, and the NukeX-only Real Light relighting system; explicitly flagged [Advanced] by the channel and assumes familiarity with channels/3D system concepts from the presenter's own prerequisite course.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX — the Real Light node and full 3D camera-tracking/DepthGenerator workflow are NukeX-tier features. Version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+relighting, 3d-system, camera-tracking, channels, aovs, digital-matte-painting, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`) — shares `relighting`, `digital-matte-painting`; this video's presenter explicitly references that companion class's "pinging highlights" concept as the next step of realism after this relighting pass.
+- Physics of Light for VFX Artists [Updated] (`physics-of-light-for-vfx-artists-updated.md`) — shares `relighting`; theory foundation referenced directly in this video's "color diffuse" discussion.
+- Create 3D Noise | Nuke Compositing (`create-3d-noise-nuke-compositing.md`) — shares `channels`, `aovs`; both drive comp-side effects from CG/synthetic utility passes (position/normals) rather than roto or re-rendering.

@@ -125,3 +125,4 @@ relighting, grading, digital-matte-painting, beginner
 
 ## Related Tutorials
 - Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`) — shares `relighting`, `grading`, `digital-matte-painting`; this video is the theory foundation for that one's "four layers of pinging" highlight-painting technique (both reference the same in-progress "Nuke 404: Advanced Grading and Relighting" class).
+- Re-lighting Real Footage | Nuke Compositing [Advanced] (`re-lighting-real-footage-nuke-compositing-advanced.md`) — shares `relighting`; that video directly references this one's "color diffuse" theory while explaining its position-pass technique.

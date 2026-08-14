@@ -164,11 +164,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=VYjmvB6d9NA
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (3D camera tracking + Real Light node require NukeX)
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** relighting, 3d-system, camera-tracking, channels, aovs, digital-matte-painting, advanced
+- **Summary:** Derives synthetic depth/position/normal utility passes from live-action footage via a solved 3D camera + `DepthGenerator` (works best with high parallax), then uses them for three techniques: fog (inverted/graded depth pass as a haze mask), position-based selection (a Nukepedia 3D-position-picker samples a point in the position-pass image to generate an alpha that sticks to that surface point across the whole shot, no roto needed), and relighting (`Shuffle` copies the normals pass into the main stream, feeding a `RealLight` node with Material/Camera/Light for a fake golden-hour rim light). Utility passes must be written at 32-bit float with no compression to avoid data corruption.
 - **File:** tutorials/re-lighting-real-footage-nuke-compositing-advanced.md
+- **Related:** Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`), Physics of Light for VFX Artists [Updated] (`physics-of-light-for-vfx-artists-updated.md`) — shares `relighting`; Create 3D Noise | Nuke Compositing (`create-3d-noise-nuke-compositing.md`) — shares `channels`, `aovs`.
 
 ---
 

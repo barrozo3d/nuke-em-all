@@ -188,3 +188,4 @@ compositing, channels, aovs, procedural-texture, intermediate
 ## Related Tutorials
 - Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `compositing`, `channels`, `aovs`, `procedural-texture`, `intermediate`; both drive procedural comp-side effects entirely from a single world-position AOV.
 - Nuke Tutorial | Compositing a Rainbow [Intermediate] (`nuke-tutorial-compositing-a-rainbow-intermediate.md`) — shares `compositing`, `channels`, `procedural-texture`, `intermediate`; both build procedural patterns purely through channel/expression manipulation.
+- Re-lighting Real Footage | Nuke Compositing [Advanced] (`re-lighting-real-footage-nuke-compositing-advanced.md`) — shares `channels`, `aovs`; both drive comp-side effects from CG/synthetic utility passes (position/normals) rather than roto or re-rendering.
