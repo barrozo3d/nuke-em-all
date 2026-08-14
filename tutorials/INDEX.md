@@ -414,6 +414,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/this-one-step-makes-cg-look-cinematic-most-artists-skip-it.md
 - **Related:** How to use NUKE to Composite Blender Renders (`how-to-use-nuke-to-composite-blender-renders.md`) — shares AOV/light-component selective grading. 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — shares position-matte-driven targeted highlight technique.
 
+
+### How to DENOISE your CG in POST | Blender & Nuke Tutorial
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=uReRex8xPqs
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/how-to-denoise-your-cg-in-post-blender-nuke-tutorial.md
+
 ---
 
 ## Tag Reference
