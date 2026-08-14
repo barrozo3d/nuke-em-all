@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=uReRex8xPqs
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (cross-platform: Blender for the CG render being denoised, but the actual denoise technique — the video's main content — is pure Nuke)"
+version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)"
+tags: [denoise, projection, compositing, grading, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/how-to-denoise-your-cg-in-post-blender-nuke-tutorial/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # How to DENOISE your CG in POST | Blender & Nuke Tutorial
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py how-to-denoise-your-cg-in-post-blender-nuke-tutorial <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -217,30 +213,52 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:53] tutorials/frames/how-to-denoise-your-cg-in-post-blender-nuke-tutorial/frame_000.jpg
+- [4:30] tutorials/frames/how-to-denoise-your-cg-in-post-blender-nuke-tutorial/frame_001.jpg
+- [5:20] tutorials/frames/how-to-denoise-your-cg-in-post-blender-nuke-tutorial/frame_002.jpg
+- [8:05] tutorials/frames/how-to-denoise-your-cg-in-post-blender-nuke-tutorial/frame_003.jpg
+- [9:36] tutorials/frames/how-to-denoise-your-cg-in-post-blender-nuke-tutorial/frame_004.jpg
+- [12:59] tutorials/frames/how-to-denoise-your-cg-in-post-blender-nuke-tutorial/frame_005.jpg
+- [15:27] tutorials/frames/how-to-denoise-your-cg-in-post-blender-nuke-tutorial/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Removing render noise from a CG element in post rather than re-rendering with more samples, by projecting the live-action-style render onto its own scene geometry, working on the noise in flattened UV space (where the camera/geometry motion is factored out) using `TimeEcho` averaging and/or frame-hold-and-dissolve between clean frames, then projecting the cleaned result back through the original camera.
 
 ### Summary
-[PENDING EXTRACTION]
+A two-part video: the first half (frame_000, an abstract force-field "waterfall" alpha element; frame_001, the Blender turntable/generator model) is a creative aside explaining how the author built a layered, time-offset force-field CG element and — notably — rendered it out as a flat 2D emission texture rather than compositing it directly, then re-imported that texture into Blender as an emission-shader material so the glossy/metallic generator geometry gets *real* ray-traced reflections and interactive lighting from it (frame_002) — something the author says would be "really, really hard to achieve in Nuke" since it depends on actual specular/roughness-driven glossy reflection. A bonus 2D-workflow tip: render a plain white-to-black ramp through the same geometry as a grade/lookup map, letting later grading tweaks happen without reopening the heavy 3D scene. The second half is the actual denoise technique, demonstrated on three different problem areas of one very glossy/metallic environment render (frame_003 shows the raw noisy render — visibly grainy reflective panels). Core method: bring in the render's camera export (Alembic) and project the live (non-frame-held) render onto the matching scene geometry so it lines up perfectly, then view it unwrapped in UV space (frame_004/006 show a UV-unwrapped noisy patch) — in UV space the geometry/camera motion is factored out, so the remaining noise is easier to isolate and treat. For a flat, camera-facing wall with small high-frequency noise, a simple `TimeEcho` (frame-averaging) pass in UV space cleans it up well (frame_005 shows the TimeEcho'd result). For a wall with larger, low-frequency "blotchy" noise where a straight TimeEcho isn't enough and would also flatten out real lighting changes over time, the author instead TimeEcho's first for a partial improvement, then manually finds two "key" clean frames that bracket a real lighting change, frame-holds each, and dissolves/cross-fades between them with the dissolve's frame-selection animated to match — trading continuous per-frame noise for a smooth blend between two clean patches (frame_006 shows this frame-hold+dissolve setup, a Dissolve node between two frame-held branches). Both cleaned UV-space results get projected back through the original camera and reapplied to the render. A third area's high-frequency noise (frame not separately captured) is knocked out with **Neat Video's ReduceNoise** — a paid third-party plugin the author calls the best denoiser in the industry (built for film grain/sensor noise, but works very well on CG noise too).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Bring the render's camera export (e.g. Alembic) and matching scene geometry into Nuke's 3D system; `Project3D` the live (un-frame-held) render onto the geometry so image and geometry stay in perfect lockstep as the camera moves.
+2. Flatten the projected result into **UV space** (same underlying technique as this channel's separate UV-baking tutorial) — this factors out camera/object motion, leaving the noise as the main visible variation frame-to-frame, which makes it much easier to treat.
+3. **For small, high-frequency noise on a simple/flat surface:** apply `TimeEcho` in UV space to average across a frame window and knock the noise down; this alone can be sufficient (optionally follow with a light `Blur` if being picky).
+4. **For larger, low-frequency "blotchy" noise where lighting also changes meaningfully over the shot:** `TimeEcho` first for a baseline improvement, then manually scrub to find two clean "key" frames bracketing a real lighting change; frame-hold each one, feed both into a `Dissolve`, and animate the dissolve's mix/frame-selection so the shot crossfades smoothly between the two clean patches instead of showing per-frame noise — repeat across the shot with more patch-pairs as needed for longer sequences.
+5. Project the cleaned UV-space result back through the original camera / onto the geometry to reapply it to the render in its original, camera-relative form.
+6. **Non-free alternative/supplement:** run the noisy render (or a difficult high-frequency patch) through **Neat Video ReduceNoise** (third-party paid plugin) for a much stronger single-pass denoise without any of the projection/UV work above.
+7. **Bonus 2D-workflow tip (not denoise-specific):** render a plain ramp (white→black) through the same geometry once as a lookup/grade map, so later color-grading tweaks to that geometry's shading can be done with a 2D `Grade` against the ramp instead of reopening and re-rendering the full 3D scene — a general "get out of the 3D system as early as possible" principle for heavy scenes.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** `Project3D` (camera-locked projection of a render back onto its source geometry), UV-space unwrap/workflow (cross-referenced to this channel's dedicated UV-baking tutorial), `TimeEcho` (frame-averaging denoise), frame-hold + `Dissolve` (two clean-frame patch blend with animated dissolve timing), `Grade` (ramp-driven lookup grading to avoid re-touching the 3D render)
+- **Third-party (non-Nuke):** **Neat Video ReduceNoise** plugin — paid, described as still the best denoiser in the industry despite being built for film grain/sensor noise rather than CG noise specifically
+- **Caveats the author states directly:** this whole projection/UV-space method works best on relatively simple geometry/camera situations — heavy geometry overlap, complex camera movement, or deforming/bending materials make it much harder or unreliable; TimeEcho-only fixes can flatten out real lighting changes over time, which is exactly why the frame-hold+dissolve variant exists for those cases; always prefer just throwing more samples at the original render if time/compute budget allows — this is a budget/time-constrained workaround, not a universal fix
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced — requires comfort with Nuke's 3D system (camera/geometry projection) and UV-space compositing as prerequisites, plus judgment about which of the three fix strategies (TimeEcho alone, TimeEcho+dissolve, or a paid denoiser) fits a given noise pattern.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke for the entire denoise technique (majority of this video and the reason it's extracted fully here); Blender is only the source of the CG render being fixed, not covered in Nuke-relevant detail. Nuke version not stated on screen; per this skill's version-tracker, a 2022 upload falls in the 13.1 (Nov 2021) → 13.2 (Apr 2022) window. Uses Nuke's Classic 3D system (Project3D, camera/geometry import) — predates the 14.0-beta USD 3D overhaul.
 
 ### Tags
-[PENDING EXTRACTION]
+denoise, projection, compositing, grading, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- How I Use Compositing to Skip THOUSANDS of Hours Rendering (`how-i-use-compositing-to-skip-thousands-of-hours-rendering.md`) — that video explicitly cross-references this one as covering its "technique 4" (denoise flickering specular by projecting the render back onto geometry and blending frames) in full detail; shares `denoise`, `compositing`, `3d-system`/`projection`.
+
+Revisit for further cross-links once this channel's dedicated UV-baking/projection tutorial (referenced repeatedly in this video's transcript but not yet identified/ingested from the channel's catalog) lands in the index.
