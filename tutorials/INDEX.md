@@ -552,6 +552,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md
 
+
+### EASY TRICK: Improve your Color Grading skills
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=dVN7IK1GsLA
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/easy-trick-improve-your-color-grading-skills.md
+
 ---
 
 ## Tag Reference
