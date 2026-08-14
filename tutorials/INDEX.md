@@ -518,6 +518,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/i-brought-a-greenscreen-in-arctic-conditions-for-this-film.md
 - **Related:** Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`), How I Faked a $200M Movie Scene (In my DRIVEWAY!) (`how-i-faked-a-200m-movie-scene-in-my-driveway.md`) — share the BTS/pipeline-case-study format.
 
+
+### Break up your "PERFECT CG" Renders with this FREE Plugin
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=Nk6iluY4shE
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/break-up-your-perfect-cg-renders-with-this-free-plugin.md
+
 ---
 
 ## Tag Reference
