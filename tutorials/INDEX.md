@@ -671,6 +671,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md
 - **Related:** I Made VFX Relighting WAY Better in Nuke (`i-made-vfx-relighting-way-better-in-nuke.md`), Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`), I Brought a Greenscreen in Arctic Conditions for this Film (`i-brought-a-greenscreen-in-arctic-conditions-for-this-film.md`).
 
+
+### Parallax HAX | Nuke Compositing [Advanced]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=avtDQcZNThI
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/parallax-hax-nuke-compositing-advanced.md
+
 ---
 
 ## Tag Reference
