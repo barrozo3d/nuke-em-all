@@ -625,6 +625,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/13-nuke-tutorial-series-practical-sfx-lighting-script-overview.md
 - **Related:** [2/3] and [3/3] Nuke Tutorial Series (once ingested) — direct continuations of this same shot/project. 360 Spherical LatLong Textures (`360-spherical-latlong-textures-nuke-tutorial.md`) and others — share the `PolarDistort` gizmo.
 
+
+### Nuke Compositing Technique | Card3D + PixelsToPos [Beginners]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=w5xFpajzC8s
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-technique-card3d-pixelstopos-beginners.md
+
 ---
 
 ## Tag Reference
