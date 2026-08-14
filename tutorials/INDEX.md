@@ -905,6 +905,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending.md
 
+
+### Houdini FX, Solaris & Nuke -  Full VFX Course
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=LBAXQC5maVY
+- **Author:** Voxyde VFX
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/houdini-fx-solaris-nuke---full-vfx-course.md
+
 ---
 
 ## Tag Reference
