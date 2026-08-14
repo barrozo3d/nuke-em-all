@@ -319,11 +319,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=YeGZP5xlBGg
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (theory-focused; real reference footage)
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** relighting, digital-matte-painting, beginner
+- **Summary:** Part 5/8 of the "Artistic Basics" series. The Fresnel effect (glancing-angle surfaces reflect far more strongly than surfaces viewed straight-on) demonstrated live with real puddle/wave footage, plus the CG-specific vocabulary split between "specular" (small bright highlight glints) and "reflection" (the broader base mirror image) — both needed to judge per-angle reflectivity on car panels/windows.
 - **File:** tutorials/nuke-compositing-artistic-basics-58---reflections-and-fresnel.md
+- **Related:** All 8 parts of this series cross-link to each other — see Part 1/8 (`nuke-compositing-artistic-basics-18-roles-of-production.md`) and the rest of the series files.
 
 
 ### Rotoscoping in Nuke Tutorial | 5 Beginner Tips
@@ -354,33 +355,36 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=VlA6a0IK-Ds
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** grading, color-management, compositing, beginner
+- **Summary:** Part 6/8 of the "Artistic Basics" series. Distinguishes the two causes of a shot's white point — light color vs. camera white balance — and demonstrates the core CG-matching workflow: sample a known-white reference point in the plate near a CG element, and grade the element's white to match it (plus layering in local colored-light contamination separately if a practical light is present).
 - **File:** tutorials/nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md
+- **Related:** All 8 parts of this series cross-link to each other — see Part 1/8 (`nuke-compositing-artistic-basics-18-roles-of-production.md`) and the rest of the series files.
 
 
 ### Nuke Compositing Artistic Basics (7/8): Glows
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=FFutBgMZBLo
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** compositing, grading, digital-matte-painting, beginner
+- **Summary:** Part 7/8 of the "Artistic Basics" series. Distinguishes bloom from lens diffusion, establishes that glows happen optically last (in the lens/eye) so foreground objects must never occlude them, and shows two ways to wrap a glow around a foreground object: a `Light Wrap` node, or a manual `Keyer` (luminance key) → `Premult` → `Exponential Glow` → `Plus` build derived from the already-occluded beauty.
 - **File:** tutorials/nuke-compositing-artistic-basics-78-glows.md
+- **Related:** All 8 parts of this series cross-link to each other — see Part 1/8 (`nuke-compositing-artistic-basics-18-roles-of-production.md`) and the rest of the series files.
 
 
 ### Nuke Compositing Artistic Basics (8/8): Camera Artifacts
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=bmwOCLwiYM0
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (theory-focused; real reference footage)
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** compositing, defocus, digital-matte-painting, beginner
+- **Summary:** Part 8/8 (series finale) of the "Artistic Basics" series. Trains the eye to spot chromatic aberration (colored fringing on highlight edges, matched from the real plate), camera defocus (sharpness falling off with distance, deferred to a future depth-of-field lesson), and bokeh (lens-specific out-of-focus highlight shapes) — all to be replicated on inserted CG elements.
 - **File:** tutorials/nuke-compositing-artistic-basics-88-camera-artifacts.md
+- **Related:** All 8 parts of this series cross-link to each other — see Part 1/8 (`nuke-compositing-artistic-basics-18-roles-of-production.md`) and the rest of the series files. Also shares `defocus` with Skill Up with Nuke | How To Think Like A Pro Compositor (`skill-up-with-nuke-how-to-think-like-a-pro-compositor.md`).
 
 
 ### How I Faked a $200M Movie Scene (In my DRIVEWAY!)
@@ -441,6 +445,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** Tour of the `ScreenFX` plugin's GPU-accelerated node library for building 2D motion graphics (glitches, HUD/hologram/CRT effects, transitions) directly in Nuke instead of After Effects: `PolyFlow` shape generator (rain-offset fade animation, ID-pass-style color modes), `Warp Bar` + `Blocky Lines` combined into a 3-layer retro-TV static effect, `JitterDuplicate` for teleport/glitch jumps (replaces a manual Transform+chromatic-aberration+glass-warp chain), `GridDrips`, bar-graph and dot-grid generators, and a 3D-tracked-card technique for projecting a 2D "Sci-Fi Rings" graphic onto a rotating CG model in correct perspective.
 - **File:** tutorials/goodbye-after-effects-2d-motion-graphics-in-nuke.md
 - **Related:** Shares the `ScreenFX` plugin with Create a Movie Quality Sci-Fi Laser Effect in Nuke, How I Made a FULL Star Wars Cinematic from JUST One Screenshot, and How I Use Compositing to Skip THOUSANDS of Hours Rendering.
+
+
+### 2D Rim Lights Look FAKE - But Not Anymore
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=WcB524Y32Io
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/2d-rim-lights-look-fake---but-not-anymore.md
 
 ---
 
