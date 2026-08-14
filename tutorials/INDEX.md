@@ -566,6 +566,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/easy-trick-improve-your-color-grading-skills.md
 - **Related:** Nuke Tutorial | Keying with Math Expressions [Intermediate], Nuke Tutorial | Compositing a Rainbow [Intermediate] — share first-principles RGB channel-math grading technique.
 
+
+### Nuke Compositing Tutorial: Integration Sketching
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=p7_PYigrOgM
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-tutorial-integration-sketching.md
+
 ---
 
 ## Tag Reference
