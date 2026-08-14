@@ -171,6 +171,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/re-lighting-real-footage-nuke-compositing-advanced.md
 - **Related:** Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`), Physics of Light for VFX Artists [Updated] (`physics-of-light-for-vfx-artists-updated.md`) — shares `relighting`; Create 3D Noise | Nuke Compositing (`create-3d-noise-nuke-compositing.md`) — shares `channels`, `aovs`.
 
+
+### Nobody’s Ever Made VFX This Way (New Tech)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=3d9ycMKf65U
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nobodys-ever-made-vfx-this-way-new-tech.md
+
 ---
 
 ## Tag Reference
