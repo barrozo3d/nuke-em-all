@@ -457,6 +457,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/2d-rim-lights-look-fake---but-not-anymore.md
 
+
+### Planning out a Visual Effects Shot | Blender and Nuke
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=mToElxsVvZY
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/planning-out-a-visual-effects-shot-blender-and-nuke.md
+
 ---
 
 ## Tag Reference
