@@ -564,7 +564,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** grading, channels, color-management, compositing, beginner
 - **Summary:** Targeted hue shift via a `Copy` node partially blending one RGB channel into another (e.g. red into green to turn reddish bounce light orange, not yellow) — leverages the fact that color is just a channel ratio (desaturating evens the ratio; this technique deliberately un-evens it). Compared against `HueCorrect`, the HSV tool, and `Keyer`-based selection, all of which can show harsher/imperfect falloff at the correction edge versus the smoother channel-mix gradient.
 - **File:** tutorials/easy-trick-improve-your-color-grading-skills.md
-- **Related:** Nuke Tutorial | Keying with Math Expressions [Intermediate], Nuke Tutorial | Compositing a Rainbow [Intermediate] — share first-principles RGB channel-math grading technique.
+- **Related:** Nuke Tutorial | Keying with Math Expressions [Intermediate], Nuke Tutorial | Compositing a Rainbow [Intermediate] — share first-principles RGB channel-math grading technique. A BETTER way to Color Grade in Nuke (`a-better-way-to-color-grade-in-nuke.md`) — shares `grading`, `compositing`.
 
 
 ### Nuke Compositing Tutorial: Integration Sketching
