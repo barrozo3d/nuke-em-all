@@ -343,6 +343,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/2-expert-vfx-tips-to-perfectly-blend-cg.md
 
+
+### Nuke Compositing Artistic Basics (6/8): Whitepoint and white balance
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=VlA6a0IK-Ds
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md
+
 ---
 
 ## Tag Reference
