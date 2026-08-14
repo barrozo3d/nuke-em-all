@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=UQlTyaVKog4
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX (RayRender, AmbientOcclusion, and camera-tracked 3D projections all require NukeX)"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [3d-system, camera-tracking, digital-matte-painting, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/ray-render-in-nuke-tutorial-compositing-3d-reflections/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Ray Render in Nuke Tutorial | Compositing 3d Reflections
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py ray-render-in-nuke-tutorial-compositing-3d-reflections <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -417,30 +413,69 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:58] tutorials/frames/ray-render-in-nuke-tutorial-compositing-3d-reflections/frame_000.jpg
+- [5:40] tutorials/frames/ray-render-in-nuke-tutorial-compositing-3d-reflections/frame_001.jpg
+- [7:11] tutorials/frames/ray-render-in-nuke-tutorial-compositing-3d-reflections/frame_002.jpg
+- [9:44] tutorials/frames/ray-render-in-nuke-tutorial-compositing-3d-reflections/frame_003.jpg
+- [14:20] tutorials/frames/ray-render-in-nuke-tutorial-compositing-3d-reflections/frame_004.jpg
+- [17:07] tutorials/frames/ray-render-in-nuke-tutorial-compositing-3d-reflections/frame_005.jpg
+- [18:16] tutorials/frames/ray-render-in-nuke-tutorial-compositing-3d-reflections/frame_006.jpg
+- [19:55] tutorials/frames/ray-render-in-nuke-tutorial-compositing-3d-reflections/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Creating genuine ray-traced 3D reflections entirely inside Nuke (no external renderer) by combining a solved 3D camera track, a hand-built rough proxy model of the surrounding environment, footage re-projected onto that geometry, and Nuke's `RayRender` node (not `ScanlineRender`, which cannot ray-trace reflections or ambient occlusion).
 
 ### Summary
-[PENDING EXTRACTION]
+Two approaches to a chrome-sphere reflection composited into real footage of a backyard bench/patio, both starting from a pre-solved 3D camera track: the "cheap" version projects the live footage flat onto a single ground-plane card, which is fast but spatially wrong (nearby objects like a bench won't show up correctly in the reflection because everything is flattened onto one plane); the "right" way rebuilds a rough low-poly proxy of the immediate environment (simple scaled/rotated `Cube` primitives standing in for the bench, wall, planter) using the *same* re-projected footage as texture, lined up by eye against the projected image so it "sticks" as the camera moves. Distant elements (sky, background houses) are handled without modeling: either a flat 2D sky photo graded and stuck to a distant sphere (cheap/no-360-photo fallback), or — for a much better result — a genuine 360° photo of the location mapped onto a sphere surrounding the whole scene. The actual reflective object (a chrome sphere) is rendered through `RayRender`, which unlike `ScanlineRender` can physically ray-trace reflections and ambient occlusion off the surrounding proxy geometry. A separate `ScanlineRender` of just the reflective sphere produces a clean alpha to mask/stencil only the ball out of the messy RayRender beauty pass (which also shows the ugly proxy geometry) before merging it back over the original plate. A second `RayRender`-based `AmbientOcclusion` pass (fed the same reflective object + ground geometry) generates a believable contact shadow beneath the object. Final polish notes: fill exposed proxy-geometry edges/gaps with a white constant and multiply to fake soft contact shadowing, add a subtle glow via a luma-keyed/pre-multiplied/exponential-blurred screen pass on the highlights, and always undistort before projection and re-distort after the RayRender for lens accuracy, plus match grain at the end.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Start from a pre-solved 3D camera track of the plate (out of scope for this tutorial itself).
+2. Create a ground-plane `Card` positioned/oriented to match the real ground in the tracked scene; optionally verify alignment with a wireframe shader.
+3. Re-project the live footage onto that card using `Project3D` fed by the tracked camera, so the plate "wraps" correctly onto the ground geometry as the camera moves.
+4. Add a `Sphere` primitive at the location where the reflective object should sit.
+5. Delete/avoid `ScanlineRender` for the reflective object — instead create a `RayRender` node, since only RayRender can physically ray-trace true reflections (and later, ambient occlusion); ScanlineRender is fine for elements/smoke/some lights but not reflections or accurate shadows.
+6. Verify the basic reflection already works once RayRender is hooked up, but recognize the flat single-card projection is spatially wrong — nearby objects (e.g. a bench) won't appear correctly in the reflection because everything projects onto one plane.
+7. Build simple proxy geometry for everything close to the reflective object: duplicate/add `Cube` primitives (divisions set to 1×1 to keep them simple to manipulate), scale/position/rotate each to roughly match a real nearby object's footprint (e.g. bench sides and top), and feed each cube the *same* `Project3D` texture stream used for the ground card so the real footage wraps around them too.
+8. Line up each proxy cube by eye against the projected footage — match edges visible in the projection (e.g. a curved wire/edge in the plate) by rotating/scaling/translating the cube until the CG proxy edge lines up with the photographed edge; scrub through frames to confirm it "sticks" as the camera moves (doesn't need to be perfect).
+9. Undistort the incoming footage with a `LensDistort` node before projecting, for extra accuracy (impact is small on lightly-distorted footage like an iPhone shot, but matters more on stronger lenses).
+10. For distant elements with no nearby geometry needed: either (a) cheap fallback — grade a flat 2D sky photo and place it on a large distant sphere, filling the RayRender's black background/sky gap, or (b) better — map a genuine 360° photo of the actual filming location (shot on any phone with a 360 camera app) onto a surrounding sphere, giving accurate reflections of everything beyond the modeled foreground (sky, distant buildings, furniture) without having to model any of it.
+11. The same core principle (camera track + a reflective card/geometry + an opposite-facing image plugged in) also works for simple flat reflective surfaces like windows — put a reflective card where the window glass is and any plausible "what's behind the glass" image on a card/sphere facing it.
+12. Once the environment and reflective object render correctly through RayRender, don't use that beauty pass directly — add a separate `ScanlineRender` fed the same camera and only the reflective object geometry, producing a clean alpha matte of just that object.
+13. Use that alpha to mask/stencil the RayRender result down to only the reflective object, discarding the ugly visible proxy geometry and any projection distortion/blur elsewhere in frame; `Merge` (over) that masked result onto the original background plate.
+14. For contact shadowing: duplicate the reflective object geometry and the ground geometry, feed both into an `AmbientOcclusion` node (also RayRender-based — ScanlineRender will not work for this), and use the resulting occlusion pass to darken the contact area for a noticeably more convincing "object is really there" feel.
+15. Fix visible edges of finite proxy geometry (e.g. the ground card's edge appearing in early/extreme frames) either by scaling the card much larger, or simpler: merge a white `Constant` in behind it to fill the resulting black gap, then `Multiply` that combined pass over the shot so the white areas vanish and only the intended dark/shadow areas remain.
+16. Optional final polish: `Keyer` (luminance key) the brightest highlight areas of the rendered reflective ball, `Premult`, apply an exponential `Blur`/glow, and `Screen`-merge it back over the ball for a subtle bloom; always re-distort with the same lens-distortion values used to undistort earlier; add matching film grain at the very end for full production integration.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `RayRender` — the core node; performs true ray-traced rendering (reflections, ambient occlusion) that `ScanlineRender` cannot produce; used for both the beauty pass of the reflective object and the ambient occlusion pass.
+- `ScanlineRender` — deliberately used in two places despite RayRender being the star: (1) as the source of a clean alpha matte of just the reflective object, for masking; explicitly stated as unusable for reflections or ambient occlusion.
+- `Project3D` — projects the live-action plate footage from the tracked camera onto all proxy geometry (ground card + cubes), so real footage textures the environment rather than a flat UV-mapped texture.
+- `Card` — flat plane standing in for the ground; also demonstrated as a simple reflective surface for a window-style reflection trick using an opposite-facing image.
+- `Cube` (multiple, divisions set to 1×1) — rough proxy geometry for nearby real objects (bench sides/top, low wall), scaled/rotated/positioned by eye to match the projected footage.
+- `Sphere` — the reflective chrome object itself; also used (scaled large, surrounding the scene) to hold either a flat graded sky photo or a full 360° environment photo for distant reflections.
+- `LensDistort` — undistort before projection, re-distort after the RayRender, to preserve lens accuracy through the projection round-trip.
+- `AmbientOcclusion` (RayRender-based) — fed duplicated object + ground geometry to generate a contact-shadow pass.
+- `Constant` (white) + `Multiply` — fills exposed proxy-geometry edge gaps (black holes at frame extremes) so they read as clean instead of artifacted.
+- `Keyer` (luminance key) + `Premult` + `Blur` (exponential) + `Screen` merge — optional glow/bloom pass on the reflective object's brightest highlights.
+- Wireframe shader — optional visual aid to confirm the 3D-tracked scene/geometry placement is correct.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced — combines 3D camera tracking (assumed as prerequisite, not taught here), hand-built proxy geometry matching, projection texturing, and NukeX's ray-tracing-specific nodes (RayRender, AmbientOcclusion), explicitly labeled as going beyond simpler 2D reflection tricks.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX — `RayRender` and `AmbientOcclusion` are NukeX-tier ray-tracing nodes; the 3D camera-tracked projection workflow also implies NukeX. Version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+3d-system, camera-tracking, digital-matte-painting, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Re-lighting Real Footage | Nuke Compositing [Advanced] (`re-lighting-real-footage-nuke-compositing-advanced.md`) — shares `3d-system`, `camera-tracking`, `digital-matte-painting`, `advanced`; both derive convincing CG-like results (relighting vs. reflections) from a solved 3D camera track over live-action footage, without full production 3D geometry.
+- Preserve Quality | Projections in Nuke (`preserve-quality-projections-in-nuke.md`) — shares `3d-system`; that video's projection-quality tips (limiting re-projected area, filter choice) apply directly to the Project3D-heavy proxy-geometry workflow taught here.

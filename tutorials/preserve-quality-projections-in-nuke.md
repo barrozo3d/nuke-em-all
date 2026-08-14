@@ -156,4 +156,4 @@ Nuke / NukeX (3D system/projection setup implies NukeX). Version not stated on s
 ---
 
 ## Related Tutorials
-[No existing tutorials in the knowledge base share 2+ tags yet — will be cross-linked as more 3D-system/projection-focused entries are ingested.]
+- Ray Render in Nuke Tutorial | Compositing 3d Reflections (`ray-render-in-nuke-tutorial-compositing-3d-reflections.md`) — shares `3d-system`; that video's Project3D-heavy proxy-geometry workflow benefits directly from this one's projection-quality tips (limiting re-projected area, filter choice).

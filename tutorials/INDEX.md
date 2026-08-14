@@ -223,11 +223,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=UQlTyaVKog4
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (RayRender, AmbientOcclusion, camera-tracked 3D projections)
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** 3d-system, camera-tracking, digital-matte-painting, advanced
+- **Summary:** True ray-traced 3D reflections built entirely in Nuke via `RayRender` (not `ScanlineRender`, which can't ray-trace). A solved 3D camera track projects live footage onto rough proxy `Cube`/`Card` geometry hand-built to match nearby real objects (bench, wall), giving spatially-accurate reflections; distant elements use either a flat graded sky photo or a true 360° photo mapped onto a surrounding sphere. A separate `ScanlineRender` alpha isolates just the reflective object for masking, and a RayRender-based `AmbientOcclusion` pass adds contact shadow. Also covers a simplified flat-card "window reflection" variant.
 - **File:** tutorials/ray-render-in-nuke-tutorial-compositing-3d-reflections.md
+- **Related:** Re-lighting Real Footage | Nuke Compositing [Advanced] (`re-lighting-real-footage-nuke-compositing-advanced.md`) — shares `3d-system`, `camera-tracking`, `digital-matte-painting`, `advanced`; Preserve Quality | Projections in Nuke (`preserve-quality-projections-in-nuke.md`) — shares `3d-system`.
 
 
 ### How to use NUKE to Composite Blender Renders
