@@ -540,6 +540,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/compositing-in-uv-space-with-projections-nuke-advanced.md
 
+
+### Nuke Compositing an Advanced CG Shockwave | VFX (LookDev)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=ErwClH-dQA0
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md
+
 ---
 
 ## Tag Reference
