@@ -404,5 +404,5 @@ compositing, 3d-system, procedural-texture, gizmo, ai-tools, digital-matte-paint
 ---
 
 ## Related Tutorials
-- Stormy Crystal Skull | Nuke, Blender, Ai, Embergen, Mixed VFX Medium Part 2 (`stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2.md`, once ingested) — direct continuation of this project (Part 2), covering the CG skull itself and the EmberGen work referenced in this video's title.
+- Stormy Crystal Skull | Nuke, Blender, Ai, Embergen, Mixed VFX Medium Part 2 (`stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2.md`) — direct continuation of this project (Part 2), covering the CG skull itself and the EmberGen storm-simulation work referenced in this video's title.
 - 360 Spherical LatLong Textures | Nuke Tutorial (`360-spherical-latlong-textures-nuke-tutorial.md`) — shares the Nukepedia `PolarDistort` gizmo, used there for sphere-wrapping and here for artistic radial abstraction; useful to read together to see the same node used for two very different purposes.

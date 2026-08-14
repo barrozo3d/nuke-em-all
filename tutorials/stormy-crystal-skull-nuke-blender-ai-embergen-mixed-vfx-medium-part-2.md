@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=prhQhQ5AnNM
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (cross-platform: EmberGen storm sim + Blender/Adobe Medium sculpting for the CG asset, but the compositing techniques — the video's back half and this skill's focus — are pure Nuke)"
+version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated; Classic 3D system / no USD-specific nodes used)"
+tags: [compositing, merge, channels, st-map, gizmo, grading, fx-simulation, lighting, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Stormy Crystal Skull | Nuke, Blender, Ai, Embergen, Mixed VFX Medium Part 2
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2 <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -340,30 +336,57 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:59] tutorials/frames/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2/frame_000.jpg
+- [4:22] tutorials/frames/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2/frame_001.jpg
+- [9:56] tutorials/frames/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2/frame_002.jpg
+- [13:52] tutorials/frames/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2/frame_003.jpg
+- [16:03] tutorials/frames/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2/frame_004.jpg
+- [18:42] tutorials/frames/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2/frame_005.jpg
+- [23:03] tutorials/frames/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2/frame_006.jpg
+- [25:52] tutorials/frames/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Building a "crystal skull with an internal lightning storm" CG element by rendering many separate, deliberately simple CG passes (glass, storm, two independent point-light passes) and doing all of the actual "art direction" — light flicker, lightning placement, internal-vs-surface depth cheating, edge distortion — in Nuke compositing rather than in the 3D renderer.
 
 ### Summary
-[PENDING EXTRACTION]
+Part 2 of the "Stormy Crystal Skull" project (continuing Part 1's "frame" build). The CG side is fast: EmberGen simulates smoke/storm inside an imported FBX skull collider (two sims, one emitting from center, one from the back, to fill the skull evenly) exported as VDBs (frame_000); Blender loads the VDBs (Shift-A → Volume → Import OpenVDB) alongside a high-res and a remeshed low-res skull, both containing extra crack/bubble detail hand-sculpted in Adobe Medium VR (frame_001) rather than procedurally, because sculpted interior cracks read as more convincingly "quartz-like" than a glass shader alone. Lighting uses a camera parented to a rotating axis so the same fixed area lights read correctly from every angle, with a rim/silhouette-read priority (never let the glancing edge go fully black) and one light placed directly behind the skull for a sub-dermal glow. Everything is deliberately split into many separate un-animated renders (base glass high-res, base glass low-res, storm-lit-from-center, storm-lit-from-back) so that all animation — light flicker, mixing high/low-res detail, blending render layers — happens in Nuke instead of 3D, because iterating on lighting timing inside a ray-traced glass render is too slow. The two storm-light renders (frame_003 shows one, a raw blue glow) are combined with Merge (plus) and independently flickered using Grade nodes driven by the Nukepedia "Expression Generator" gizmo (control-drag its `result` output into a Grade's gain knob), with wavelength/min/max tuned for a fast, high-frequency flicker rather than a naturalistic single-strike look, because the author wanted the interior to never read fully dark. Lightning bolts (frame_004) come from ST-mapping pre-rendered lightning-pattern footage (from Compositing Academy's own look-dev library) onto the skull's UV pass, then masking the ST-mapped lightning so it only shows through the bright parts of the storm render — making surface-projected lightning read as if it's happening deep inside the volume (frame_005). RotoPaint is layered on top of the mask to hand-place individual bolts for a less uniform, more random-feeling strike pattern. A blurred, keyed-out version of the lightning creates a cheap bounce-light glow around each strike. Later passes: a Glass-node edge distortion (using the glass render's own alpha as a displacement map) to make the lightning/storm feel like it's refracting through uneven glass rather than sitting on a flat surface (frame_006); fake interior bounce light (darken + blur + alpha-mask the main effect, Plus it back); PMatte-driven eye brightening from the position pass; log-space sharpening (Log2Lin → Sharpen → Lin2Log) for better results than sharpening directly in display space; and a VolumeRays node worked around via "Copy to Group" + disabling its internal Crop node, to preserve overscan pixels needed because the final image was later scaled down (frame_007 shows the finished glowing-comet-like lightning result).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. **EmberGen:** near-default force+noise smoke setup, sphere emitter, FBX skull imported as a collider; run two separate sims (front-emitting, back-emitting) so the whole skull fills with smoke; export both as VDB sequences — temporary EmberGen lighting is discarded because true glass refraction/ray-tracing needs to happen in a renderer that actually ray-traces (Blender), not EmberGen's real-time preview.
+2. **Blender:** import VDBs (Shift-A → Volume → Import OpenVDB); keep both a high-res sculpted skull and a remeshed low-res version for faster iteration; hand-sculpt interior crack/bubble detail in Adobe Medium (VR sculpting) rather than procedural noise, since real quartz reads convincingly mainly from internal fracture detail; light with a camera parented to a rotating axis + fixed area lights placed to keep a rim highlight readable at every rotation angle, plus one light directly behind the object for sub-dermal glow; render many separate un-animated passes (base glass hi-res, base glass lo-res, storm-lit-front, storm-lit-back) instead of one animated composite, specifically to push all timing/animation decisions into Nuke.
+3. **Nuke — combine and animate the two light passes:** `Merge` (plus) the two storm-light renders; add an independent `Grade` per light with an expression-driven `gain`, generated via the Nukepedia **Expression Generator** gizmo — control-drag its `result` knob into Grade's gain, then tune wavelength (shorter = faster flicker) and min/max (amplitude) so the interior stays lit rather than going to black between strikes.
+4. **Nuke — glows:** key/pull luminance from the flickering light layers, premultiply, run an exponential `Glow`, `Plus` back over the main chain, `Grade` up slightly to taste.
+5. **Nuke — lightning bolts:** `Shuffle` out the render's UV pass; `STMap` pre-made lightning-pattern footage (Compositing Academy look-dev library asset pack) onto the skull surface using that UV pass. Alternative/complementary tool named: **X-Tesla** (Nukepedia, by Xavier Martin) for generating individual bespoke lightning bolts — preferred for single bolts, but too slow for "lots of simultaneous lightning," which is why the ST-map-library approach was used here instead.
+6. **Nuke — fake internal depth for the lightning:** the ST-mapped lightning initially reads as sitting on the surface; fix by keying/masking it so it's only visible through the bright regions of the storm's own render (dark cloud areas cut the lightning out) — this alone sells "lightning happening inside the volume" instead of on the glass surface. Layer hand-painted `RotoPaint` masks on top to selectively re-enable/disable specific bolts frame-by-frame for a less uniform strike pattern than the raw ST-mapped layer gives.
+7. **Nuke — bounce light from the bolts:** blur a keyed/masked copy of the lightning layer, mask it to the dark cloud regions, use it to `Multiply` (brighten) the surrounding area — cheap, comp-only fill light that has no equivalent in the CG render.
+8. **Nuke — seamless loop:** render ~20 extra frames past the simulation's natural end, then `Dissolve` between the tail and the head of the render to hide the loop point (fluid sims can't trivially self-loop).
+9. **Nuke — edge distortion:** feed the alpha of the low-res glass render into a `Glass` node as a displacement source, applied over the storm/lightning composite, so refraction-like surface noise reads on the lightning as the skull rotates — reinforces "this is inside solid glass," not a flat overlay.
+10. **Nuke — final polish:** fake interior bounce (darken + blur + alpha-mask the main effect, `Plus` back over); `PMatte` (Nukepedia) driven by the position pass to isolate/brighten just the eye sockets; log-space sharpen (`Log2Lin` → `Sharpen` → `Lin2Log`, better result than sharpening directly in display-referred space); `VolumeRays` handled via right-click → **Copy to Group** (converts the locked node into an editable group) so its internal auto-`Crop` can be disabled, preserving the overscan the shot needed since the final image was later scaled down — re-`Crop` afterward to a sane bounding box rather than leaving the huge overscan canvas in place.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** Shuffle, STMap, Merge (`plus`), Grade (`gain` driven by expression), Glow (exponential), Blur, RotoPaint, Dissolve, Glass (distortion via alpha displacement), Log2Lin/Lin2Log (`operation` toggle for log-space sharpening), Sharpen, VolumeRays (+ "Copy to Group" trick to disable its internal Crop), Crop, Multiply merges for bounce-light gain
+- **Nukepedia gizmos:** **Expression Generator** (drag-and-drop animated-value driver, used here for light flicker via a Grade's gain), **X-Tesla** (Xavier Martin — dedicated single-bolt lightning generator, mentioned as the better tool for individual bolts vs. this video's ST-map-library approach for mass lightning), **PMatte** (position-pass-driven region isolation, used to brighten the eyes)
+- **Cross-app / non-Nuke:** EmberGen (smoke/storm sim, VDB export), Blender (VDB import, remesh modifier, area-light rig on a rotating-axis-parented camera), Adobe Medium (VR sculpting for interior crack detail — author predicts VR sculpting workflows like this will eventually supersede flat-screen sculpting tools)
+- **Asset source:** Compositing Academy's own "200 lightning simulations" look-dev library pack (ST-mapped footage), referenced as available on the channel's website
+- **Cross-reference:** the flicker-expression and constant-over-white-then-multiply bounce-light techniques are both noted as covered in more depth in the author's paid "Nuke 606" course
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced — no single node is exotic, but the overall approach (deliberately under-baking the 3D render into many static, un-animated passes so that *all* timing/animation/detail-blending happens in comp) requires production-level judgment about what to solve in 3D vs. 2D.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke for all compositing (majority of this video's runtime and the reason it's extracted fully here); EmberGen for the storm simulation and Blender/Adobe Medium for the CG asset are cross-platform prerequisites, not covered in depth. Nuke version not stated on screen; per this skill's version-tracker, a 2022 upload falls in the 13.1 (Nov 2021) → 13.2 (Apr 2022) window. Uses only Classic-3D-era passes (P Matte position pass, UV pass) — no USD-specific nodes, so unaffected by the 14.0-beta 3D-system overhaul.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, merge, channels, st-map, gizmo, grading, fx-simulation, lighting, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Mixed Medium VFX P1 | Blender, Nuke, Ai, Embergen, VR Tutorial (`mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md`) — direct prequel (Part 1); covers the AI-concepted "frame" element for the same overall Stormy Crystal Skull piece using a related 2D→3D→2D Nuke/Blender pipeline. Read together — Part 1 explains the frame surrounding this skull, this video explains the skull itself.
+- Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares the "isolate a region via a position/ID pass, then multiply/mask to fake extra CG detail entirely in comp" philosophy (there via World Position AOV, here via P Matte on the position pass), and both push flicker/animation into expression-driven Grade nodes.
