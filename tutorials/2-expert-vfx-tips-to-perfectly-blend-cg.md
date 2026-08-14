@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=DFb9dnOWTxw
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [relighting, grading, roto, compositing, digital-matte-painting, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/2-expert-vfx-tips-to-perfectly-blend-cg/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # 2 Expert VFX Tips to PERFECTLY Blend CG
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py 2-expert-vfx-tips-to-perfectly-blend-cg <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -244,30 +240,57 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:44] tutorials/frames/2-expert-vfx-tips-to-perfectly-blend-cg/frame_000.jpg
+- [1:16] tutorials/frames/2-expert-vfx-tips-to-perfectly-blend-cg/frame_001.jpg
+- [2:55] tutorials/frames/2-expert-vfx-tips-to-perfectly-blend-cg/frame_002.jpg
+- [3:37] tutorials/frames/2-expert-vfx-tips-to-perfectly-blend-cg/frame_003.jpg
+- [5:47] tutorials/frames/2-expert-vfx-tips-to-perfectly-blend-cg/frame_004.jpg
+- [6:35] tutorials/frames/2-expert-vfx-tips-to-perfectly-blend-cg/frame_005.jpg
+- [8:04] tutorials/frames/2-expert-vfx-tips-to-perfectly-blend-cg/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+CG integration is not one HDRI-lit render plus a single color grade — it's dozens of stacked micro-decisions built in comp: hand-rotoed/tracked "painted light" (contact shadows, glancing-angle highlights, faked reflections) driven by a rotated-normals alpha matte, plus a disciplined "connection points" methodology of continuously comparing CG against real reference while remembering that different materials (a dark book vs. a bright table) legitimately reflect light differently, so naive 1:1 brightness matching between them is a trap.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy demonstrates, on a real coin-and-book tabletop shot with a CG cup/coins hidden among real props, that an HDRI-lit render is only a starting point, not the finish line. Technique 1, "paint with light": rather than re-lighting in 3D (slow, for what should be a fast comp fix), roto shapes are tracked onto the single-frame CG render (the camera is a nodal pan, so only one CG frame needed rendering, with tracking applied at the end) to add contact shadows (layered — broad shadow, then a darker contact shadow underneath), glancing-angle Fresnel highlights, desaturated highlight areas (a common real-world highlight characteristic), faked soft reflections roto'd in based on photographed real-object reference, and colored light bounce (e.g. a blue window reflection found in reference photos). Edge/surface highlights specifically are pulled from a `RotateNormals` (Nucopedia gizmo) alpha matte fed into a `Grade`, done multiple times for different light directions. A key sub-technique for surface detail: instead of just brightening a roto'd region flatly (which looks "flat" and fake), pull a luma key of the surface's own texture/fiber detail and use that as the grade's alpha, so brightened highlights follow the material's actual micro-texture — reasoned from first principles about what the material is and how it reflects light. Technique 2, "finding connection points": a disciplined scanning methodology of repeatedly comparing every visual property (shadow softness/depth, DOF, exposure, hue, surface imperfections, texture size/sharpness) between the CG and real elements, while remembering that materials don't reflect equally — e.g. a dark book will legitimately read darker than a bright table surface even in identical lighting, so matching brightness 1:1 between mismatched materials is the actual mistake, not a lighting failure.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Recognize that an HDRI-lit CG render is a starting point, not a finished integration — pools of light, shadow contrast, and highlight behavior will not automatically cross over and match the real plate.
+2. Rather than iterating lighting setups in 3D (slow, especially for small objects like coins), roto shapes and track them onto the CG render in comp for fast, art-directable light/shadow painting.
+3. Since the shot is a nodal pan (rotation-only camera), render just one CG frame and apply the tracked motion to the whole roto/grade stack at the end rather than animating shadows per frame.
+4. Layer shadow types: a broad ambient-occlusion-style shadow, then a separate, darker "contact shadow" directly underneath contact points.
+5. Add glancing-angle highlights using a `RotateNormals` gizmo (Nucopedia) — rotate the normals pass to generate an alpha matte representing which surfaces catch light from a given direction, feed that alpha into a `Grade`; repeat with different rotation values for multiple light directions/highlight passes.
+6. Desaturate highlight regions specifically — a common real-world characteristic of specular highlights that's easy to skip.
+7. Fake soft reflections with a roto shape (not a shadow — a distinct, softer, brighter shape) informed by real photographed reference of similar objects/materials in similar lighting.
+8. Add colored bounce/reflection details found in reference photography (e.g. a blue window reflection) via another `RotateNormals`-driven pass, applied specifically in shadow regions.
+9. For surface highlight detail (e.g. worn/polished book edges, fiber texture): avoid simply brightening a flat roto shape — pull a luma key of the material's own texture (fibers, grain, imperfections) and use that luma matte as the `Grade`'s mask, so the added light follows the material's actual surface detail rather than reading as a flat painted highlight.
+10. Apply the "connection points" comparison methodology: continuously scan back and forth between CG and real elements checking shadow softness/depth, depth of field, exposure, hue variation, surface imperfections, texture size and sharpness.
+11. Guard against the brightness-matching trap: different materials (e.g. a dark book vs. a light table) legitimately reflect different amounts of light even under identical illumination — don't force 1:1 brightness matching between visually different materials; reason from the material's actual reflectance first.
+12. Source real reference photography of comparable materials/objects under similar lighting before finalizing comp decisions — treated as standard practice (referenced as common in productions like Iron Man), not "cheating."
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `RotoPaint`/Roto shapes — tracked onto a single CG frame for contact shadows, highlights, faked reflections, and colored bounce light
+- `RotateNormals` (Nucopedia gizmo) — rotates the normals pass to generate directional alpha mattes for highlight/relight passes, used multiple times per shot
+- `Grade` — driven by RotateNormals alpha mattes and by luma-keyed surface-texture mattes for material-aware highlight detail
+- Luma key of surface texture (as opposed to a flat roto) — mask source for physically-motivated highlight detail on fibrous/textured materials
+- Single-frame CG render + tracked motion — render-saving technique for nodal-pan (rotation-only) camera shots, referenced back to the channel's beginner series
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. No on-screen version banner or OCIO metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+relighting, grading, roto, compositing, digital-matte-painting, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares `relighting`/`RotateNormals`-driven highlight technique with Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`) — both use normals-derived alpha mattes to add directional light/highlights in comp rather than re-rendering. Also shares the nodal-pan single-frame-render optimization with How I Use Compositing to Skip THOUSANDS of Hours Rendering (`how-i-use-compositing-to-skip-thousands-of-hours-rendering.md`).
