@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=rBPz0LL0yF0
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated; no version-specific features used)"
+tags: [roto, tracking, camera-tracking, compositing, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/rotoscoping-in-nuke-tutorial-5-beginner-tips/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Rotoscoping in Nuke Tutorial | 5 Beginner Tips
@@ -23,20 +24,11 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-## Ingest Safeguard Report
+Frames captured — see "Captured Frames" section below.
 
-_Auto-generated at ingest/frame-capture time — explains why `extraction_status` may be `needs-review`. Safe to delete once reviewed._
-
-- WARNING: Very short transcript (41 chars) in 'Intro'
-
----
-
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py rotoscoping-in-nuke-tutorial-5-beginner-tips <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+> Reviewed: the "very short transcript in 'Intro'" warning is expected — that
+> chapter is just the spoken title card ("Rotoscoping in Nuke, 5 tips for
+> beginners"). The 5 real tips are fully transcribed below.
 
 
 ### Intro [0:00]
@@ -383,30 +375,55 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:39] tutorials/frames/rotoscoping-in-nuke-tutorial-5-beginner-tips/frame_000.jpg
+- [4:10] tutorials/frames/rotoscoping-in-nuke-tutorial-5-beginner-tips/frame_001.jpg
+- [6:55] tutorials/frames/rotoscoping-in-nuke-tutorial-5-beginner-tips/frame_002.jpg
+- [8:03] tutorials/frames/rotoscoping-in-nuke-tutorial-5-beginner-tips/frame_003.jpg
+- [10:29] tutorials/frames/rotoscoping-in-nuke-tutorial-5-beginner-tips/frame_004.jpg
+- [15:12] tutorials/frames/rotoscoping-in-nuke-tutorial-5-beginner-tips/frame_005.jpg
+- [17:23] tutorials/frames/rotoscoping-in-nuke-tutorial-5-beginner-tips/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Five workflow/methodology principles for faster, more stable RotoPaint/Roto work in Nuke: keyframe placement driven by actual motion-direction changes (not arbitrary intervals), separating roto shapes by object/parallax plane, stabilizing shaky footage before rotoing then re-applying the motion, decomposing complex silhouettes into primary + secondary shapes, and using each shape's rotation pivot instead of animating every point by hand.
 
 ### Summary
-[PENDING EXTRACTION]
+A pure-methodology beginner tutorial (no scripting, no exotic nodes) built around five real production examples. **Tip 1 (frame_000, hand reaching between 3 basket positions):** watch the whole shot first and place keyframes only at direction-change points (not evenly-spaced intervals) to avoid "counter-animating" the shape between two extremes; add secondary keyframes just before a shape settles into its next position, since real motion eases in/out rather than moving at constant velocity. **Tip 2 (frame_001, overlapping foreground/background market produce):** rotoscope different objects — especially ones on different parallax planes or that deform independently — as separate shapes rather than one combined silhouette, and keep each control point anchored to the same physical feature/edge-detail across frames rather than letting points slide freely along the silhouette (sliding points cause a wobbly-looking roto even with plenty of keyframes). **Tip 3 (frames_002/003/004, shaky handheld market-basket footage):** for camera/subject shake, `Tracker` a stable feature (toggle "adjust for luminance changes" if lighting shifts during the shot), export both a **baked Stabilize** transform and a **baked Match-Move** transform, sandwich a `Roto` between them (Stabilize → Roto → MatchMove) so the roto itself is drawn on the *stabilized* plate where the shape barely moves frame-to-frame — the stabilize window (viewer's tracked-patch preview) is the main tool for judging whether a track is holding, and should be enlarged for sub-pixel accuracy work; once rotoed, the Stabilize node can be disabled/removed since it was only a drawing aid, and the roto + MatchMove pair travels with the original shaky footage. **Tip 4 (frame_005, a walking rooster):** break complex, overlapping silhouettes into a primary "main body" shape plus smaller secondary shapes wherever a detail (a feather, a wing) pops in and out of the main silhouette, rather than repeatedly editing one mega-shape's point count. **Tip 5 (frame_006, a sled dog's legs on snow):** once shapes are separated into primary/secondary forms, further split them along an object's actual joints/pivots (a bone structure doesn't change volume much even when skin/muscle stretches) so each piece can be **rotated around a Ctrl-set pivot** rather than hand-animating every point — faster and more stable for jointed/rotating motion.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Watch the full shot before placing any keyframes; sketch (mentally or literally) the object's motion path to find real direction-change points — that's where keyframes go, not at arbitrary fixed intervals.
+2. Add secondary/ease keyframes just before a shape settles at each direction-change point, since motion naturally eases in and out.
+3. Split any composited elements that sit on different parallax planes, or that deform independently of each other, into separate `Roto`/`RotoPaint` shapes instead of one combined shape.
+4. Anchor each control point to a specific, trackable feature on the subject's edge and keep it there frame-to-frame — don't let points "slide" freely along the silhouette even if the outline still reads correctly, since sliding points are what causes edge wobble.
+5. For shaky/handheld shots: add a `Tracker`, pick a stable high-contrast feature, enable "adjust for luminance changes" if lighting shifts, track forward/backward (C/X hotkeys) and nudge frame-by-frame using the tracker's stabilized-preview window until the patch stops jumping.
+6. Export the track twice from the Tracker: **Stabilize (baked)** and **Match-Move (baked)** — "baked" so neither breaks if the Tracker node is later modified.
+7. Build the chain Stabilize → `Roto` → Match-Move; draw the roto shape against the now-mostly-static stabilized plate, where frame-to-frame point movement is minimal, instead of against the raw shaky footage.
+8. Once the roto is complete, the Stabilize node has served its purpose (drawing aid only) and can be disabled — do not leave the whole shot running through Stabilize for final output, since it re-filters/softens the image; only the Roto + Match-Move pair is needed downstream (e.g. as a `Grade`/color-correct mask).
+9. For complex silhouettes, draw one primary shape for the main mass, then add small secondary shapes only where a detail breaks the primary silhouette (rather than repeatedly re-editing the primary shape's point count).
+10. For rotating/jointed parts, split primary/secondary shapes further along the object's actual joints, and animate by rotating each shape around a Ctrl-placed pivot point rather than hand-keying every control point.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** `Roto`/`RotoPaint` (Bezier curves preferred by the author over B-splines for point control; select-all + `Z` to smooth corners), `Tracker` (reference frame, "adjust for luminance changes" toggle, C = track forward / X = track backward, stabilized-preview window for judging track quality), `Transform` (Stabilize-baked and Match-Move-baked exports from the Tracker), pivot-point rotation via Ctrl-drag on a shape's transform handle
+- **Workflow pattern:** Stabilize → Roto → Match-Move (roto against a stabilized plate, then re-apply the original motion) — a general-purpose pattern for rotoscoping any moving/shaky subject, not specific to any one shot type
+- **No scripting, no gizmos, no gradle/AOV work** — this is pure interactive-tool methodology
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — explicitly framed as five foundational tips; no Python, no expressions, no advanced nodes, just disciplined use of Roto/Tracker.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. No version-specific features referenced (Tracker/Roto/Transform have been stable across many releases); per this skill's version-tracker, a 2022 upload falls in the Nuke 13.1 (Nov 2021) → 13.2 (Apr 2022) window, but nothing in this tutorial would behave differently on adjacent versions.
 
 ### Tags
-[PENDING EXTRACTION]
+roto, tracking, camera-tracking, compositing, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Why your VFX Tracks aren't "Sticking" (and how to Fix it) (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — shares `tracking`, `camera-tracking`, `compositing`, `roto`; that tutorial diagnoses why a track *slides* (lens distortion/vignette), this one covers how to place keyframes and stabilize footage *before* rotoing so a track/roto sticks well from the start — complementary reading.
+
+Revisit once other tracking-focused tutorials (e.g. "Tracking Concepts in Nuke for Beginners" or the 2024 Mocha+Nuke tracking video, once ingested) land in the index.

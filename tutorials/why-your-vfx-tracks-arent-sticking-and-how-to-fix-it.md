@@ -245,4 +245,6 @@ tracking, camera-tracking, compositing, roto, gizmo, intermediate
 ---
 
 ## Related Tutorials
-None yet in the knowledge base share the `tracking`/`camera-tracking` tags — first entry establishing these. Future tracking-focused tutorials (2020's "Tracking Concepts in Nuke for Beginners", 2021's "Parallax HAX") should cross-link here once ingested.
+- Rotoscoping in Nuke Tutorial | 5 Beginner Tips (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`) — shares `tracking`, `camera-tracking`, `compositing`, `roto`; covers keyframe placement and the Stabilize→Roto→Match-Move pattern for getting a roto to stick well in the first place, complementary to this tutorial's track-slide diagnostics.
+
+Future tracking-focused tutorials (2020's "Tracking Concepts in Nuke for Beginners", 2021's "Parallax HAX") should cross-link here once ingested.
