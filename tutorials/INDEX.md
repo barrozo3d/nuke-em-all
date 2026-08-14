@@ -499,11 +499,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=gS4zXJ6sLs8
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)
+- **Tags:** procedural-texture, gizmo, compositing, st-map, rotopaint, intermediate
+- **Summary:** Builds a Moiré interference pattern (as seen filming LED/CRT screens, e.g. WandaVision's "big wall" effect) from a `sin(x)` Expression line pattern, offset + rotated against a duplicate copy (rotation is what actually produces the interference), optionally warped via `GridWarp` or an animated `RotoPaint` stroke for organic distortion, then colorized with a blur→Linear-HSV "rainbow" pass (reused from the channel's dedicated rainbow tutorial) and multiplied back over the sharp pattern for a final animated old-TV Moiré effect.
 - **File:** tutorials/moire-patterns-nuke-tutorial-intermediate.md
+- **Related:** Nuke Tutorial | Compositing a Rainbow [Intermediate] (`nuke-tutorial-compositing-a-rainbow-intermediate.md`) — this video reuses that one's HSV rainbow-coloring technique directly.
 
 
 ### I Brought a Greenscreen in Arctic Conditions for this Film

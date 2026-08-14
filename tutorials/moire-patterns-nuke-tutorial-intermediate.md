@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=gS4zXJ6sLs8
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)"
+tags: [procedural-texture, gizmo, compositing, st-map, rotopaint, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/moire-patterns-nuke-tutorial-intermediate/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Moire Patterns | Nuke Tutorial [Intermediate]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py moire-patterns-nuke-tutorial-intermediate <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction to moiré [0:00]
@@ -140,30 +136,54 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:45] tutorials/frames/moire-patterns-nuke-tutorial-intermediate/frame_000.jpg
+- [2:58] tutorials/frames/moire-patterns-nuke-tutorial-intermediate/frame_001.jpg
+- [3:29] tutorials/frames/moire-patterns-nuke-tutorial-intermediate/frame_002.jpg
+- [3:48] tutorials/frames/moire-patterns-nuke-tutorial-intermediate/frame_003.jpg
+- [4:47] tutorials/frames/moire-patterns-nuke-tutorial-intermediate/frame_004.jpg
+- [6:22] tutorials/frames/moire-patterns-nuke-tutorial-intermediate/frame_005.jpg
+- [6:32] tutorials/frames/moire-patterns-nuke-tutorial-intermediate/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Procedurally generating a Moiré interference pattern (the visual "beating" effect from two overlapping fine line/grid patterns, as seen filming LED screens or through chain-link fences) using a `sin(x)` expression to build thin repeating line patterns, offsetting and rotating a duplicate against the original to create the interference, then optionally warping with `GridWarp` or an animated `RotoPaint` stroke and colorizing through a blur→HSV rainbow pass for an old-CRT-television look.
 
 ### Summary
-[PENDING EXTRACTION]
+A short, focused procedural-pattern tutorial. The base pattern (frame_000/001) comes from a single `Expression` node: `sin(x)` on the alpha (or color) channel produces a repeating sine-wave line pattern across the frame; dividing `x` by a number (e.g. `sin(x/10)`) thickens the lines — thin lines are kept deliberately, since the Moiré effect reads more strongly with more intersecting lines per area. The author has a personal Nukepedia gizmo that automates this line-generation (so no manual expression typing is needed day-to-day) plus a companion **Offset** gizmo that wraps content back onto the opposite edge when shifted (useful for tiling this pattern, similar to a `Checkerboard`). A duplicate of the line pattern is nudged (`Transform` ~20px in X) to slightly misalign it from the original (frame_002), and — critically — **rotated**: rotation of one copy relative to the masked-off other is what actually produces the interference "beating" pattern; at 0° rotation almost nothing happens, but interference appears immediately once rotation is introduced (frame_003 shows the un-rotated warped-grid state, for contrast). For a more organic look than pure straight-line interference, a `GridWarp` applied to one of the two line layers produces circular/swirled Moiré patterns (frame_004) — useful as an animatable effect for a hand or object passing through a screen surface, or a "matrix zoom" style distortion. An alternative, more art-directable distortion driver is an animated `RotoPaint` stroke (Smear tool, sized up) whose stroke tab can be keyframed over time to drive organic warping through the pattern (frame_006) — cross-referenced to the channel's own UV-workflow tutorial for the underlying ST-map/UV distortion-driving technique. To finish it as a "TV screen" look: shuffle the alpha into all of R/G/B/A so the pattern is neutral gray across channels, `Blur` it (averages ridges to white, troughs to black instead of a hard sine edge), then run the same Linear→HSV→shuffle "rainbow" trick used elsewhere on this channel (cross-referenced to the dedicated "How to make a rainbow" Nuke tutorial) to colorize it (frame_005 shows the resulting magenta/orange banded rainbow interference pattern) — applying the rainbow trick to the sharp unblurred pattern directly looks flat, so the blur step first is what makes the color roll convincingly into highlights/shadows. Finally, `Multiply` the colorized rainbow pattern against the original sharp Moiré pattern to combine detail with color, producing an animated CRT/old-screen Moiré effect usable as a render pass or comp element (e.g. the "old TV" look used in shows like WandaVision).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Generate a thin repeating line pattern with an `Expression` node: `sin(x)` (or `sin(x/N)` to thicken the lines) on alpha or a color channel. Keep lines thin for a stronger Moiré effect (more intersections per area).
+2. (Optional/author's convenience) Wrap this into a reusable gizmo, plus a companion **Offset** gizmo (Nukepedia) that wraps shifted content back onto the opposite edge — useful for tiling the line pattern like a `Checkerboard`.
+3. Duplicate the line layer; `Transform` it slightly off-axis from the original (e.g. 20px in X) so the two copies aren't perfectly stacked.
+4. **Rotate** the duplicate relative to the (masked) original — this rotation is what actually generates the Moiré interference pattern; without rotation, little to no interference appears even with the copies offset.
+5. For a more organic, non-linear interference look: apply `GridWarp` to one of the two line layers before combining — produces circular/swirling Moiré patterns instead of straight banding, and can be animated to simulate an object passing through the pattern.
+6. Alternative distortion driver: an animated `RotoPaint` stroke (Smear brush, enlarged) whose Stroke tab is keyframed over time, used as an ST-map-style UV distortion source for more art-directed, hand-animated warping (cross-referenced to this channel's UV/ST-map tutorial).
+7. To colorize as an old-TV look: `Shuffle` the pattern's alpha into all of R/G/B/A (neutral grayscale across channels), `Blur` it so ridges read as bright and troughs as dark (rather than a hard binary sine edge), then convert Linear→HSV, remap, and shuffle back to RGB (the same "rainbow" technique used in this channel's dedicated rainbow tutorial) to get smooth color banding.
+8. `Multiply` the blurred/colorized rainbow pass against the original sharp Moiré pattern to recombine fine interference detail with the rainbow coloring, yielding the final animated CRT/television Moiré effect — usable as a standalone render pass mixed into a larger composite.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** `Expression` (`sin(x)` / `sin(x/N)` for line generation), `Transform` (small offset + rotation between two copies), `Shuffle` (alpha → all RGBA channels), `Blur`, `Multiply` merge, HSV round-trip (Linear→HSV via `Colorspace`/`Shuffle`, remap, back to RGB) for the rainbow coloring pass
+- **`GridWarp`** (built-in Nuke node) — used for organic/circular Moiré distortion instead of pure straight-line interference
+- **`RotoPaint`** — Smear brush with an animated Stroke tab, used as an alternative, hand-art-directable distortion driver via ST-map-style UV warping
+- **Nukepedia gizmos:** a personal line-pattern generator gizmo (automates the `sin(x)` expression) and a companion **Offset** gizmo (wrap-around edge offset, like a tileable `Checkerboard`)
+- **Real-world reference cited:** chain-link fence overlap, filming LED/CRT screens, and the WandaVision "big wall" VFX sequence as a prominent production example of this effect
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — the underlying idea (two rotated line patterns interfering) is simple, but building it cleanly requires comfort with expressions, offset/rotate node chaining, and the HSV rainbow-coloring trick as a supporting technique.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. Version not stated on screen; per this skill's version-tracker, a 2022 upload falls in the Nuke 13.1 (Nov 2021) → 13.2 (Apr 2022) window. No version-specific features used — `Expression`, `Transform`, `GridWarp`, `RotoPaint`, and Shuffle/Colorspace have been stable across many releases.
 
 ### Tags
-[PENDING EXTRACTION]
+procedural-texture, gizmo, compositing, st-map, rotopaint, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Nuke Tutorial | Compositing a Rainbow [Intermediate] (`nuke-tutorial-compositing-a-rainbow-intermediate.md`) — this Moiré tutorial explicitly reuses that video's Linear→HSV "rainbow" technique (blur → HSV round-trip → multiply) as its final colorization step.
+- 360 Spherical LatLong Textures | Nuke Tutorial (`360-spherical-latlong-textures-nuke-tutorial.md`), Mixed Medium VFX P1 (`mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md`), and A new way to design VFX | Gravity Sketch + Nuke (`a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial.md`) — all build procedural patterns for creative/technical purposes using expression-driven and gizmo-based Nuke techniques from the same channel's toolkit.

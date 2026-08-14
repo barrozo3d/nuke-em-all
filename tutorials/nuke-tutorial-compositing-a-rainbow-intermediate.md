@@ -204,3 +204,4 @@ compositing, channels, procedural-texture, intermediate
 ## Related Tutorials
 - Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `compositing`, `channels`, `procedural-texture`, `intermediate`.
 - Create 3D Noise | Nuke Compositing (`create-3d-noise-nuke-compositing.md`) — shares `compositing`, `channels`, `procedural-texture`, `intermediate`; both build procedural patterns purely through channel/expression manipulation.
+- Moiré Patterns | Nuke Tutorial [Intermediate] (`moire-patterns-nuke-tutorial-intermediate.md`) — that tutorial directly reuses this video's Linear→HSV rainbow-coloring technique as its final colorization step for a TV/CRT Moiré effect.
