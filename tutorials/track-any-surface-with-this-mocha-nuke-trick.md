@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=vgNTBxOXna0
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX, cross-platform with Mocha Pro (third-party planar tracker, sold separately/bundled by Boris FX — not a Foundry product but ships a Nuke corner-pin exporter)"
+version: "Nuke 15.x (2024 upload; no other version-specific features referenced)"
+tags: [tracking, camera-tracking, roto, grading, compositing, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/track-any-surface-with-this-mocha-nuke-trick/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Track Any Surface with This Mocha + Nuke Trick!
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py track-any-surface-with-this-mocha-nuke-trick <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction Explanation [0:00]
@@ -151,30 +147,60 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:19] tutorials/frames/track-any-surface-with-this-mocha-nuke-trick/frame_000.jpg
+- [1:31] tutorials/frames/track-any-surface-with-this-mocha-nuke-trick/frame_001.jpg
+- [3:40] tutorials/frames/track-any-surface-with-this-mocha-nuke-trick/frame_002.jpg
+- [5:06] tutorials/frames/track-any-surface-with-this-mocha-nuke-trick/frame_003.jpg
+- [6:22] tutorials/frames/track-any-surface-with-this-mocha-nuke-trick/frame_004.jpg
+- [7:10] tutorials/frames/track-any-surface-with-this-mocha-nuke-trick/frame_005.jpg
+- [8:04] tutorials/frames/track-any-surface-with-this-mocha-nuke-trick/frame_006.jpg
+- [9:19] tutorials/frames/track-any-surface-with-this-mocha-nuke-trick/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Getting a rock-solid planar track for a difficult logo-removal/clean-plate shot (uneven lighting, an object occluding the surface, a non-planar edge) by pre-conditioning the footage with frequency separation before handing it to Mocha's planar tracker, then round-tripping the result back into Nuke as a `CornerPin` to stabilize the surface for paint work.
 
 ### Summary
-[PENDING EXTRACTION]
+The shot has three named problems working against a track: luminance changes (shadows/reflections crossing the surface), occlusion (an object/jacket passing in front), and a non-planar perspective shift at the surface's edge (frame_000 shows the source footage with the tracked leaf-patterned bucket and jacket occlusion). Nuke's own planar `Tracker`/`Roto` node (with its "adjust for luminance changes" option) was tried first but couldn't hold — even after adding frequency separation to help it — so the workflow moves to **Mocha** (third-party, Boris FX; free trial available), described as a near-mandatory secondary skill every compositor eventually needs since Mocha's planar tracker outperforms Nuke's built-in one on hard surfaces. Before tracking, **frequency separation** is used purely as a tracking aid, not a beauty pass: `Blur` the plate, subtract the blur from the original (frame_001/002 show the resulting high-frequency-only "Freq Separation" result — a spiky, contrasty edge-pattern render that isolates surface texture from the lighting/shadow changes riding on top of it), then `Grade` it up for contrast — this gives Mocha a texture pattern to lock onto that barely changes even as real-world lighting shifts across the surface. A small manual `Roto` (set to output RGBA, painted black) removes a stray reflection/shadow-edge artifact the frequency-separation pass introduced near the tracked leaf, specifically so it doesn't distract the tracker; the cleaned result is shuffled into a solid alpha before export to Mocha. **In Mocha:** draw a spline-layer selection around the trackable pattern (the leaf plus a bit of the logo area — frame_003/004 shows this selection over the frequency-separated footage), enable "Perspective" tracking (not "Mesh," which is for warping/deforming tracks, not needed here since the surface is treated as mostly planar); draw a *second* spline layer around the occluding object (the jacket) with tracking disabled, and manually keyframe that shape frame-by-frame as it crosses — any layer stacked above the base tracked layer subtracts from that layer's tracking data, so this occlusion shape must exist (even un-tracked) before running Track Forward/Track Backward on the base layer (frame_005 shows the tracked jacket-occlusion shape mid-track). Once tracked cleanly through the whole occlusion pass, click "expand planar surface to the edge of frame" (critical — the goal is stabilizing the full frame for paint, not cropping to the tracked patch) and "show the planar surface," then Export Track → Nuke CornerPin.nk → Copy to Clipboard, and paste directly into Nuke's node graph as a ready-made `CornerPin` node. Plugging it into the footage and checking **Invert** removes the tracked motion from that region (frame_006/007 show the plate mostly stabilized to a green-square reference with the surrounding background swinging wildly, as expected — everything *outside* the tracked/inverted region distorts, which is normal). **Verifying track quality:** overlay a `Grid` node (increase line count, shrink/scale it, `Merge` over the stabilized footage) as a visual reference — small warps or motion blur near the edges of the tracked area are expected and acceptable; if the surface isn't perfectly planar (e.g. a curved bucket), residual edge drift is fixed downstream with `GridWarp`/`IDistort`-family 2D correction, or by switching to a true cylindrical/geometric tracker like KeenTools GeoTracker if the extra accuracy is worth the setup cost — the author frames the Mocha-planar approach as "viable and strong for any type of surface" regardless. Finally, a quick paint preview (a flat sampled-color solid merged over the stabilized plate, set to persist across all frames) demonstrates why real paint work on this kind of surface is deceptively hard — even a "simple white bucket" turns out to have double shadows, reflections, and highlight parallax once you actually study the stabilized footage closely (frame_007), which the video frames as the reason this is only the tracking half of a larger paint-removal project (continued in the author's paid course).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Identify the specific factors working against the track before choosing a tool: luminance/shadow changes across the surface, occluding objects passing over it, and any non-planar perspective shift.
+2. Try Nuke's native planar `Tracker`/`Roto` first, including its "adjust for luminance changes" option; if it still slides, move to Mocha rather than fighting Nuke's tracker further.
+3. Pre-condition the plate with frequency separation specifically as a tracking aid: `Blur` the image, subtract the blur from the original, `Grade` up the result — isolates stable surface texture from the lighting variation riding on top of it, giving the tracker a more consistent pattern to lock onto.
+4. Manually clean up any stray artifacts the frequency-separation pass introduces (reflections, shadow edges) with a quick black `Roto` (RGBA output) before tracking, so the tracker doesn't grab distracting regions.
+5. Export the cleaned plate to Mocha (double-click the Nuke node that launches the Mocha UI, or open it directly).
+6. In Mocha: draw a spline-layer selection around the actual trackable, mostly-planar pattern; enable Perspective tracking (Mesh is for warping/deforming tracks — not needed for a planar surface).
+7. Draw a second spline layer around any occluding object, leave tracking off, and manually keyframe it frame-by-frame across the occlusion — any layer above the tracked base layer subtracts from that layer's track data, so the occlusion shape must exist before tracking the base layer.
+8. Set a starting keyframe on the base layer, Track Forward, then Track Backward to cover the full frame range.
+9. Use Mocha's grid overlay to visually confirm the track is holding through the occlusion without sliding.
+10. Click "expand planar surface to the edge of frame" and "show the planar surface" — critical for exporting a stabilization track meant to cover the whole frame for paint work, not a cropped patch.
+11. Export Track → Nuke CornerPin.nk → Copy to Clipboard; paste directly into Nuke's node graph as a ready CornerPin node; plug it into the footage and enable Invert to stabilize the tracked region (everything else in frame will appear to swing/distort — expected).
+12. Verify track quality visually: overlay a scaled-down `Grid` merged over the stabilized footage and check how well it holds relative to the grid lines; minor edge warping/motion blur is normal.
+13. For any remaining edge drift from a non-perfectly-planar surface, correct downstream with `GridWarp`/2D distortion nodes, or consider a dedicated geometric tracker (e.g. KeenTools GeoTracker for a cylindrical surface) if warranted.
+14. Preview paint feasibility with a flat sampled-color solid merged over the stabilized plate (set to persist all frames) — reveals real-world shading complexity (double shadows, reflections, highlight parallax) that a flat "just paint it out" assumption would miss.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke/NukeX:** native planar `Tracker`/`Roto` ("adjust for luminance changes" option), `Blur` + subtract (frequency separation setup), `Grade`, `Roto` (RGBA output for cleanup mattes), `Shuffle` (solid alpha), `CornerPin` (Mocha-exported, Invert toggle), `Grid` node (track-quality visual check), `GridWarp`/`IDistort`-family nodes (residual edge-drift correction)
+- **Mocha Pro (third-party, Boris FX):** spline-layer tool, Perspective vs. Mesh tracking modes, per-layer track-subtraction stacking behavior (occlusion layers above the base layer remove their region from the base track), Track Forward/Backward, "expand planar surface to edge of frame," "show planar surface," Export Track → Nuke CornerPin.nk
+- **Alternative mentioned for non-planar surfaces:** KeenTools GeoTracker (true cylindrical/geometric tracking instead of a planar approximation)
+- **Cross-referenced techniques:** frequency separation (author's own dedicated tutorial), planar-track workflow fundamentals (author's paid beginner series)
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — requires comfort with planar tracking concepts and a willingness to leave Nuke's native toolset for Mocha when needed; the frequency-separation pre-conditioning trick and the occlusion-layer-subtracts-from-base-track behavior in Mocha are the two "aha" details most likely to be new even to viewers who already know basic tracking.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX, cross-platform with Mocha Pro (Boris FX, not a Foundry product, but ships a native Nuke CornerPin exporter). Nuke version not stated on screen; per this skill's version-tracker, a 2024 upload falls in the Nuke 15.x window (15.0 Oct 2023 → 15.1 Jun 2024 → 15.2 Feb 2025). No version-specific Nuke features referenced.
 
 ### Tags
-[PENDING EXTRACTION]
+tracking, camera-tracking, roto, grading, compositing, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Rotoscoping in Nuke Tutorial | 5 Beginner Tips (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`) and Why your VFX Tracks aren't "Sticking" (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — share `tracking`, `camera-tracking`; both are about getting a track to hold reliably, at different points on the beginner→troubleshooting spectrum from this video's Mocha-specific hard-case workflow.
+- [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors) (`23-nuke-tutorial-series-cracks-keentools-smartvectors.md`) — shares the theme of picking the right third-party/specialized tracker (there: KeenTools FaceTracker for 3D face geometry; here: Mocha for planar surfaces) when Nuke's native tools fall short.

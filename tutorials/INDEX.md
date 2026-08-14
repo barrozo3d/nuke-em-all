@@ -887,11 +887,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=vgNTBxOXna0
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX, cross-platform with Mocha Pro (third-party planar tracker, Boris FX)
+- **Version:** Nuke 15.x (2024 upload)
+- **Tags:** tracking, camera-tracking, roto, grading, compositing, intermediate
+- **Summary:** Getting a solid planar track for a hard clean-plate/logo-removal shot (uneven lighting, occlusion, non-planar edge) by pre-conditioning the plate with frequency separation (Blur, subtract, Grade up) before handing it to Mocha's planar tracker — Mocha out-performs Nuke's native planar tracker here. Covers Mocha's spline-layer selection, Perspective vs. Mesh tracking, occlusion-layer-subtracts-from-base-track stacking behavior, expanding the planar surface to the frame edge before export, exporting a ready-made Nuke CornerPin, inverting it to stabilize, and verifying track quality with a Grid overlay before real paint work begins.
 - **File:** tutorials/track-any-surface-with-this-mocha-nuke-trick.md
+- **Related:** Rotoscoping in Nuke Tutorial (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`), Why your VFX Tracks aren't "Sticking" (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — shared tracking fundamentals; [2/3] Nuke Tutorial Series (`23-nuke-tutorial-series-cracks-keentools-smartvectors.md`) — shared "specialized tracker when native tools fall short" theme.
 
 ---
 
