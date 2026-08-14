@@ -779,10 +779,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=yLnSZxwlOyA
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2021 upload, Nuke 13.0 era)
+- **Tags:** compositing, st-map, channels, procedural-texture, keying, grading, gizmo, color-management, advanced
+- **Summary:** Repurposes STMap as a Photoshop-style gradient map: feed it a black-and-white gradient (Radial/Roto) as the "UV" input and a strip of colored Constants (only the bottom pixel row matters) as the source, remapping black-to-white into a smooth multi-color gradient for flares/fire/skies/underwater falloff. Extends the trick into a free "Quadratic Luma Key" gizmo for naturally rolled-off highlight isolation and P-matte falloff shaping.
 - **File:** tutorials/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced.md
 
 

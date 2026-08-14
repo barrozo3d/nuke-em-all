@@ -110,3 +110,4 @@ keying, compositing, intermediate
 
 ## Related Tutorials
 - Parallax HAX | Nuke Compositing [Advanced] (`parallax-hax-nuke-compositing-advanced.md`) — shares the self-referencing/user-knob expression-driven approach to building a reusable, tunable effect (there: parallax speed; here: keying math) instead of manual per-shot values.
+- Gradient Re-Mapping and Quadratic Luma Keys | Nuke Compositing [Advanced] (`gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced.md`) — shares the theme of building a custom, reusable keying tool (there: quadratic-falloff STMap gizmo; here: expression-driven math) instead of stacking multiple stock Keyer nodes.

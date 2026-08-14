@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=yLnSZxwlOyA
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (2021 upload, Nuke 13.0 era — see version-tracker.md)"
+tags: [compositing, st-map, channels, procedural-texture, keying, grading, gizmo, color-management, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Gradient Re-Mapping and Quadratic Luma Keys | Nuke Compositing [Advanced]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -237,30 +233,66 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:30] tutorials/frames/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced/frame_000.jpg
+- [3:15] tutorials/frames/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced/frame_001.jpg
+- [4:30] tutorials/frames/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced/frame_002.jpg
+- [6:45] tutorials/frames/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced/frame_003.jpg
+- [7:10] tutorials/frames/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced/frame_004.jpg
+- [9:00] tutorials/frames/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced/frame_005.jpg
+- [11:30] tutorials/frames/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced/frame_006.jpg
+- [13:40] tutorials/frames/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Porting Photoshop's "gradient map" concept into Nuke using `STMap` in an unconventional way: instead of feeding it a UV pass to wrap textures onto CG, feed it a black-and-white gradient/mask as the coordinate source and a strip of colored `Constant`s (only the bottom row of pixels matters) as the "source" image — the STMap remaps the black-to-white range of the mask into a smooth multi-color gradient, useful for flares, fire, skies, underwater light falloff, and space effects without stacking radials/keyers/grades.
 
 ### Summary
-[PENDING EXTRACTION]
+Explains a repurposed use of `STMap` that most users don't associate with the node: normally STMap unwraps a CG UV pass, but plugging a black-and-white gradient (e.g. a `Radial`) into its first (UV) input and a strip of solid colors into its second (source) input turns it into a gradient-remapping tool identical in spirit to Photoshop's gradient map. The mechanism: STMap's UV channels are set to RGB, with one unwanted channel (e.g. green) disabled so only a single channel (e.g. red) of the gradient drives the remap; critically, the node only reads the *bottom row of pixels* of the source image, so colored `Constant`s (given solid alphas via `Shuffle` to avoid transparent blending where they overlap) are transformed left-right along that bottom row — left = where the gradient reads black (0), right = where it reads white (1). Blurring the colored constants together before the STMap softens hard transitions into a smooth multi-color falloff; sliding each `Constant`'s `Transform` left/right repositions where that color lands in the 0–1 remap, letting an artist dial in exactly which colors fall in the shadows/midtones/highlights of any black-and-white driver image — demonstrated on radials (skies, flares), a masked practical example, and a feathered roto shape. A caveat: values above 1.0 ("super whites") break the remap since it's built for a strict 0–1 range; a white clamp mostly fixes it, or converting to log space beforehand can extend the usable range somewhat. The technique is then extended into a free custom gizmo, "Quadratic Luma Key," which applies the same STMap-remap trick but reads the black-and-white driver through roto shapes with a quadratic (exponential) falloff baked in — giving naturally "pingy" rolled-off highlights (e.g. isolating specular highlights on wet asphalt/rocks) that would otherwise require stacking multiple `Keyer` nodes to fake; sliding the gizmo's key control shifts the falloff the same way sliding a Constant did in the base technique, and it includes multiple falloff-mode options. The same gizmo is also useful for adding a believable quadratic rolloff to P-mattes/position-driven alpha masks (e.g. for relighting a CG scene, or shaping headlight falloff on a car at night) when the source render's own falloff isn't quadratic by default. A final practical pattern: use the color-remapped ST-map result as a "base color contamination" image and `Multiply` it against the original plate to subtly tint/grade the image's luminance range using this gradient-remap machinery instead of manual grading.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Build (or use) a black-and-white driver image with a smooth 0–1 gradient — e.g. a `Radial`, a feathered `Roto` shape, or any grayscale mask.
+2. Create a strip of colored `Constant` nodes (as many as needed for the number of color stops wanted), each given a solid alpha via `Shuffle` (set alpha to 1) so overlapping colors don't blend transparently.
+3. Position the constants side by side with `Transform` nodes — only their position along the *bottom row of pixels* matters; vertical position/size elsewhere in frame is irrelevant to the remap.
+4. Merge/stack the colored constants together and `Blur` them so the transitions between adjacent colors are smooth rather than hard-edged.
+5. Plug the black-and-white driver image into the `STMap` node's first (UV) input; plug the blurred color strip into the second (source) input.
+6. In the `STMap`, set the UV channels to RGB and disable the unwanted channel(s) (e.g. turn off green) so only one channel (e.g. red) of the driver image controls the remap.
+7. Interpret the result: wherever the driver image reads black (0), the STMap samples the leftmost color in the strip; wherever it reads white (1), it samples the rightmost color — everything in between interpolates smoothly.
+8. Reposition individual `Constant`+`Transform` pairs left/right to shift where each color falls in the black-to-white range (e.g. slide a color left to make more of the image read that color, since more of the driver's gradient is "whiter" toward the right by convention here).
+9. Watch for super-white (>1.0) values in the driver image breaking the remap; apply a white clamp beforehand, or convert to log space first if brighter-than-1 values need to be preserved.
+10. (Optional, packaged as the "Quadratic Luma Key" gizmo) Replace the plain black-and-white driver with roto shapes carrying a built-in quadratic/exponential falloff, so the same STMap-remap machinery produces naturally rolled-off, "pingy" highlight isolation — avoids stacking multiple `Keyer`s to fake a similar look; the gizmo exposes a slidable key control (same left/right-shift concept as the raw technique) and multiple falloff-mode options.
+11. Apply the same quadratic-falloff gizmo directly to P-mattes/position-driven alpha masks that lack a natural quadratic rolloff (e.g. for CG relighting or car headlight falloff at night) by chaining it after the linear-falloff mask.
+12. For a subtle final grade: take the color-remapped STMap output as a "base color contamination" pass and `Multiply` it against the original plate to blend a custom luminance-range tint into the image without manual keyframed grading.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `STMap` — repurposed core node; UV input = black-and-white driver (Radial/Roto/mask), source input = strip of colored Constants; UV channels set to RGB with unwanted channel(s) disabled to isolate one driving channel
+- `Radial` — common black-and-white driver/gradient source for the technique
+- `Constant` — one per color stop; only the bottom row of pixels is sampled by the STMap
+- `Shuffle` — forces solid alpha (1) on each Constant so overlapping colors don't blend transparently
+- `Transform` — repositions each Constant left/right to control where its color lands in the 0–1 remap range
+- `Blur` — softens hard transitions between adjacent color stops before the STMap for a smooth gradient falloff
+- `Roto`/`RotoPaint` (feathered) — alternative black-and-white driver source instead of a Radial
+- `Grade` — applied to the driver image and/or the color strip to fine-tune falloff and fix super-white breakage (white clamp)
+- "Quadratic Luma Key" (free custom Nukepedia-style gizmo by the creator) — wraps the same STMap-remap technique using quadratic/exponential-falloff roto shapes as the driver; exposes a slidable key control and multiple falloff modes; usable both as a highlight-isolation keyer and as a P-matte/alpha-falloff shaping tool
+- `Multiply` — blends the color-remapped STMap output as a "base color contamination" layer against the original plate for subtle grading
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (native `STMap`, `Radial`, `Constant`, `Shuffle`, `Transform`, `Blur`, `Roto`, `Grade`, `Multiply`; the "Quadratic Luma Key" is a free third-party/creator-made gizmo, not a native node). No on-screen version number visible in the captured frames and none stated in the transcript. Video published 2021 — falls in the Nuke 13.0 era (13.0 released 2021-03-17); see `references/version-tracker.md`.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, st-map, channels, procedural-texture, keying, grading, gizmo, color-management, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [UVs and UV Passes in Nuke: PART 1 [Beginner]](uvs-and-uv-passes-in-nuke-part-1-beginner.md) — covers the standard/intended `STMap` use case (UV-pass texture wrapping) this tutorial deliberately repurposes for gradient remapping instead.
+- [UV / ST Maps [Part 2] | Nuke Compositing [Beginner / Intermediate]](uv-st-maps-part-2-nuke-compositing-beginner-intermediate.md) — shares the theme of using `STMap` creatively beyond its standard UV-wrapping purpose (there: expression-generated coordinate patterns and projection precomps; here: color gradient remapping).
+- [Nuke Tutorial | Compositing a Rainbow [Intermediate]](nuke-tutorial-compositing-a-rainbow-intermediate.md) — shares the theme of building smooth procedural color gradients from channel/coordinate manipulation rather than manual keyframed grading.
+- [Nuke Tutorial | Keying with Math Expressions [Intermediate]](nuke-tutorial-keying-with-math-expressions-intermediate.md) — shares the theme of building a custom, reusable keying tool (there: expression-driven; here: quadratic-falloff-driven) instead of stacking multiple stock Keyer nodes.
