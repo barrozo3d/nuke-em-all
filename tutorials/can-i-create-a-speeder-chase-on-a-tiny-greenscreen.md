@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=KLNmQtwj5Pc
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke + Blender (mixed pipeline)"
+version: "not specified — CA_Relight gizmo visible briefly (same tool as 'I Made VFX Relighting WAY Better in Nuke'); otherwise Nuke used but not screen-recorded"
+tags: [compositing, relighting, gizmo, digital-matte-painting, projection, fx-simulation, virtual-production, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/can-i-create-a-speeder-chase-on-a-tiny-greenscreen/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Can I Create a Speeder Chase on a TINY Greenscreen?
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py can-i-create-a-speeder-chase-on-a-tiny-greenscreen <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -177,30 +173,55 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:20] tutorials/frames/can-i-create-a-speeder-chase-on-a-tiny-greenscreen/frame_000.jpg
+- [2:07] tutorials/frames/can-i-create-a-speeder-chase-on-a-tiny-greenscreen/frame_001.jpg
+- [3:56] tutorials/frames/can-i-create-a-speeder-chase-on-a-tiny-greenscreen/frame_002.jpg
+- [5:22] tutorials/frames/can-i-create-a-speeder-chase-on-a-tiny-greenscreen/frame_003.jpg
+- [6:04] tutorials/frames/can-i-create-a-speeder-chase-on-a-tiny-greenscreen/frame_004.jpg
+- [7:51] tutorials/frames/can-i-create-a-speeder-chase-on-a-tiny-greenscreen/frame_005.jpg
+- [8:00] tutorials/frames/can-i-create-a-speeder-chase-on-a-tiny-greenscreen/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Full-pipeline behind-the-scenes case study (not a screen-recorded node-graph tutorial): building an entire sci-fi chase sequence — Iceland volcano drone photogrammetry, a practical "bicycle parts + broomstick" greenscreen rig standing in for a real vehicle, CG vehicle/villain-ship builds, and a Blender-terrain + Nuke-compositing integration pipeline (map painting, multi-camera projection, elemental layering, and a proprietary relight gizmo).
 
 ### Summary
-[PENDING EXTRACTION]
+Alex Hanaman (ex-Weta/ILM/Sony compositor) documents an independent-scale attempt to produce Hollywood-level VFX solo. Key pipeline beats relevant to Nuke: (1) drone-based photogrammetry scan of volcanic terrain, reconstructed into high-poly/high-res Blender models, separated into scan "sections" using gaps in the drone's 1-second photo timer; (2) a physical practical rig — bicycle handlebars mounted on a broomstick, shot on a small garage greenscreen (the video's "tiny greenscreen") — used only to get plausible actor hand/body performance, with the entire vehicle later replaced by a CG model built to the actor's exact 3D-scanned proportions; (3) paint/roto cleanup to remove the practical handlebars and the actor's real jacket edge (replaced with a CG-scanned jacket for a windier look); (4) camera tracking + hand tracking so the CG vehicle sticks to the actor's hands; (5) Nuke used for map painting, multi-camera projection setups (to blend projected Iceland photography onto CG terrain/crater models and hide seams/hard edges), and compositing of FX elements (geyser smoke, dust/bullet-impact debris, template-based explosive sparks, laser-blast tools); (6) final integration via the **CA_Relight** gizmo — the same "Compositing Academy Relight" self-shadowing tool featured in the channel's dedicated "I Made VFX Relighting WAY Better in Nuke" video — used to relight the character convincingly against blue lava/light sources in the comp. Nuke's actual UI is shown on-screen only once (the CA_Relight node graph + viewer), everything else is narrated B-roll/pipeline montage.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Photogrammetry: fly a drone in orbiting patterns over terrain in sections; separate sections in post by finding time-gaps longer than the camera's 1-second interval; reconstruct each section into a textured 3D scan in Blender.
+2. Build a cheap practical proxy rig (bike parts on a broomstick) and shoot the actor performing against a small garage greenscreen — captures believable hand/body motion without building a real vehicle.
+3. Send footage out for: paintwork (remove practical rig from hands, remove/replace jacket edge with a 3D-scanned CG jacket), camera tracking, and hand tracking.
+4. Model the CG vehicle to the exact dimensions of the 3D-scanned actor so it fits the tracked hand positions; rig vehicle handlebars to follow the actor's hand animation.
+5. Composite hands/tracking data + CG vehicle + tracked camera together; block out camera animation/previs for remaining shots.
+6. Detail pass: cavity maps drive lava-in-cracks shading (Blender shaders); Nuke used for map painting; multi-camera projection setups blend photography onto CG terrain/crater geometry to remove hard edges between scan and CG; Substance Painter for geyser geo, ComfyUI for generated background/lava-texture assets projected onto terrain.
+7. Add FX elements composited in Nuke: geyser smoke, bullet-impact dust, debris, template-driven "explosive sparks" and "laser blast" toolsets (channel-built Nuke templates), plus hand-done Blender sparks/EmberGen smoke.
+8. Final relight pass with the **CA_Relight** gizmo (self-shadowing relight tool) to integrate the character against in-scene blue light sources, then layer/composite the full shot.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `CA_Relight` — Compositing Academy's proprietary self-shadowing relight gizmo (same tool covered standalone in "I Made VFX Relighting WAY Better in Nuke," `i-made-vfx-relighting-way-better-in-nuke.md`); seen in the node graph feeding a Properties panel with a color-wheel/tonal grading section.
+- Multi-camera projection setup (terrain-to-projection conversion tool, described as custom-built) — used to blend photography onto 3D-scanned terrain/crater CG.
+- Map painting done natively in Nuke (tool/node not shown on-screen).
+- Channel-built Nuke templates: "explosive sparks" and "laser blast" element toolsets (not detailed on-screen).
+- Cross-app: Blender (terrain reconstruction, lava shaders, vehicle rig), Substance Painter (geyser geometry), ComfyUI (generated lava/background texture assets), EmberGen (interactive smoke).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced — full VFX pipeline case study spanning photogrammetry, tracking, CG integration, and multi-layer compositing; not a beginner how-to.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke version not specified in-video. Mixed Blender + Nuke pipeline; the one visible Nuke screenshot shows the same era of UI/3D-system as this channel's other 2026 uploads (consistent with Nuke 17.x), but this is inferred from house style, not confirmed on-screen.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, relighting, gizmo, digital-matte-painting, projection, fx-simulation, virtual-production, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- I Made VFX Relighting WAY Better in Nuke (`i-made-vfx-relighting-way-better-in-nuke.md`) — shares `relighting`, `gizmo`, `compositing`; this is the dedicated tutorial for the exact CA_Relight gizmo glimpsed here.
+- Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`) — shares BTS pipeline case-study format (LiDAR/photogrammetry-driven asset capture, Nuke mentioned more than shown).
+- I Brought a Greenscreen in Arctic Conditions for this Film (`i-brought-a-greenscreen-in-arctic-conditions-for-this-film.md`) — shares practical-rig-on-location BTS format and greenscreen-in-extreme-environment theme.

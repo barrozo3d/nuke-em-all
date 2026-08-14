@@ -181,7 +181,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** virtual-production, compositing, camera-tracking, gaussian-splats, digital-matte-painting, intermediate
 - **Summary:** Behind-the-scenes pipeline case study (not a node tutorial): a CG dragon (iCandy XYZ) is shot on location in an Icelandic cave using Lightcraft Jet Set's real-time phone-based AR camera tracking, a photogrammetry cave reconstruction built from crowd-sourced tourist photos (since the site couldn't be pre-scanned), and an XGrids handheld LiDAR scanner producing a dense point cloud/Gaussian splat for track refinement and lighting reference. Nuke is named as the finishing/compositing tool but not demonstrated on screen.
 - **File:** tutorials/nobodys-ever-made-vfx-this-way-new-tech.md
-- **Related:** First entry tagged `virtual-production`/`gaussian-splats` — cross-reference against Nuke 17.0/17.1's native Gaussian Splat toolset (`references/release-notes-nuke-17.0.md`, `release-notes-nuke-17.1.md`).
+- **Related:** First entry tagged `virtual-production`/`gaussian-splats` — cross-reference against Nuke 17.0/17.1's native Gaussian Splat toolset (`references/release-notes-nuke-17.0.md`, `release-notes-nuke-17.1.md`). Can I Create a Speeder Chase on a TINY Greenscreen? (`can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md`) — shares `virtual-production`, `compositing`, BTS pipeline-case-study format.
 
 
 ### Preserve Quality | Projections in Nuke
@@ -588,7 +588,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** relighting, gizmo, compositing, 3d-system, intermediate
 - **Summary:** Custom gizmo "CA Relight" extends screen-space normals-based relighting with depth+normals-derived self-shadowing/occlusion (a gap pure normals relighting can't fill), a top-down multi-light placement UI (vs. raw XYZ knobs, with keyframing and Shift-drag height control), and HDRI Reflect/Diffuse modes with a 3D dome visualization + "flat floor" reprojection option for physically accurate parallax. Validated against a test sphere and ray-traced render. **Version note: this is a third-party plugin, unrelated to Nuke 17.1's native SplatRender relighting feature** — do not conflate the two.
 - **File:** tutorials/i-made-vfx-relighting-way-better-in-nuke.md
-- **Related:** Direct follow-up to Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`) and 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — share `relighting`.
+- **Related:** Direct follow-up to Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`) and 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — share `relighting`. Can I Create a Speeder Chase on a TINY Greenscreen? (`can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md`) — shares `relighting`, `gizmo`; the CA_Relight gizmo covered here is used in that pipeline case study.
 
 
 ### How SMART is State of the Art A.I Rotoscoping?
@@ -664,11 +664,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=KLNmQtwj5Pc
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke + Blender (mixed pipeline)
+- **Version:** not specified — CA_Relight gizmo visible briefly (same tool as "I Made VFX Relighting WAY Better in Nuke")
+- **Tags:** compositing, relighting, gizmo, digital-matte-painting, projection, fx-simulation, virtual-production, intermediate
+- **Summary:** Full-pipeline BTS case study: Iceland volcano drone photogrammetry → CG vehicle built to a 3D-scanned actor's dimensions (practical rig was just bike parts on a broomstick against a garage greenscreen) → Nuke map painting/multi-camera projection to blend photography onto CG terrain → FX element compositing (smoke, debris, template sparks/lasers) → final integration via the CA_Relight self-shadowing gizmo. Nuke UI shown on-screen only once (the CA_Relight graph); mostly narrated pipeline montage.
 - **File:** tutorials/can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md
+- **Related:** I Made VFX Relighting WAY Better in Nuke (`i-made-vfx-relighting-way-better-in-nuke.md`), Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`), I Brought a Greenscreen in Arctic Conditions for this Film (`i-brought-a-greenscreen-in-arctic-conditions-for-this-film.md`).
 
 ---
 
