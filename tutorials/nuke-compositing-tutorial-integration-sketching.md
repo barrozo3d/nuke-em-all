@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=p7_PYigrOgM
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified on screen; 2021 upload, close to the Nuke 13.0 launch (2021-03-17) — likely Nuke 12.2/13.0-era per version-tracker.md"
+tags: [compositing, grading, roto, relighting, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-compositing-tutorial-integration-sketching/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Compositing Tutorial: Integration Sketching
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-compositing-tutorial-integration-sketching <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Information [0:00]
@@ -457,30 +453,56 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:55] tutorials/frames/nuke-compositing-tutorial-integration-sketching/frame_000.jpg
+- [8:13] tutorials/frames/nuke-compositing-tutorial-integration-sketching/frame_001.jpg
+- [9:10] tutorials/frames/nuke-compositing-tutorial-integration-sketching/frame_002.jpg
+- [10:10] tutorials/frames/nuke-compositing-tutorial-integration-sketching/frame_003.jpg
+- [12:00] tutorials/frames/nuke-compositing-tutorial-integration-sketching/frame_004.jpg
+- [14:55] tutorials/frames/nuke-compositing-tutorial-integration-sketching/frame_005.jpg
+- [17:50] tutorials/frames/nuke-compositing-tutorial-integration-sketching/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A methodology/thought-process lesson (clip from a longer "Nuke 505: Key, Despill, and Plate Integration" course) demonstrating how a compositor visually diagnoses and "sketches" fixes for a keyed character that doesn't yet sit believably into a night cityscape background, using RotoPaint annotations and rough Grade tests before committing to any final node work.
 
 ### Summary
-[PENDING EXTRACTION]
+Working shot: a keyed character (swinging on a rope) composited over a night city plate, clearly not yet integrated. The presenter uses `RotoPaint` circles/annotations directly over frame-held stills to call out specific problems as they're spotted, then tests fixes live with rough Grade adjustments — explicitly framed as sketching/brainstorming, not final work. Issues identified and addressed: (1) lifted blacks — the character's dark areas read much brighter than equally-dark plate elements with no narrative justification, diagnosed by comparing black levels directly; (2) missing edge/rim light — the character could plausibly catch light from an off-camera source or a nearby building, faked with a soft brightness falloff on one side; (3) an unnatural bright highlight (e.g. on the armpit) inherited from the real source footage that creates a jarring local value/color conflict against the background and should be neutralized even though it's "real," because a jarring value conflict reads as wrong on screen regardless of physical accuracy; (4) "value conflict" as a named general concept — any spot where extreme bright sits directly against extreme dark (silhouette edges, water) pulls the eye and should be softened unless that's the deliberate focal point; tested by mentally blurring/abstracting the image to see where contrast draws attention; (5) coincidental edge alignment — a background light shape and the character's shoulder edge happen to line up, creating a false "black halo" that looks exactly like a bad key even though the key itself is fine; fixed with a subtle local Grade (soft gamma lift, "justified" by a nearby light source) rather than touching the key. General principles emphasized: match dynamic range/highlight "pop" between foreground and background (don't let only the character have bright highlights while the environment looks flat); prefer meeting in the middle — adjusting both foreground and background rather than only pushing one toward the other; local, justified color pushes (a plausible in-story light source) read better than global corrections; environmental additions (haze, noise, clouds) can integrate a character without ever touching the original plate, useful on shows where plate modification isn't allowed; final overall grades/color corrections are applied last, only after the foreground and background have been brought into a compatible dynamic range and value relationship.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Frame-hold a representative frame and use `RotoPaint` circles/annotations directly over it to visually call out every integration problem spotted, before touching any correction nodes — treat this as a planning/communication step ("sketching"), not a fix.
+2. Compare black levels directly between the composited character and nearby plate elements at similar depth — unjustified brightness lift on the character's shadows is one of the most common, most obvious integration tells.
+3. Look for opportunities to justify localized brightening/rim light on the character by inventing a plausible in-scene source (an off-camera light, a nearby lit building) rather than a flat global correction.
+4. Identify and neutralize highlights or color artifacts inherited from the original source footage that create a jarring, unmotivated value/color conflict against the new background — even if "technically real" in the original plate, a conflict that reads as a mistake on screen should be softened or removed.
+5. Understand "value conflict" as a general diagnostic concept: any region where extreme bright sits directly against extreme dark (silhouette edges, dark water against a bright figure) pulls viewer attention — test by mentally blurring/abstracting the image and checking whether the resulting contrast hotspot is actually where the story wants attention; if not, bring the values closer together.
+6. Watch for coincidental edge alignment between unrelated elements (e.g. a background light's silhouette lining up with the character's shoulder edge) that creates a false "bad key" look — diagnose by test-compositing over a flat gray background to confirm the key itself is clean, then fix with a small local Grade justified by a plausible nearby light source, not by touching the keyer.
+7. Match "pop"/highlight dynamic range between foreground and background — if the character has bright specular highlights but the environment (streetlights, buildings) looks comparatively flat, boost background highlights (or reduce character highlights) so both read in the same dynamic range rather than looking like two different exposures pasted together.
+8. Prefer adjusting both sides toward each other ("meet halfway") over only pushing the foreground or only pushing the background — e.g. lift the background's gamma slightly rather than only crushing the foreground's blacks down.
+9. Consider environmental additions that integrate the character without touching the original plate at all — atmosphere/haze via noise stenciled through a roto shape, simple painted clouds — useful specifically on productions where the client/show doesn't allow plate modification.
+10. Save broad, whole-image color corrections/grades for last, only after foreground and background have already been brought into a compatible black-point, dynamic-range, and value relationship at the local level.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `RotoPaint` — used purely as an annotation/sketching tool (circles, notes) over frame-held stills to visually flag integration problems before any correction work begins.
+- `Grade` — the primary correction tool for all rough tests shown: black-point/lift adjustments to match shadow levels, gamma lifts to fake motivated rim/ambient light, and highlight "pop" boosts on background elements.
+- Frame Hold — used repeatedly to freeze a representative problem frame for side-by-side comparison and sketching.
+- Test compositing over a flat gray/neutral background — diagnostic technique to confirm whether an apparent "bad key" edge artifact is actually a keying problem or just coincidental background-element alignment.
+- Noise + Roto (stencil) — used to break up/soften a flat corrected region (e.g. faking atmosphere) rather than leaving a hard-edged flat grade.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — no complex node chains, but requires developed compositing judgment (reading value conflicts, matching dynamic range, distinguishing real keying problems from coincidental artifacts) more than any specific technical skill; presented as a "hardest and most creative part of compositing."
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — version not stated on screen. 2021 upload, close to the Nuke 13.0 launch (2021-03-17 per `references/version-tracker.md`) — likely Nuke 12.2 or early 13.0, not stated explicitly enough to pin down further.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, grading, roto, relighting, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`) — shares `grading`, `relighting`; both are process/methodology lessons on believable light integration by the same presenter.
+- 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — shares `relighting`, `grading`, `roto`, `compositing`; that video's "finding connection points" methodology closely parallels this one's value-conflict/dynamic-range diagnostic approach, just applied to CG rather than a keyed live-action character.
