@@ -261,4 +261,6 @@ denoise, projection, compositing, grading, advanced
 ## Related Tutorials
 - How I Use Compositing to Skip THOUSANDS of Hours Rendering (`how-i-use-compositing-to-skip-thousands-of-hours-rendering.md`) — that video explicitly cross-references this one as covering its "technique 4" (denoise flickering specular by projecting the render back onto geometry and blending frames) in full detail; shares `denoise`, `compositing`, `3d-system`/`projection`.
 
+- [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors) (`23-nuke-tutorial-series-cracks-keentools-smartvectors.md`) — shares the "flatten to UV/projection space, do the hard work there, project back" pipeline shape, there for lighting-stabilized texture integration, here for denoise.
+
 Revisit for further cross-links once this channel's dedicated UV-baking/projection tutorial (referenced repeatedly in this video's transcript but not yet identified/ingested from the channel's catalog) lands in the index.

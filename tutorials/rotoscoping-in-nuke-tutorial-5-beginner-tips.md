@@ -426,5 +426,6 @@ roto, tracking, camera-tracking, compositing, beginner
 ## Related Tutorials
 - Why your VFX Tracks aren't "Sticking" (and how to Fix it) (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — shares `tracking`, `camera-tracking`, `compositing`, `roto`; that tutorial diagnoses why a track *slides* (lens distortion/vignette), this one covers how to place keyframes and stabilize footage *before* rotoing so a track/roto sticks well from the start — complementary reading.
 - Tracking Concepts in Nuke for Beginners (`tracking-concepts-in-nuke-for-beginners.md`) — shares `tracking`, `camera-tracking`, `beginner`; that video explains the parallax/triangulation fundamentals behind the 2D tracking this tutorial's stabilize-before-roto technique depends on.
+- [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors) (`23-nuke-tutorial-series-cracks-keentools-smartvectors.md`) — shares `tracking`, `camera-tracking`; that video's per-region tracking-method selection (SmartVector/KeenTools/blended dual-track) and SmartVector edge-extension technique is an advanced counterpart to this tutorial's beginner keyframe/stabilize fundamentals.
 
 Revisit once other tracking-focused tutorials (e.g. the 2024 Mocha+Nuke tracking video, once ingested) land in the index.

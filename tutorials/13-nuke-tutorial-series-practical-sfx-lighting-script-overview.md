@@ -514,5 +514,5 @@ compositing, roto, rotopaint, grading, fx-simulation, digital-matte-painting, in
 ---
 
 ## Related Tutorials
-- [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors) and [3/3] Nuke Tutorial Series (Flow Paths, FX Integration, Design) — direct continuations of this same shot/project; Part 2 covers the tracking/SmartVector/KeenTools techniques this video only names, Part 3 covers the element-interaction/relighting/Tilt-Brush-flow-path techniques this video only previews.
+- [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors) (`23-nuke-tutorial-series-cracks-keentools-smartvectors.md`) and [3/3] Nuke Tutorial Series (Flow Paths, FX Integration, Design) — direct continuations of this same shot/project; Part 2 covers the tracking/SmartVector/KeenTools techniques this video only names, Part 3 covers the element-interaction/relighting/Tilt-Brush-flow-path techniques this video only previews.
 - 360 Spherical LatLong Textures | Nuke Tutorial (`360-spherical-latlong-textures-nuke-tutorial.md`), Mixed Medium VFX P1 (`mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md`), Nuke Compositing an Advanced CG Shockwave (`nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md`) — all reference or use `PolarDistort` for spherical/radial wrapping, as this video does for the eye effect.

@@ -641,11 +641,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=dLrJhqqNMrk
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (SmartVector/VectorDistort require NukeX)
+- **Version:** Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)
+- **Tags:** tracking, camera-tracking, 3d-system, projection, channels, grading, digital-matte-painting, advanced
+- **Summary:** Part 2/3 of the flagship series. Per-region tracking-method selection (SmartVector vs. KeenTools 3D face track vs. blended dual-track via ST maps), SmartVector edge-extension past overlap/edge failures (built-in in-paint-map-region, or VectorDistort→ST map→manual RotoPaint+InPaint for more control), the KeenTools FaceBuilder/FaceTracker workflow (faking multi-photo input via AppendClip of two frame-holds), UV-space texture integration with a dynamic blurred-plate light-map for free lighting-matched CG textures, 3D DisplaceGeo crack detail + RayRender Ambient Occlusion contact shadows, and the video's most advanced technique: preserving crack-matte alignment through 3D displacement by Shuffling the alpha into a custom channel *before* DisplaceGeo/ScanlineRender so it survives the position change correctly.
 - **File:** tutorials/23-nuke-tutorial-series-cracks-keentools-smartvectors.md
+- **Related:** [1/3] Nuke Tutorial Series (`13-nuke-tutorial-series-practical-sfx-lighting-script-overview.md`) — direct prequel; Rotoscoping in Nuke Tutorial (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`), Why your VFX Tracks aren't "Sticking" (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — shared tracking fundamentals; How to DENOISE your CG in POST (`how-to-denoise-your-cg-in-post-blender-nuke-tutorial.md`) — shared UV/projection-space pipeline shape.
 
 
 ### Render World Position in Blender for Nuke
