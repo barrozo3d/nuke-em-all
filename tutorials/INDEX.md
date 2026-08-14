@@ -51,6 +51,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/grading-highlights-and-pools-of-light-nuke-compositing.md
 
+
+### 360 Spherical LatLong Textures | Nuke Tutorial
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=ifsOs84Ps2g
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/360-spherical-latlong-textures-nuke-tutorial.md
+
 ---
 
 ## Tag Reference
