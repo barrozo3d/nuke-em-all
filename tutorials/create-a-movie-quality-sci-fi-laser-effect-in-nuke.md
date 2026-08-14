@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=OJJ9hu6smqk
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [compositing, particles, gizmo, procedural-texture,3d-system, digital-matte-painting, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/create-a-movie-quality-sci-fi-laser-effect-in-nuke/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Create a Movie Quality Sci-Fi Laser Effect in Nuke
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py create-a-movie-quality-sci-fi-laser-effect-in-nuke <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -435,30 +431,63 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:14] tutorials/frames/create-a-movie-quality-sci-fi-laser-effect-in-nuke/frame_000.jpg
+- [3:53] tutorials/frames/create-a-movie-quality-sci-fi-laser-effect-in-nuke/frame_001.jpg
+- [9:57] tutorials/frames/create-a-movie-quality-sci-fi-laser-effect-in-nuke/frame_002.jpg
+- [12:39] tutorials/frames/create-a-movie-quality-sci-fi-laser-effect-in-nuke/frame_003.jpg
+- [15:37] tutorials/frames/create-a-movie-quality-sci-fi-laser-effect-in-nuke/frame_004.jpg
+- [20:06] tutorials/frames/create-a-movie-quality-sci-fi-laser-effect-in-nuke/frame_005.jpg
+- [24:56] tutorials/frames/create-a-movie-quality-sci-fi-laser-effect-in-nuke/frame_006.jpg
+- [26:16] tutorials/frames/create-a-movie-quality-sci-fi-laser-effect-in-nuke/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Build a fully art-directable "laser scan" reveal effect entirely in 2D/3D comp (no simulation software) by animating hand-drawn `RotoPaint` stroke alphas, projecting them back onto CG geometry with position-data (P-channel) projection tools, then masking a secondary procedural pattern through the spreading edge to fake an intentional, designed light-scan look.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy builds a sci-fi laser-scan reveal (light traces across a rock surface toward a glowing sphere) entirely inside Nuke, deliberately avoiding Houdini/simulation. The video first shows a "sandbox" look-dev process — trying UV-projected grids, P-channel edge-detected Perlin noise, and the author's own free `PScatter` plugin scattering shapes — before settling on the actual method: hand-animate `RotoPaint` stroke end-points over the rock's crevices (drawn in different colors so an `EdgeDetect` picks up interior cracks, not just silhouettes), reproject that spreading alpha onto the rock through a static "projection camera" using `Card3D`/`ScanlineRender`, clean it with erode/dilate and edge-subtract tricks, then mask a second procedural pattern (`HexFlow`, or the free `ProjectionBuddy` gizmo projecting textures via P-channel/position data) through the spread edge so the revealed laser trail has internal detail rather than being a flat glow. God rays are pulled from the edge toward the light source, the composited effect is re-projected back onto the CG rock/sphere in the renderer for accurate reflections, and even re-projected into Blender as a fake interactive light-contamination pass. The sphere itself uses a simpler technique: animated exponential "spot flare" glows multiplied against a grid/`RainCircuit`-style pattern, stretched into a tall ellipse to read as a thin expanding beam.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Look-dev/sandbox phase: try (a) UV-projecting a simple grid onto geometry via an `Axis` parented to the moving object, (b) edge-detecting P-channel noise (`P_Noise_Advanced`, a Nukepedia gizmo) for organic but uncontrollable motion, (c) the free `PScatter` gizmo (author's own plugin) to scatter video-texture shapes across position data — reject all three for lack of controllable, intentional spread.
+2. Real method — draw the spread mask by hand: use `RotoPaint`'s animatable stroke end-point to hand-trace crevices on the rock texture over time (paint in "replace" mode to preview cleanly), using different stroke colors per region so a later `EdgeDetect` picks up internal cracks, not just outer silhouette.
+3. Desaturate the multi-color roto result before edge-detecting, to avoid a "pie slice" split-color artifact; keep the far-reaching edge only.
+4. Reproject that spreading alpha onto the rock geometry using a static, non-animated "projection camera" (separate from the animated hero camera) via `ScanlineRender`/`Card3D`-style projection, so the spread reads as if traced across the real surface from the correct point of view.
+5. Clean the projected alpha: erode-then-dilate to remove small stray specks, then create a "leading edge" by shrinking a copy of the alpha and subtracting it from the original (manual edge-detect alternative to `EdgeDetect`).
+6. Build a secondary internal pattern to reveal inside the spread: project a procedural texture (`HexFlow` gizmo, or a simpler eroded `Noise`) onto the rock's P-channel/position data using the `ProjectionBuddy` gizmo (Nukepedia) — control-click/alt-click the viewer to drag-place the projection directly on the 3D surface; use two projections placed on different facing sides, blended via a `P`-channel-derived matte, to reduce projection stretching.
+7. Multiply the internal pattern by the spreading edge alpha (pre-comped) so the revealed detail only shows inside the laser trail, not everywhere.
+8. Build a secondary "light falloff" layer: `Glow` the edge-detected alpha and multiply it against the un-edge-detected spread alpha for a softer light-falloff look; mask out the original hand-drawn crevices from this layer so the pattern reads as being on the surface (not inside cracks), preserving a 3D read instead of looking 2D.
+9. Add depth of field (ideally on separate per-element renders to avoid edge bleeding) and god rays: shrink an edge-alpha-derived shape toward the light source and increase ray-march steps to build streaking god rays; expect to re-balance brightness after the final color grade dims things down.
+10. Feed the composited effect back into the CG pipeline for accuracy: pre-comp the rock's effect layer, reproject it back onto the reflective sphere via ray-traced render so the sphere's reflection shows the effect; separately reproject the edge effect back into Blender at low sample count as a fake interactive light-contamination/bounce-light source, combined with an Albedo pass.
+11. Sphere reveal (simpler pass): animate exponential "spot flare" glow shapes sliding across, multiply against edge/pattern shapes (e.g. `RainCircuit`-style grid) for a metallic falling-off-light look; scale one flare into a tall vertical ellipse so the final beam reads as a thin line that "expands" at the end like a shot being fired.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `RotoPaint` — animatable stroke end-point (hand-drawn, animated "trace" reveal), multi-color strokes for interior edge detection, "replace" blend mode to preview cleanly
+- `EdgeDetect` — both on multi-color roto (interior cracks) and as an alternative manual erode-and-subtract technique for a leading edge
+- `P_Noise_Advanced` (Nukepedia gizmo) — Perlin-style noise driven by P-channel/position data (rejected approach, shown for context)
+- `PScatter` (free gizmo, author's own plugin) — scatters video textures across P-channel/position data
+- `ProjectionBuddy` (free Nukepedia gizmo) — projects 2D textures onto 3D position data (P-channel), control/alt-click-drag placement directly in the viewer
+- `HexFlow` (motion-graphics plugin node, author's own) — rippling procedural dot pattern used as the internal laser-trail texture
+- `Card3D` / `ScanlineRender` / static "projection camera" (separate from the animated hero camera) — re-projects 2D comp elements back onto 3D geometry
+- `Glow` — light-falloff layer built from the edge-detected alpha
+- God ray technique — shrink an edge-derived alpha toward the light source with increased ray-march steps (referenced from the author's earlier dedicated god-ray/volume-ray tutorial)
+- Depth of Field — flagged as ideally requiring per-element render separation to avoid edge artifacts (not done here for time)
+- Blender re-projection — composited effect fed back into the 3D renderer as a fake interactive light-contamination pass, combined with Albedo
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (with a Blender-side re-projection step for interactive lighting). No on-screen version banner or OCIO metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, particles, gizmo, procedural-texture, 3d-system, digital-matte-painting, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares `procedural-texture` and `gizmo` with Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — both use World Position/P-channel data to drive procedural effects without re-rendering.

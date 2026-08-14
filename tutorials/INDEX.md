@@ -127,11 +127,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=OJJ9hu6smqk
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** compositing, particles, gizmo, procedural-texture, 3d-system, digital-matte-painting, advanced
+- **Summary:** Builds a fully art-directable sci-fi laser-scan reveal with no simulation software: hand-animated `RotoPaint` stroke alphas over CG rock crevices, reprojected through a static camera onto the geometry, masked against a secondary procedural pattern (`HexFlow`, `ProjectionBuddy` gizmo on P-channel data) for internal detail, plus god rays and re-projection back into the CG renderer (and Blender) for accurate reflections/light contamination. Also documents the author's rejected look-dev experiments (UV-projected grids, P-noise edge detection, the free `PScatter` gizmo) as a case study in effect design iteration.
 - **File:** tutorials/create-a-movie-quality-sci-fi-laser-effect-in-nuke.md
+- **Related:** Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `procedural-texture`, `gizmo`, P-channel/position-data driven effects.
 
 
 ### Create 3D Noise | Nuke Compositing
