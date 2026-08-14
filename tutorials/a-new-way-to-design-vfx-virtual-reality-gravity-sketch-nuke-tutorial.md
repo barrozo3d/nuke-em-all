@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=wEHiUNE66fk
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (cross-platform: Gravity Sketch is a third-party VR modeling app, not a Foundry product; Nuke both generates the source textures and would composite the final result)"
+version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)"
+tags: [compositing, procedural-texture, gizmo, motion-graphics, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # A new way to design VFX | Virtual Reality | Gravity Sketch + Nuke Tutorial
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -215,30 +211,51 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:00] tutorials/frames/a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial/frame_000.jpg
+- [3:52] tutorials/frames/a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial/frame_001.jpg
+- [6:34] tutorials/frames/a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial/frame_002.jpg
+- [8:39] tutorials/frames/a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial/frame_003.jpg
+- [10:15] tutorials/frames/a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial/frame_004.jpg
+- [13:27] tutorials/frames/a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Generate 2D procedural "energy"/wormhole-style textures in Nuke (via a bidirectional GodRay-based spectrum-mapping trick), flatten them with `PolarDistort`, then use them as reference/wrap materials inside the VR modeling app **Gravity Sketch** to hand-sculpt NURBS-based 3D geometry that would be impractical to build with curves/lofts in Nuke, Houdini, or Maya — then bring that geometry back into Nuke so the *original animated* (not the single exported still) texture can be re-applied to its surface.
 
 ### Summary
-[PENDING EXTRACTION]
+An exploratory/"sandbox" video (author explicitly disclaims the demo Nuke script as messy, non-production) demonstrating a workflow bridging 2D procedural texture design in Nuke and VR-native 3D modeling in Gravity Sketch. The Nuke side (frame_000, a wormhole slap-comp; frame_001, the messy sandbox script) starts from a technique credited to a fellow artist named Chris Friar: a custom bidirectional `GodRay`-style gizmo that rays out from a center point in two directions at once, combined with tiling (via scale/rotation, low sample count) and per-tile color/spectrum mapping to create rainbow/energy patterns — the author reproduces and extends this "spectrum map through tiling" trick to build a library of animated abstract textures. Each pattern is optionally rotated then flattened with `PolarDistort` into a tileable flat texture (frame_002 shows Gravity Sketch's basic stroke/point-editing UI as context for the modeling side). These flat textures are exported as reference/material images into Gravity Sketch, a VR 3D modeling app (not a Foundry product) primarily used for concept/product design — inside VR, the artist can grab a texture, assign it as a material via a right-click toggle, and use tools like **Revolve** (rotate a profile around an axis — frame_003 shows a revolved ring geometry lit up with the imported texture), **Surface** (drag geometry out with both hands, good for shockwave-like forms), and **Stroke with polar symmetry** (repeat a stroke radially around a point — natural fit for wormhole/portal designs) to sculpt 3D forms directly around the texture in true stereo 3D, seeing exactly how the texture stretches across the surface as they design — something the author argues is far more intuitive than lofting curves in a DCC without that direct visual/spatial feedback. Multiple material layers can be stacked in VR for cheap, convincing parallax (frames 004-005 show layered glowing ring/particle materials forming a wormhole-like composition) that would be tedious to achieve with flat 2D cards alone. Because Gravity Sketch only supports static (non-animated) reference textures, only a single frame is exported for use during VR modeling — the payoff comes after: the sculpted geometry is brought back into Nuke, where the *original animated* texture (not the static VR reference) is reapplied to its UVs, so the final render/comp gets both the hand-designed, VR-native 3D form *and* full texture animation. The video ends before showing that re-import/re-texture step in detail — it demonstrates the texture-generation and VR-sculpting halves of the pipeline only.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Build a base animated "energy" texture in Nuke using a bidirectional `GodRay`-type gizmo (credited to Chris Friar) that emits rays in two directions from a center point.
+2. Tile the ray pattern (via scale and/or rotation repetition, kept at a low sample count) and map different colors per tile to produce spectrum/rainbow-style variation instead of a single-hue glow.
+3. Optionally rotate the design, then flatten it with `PolarDistort` into a tileable, non-radial flat 2D texture — repeat this generation process to build a small library of distinct animated patterns.
+4. Export a still frame of each pattern (Gravity Sketch only accepts static reference/material images, not animated textures) for use inside the VR app.
+5. In Gravity Sketch: load the exported textures as materials, assign one to a geometry via right-click → material toggle, then sculpt using **Revolve** (axis-rotated profile), **Surface** (two-handed drag/extrude), or **Stroke with polar symmetry** (radial repeat around a point) — watching in real stereo 3D how the actual texture stretches across the surface as the geometry is shaped, rather than guessing at UV stretch the way a flat-screen loft/curve workflow would require.
+6. Layer multiple separately-modeled/textured pieces in VR (e.g. an inner glowing ring plus an outer particle/laser layer) to build up parallax depth cheaply — noted as one of Gravity Sketch's biggest advantages over flat 2D compositing cards for this kind of design work.
+7. Bring the finished geometry back into Nuke with its UVs intact; reapply the *original animated* (not the static exported-reference) version of the source texture, so the final asset combines VR-sculpted 3D form with full texture animation. (This re-import/re-texture step is described but not shown step-by-step in this video.)
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** `PolarDistort` (Nukepedia gizmo — same one used in "360 Spherical LatLong Textures" and "Mixed Medium VFX P1", here for flattening radial patterns into tileable textures rather than sphere-wrapping or artistic abstraction), Transform (tile via scale/rotation), Grade/color mapping per tile for the spectrum effect
+- **Bidirectional GodRay gizmo:** credited to fellow artist Chris Friar (his own tutorial referenced in the video description) — emits rays in two directions from a single center point, unlike a standard one-directional `GodRays` node; combined with low-sample tiling to fake a spectrum-mapped rainbow look
+- **Gravity Sketch (third-party VR app, not Foundry):** Revolve, Surface, Stroke-with-polar-symmetry tools; material/reference-image import (right-click → material toggle); geometry export back to a DCC with UVs preserved
+- **Workflow constraint to remember:** Gravity Sketch materials are static images only — always export a single representative frame for VR modeling, then swap back to the animated source texture once geometry returns to Nuke
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — the individual Nuke nodes are simple (GodRay gizmo, tiling, PolarDistort), but the workflow requires comfort in a completely different (VR) tool and the conceptual leap of designing 3D form around a 2D texture's visual stretch rather than through curves/lofts.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke for texture generation (and, per the author, for the eventual re-composite once geometry returns from VR) — cross-platform with Gravity Sketch, a third-party VR modeling app with no Foundry relationship. Nuke version not stated on screen; per this skill's version-tracker, a 2022 upload falls in the 13.1 (Nov 2021) → 13.2 (Apr 2022) window. Nothing in this video uses Nuke's actual 3D system (Sphere/Camera/ScanlineRender) — all "3D" work happens in Gravity Sketch, not Nuke.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, procedural-texture, gizmo, motion-graphics, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- 360 Spherical LatLong Textures | Nuke Tutorial (`360-spherical-latlong-textures-nuke-tutorial.md`) and Mixed Medium VFX P1 (`mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md`) — both share the `PolarDistort` gizmo, each using it for a different purpose (sphere-wrapping, artistic radial abstraction, and here flattening a radial pattern into a tileable texture); useful to read together to see the same node applied three different ways.
+- Mixed Medium VFX P1 also shares the broader "design 2D textures in Nuke, hand-build custom 3D geometry in another tool, bring it back into Nuke" pipeline shape (there: Blender; here: Gravity Sketch VR).

@@ -395,11 +395,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=wEHiUNE66fk
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (cross-platform with Gravity Sketch, a third-party VR modeling app)
+- **Version:** Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)
+- **Tags:** compositing, procedural-texture, gizmo, motion-graphics, intermediate
+- **Summary:** Bridges 2D procedural texture design in Nuke (a bidirectional GodRay gizmo + tiling + `PolarDistort` for spectrum-mapped rainbow/energy patterns) with VR-native NURBS modeling in Gravity Sketch — export a static frame of an animated texture as a VR reference material, sculpt geometry around it in true stereo 3D using Revolve/Surface/polar-symmetry Stroke tools (impractical to loft in Nuke, Houdini, or Maya), layer multiple materials for cheap parallax, then bring the geometry back into Nuke to reapply the *original animated* texture to its UVs.
 - **File:** tutorials/a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial.md
+- **Related:** 360 Spherical LatLong Textures (`360-spherical-latlong-textures-nuke-tutorial.md`), Mixed Medium VFX P1 (`mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md`) — share the `PolarDistort` gizmo and/or the "texture in Nuke → geometry in another tool → back to Nuke" pipeline shape.
 
 
 ### This ONE Step Makes CG Look Cinematic (Most Artists Skip It)
