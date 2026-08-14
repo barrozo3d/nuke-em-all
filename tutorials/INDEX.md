@@ -600,7 +600,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** roto, ai-tools, compositing, tracking, nuke-17, intermediate
 - **Summary:** Benchmarks Foundry's paid SmartRoto AI-roto add-on against 5 hard test shots (profile, motion blur, occlusion, lost profile, undefined profile). Workflow: draw base shape, mark hero keyframes with one-click auto-align snap, run Create Smart Keys to propagate. Handles moderate variation well with 2-5 hero keys and multi-shape mutual stabilization; breaks down under heavy occlusion, drastic color shifts, and undefined/flowing profiles.
 - **File:** tutorials/how-smart-is-state-of-the-art-ai-rotoscoping.md
-- **Related:** Rotoscoping in Nuke Tutorial | 5 Beginner Tips (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`), Why your VFX Tracks aren't "Sticking" (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — share `roto`, `tracking`, `compositing`.
+- **Related:** Rotoscoping in Nuke Tutorial | 5 Beginner Tips (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`), Why your VFX Tracks aren't "Sticking" (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — share `roto`, `tracking`, `compositing`. Did Corridor Crew SOLVE Greenscreen? (`did-corridor-crew-solve-greenscreen.md`) — shares `ai-tools`, `compositing`; same channel's pattern of rigorously benchmarking a new AI tool.
 
 
 ### Compositing Complex Shadows in Nuke [Advanced]
