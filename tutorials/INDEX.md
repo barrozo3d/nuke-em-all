@@ -740,6 +740,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/3d-laser-effect-nuke-compositing-tutorial-higx-point-render.md
 
+
+### UV / ST Maps [Part 2] | Nuke Compositing [Beginner / Intermediate]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=0A-DC41U09M
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/uv-st-maps-part-2-nuke-compositing-beginner-intermediate.md
+
 ---
 
 ## Tag Reference
