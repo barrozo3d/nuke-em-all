@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=WcB524Y32Io
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "specific version not stated on screen — author notes the free gizmo download was compiled for one particular Nuke version"
+tags: [compositing, gizmo, grading, digital-matte-painting, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/2d-rim-lights-look-fake---but-not-anymore/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 5
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # 2D Rim Lights Look FAKE - But Not Anymore
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py 2d-rim-lights-look-fake---but-not-anymore <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -90,30 +86,49 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:33] tutorials/frames/2d-rim-lights-look-fake---but-not-anymore/frame_000.jpg
+- [1:05] tutorials/frames/2d-rim-lights-look-fake---but-not-anymore/frame_001.jpg
+- [2:34] tutorials/frames/2d-rim-lights-look-fake---but-not-anymore/frame_002.jpg
+- [2:51] tutorials/frames/2d-rim-lights-look-fake---but-not-anymore/frame_003.jpg
+- [3:15] tutorials/frames/2d-rim-lights-look-fake---but-not-anymore/frame_004.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Build a convincing soft rim/edge light on a flat 2D graphic (logo, title card) using only its alpha channel — no normals or position pass needed — by comparing three approaches: a quick but graphic-looking `Emboss` node, a manual stencil+GodRay fake, and a custom gizmo that attenuates softness specifically at the edge (not a uniform blur), reading as an actual light source rather than a blurred picture.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy compares ways to fake a rim light on flat 2D graphics/logos using nothing but the shape's alpha. The intuitive first approach, an `Emboss` node with an angle control, is fast but always reads as graphic/harsh unless the "light" is a perfect pinpoint — it has no true softness control. A better manual technique: `Transform` the image by a pixel or two, stencil it against the original to carve out a thin edge line, then extend that into a soft glow using a stencil-masked `GodRay` (blurred, offset in X/Y to fake a light direction) plus'd back over the original — a legitimate, if fiddly, 2D compositing trick. The video's actual contribution is a free custom gizmo that solves the remaining softness problem directly: rather than blurring the whole image (which just looks blurred everywhere, not lit), the gizmo's smoothing control attenuates specifically at the edge/shadow-facing side, simulating true light falloff along the silhouette, with additional rotation and falloff controls to dial in direction and spread — explicitly distinguished from a "light wrap" (which simulates a light source behind the object bleeding onto its edges via a masked glow plus'd over) since this technique casts light onto the edge of an already-opaque foreground shape instead.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Baseline/naive approach: apply an `Emboss` node to the alpha, adjust its angle control to aim the simulated rim light — fast, but always reads as flat/graphic since Emboss has no true softness, only working well for perfectly pinpoint hard light.
+2. Manual stencil+GodRay technique: duplicate the image, `Transform` it a pixel or two in the intended light direction, and stencil it against the original to carve out a thin rim-light edge line.
+3. Extend that thin edge into a glow: feed the stencilled edge into a `GodRay` node (with blur), then `Plus` it back over the original image; adjust the GodRay's X/Y center position to fake different light directions.
+4. Recognize the remaining limitation: a plain `Blur` on the rim doesn't read as light falloff — it just looks like the whole image got blurry, not like an attenuating light source.
+5. Use (or build) a custom smoothing-aware rim-light gizmo: its "smoothing" control attenuates brightness specifically toward the far/shadowed side of the edge rather than blurring uniformly, with additional rotation (light direction) and falloff (spread) controls.
+6. Compare directly against the GodRay/blur approach on the same edge to confirm the difference: the custom tool's softness genuinely falls off from the lit edge inward, while a blur just softens the whole image indiscriminately.
+7. Understand the distinction from "light wrap": light wrap simulates a light source physically behind the object bleeding around its silhouette (masked glow plus'd over); this rim-light technique instead casts a light onto the front-facing edge of an already-composited flat shape — a different problem despite the visually similar result.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Emboss` — quick but graphic/hard-edged rim-light approximation; angle control only, no true softness
+- `Transform` + stencil (self vs. offset copy) — manual technique to carve a thin rim-light edge line from an alpha
+- `GodRay` (stencil-masked, blurred, X/Y-offset) + `Plus` — extends a thin edge line into a soft directional glow
+- Custom gizmo (free download, author-built) — smoothing/falloff/rotation controls for edge-attenuated soft rim lighting, explicitly not a "light wrap" node; compiled against one specific Nuke version at time of release (author notes to request other versions in comments)
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. No on-screen general version banner in the captured frames; the author states the free gizmo download was compiled for one specific Nuke version and hadn't been tested across all versions at release time.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, gizmo, grading, digital-matte-painting, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares the "gizmo solving a lighting/shading problem via alpha or normals rather than a full re-render" pattern with Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`) and 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`).

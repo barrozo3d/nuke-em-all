@@ -451,11 +451,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=WcB524Y32Io
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** specific version not stated on screen — free gizmo compiled for one particular Nuke version
+- **Tags:** compositing, gizmo, grading, digital-matte-painting, beginner
+- **Summary:** Compares three ways to fake a soft rim light on flat 2D alpha-only graphics: a quick but graphic `Emboss` approach, a manual `Transform`+stencil+`GodRay` fake, and a free custom gizmo whose smoothing control attenuates specifically at the edge (true light falloff) rather than uniformly blurring — explicitly distinguished from "light wrap" (a light source behind the object bleeding onto edges) since this casts light onto an already-composited shape's front edge instead.
 - **File:** tutorials/2d-rim-lights-look-fake---but-not-anymore.md
+- **Related:** Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`), 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — share the gizmo-solves-a-lighting-problem-via-alpha-or-normals pattern.
 
 
 ### Planning out a Visual Effects Shot | Blender and Nuke
