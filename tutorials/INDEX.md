@@ -894,6 +894,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/track-any-surface-with-this-mocha-nuke-trick.md
 - **Related:** Rotoscoping in Nuke Tutorial (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`), Why your VFX Tracks aren't "Sticking" (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — shared tracking fundamentals; [2/3] Nuke Tutorial Series (`23-nuke-tutorial-series-cracks-keentools-smartvectors.md`) — shared "specialized tracker when native tools fall short" theme.
 
+
+### The Secret to Perfectly Merge CGI with Live Action | (Edge Extending)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=Ub0MmjYy0b0
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/the-secret-to-perfectly-merge-cgi-with-live-action-edge-extending.md
+
 ---
 
 ## Tag Reference
