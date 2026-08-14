@@ -722,11 +722,23 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=M-iKJu9hYBk
 - **Author:** Compositing Academy
+- **App:** Nuke
+- **Version:** not specified — free 3rd-party gizmo set (CA Detail Normals, Normal Mixer, CA_NormalMask). CONFIRMED NOT native Gaussian Splat/SplatRender relighting (Nuke 17.1) — purely 2D normals-based.
+- **Tags:** relighting, gizmo, digital-matte-painting, compositing, intermediate
+- **Summary:** Free "Normals Toolkit" (3 gizmos) fixes the plasticky/flat look of low-res proxy-mesh or AI-generated normal relights: CA Detail Normals extracts high-frequency detail from an image (luminance or frequency-size separation), Normal Mixer re-orients the detail normals to match a base normal pass before blending (prevents relight artifacts), CA_NormalMask converts the result into a rotatable/sampleable light mask with a softness control (diffuse to specular). Demoed on an Iceland photogrammetry-scan digital matte painting and a CG sphere with roto-targeted detail popping.
+- **File:** tutorials/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md
+- **Related:** I Made VFX Relighting WAY Better in Nuke (`i-made-vfx-relighting-way-better-in-nuke.md`), 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`), Can I Create a Speeder Chase on a TINY Greenscreen? (`can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md`) — share `relighting`/`gizmo`.
+
+
+### 3D Laser Effect | Nuke Compositing Tutorial (Higx Point Render)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=R9zvo0T_PjY
+- **Author:** Compositing Academy
 - **App:** [PENDING]
 - **Version:** [PENDING]
 - **Tags:** [PENDING]
 - **Summary:** [PENDING EXTRACTION]
-- **File:** tutorials/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md
+- **File:** tutorials/3d-laser-effect-nuke-compositing-tutorial-higx-point-render.md
 
 ---
 
