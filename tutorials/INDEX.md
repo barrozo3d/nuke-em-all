@@ -547,22 +547,24 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=ErwClH-dQA0
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (deep compositing requires NukeX)
+- **Version:** Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)
+- **Tags:** compositing, 3d-system, deep-compositing, st-map, projection, gizmo, fx-simulation, grading, expert
+- **Summary:** Advanced concept-level (not node-by-node) breakdown of "kitbashing" a complex glassy shockwave/explosion entirely from generic pre-rendered stock energy elements, re-mapped so aggressively their circular/spherical origin disappears: `PolarDistort` circle-to-line unwrap + `STMap` onto scene UVs with an expanding `PMatte` reveal for a "contact energy" pass; a 3D `Sphere` with `UVProject`-doubled texture layers and `DisplaceGeo` radial-gradient-driven pinch-to-sphere shape animation for the main shockwave; `Glass` (per-channel IDistort) for chromatic-aberration refraction; `Deep`/`DeepMerge` occlusion against scene geometry; Cryptomatte-isolated per-piece UV rescaling; a deliberate, disciplined color scheme (monochromatic base + small accent-hue "pops," Doctor-Strange-style) applied via the channel's own Linear-HSV rainbow trick; and lens flares built from frame-held/dissolved stock elements studied against real reference footage.
 - **File:** tutorials/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md
+- **Related:** Nuke Tutorial | Compositing a Rainbow (`nuke-tutorial-compositing-a-rainbow-intermediate.md`), 360 Spherical LatLong Textures (`360-spherical-latlong-textures-nuke-tutorial.md`) — shared `PolarDistort`/rainbow techniques; Build Entire FX with ONE Pass (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shared position/UV-pass-driven comp-FX philosophy.
 
 
 ### EASY TRICK: Improve your Color Grading skills
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=dVN7IK1GsLA
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** grading, channels, color-management, compositing, beginner
+- **Summary:** Targeted hue shift via a `Copy` node partially blending one RGB channel into another (e.g. red into green to turn reddish bounce light orange, not yellow) — leverages the fact that color is just a channel ratio (desaturating evens the ratio; this technique deliberately un-evens it). Compared against `HueCorrect`, the HSV tool, and `Keyer`-based selection, all of which can show harsher/imperfect falloff at the correction edge versus the smoother channel-mix gradient.
 - **File:** tutorials/easy-trick-improve-your-color-grading-skills.md
+- **Related:** Nuke Tutorial | Keying with Math Expressions [Intermediate], Nuke Tutorial | Compositing a Rainbow [Intermediate] — share first-principles RGB channel-math grading technique.
 
 ---
 

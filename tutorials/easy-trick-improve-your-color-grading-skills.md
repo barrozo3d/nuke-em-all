@@ -4,10 +4,10 @@ source: YouTube
 url: https://www.youtube.com/watch?v=dVN7IK1GsLA
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [grading, channels, color-management, compositing, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/easy-trick-improve-your-color-grading-skills/
 frame_count: 0
 frame_status: pending-selection
@@ -133,27 +133,36 @@ frontmatter before you write the Structured Notes below.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A targeted hue shift (e.g. turning a reddish bounce-light color into orange) can be achieved by partially mixing one color channel into another with a `Copy` node — since a color is just a ratio between R/G/B, copying part of the brighter channel (red) into the darker channel (green) shifts the hue smoothly, without the harsh/imperfect falloff edges typical of `HueCorrect`, the HSV tool, or a `Keyer`-based approach.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy demonstrates a simple but underused targeted-hue-shift technique: to turn reddish bounce lighting on a character into a warmer orange-lantern color, use a `Copy` node to partially blend the red channel into the green channel (not fully — full red+green mixing gives yellow, not orange), scaled down via the copy's mix control until the desired orange balance is reached. The underlying principle explained: RGB channels are simply a ratio (pure white = 1,1,1 in all channels; desaturating to zero works by bringing all channel values toward a shared luminance value, evening the ratio rather than removing color information), so deliberately un-evening that ratio — mixing part of one channel into another — reproduces real color-theory mixing (red+green=yellow; red+less green=orange) directly in the image's own channel data. The channel-copy technique is contrasted with three more common targeted-correction tools — `HueCorrect`, the HSV tool (similar to Resolve's qualifier), and `Keyer`-based (e.g. a red key) corrections — noting that all three can produce visibly imperfect falloff/edges or a "harsh matte" look at the boundary between corrected and uncorrected regions, whereas the channel-mix approach tends to give a smoother, more natural gradient since it operates on the image's inherent luminance relationships rather than an externally-defined selection range.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Identify the target hue shift in terms of RGB channel math — e.g. orange = red plus a smaller amount of green (not equal red+green, which yields yellow).
+2. Compare the source channels visually (e.g. view the red channel alone, then the green channel alone) to confirm which channel is naturally brighter/darker in the region you want to shift, so you know the copy will land correctly.
+3. Add a `Copy` node and copy the brighter channel (e.g. red) into the target channel (e.g. green).
+4. Set the copy's mix/amount to 1 first to see the full effect (e.g. red fully copied into green produces a yellowish-green result), then dial the mix down to only partially blend the channel until the desired hue (e.g. orange rather than yellow) is achieved.
+5. Layer supplementary unrelated corrections afterward if needed (e.g. keying/boosting highlights for a more metallic look) — these are separate from the core channel-mix hue-shift technique.
+6. Remember the ratio principle for grading generally: full white is equal values across all channels; desaturating toward zero works by pulling all channels toward a shared luminance value (evening the ratio), while a channel-mix hue shift deliberately un-evens the ratio in a controlled way.
+7. Compare against alternative targeted-correction tools (`HueCorrect`, HSV/qualifier tool, `Keyer`-based selection) when precision at the correction's edge matters — these commonly show imperfect falloff or a harsher selection edge than a channel-mix approach.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Copy` — core technique node; partially copies one color channel's data into another channel to achieve a targeted, smooth hue shift based on the image's own luminance ratios
+- `HueCorrect` — common alternative targeted-hue tool; can show imperfect falloff at the correction's edge
+- HSV tool — range-based color targeting (compared to DaVinci Resolve's qualifier); similar edge-falloff imperfections possible
+- `Keyer` (e.g. red key) — selection-based targeted correction; generally the best of the three alternatives shown but still not as smooth as the channel-mix approach in this example
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. No on-screen version banner or OCIO metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+grading, channels, color-management, compositing, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares channel-math grading fundamentals with Nuke Tutorial | Keying with Math Expressions [Intermediate] (`nuke-tutorial-keying-with-math-expressions-intermediate.md`) and Nuke Tutorial | Compositing a Rainbow [Intermediate] (`nuke-tutorial-compositing-a-rainbow-intermediate.md`) — all three build effects from first-principles RGB channel relationships rather than pre-built color tools.
