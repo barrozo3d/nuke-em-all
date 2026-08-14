@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=aeJTBwIudSs
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (theory/concepts only — a free preview of the paid 'Nuke 505' Keying and Color Integration course; illustrated diagrams, no live node work shown, though the Keylight node is named)"
+version: "Nuke 14.x (2023 upload; no version-specific features referenced)"
+tags: [keying, compositing, roto, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-keying-tutorial-greenscreen-beginner-concepts/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Keying Tutorial | Greenscreen Beginner Concepts
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-keying-tutorial-greenscreen-beginner-concepts <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -266,30 +262,49 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:55] tutorials/frames/nuke-keying-tutorial-greenscreen-beginner-concepts/frame_000.jpg
+- [5:20] tutorials/frames/nuke-keying-tutorial-greenscreen-beginner-concepts/frame_001.jpg
+- [9:15] tutorials/frames/nuke-keying-tutorial-greenscreen-beginner-concepts/frame_002.jpg
+- [9:33] tutorials/frames/nuke-keying-tutorial-greenscreen-beginner-concepts/frame_003.jpg
+- [10:39] tutorials/frames/nuke-keying-tutorial-greenscreen-beginner-concepts/frame_004.jpg
+- [12:13] tutorials/frames/nuke-keying-tutorial-greenscreen-beginner-concepts/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+The conceptual foundation of professional (feature-film-level, not TV-level) keying: a clean alpha almost never comes from one keyer — it comes from combining multiple keyers via key-mixing, garbage mattes, and holdout mattes to solve different problem regions of the frame separately, followed by a dedicated edge matte/de-spill pass before the cutout is pre-multiplied over its new background.
 
 ### Summary
-[PENDING EXTRACTION]
+A free preview lecture from the author's paid "Nuke 505" (Keying and Color Integration) course — pure theory/vocabulary, illustrated with diagrams rather than live Nuke node work (though the `Keylight` node is named as insufficient by itself). Opens by debunking the "pick one color, get a perfect cutout" myth (frame_000 shows an unevenly-lit "realistic" greenscreen with five named problems: uneven lighting, unwanted objects like a boom mic, wrinkles/edges, bad overlap with the subject, and green spill on the subject) — real greenscreens are rarely lit perfectly, so a single keyer applied to the whole frame either under- or over-keys depending on which patch of the uneven screen it was tuned to, leaving a "not a clean alpha matte" result (frame_001, illustrated: a lit/unlit screen split with a white silhouette showing holes and stray keyed regions). The recommended mental process, before ever opening Nuke: **identify every problem area first, then decide which technique solves each one.** For uneven lighting specifically, the fix is **key-mixing**: pull two (or as many as 8-10, for real productions) separate keyers, each tuned to a different lighting region of the screen, producing separate alpha results ("Key 1 Alpha," "Key 2 Alpha" — frame_002/003), then combine them with a roto shape defining which alpha to trust in which region — remembering the alpha convention black=transparent/white=solid, aiming for a pure-white subject on pure-black background. Problems a keyer fundamentally cannot solve (a non-green boom mic, black wrinkle shadows, a subject's tie that happens to have green dots) are handled with **garbage mattes** (roto-cut regions that are simply excluded from the alpha regardless of color, e.g. cutting the mic and ground wrinkles out entirely) and **holdout mattes** (roto regions that force-protect part of the alpha that a garbage cut or the key itself would otherwise incorrectly punch a hole through — e.g. restoring the character's feet after a garbage-matte cut removed the wrinkled ground beneath them, or protecting the green-dotted tie from being keyed as background). The author stresses keying and rotoscoping are not alternatives to each other — they're used together routinely, both in service of one goal: a clean, accurate alpha. Once the alpha itself is clean, a **separate de-spill pass** is needed before final compositing (frame_004/005): erode the clean alpha inward slightly to generate a new, narrower "edge matte" isolating just the fringe where green spill/contamination sits, then use that edge matte to drive a targeted color correction on just that ring (darkening it and/or pushing in the opposite of green) rather than correcting the whole image — cleanly separating "getting the alpha shape right" from "fixing the RGB color contamination," which the video frames as two genuinely different problems many beginners conflate. Only after both the alpha and the de-spilled RGB are clean does the cutout get pre-multiplied and merged over the new background.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Before opening Nuke: watch the greenscreen footage and explicitly list every problem area — uneven lighting across the screen, non-green unwanted objects in frame, wrinkles/black creases that can't key, overlap issues, and spill contamination on the subject.
+2. Mentally assign a technique to each identified problem before starting: uneven lighting → key-mixing; non-keyable objects → garbage matte; areas a garbage matte incorrectly removes → holdout matte; edge color contamination → a separate edge-matte/de-spill pass.
+3. Pull multiple keyers (2 for a simple case, up to 8-10 on real productions), each tuned to a different region/lighting condition of the greenscreen, rather than expecting one keyer setting to solve the whole frame.
+4. Key-mix: combine each keyer's separate alpha result using a roto shape that defines which keyer's result to trust in which region of frame — remember black = transparent, white = solid; target a pure-white subject against pure-black background.
+5. Garbage-matte out anything the key can never solve because it isn't a color problem — non-green foreign objects (mic stands), black shadow/wrinkle regions, etc. — by rotoscoping around them and excluding that region from the alpha entirely.
+6. Where a garbage matte (or the key itself) incorrectly removes part of the actual subject (e.g. cutting the ground also removes the character's feet; a keyable pattern like green dots on a tie punches a hole through fabric), rotoscope a holdout matte to restore/protect exactly that region of the alpha.
+7. Once the alpha is clean, generate a dedicated **edge matte**: erode the clean alpha inward a small amount, keep just the resulting thin edge ring (optionally blurred), and use that as a mask for a **de-spill** color correction (darken and/or add the opposite of green) applied only to that fringe — never grade the whole image to fix spill.
+8. Pre-multiply the finished, de-spilled cutout using the clean alpha, then merge it over the new background.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Named in the video (conceptual level, no live setup shown):** `Keylight` (explicitly called out as insufficient alone — "one Keylight node isn't going to solve this"), key-mixing (combining multiple keyer alphas via a roto shape), garbage matte and holdout matte (both roto-driven), edge matte (an eroded copy of the clean alpha), de-spill color correction
+- **Core concepts to know before touching nodes:** alpha convention (black = transparent, white = solid), the distinction between fixing the *alpha shape* (keying/rotoscoping) vs. fixing *RGB color contamination* (de-spill) as two separate problems, and that professional/feature-film keying routinely combines many keyers + roto operations rather than relying on one keyer node
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — explicitly a "before you even open Nuke" conceptual primer; no node graph or parameter walkthrough, deliberately theory-only so the vocabulary (key-mix, garbage matte, holdout, edge matte, de-spill) is understood before the paid course's node-level lessons.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. No version-specific features referenced — this is pure keying theory applicable across versions. Per this skill's version-tracker, a 2023 upload falls in the Nuke 14.x window.
 
 ### Tags
-[PENDING EXTRACTION]
+keying, compositing, roto, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Nuke Tutorial | Keying with Math Expressions [Intermediate] (`nuke-tutorial-keying-with-math-expressions-intermediate.md`) — shares `keying`, `compositing`; that video is a hands-on expression-driven channel-math keying technique, a practical node-level counterpart to this video's pure theory/vocabulary primer.

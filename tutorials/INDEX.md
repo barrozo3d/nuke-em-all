@@ -839,11 +839,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=aeJTBwIudSs
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (theory/concepts only — free preview of the paid "Nuke 505" course)
+- **Version:** Nuke 14.x (2023 upload; no version-specific features referenced)
+- **Tags:** keying, compositing, roto, beginner
+- **Summary:** Conceptual/vocabulary primer on professional keying: a clean alpha rarely comes from one keyer (`Keylight` alone is explicitly called insufficient) — real greenscreens are unevenly lit and need key-mixing (combine multiple keyers tuned to different regions via a roto shape), garbage mattes (roto out non-color problems like mic stands/wrinkles), and holdout mattes (protect/restore alpha regions a garbage cut or the key incorrectly removes, e.g. green-dotted clothing or feet cut with the ground). Once the alpha is clean, a separate edge-matte (eroded alpha) drives a targeted de-spill color correction on just the contaminated fringe before pre-multiply.
 - **File:** tutorials/nuke-keying-tutorial-greenscreen-beginner-concepts.md
+- **Related:** Nuke Tutorial | Keying with Math Expressions [Intermediate] (`nuke-tutorial-keying-with-math-expressions-intermediate.md`) — hands-on expression-driven keying counterpart to this theory primer.
 
 ---
 
