@@ -756,21 +756,22 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=abNygtFqYR8
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified — compares native Keylight/IBK vs. "Corridor Key," a free neural-network keyer gizmo by Corridor Digital (3rd party)
+- **Tags:** keying, compositing, ai-tools, gizmo, edge-extending, intermediate
+- **Summary:** Supervisor-style keying shootout across 4 hard plates (motion blur+transparency, shaken detail+gradient, complementary-color despill test, defocus-over-mess "nightmare" case): Keylight vs. IBK+clean-plate vs. Corridor Digital's free neural-net "Corridor Key" gizmo. Corridor Key wins edge-contamination-heavy plates (better motion-blur retention) but loses/ties on despill (no built-in despill controls) and defocus-edge creasing; never a one-shot final key on any plate. Verdict: AI keyers are additive to, not a replacement for, traditional keying.
 - **File:** tutorials/did-corridor-crew-solve-greenscreen.md
+- **Related:** Rotoscoping in Nuke Tutorial | 5 Beginner Tips (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`), How SMART is State of the Art A.I Rotoscoping? (`how-smart-is-state-of-the-art-ai-rotoscoping.md`) — share `keying`/`ai-tools`, `compositing`.
 
 
 ### Creating a 3D Hole using Nuke + Photoshop A.I (Firefly) Tutorial
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=8QEGlRX-kH4
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (cross-platform with Adobe Photoshop + Firefly generative fill for texture generation)
+- **Version:** Nuke 14.x (2023 upload, same DMP mini-series as the Nuke-14-era "3D Laser Effect" video)
+- **Tags:** projection, 3d-system, digital-matte-painting, ai-tools, grading, roto, intermediate
+- **Summary:** Camera-projection DMP sourced from Photoshop Firefly generative fill instead of hand-painting: iteratively prompt/regenerate a hole-in-the-ground texture, project it in Nuke, then use the classic projection-stretch artifact as a cue to render the *stretched* frame back into Photoshop and generate a second angle (back wall, floor, and a third overlapping "edge wall" layer purely for parallax — 3 layers reads 3D where 2 reads flat). Builds actual 3D depth (Cylinder + noise-driven DisplaceGeo for broken-up walls, a second cylinder for the floor, a displaced Card for near parallax) to receive the second projection, patches the rim with a Luma-keyed region cut from the first generation, fixes dark edge fringing via unpremult→RotoPaint→premult, and reduces projection stretch over time by DisplaceGeo-bending the receiving card with a ramp instead of leaving it flat.
 - **File:** tutorials/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial.md
 
 ---
