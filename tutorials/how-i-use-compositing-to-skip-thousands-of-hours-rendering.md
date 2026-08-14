@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=PNE9YMD64xM
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [compositing, 3d-system, digital-matte-painting, denoise, grading, gizmo, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/how-i-use-compositing-to-skip-thousands-of-hours-rendering/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # How I Use Compositing to Skip THOUSANDS of Hours Rendering
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py how-i-use-compositing-to-skip-thousands-of-hours-rendering <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -140,30 +136,55 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:01] tutorials/frames/how-i-use-compositing-to-skip-thousands-of-hours-rendering/frame_000.jpg
+- [1:31] tutorials/frames/how-i-use-compositing-to-skip-thousands-of-hours-rendering/frame_001.jpg
+- [2:16] tutorials/frames/how-i-use-compositing-to-skip-thousands-of-hours-rendering/frame_002.jpg
+- [2:44] tutorials/frames/how-i-use-compositing-to-skip-thousands-of-hours-rendering/frame_003.jpg
+- [3:03] tutorials/frames/how-i-use-compositing-to-skip-thousands-of-hours-rendering/frame_004.jpg
+- [3:49] tutorials/frames/how-i-use-compositing-to-skip-thousands-of-hours-rendering/frame_005.jpg
+- [4:51] tutorials/frames/how-i-use-compositing-to-skip-thousands-of-hours-rendering/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Six studio-standard render-time-saving techniques that move work from the renderer into Nuke compositing: animate flickering lights in 2D instead of re-rendering, fake small background lights procedurally, drop resolution on defocused elements, replace full 3D renders with 2.5D card projections for distant/rotation-only camera moves, denoise noisy/flickering specular by blending frames after projecting the render back onto geometry, and mix a slow path-traced render with a fast real-time-engine render for secondary/out-of-focus elements.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy runs through six render-cost-saving compositing techniques used across professional productions. (1) Match a real flickering light's intensity variation to a CG light by sampling brightness with the `CurveTool`, pasting that data into a `Constant`'s color, multiplying it onto the render, and desaturating the multiply layer to zero so only luminance (not hue) is affected — for finer background lights, erode a checkerboard, mask it with a noise pattern, and defocus for a cheap out-of-focus bokeh look (or use the paid `ScreenFX` plugin's animated pattern library for sci-fi console lights). (2) Render defocused elements at half resolution and scale up, since detail is lost anyway. (3) For distant background elements, render a single frame and project it onto simple geometry or a flat card (2.5D) instead of rendering a full 3D sequence — standard in matte-painting workflows. (4) For flickering/noisy specular highlights on glossy CG (e.g. metallic foil under shallow DOF) rather than cranking render samples, project the render back onto geometry and blend/average across a few frames (cross-referencing the channel's dedicated "How to Denoise CG in Post" video). (5) When the camera is a pure nodal pan (rotation only, no translation), render just one CG frame, put it on a card, and pan/tilt into it in 2D/2.5D — it reads as a full rendered sequence for a fraction of the render cost. (6) Mix render engines for different elements within one composite — e.g. a slow, high-quality path-traced render (Cycles) as the hero pass, supplemented by a fast real-time-engine render (Eevee, or Unreal for the same principle) providing extra specular/reflection detail on secondary elements (here, a foreground pole/bucket going inky black in the path-traced pass) that will be thrown out of focus anyway, so full render-time investment there isn't worth it.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Flickering light match: crop into the flickering region of the reference plate, use `CurveTool` to extract per-frame intensity data, paste that animated data into a `Constant` node's color channel, multiply the constant onto the CG render, and add a `Saturation` node set to 0 on the multiply layer so only brightness (not color) is affected by the copied flicker curve.
+2. Small background lights: erode a `Checkerboard`, mask it with a `Noise` pattern, and defocus/blur — a cheap procedural stand-in for out-of-focus bokeh lights; for more elaborate animated patterns (e.g. sci-fi console lights), use a dedicated pattern-generator plugin (`ScreenFX`).
+3. Resolution optimization: identify elements that will always be out of focus and render/composite them at half resolution, scaling up afterward, since no fine detail will be visible.
+4. 2.5D substitution: for distant background elements in a matte-painting-style shot, render a single frame instead of a full animated sequence and project it onto simple proxy geometry or a flat card via the 3D system.
+5. Flicker/noise cleanup on glossy CG: instead of increasing render samples to quiet noisy specular highlights, project the noisy render back onto its own source geometry and blend/average the projection across a few frames to smooth out chatter.
+6. Nodal-pan optimization: if the camera setup is rotation-only (no translation/parallax), render one CG frame, place it on a card in the 3D system, and animate the camera panning into that single frame — reads as a full rendered sequence.
+7. Engine-mixing: render a primary path-traced pass (e.g. Cycles) for hero quality, and a separate fast real-time-engine pass (e.g. Eevee/Unreal) of the same or nearby elements purely for extra light/reflection detail on secondary/backgrounded elements; merge the two renders together (with edge break-up/detail work) before throwing the composite out of focus, since a defocused element doesn't need full hero-render investment but still benefits from the extra specular information the real-time pass adds cheaply.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `CurveTool` — samples intensity/brightness data from a region of footage for reuse as animation data elsewhere
+- `Constant` — receives copied CurveTool intensity data in its color channel to drive a flicker-matched multiply layer
+- `Saturation` (set to 0) — desaturates the flicker-multiply layer so only luminance is affected, not hue
+- `Checkerboard` + `Noise` + erode + defocus — cheap procedural fake for small out-of-focus background lights
+- `ScreenFX` (paid plugin, Compositing Academy Asset Store) — animated pattern library for more elaborate small/console-style lights
+- 2.5D card projection (`Card3D`/`ScanlineRender`) — single-frame render projected onto simple/flat geometry for distant or nodal-pan-only elements
+- Render-back-onto-geometry + multi-frame blend — denoise technique for flickering specular/glossy noise (cross-referenced with the author's dedicated "How to Denoise CG in Post" tutorial)
+- Dual render-engine compositing (e.g. Cycles + Eevee, or equivalent Unreal pairing) — merges a slow path-traced hero pass with a fast real-time pass for cheap extra detail on secondary/defocused elements
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (3D system for card projections; general compositing nodes). No on-screen version banner or OCIO metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, 3d-system, digital-matte-painting, denoise, grading, gizmo, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Cross-referenced by the video itself: "How to DENOISE your CG in POST" (Blender & Nuke Tutorial, 2022, not yet ingested) — covers the render-back-onto-geometry + multi-frame-blend denoise technique in full. Shares `3d-system` with Create a Movie Quality Sci-Fi Laser Effect in Nuke (`create-a-movie-quality-sci-fi-laser-effect-in-nuke.md`) and How I Made a FULL Star Wars Cinematic from JUST One Screenshot (`how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot.md`) — all three use the same `ScreenFX` plugin.

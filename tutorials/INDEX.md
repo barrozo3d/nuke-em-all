@@ -270,11 +270,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=PNE9YMD64xM
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** compositing, 3d-system, digital-matte-painting, denoise, grading, gizmo, intermediate
+- **Summary:** Six render-cost-saving compositing techniques: match real flicker to CG lights via `CurveTool` data copied into a desaturated multiply `Constant`; fake small bokeh lights with eroded `Checkerboard` + `Noise` (or the `ScreenFX` plugin); half-res render defocused elements; substitute 2.5D card projections for distant/nodal-pan-only 3D elements (single frame reused); denoise flickering specular by projecting the render back onto geometry and blending frames; mix a slow path-traced hero pass with a fast real-time-engine pass for cheap extra detail on secondary defocused elements.
 - **File:** tutorials/how-i-use-compositing-to-skip-thousands-of-hours-rendering.md
+- **Related:** "How to DENOISE your CG in POST" (2022, not yet ingested) — covers technique 4 in full. Shares `3d-system`/`ScreenFX` with Create a Movie Quality Sci-Fi Laser Effect in Nuke and How I Made a FULL Star Wars Cinematic from JUST One Screenshot.
 
 
 ### Nuke Compositing Artistic Basics (2/8): 3 Point Lighting
