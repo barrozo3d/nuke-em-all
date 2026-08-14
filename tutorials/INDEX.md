@@ -682,6 +682,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/parallax-hax-nuke-compositing-advanced.md
 
+
+### [3/3] Nuke Tutorial Series (Flow Paths, FX Integration, Design)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=_Fu8yl_p0vM
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/33-nuke-tutorial-series-flow-paths-fx-integration-design.md
+
 ---
 
 ## Tag Reference
