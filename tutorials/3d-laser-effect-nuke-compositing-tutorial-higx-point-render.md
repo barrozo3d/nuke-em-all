@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=R9zvo0T_PjY
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX (RayRender for the ambient occlusion pass requires NukeX)"
+version: "Nuke 14.x (author explicitly mentions the Higx Point Render plugin is used in the Nuke 14 splash screen — consistent with a 2023 upload; Classic 3D system)"
+tags: [3d-system, gizmo, particles, motion-graphics, projection, grading, digital-matte-painting, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/3d-laser-effect-nuke-compositing-tutorial-higx-point-render/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # 3D Laser Effect | Nuke Compositing Tutorial (Higx Point Render)
@@ -23,20 +24,11 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-## Ingest Safeguard Report
+Frames captured — see "Captured Frames" section below.
 
-_Auto-generated at ingest/frame-capture time — explains why `extraction_status` may be `needs-review`. Safe to delete once reviewed._
-
-- WARNING: Very short transcript (20 chars) in 'Conclusion'
-
----
-
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py 3d-laser-effect-nuke-compositing-tutorial-higx-point-render <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+> Reviewed: the "very short transcript in 'Conclusion'" warning is expected —
+> that chapter is just the sign-off ("...and that's about it"). All real
+> content is in the preceding chapters.
 
 
 ### Introduction [0:00]
@@ -320,30 +312,56 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:45] tutorials/frames/3d-laser-effect-nuke-compositing-tutorial-higx-point-render/frame_000.jpg
+- [3:55] tutorials/frames/3d-laser-effect-nuke-compositing-tutorial-higx-point-render/frame_001.jpg
+- [6:07] tutorials/frames/3d-laser-effect-nuke-compositing-tutorial-higx-point-render/frame_002.jpg
+- [7:51] tutorials/frames/3d-laser-effect-nuke-compositing-tutorial-higx-point-render/frame_003.jpg
+- [8:44] tutorials/frames/3d-laser-effect-nuke-compositing-tutorial-higx-point-render/frame_004.jpg
+- [10:00] tutorials/frames/3d-laser-effect-nuke-compositing-tutorial-higx-point-render/frame_005.jpg
+- [11:04] tutorials/frames/3d-laser-effect-nuke-compositing-tutorial-higx-point-render/frame_006.jpg
+- [12:03] tutorials/frames/3d-laser-effect-nuke-compositing-tutorial-higx-point-render/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Building a "LiDAR laser scanning" motion-graphics effect using the third-party **Higx Point Render** plugin to scatter camera-projected points across a real-world LiDAR/photogrammetry scan, with a growing sphere used purely as a projection-blocking mask to reveal the scatter spreading outward over time — plus supporting layers (occlusion halo, residual afterglow, screen-space GodRays, custom convolve-filter flares) and a simple wireframe camera-representation geo.
 
 ### Summary
-[PENDING EXTRACTION]
+Introduces Foundry-ecosystem plugin **Higx Point Render** (credited as used in the actual Nuke 14 splash screen, confirming this is Nuke 14.x-era content) as a particle/motion-graphics point-scattering system: a `PointPlane`/`PointGeoSourceUV` scatters points across a surface's position pass or UVs, `PointRender` renders them, and `PointFractal` can distort the scatter pattern (frame_000/001 show the basic point-plane/point-render node chain). The actual project uses a **LiDAR/photogrammetry scan** (a Polycam OBJ export, complete with a messy auto-UV texture atlas the tutorial explicitly ignores) as the scatter surface. Because the scan's native UVs are unusable for a "points radiating from the camera" look, the fix is `UVProject` (not `Project3D`) fed a plain, non-animated default `Camera` node plugged into `PointGeoSourceUV` — this re-derives the scatter surface's UVs from that camera's perspective, so as the camera (or a duplicate driving camera) moves, the scattered points visually crawl across the surface as if radiating from the lens (frame_002 shows the animated-camera version of this rig, with both a driving camera and a separate "shot" camera swinging in opposite directions). To reveal this effect **spreading over time** rather than covering the whole scan instantly, a `Sphere` is parented to the driving camera (its translate literally control-dragged from the camera's transform into the sphere's) and its scale is keyframed to grow — merged into the scene geometry via `MergeGeo` with no texture on the sphere itself, it purely blocks/limits how far the UV-projected points are allowed to render, so points only appear within the sphere's current radius (frame_003 shows the resulting radiating-scan-line silhouette). A second, simpler pass repeats the exact same camera/UVProject/PointGeoSourceUV rig but scatters points onto the sphere itself (no scan geometry) with the Point Render's **occlusion** setting fed a `ScanlineRender` of the scan geometry, so the sphere's points are cut wherever the actual scan would occlude them — producing a secondary "halo" layer (frame_004) that can be independently faded, layered over the main scan-scatter effect. Standard post stacking follows: exponential `Glow` plussed back on; a large personal library (~300) of **abstract multicolor "convolve filter" images**, applied via a `Convolve` node set to "use input channels," used purely as a flare-injection trick — the convolved result is `Plus`ed over the image for organic, non-lens-flare-looking overlapping-highlight flares (frame_005); another `Glow` softens the hard flare edge for a "hot" integrated look; a **residual points layer** — the same point setup, darkened and tinted blue, faded in behind everything — simulates an afterglow left behind once the "laser" has passed (frame_006). A simple **camera-representation geo** (a hand-modeled Blender square with pulled-in vertices, `TransformGeo`'d onto an `Axis` parented to the driving camera, rendered with a green `Wireframe` shader) visualizes the implied camera/laser-source direction in-frame. The beam itself reuses the exact same Point Render technique at very low point density fed into `GodRays`, with the GodRays' center point manually keyframed to track the camera's screen-space position rather than fixed — screen-space only (not true 3D), but reads convincingly as 3D beams because the source point tracks the actual camera motion (frame_007). The video closes on a simple reveal sequence: wireframe fades into a checkerboard-textured pass (multiplied against a `RayRender` Ambient Occlusion pass for a soft contact shadow) and finally the real texture, cross-dissolved via key-mixed Merges.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Bring in a LiDAR/photogrammetry scan (e.g. a Polycam OBJ export) as 3D geometry; ignore its native auto-UV texture atlas — it isn't used for this technique.
+2. Scatter points onto the scan via `PointGeoSourceUV` → `PointRender` (Higx Point Render plugin); by default this follows the scan's messy native UVs.
+3. Replace those UVs with a camera-relative projection: plug a plain `Camera` node into `UVProject` (not `Project3D`) feeding the geosource, so points appear to radiate from that camera's perspective; animate the camera (or a dedicated driving camera separate from the "shot" camera) to make the scatter visually sweep across the surface.
+4. To reveal the effect growing over time instead of covering everything instantly: create a `Sphere`, control-drag the driving camera's translate into the sphere's translate so it follows the camera's position, keyframe the sphere's *scale* to grow over time, leave the sphere untextured, and `MergeGeo` it into the scan geometry — this blocks/limits the UV-projected points to only render within the sphere's current radius.
+5. Build a secondary "halo" pass: repeat the same camera/UVProject/PointGeoSourceUV rig scattering points onto the sphere alone (no scan geometry), and set Point Render's **occlusion** input to a `ScanlineRender` of the scan geometry so the halo points are correctly cut behind the scan — keep this as its own layer so it can be faded independently.
+6. Post-process: exponential `Glow` plussed on for bloom.
+7. Build organic, non-standard flares from a personal library of abstract multicolor "convolve filter" images: `Convolve` (mode = use input channels) that image against the render, `Plus` the result over the main image, then add a second `Glow` to soften the flare's hard edge.
+8. Add a "residual" afterglow layer: duplicate the point setup, `Grade` it darker and tint it blue, fade it in behind the main effect to suggest lingering energy after the "laser" passes.
+9. Visualize the implied camera/beam source: model a simple low-poly shape (e.g. in Blender), `TransformGeo` it onto an `Axis` parented to the driving camera, shade it with a green `Wireframe` material, render and merge over the image.
+10. Build screen-space "laser beam" rays: reuse the same low-point-density Point Render setup, feed it into `GodRays`, and **manually keyframe the GodRays center point to track the camera's screen-space position** over time (rather than a fixed center) — purely 2D/screen-space, but reads as 3D because the source point follows real camera motion; finish with light color correction/glow and `Plus` over.
+11. Finish with a simple reveal: key-mixed `Merge`s crossfading wireframe → checkerboard-textured pass (multiplied against a `RayRender` Ambient Occlusion pass for contact shadow) → final texture.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Higx Point Render (third-party Nuke plugin, not Foundry-native, but used in the actual Nuke 14 splash screen):** `PointPlane`, `PointGeoSourceUV`, `PointRender`, `PointFractal` (distortion/shape variation), Point Render's built-in **occlusion** input (fed a `ScanlineRender` for correct depth cutting)
+- **Core Nuke/NukeX:** `UVProject` (camera-relative UV re-derivation — explicitly distinguished from `Project3D`), `Camera` (both a static default-camera trick and a fully animated driving camera), `Sphere` + keyframed scale + `MergeGeo` (projection-blocking reveal mask), `Axis`/`TransformGeo` (camera-parented geo), `Wireframe` shader, `GodRays` (center point keyframed to camera screen position), `Convolve` ("use input channels" mode for image-based flares), `Glow` (exponential), `RayRender` (Ambient Occlusion pass), `Grade`, key-mixed `Merge`s
+- **Asset source:** a LiDAR/photogrammetry scan (Polycam-style OBJ export) as the base scatter geometry; a personal library of ~300 abstract multicolor "convolve filter" flare-source images
+- **Cross-reference:** the GodRays/beam technique is explicitly noted as reusing the author's separate "Compositing EPIC VFX Godrays" tutorial's core trick, just fed with sparse Point Render points instead of that video's source
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced — requires comfort with Nuke's 3D system (camera-parenting, geo merging, projection blocking) and a paid third-party plugin (Higx Point Render); individual techniques (UVProject-from-camera, sphere-as-projection-mask) are conceptually simple once explained but assume 3D-system fluency.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX (RayRender's Ambient Occlusion pass is NukeX-only). Version not stated numerically, but the author explicitly says the Higx Point Render plugin is used in the real Nuke 14 splash screen — strong contextual evidence this is Nuke 14.x-era content, consistent with a 2023 upload per this skill's version-tracker (14.0 shipped Dec 2022, 14.1 Oct 2023). Uses only the Classic 3D system — predates the 14.0-beta USD 3D overhaul, though the two shipped in the same version window.
 
 ### Tags
-[PENDING EXTRACTION]
+3d-system, gizmo, particles, motion-graphics, projection, grading, digital-matte-painting, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+No existing knowledge-base entries currently use the Higx Point Render plugin or the camera-parented-sphere-as-projection-mask technique — this is the first tutorial covering either. Revisit once "Compositing EPIC VFX Godrays" (explicitly cross-referenced by this video as covering the underlying GodRays technique in more depth) is ingested from this same 2023 batch.

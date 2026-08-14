@@ -734,10 +734,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=R9zvo0T_PjY
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (RayRender AO pass requires NukeX)
+- **Version:** Nuke 14.x (author states the Higx Point Render plugin is used in the real Nuke 14 splash screen)
+- **Tags:** 3d-system, gizmo, particles, motion-graphics, projection, grading, digital-matte-painting, advanced
+- **Summary:** Builds a LiDAR-laser-scan motion-graphics effect with the third-party Higx Point Render plugin: `UVProject` (not Project3D) fed a camera re-derives a scan's UVs so scattered points radiate from that camera's perspective; a camera-parented `Sphere` with keyframed growing scale, merged untextured into the geometry, blocks/limits the projection to reveal the point-scatter spreading outward over time; a second occlusion-masked pass builds a halo layer; custom convolve-filter images inject organic non-lens flares; a blue-tinted residual points layer fakes an afterglow; and the same sparse-point technique drives screen-space GodRays with a camera-tracked center point for convincing "3D" laser beams.
 - **File:** tutorials/3d-laser-effect-nuke-compositing-tutorial-higx-point-render.md
 
 
