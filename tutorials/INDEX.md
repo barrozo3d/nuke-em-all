@@ -354,6 +354,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md
 
+
+### Nuke Compositing Artistic Basics (7/8): Glows
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=FFutBgMZBLo
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-artistic-basics-78-glows.md
+
 ---
 
 ## Tag Reference
