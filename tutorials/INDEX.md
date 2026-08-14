@@ -833,6 +833,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/finally-the-volumetric-tool-nuke-has-always-needed.md
 
+
+### Nuke Keying Tutorial | Greenscreen Beginner Concepts
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=aeJTBwIudSs
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-keying-tutorial-greenscreen-beginner-concepts.md
+
 ---
 
 ## Tag Reference
