@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=8f2w7JxRaq4
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified — free/paid 3rd-party plugin ('Volumetric Noise' by Compositing Academy), a standalone procedural volumetric cloud/fog render engine. CONFIRMED NOT related to Nuke 17.0's native Gaussian Splat/Field-node volumetric masking toolset (GeoImport/GeoReference, SplatRender, Field nodes) — this is a fully separate CG cloud/fog GENERATOR, not a splat-masking system. Same disambiguation pattern as H7dBKDLXwPo and M-iKJu9hYBk."
+tags: [volumetrics, gizmo, 3d-system, digital-matte-painting, fx-simulation, compositing, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/finally-the-volumetric-tool-nuke-has-always-needed/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Finally! The Volumetric Tool Nuke Has Always Needed
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py finally-the-volumetric-tool-nuke-has-always-needed <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -287,30 +283,62 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:12] tutorials/frames/finally-the-volumetric-tool-nuke-has-always-needed/frame_000.jpg
+- [1:20] tutorials/frames/finally-the-volumetric-tool-nuke-has-always-needed/frame_001.jpg
+- [2:36] tutorials/frames/finally-the-volumetric-tool-nuke-has-always-needed/frame_002.jpg
+- [5:12] tutorials/frames/finally-the-volumetric-tool-nuke-has-always-needed/frame_003.jpg
+- [7:05] tutorials/frames/finally-the-volumetric-tool-nuke-has-always-needed/frame_004.jpg
+- [8:22] tutorials/frames/finally-the-volumetric-tool-nuke-has-always-needed/frame_005.jpg
+- [15:15] tutorials/frames/finally-the-volumetric-tool-nuke-has-always-needed/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Introduces "Volumetric Noise" — a free/paid third-party native volumetric rendering engine plugin for Nuke that generates true 3D CGI clouds/fog directly inside the node graph (not a 2D noise trick), with art-directable density erosion, layered parallax, real 3D lighting/shadows, motion vectors, and occlusion against depth data — built explicitly to replace the old "stack several 2D noise cards and fade by camera distance" fake-volumetric technique.
 
 ### Summary
-[PENDING EXTRACTION]
+Inspired by real drone footage of cloud parallax in an Iceland canyon, the author built a genuine 3D volumetric renderer as a Nuke plugin, arguing traditional 2D noise atmosphere tricks fail on four fronts that this tool fixes: (1) light and shadow — because the noise is a true 3D volume, it can be lit and shadowed like a real cloud instead of reading flat; (2) layered motion — animating the volume naturally produces parallax-rich layered movement that a 2D pattern can't replicate; (3) camera parallax — since it's a real 3D render engine, the camera can fly through/over the volume with correct depth cues, demonstrated by stacking up to 4 volume containers at different distances to build cumulative parallax layers; (4) realistic density distribution and erosion — dedicated erosion controls (edge erosion plus global/all-direction erosion) sculpt believable torn, wispy, thick-vs-thin cloud structure rather than a uniform noise pattern, fully art-directable per direction. A 3D occlusion system lets the volume cut out against depth data (from a full CG scene's P-pass or from photogrammetry/generated depth on plate footage), with bias and "contour softness" controls (a true 3D blur/scatter on the depth data itself, not a 2D blur) to fix depth-data aliasing — sufficient for ~60-70% of shots; extreme motion blur or fine detail (leaves, grass) still needs full deep compositing. The tool ships with presets (basic cloud, several ground-fog variants, simple volume, scalable/world-space cloudscapes, backlit fog, wispy cloud) and is driven by a small node template: the main Volumetric Noise node, a 3D volume-container cube that defines where noise spawns in space, a preview-cube node, an optional 2D roto for masking, plus scene camera/geometry. Key controls include gain/gamma/density (softness vs. sharpness of the cloud peaks), edge vs. global erosion, distortion/turbulence fields (push the base noise through a 3D distortion grid for animated, non-repetitive movement), edge fades, occlusion (with bias + contour softness), manual mask injection (project a roto — e.g. a person silhouette with motion blur — into the volume like a deep-merge, so it reads as embedded in the cloud), render optimization (slicing + space-skipping with a heat-map debug view to visualize what's actually being calculated), motion-vector output (renders separately as a precomp velocity pass, comped with a standard vector blur — clouds tolerate soft motion blur well so this is usually sufficient), lighting/shading (ambient/base cloud color, sunlight color and intensity, an out-scattering toggle for backlit falloff, shadow steps/intensity/bias/jitter), and a "points" preview mode that renders the volume as a 3D point cloud (via Position-to-Points, viewed as RGB) for fast, real-time placement/erosion feedback without waiting on full raymarched renders — described as one of the most useful features while iterating.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Set up a basic 3D scene: camera, any needed CG/proxy geometry (e.g. ground terrain, a scale reference), and optionally depth/position data for occlusion.
+2. Add the Volumetric Noise node plus its supporting template nodes: a volume-container cube (defines the 3D spawn region), a preview-cube node (visualizes the container in the viewer), and an optional 2D roto for masking.
+3. Move/scale the container cube in 3D to place and size where the volume noise will spawn.
+4. Pick a starting preset (basic cloud, ground fog variants, simple volume, scalable/world-space cloudscape, backlit fog, wispy cloud) as a base rather than starting from raw settings.
+5. Dial in density via gain/gamma/density controls, then sculpt shape with edge erosion (per-direction: top/bottom/etc.) and global/all-direction erosion for a torn, layered, realistic cloud structure instead of a uniform blob.
+6. Add distortion/turbulence to push the base noise through a 3D distortion field for non-repetitive, animated movement — tune the field's grid size for different creative results.
+7. For camera-parallax-heavy shots (e.g. a drone flying straight down through clouds), stack multiple volume containers at different distances (e.g. 4 cubes: base layer, mid wispies, close wispies) rather than relying on one container, to build up layered depth.
+8. Enable occlusion and feed it depth/P data (from CG or generated from plate footage) so the volume correctly cuts out against real-world geometry; use bias to push the cut closer/further and contour softness (a true 3D scatter on the depth data) to fix depth-map aliasing.
+9. Optionally inject a roto mask (e.g. a person's silhouette with motion blur) to embed foreground elements inside the cloud volume, deep-merge-style.
+10. Tune render-speed optimizations if needed: slicing to skip empty regions, space-skipping to auto-detect and skip empty 3D areas, verified visually via the heat-map debug overlay — though the plugin already renders quickly (roughly 0.5-1 second/frame even at high samples) so this is rarely necessary.
+11. Set up lighting: base/ambient cloud color, sunlight color/intensity, enable out-scattering for backlit fog looks, and dial shadow steps/intensity/bias/jitter for the desired shadow quality and softness.
+12. Render a separate motion-vector/velocity pass (camera + cloud movement) as a precomp, then apply a standard vector blur in comp rather than relying on expensive native motion blur.
+13. While iterating, switch preview mode to "points" (paired with Position-to-Points, viewed as RGB) to see the volume as a fast-updating 3D point cloud for placement and erosion feedback; adjust sparsity and the preview alpha cutoff if points don't appear (low-density clouds need a lower cutoff to show the full volume, not just the densest core).
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- Volumetric Noise — third-party plugin/main node (Compositing Academy); Properties panel sections: Presets, Noise Settings, Volume Transform, Quality, plus separate Erosion, Distortion, Occlusion, Lighting/Shading, Motion, and Preview control groups
+- Volume-container cube node — defines the 3D spawn region for the noise, moved/scaled in 3D
+- Preview-cube node — visualizes the container bounds in the 3D viewer
+- 2D Roto — optional mask input for manual injection (deep-merge-style embedding of foreground elements into the volume)
+- Inject 2.5D Mask (seen in node graph) — related mask-injection node in the plugin's template
+- Position to Points — native Nuke node used with the plugin's "points" preview mode to visualize the volume as a real-time-friendly point cloud
+- Controls: gain/gamma/density, edge erosion (per-direction) + global erosion, distortion/turbulence field size, edge fades, occlusion (bias, contour softness/3D blur), optimization (slicing, space-skipping, heat-map debug), motion-vector/velocity output, lighting (ambient/sunlight color+intensity, out-scattering toggle), shadows (steps, intensity, bias, jitter), sparsity, preview alpha cutoff
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced — a full volumetric-rendering feature set (erosion, distortion fields, occlusion against depth data, lighting/shadow) aimed at compositors already comfortable with 3D concepts and depth/position passes; author explicitly defers most detailed knob-by-knob explanation to a separate longer tutorial for people who download the tool.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke; exact version not stated on-screen. Volumetric Noise is a third-party plugin (Compositing Academy), not a Foundry-native feature. Explicitly confirmed NOT related to Nuke 17.0's native Gaussian Splat support or Field nodes (non-destructive volumetric masking of splats/3D data) — this plugin is a standalone procedural cloud/fog RENDER engine, conceptually closer to a Houdini pyro/volume system ported into Nuke's node graph than to Nuke's native splat-masking tools. Same "not native" disambiguation pattern as "I Made VFX Relighting WAY Better in Nuke" (H7dBKDLXwPo) and "The BEST Way to Use Normals to Relight in Nuke" (M-iKJu9hYBk).
 
 ### Tags
-[PENDING EXTRACTION]
+volumetrics, gizmo, 3d-system, digital-matte-painting, fx-simulation, compositing, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- I Made VFX Relighting WAY Better in Nuke (tutorials/i-made-vfx-relighting-way-better-in-nuke.md) — shares gizmo, same channel's pattern of releasing paid/free native-feeling 3rd-party tools alongside a demo, same disambiguation-from-native-splat-features theme.
+- The BEST Way to Use Normals to Relight in Nuke (NEW Toolset) (tutorials/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md) — shares gizmo, compositing; same "not native Gaussian Splat toolset" disambiguation.
+- Can I Create a Speeder Chase on a TINY Greenscreen? (tutorials/can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md) — shares Iceland drone-footage sourcing and digital-matte-painting/compositing pipeline overlap (same filming trip referenced).

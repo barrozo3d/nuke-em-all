@@ -827,11 +827,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=8f2w7JxRaq4
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified — free/paid 3rd-party plugin ("Volumetric Noise" by Compositing Academy). CONFIRMED NOT native Gaussian Splat/Field-node volumetrics (Nuke 17.0) — a standalone procedural cloud/fog render engine, unrelated to splat masking.
+- **Tags:** volumetrics, gizmo, 3d-system, digital-matte-painting, fx-simulation, compositing, intermediate
+- **Summary:** "Volumetric Noise" plugin renders true 3D CGI clouds/fog natively in Nuke's node graph (vs. faking it with stacked 2D noise cards): art-directable density erosion (edge + global), distortion/turbulence fields, real 3D lighting/shadow, camera parallax via stacked volume containers, 3D occlusion against depth data (with contour-softness 3D-blur anti-aliasing), motion-vector output, and a fast "points" preview mode for real-time placement feedback. Built after noticing real cloud parallax while drone-filming in Iceland.
 - **File:** tutorials/finally-the-volumetric-tool-nuke-has-always-needed.md
+- **Related:** I Made VFX Relighting WAY Better in Nuke (`i-made-vfx-relighting-way-better-in-nuke.md`), The BEST Way to Use Normals to Relight in Nuke (NEW Toolset) (`the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md`), Can I Create a Speeder Chase on a TINY Greenscreen? (`can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md`).
 
 
 ### Nuke Keying Tutorial | Greenscreen Beginner Concepts
