@@ -110,6 +110,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md
 - **Related:** first entry tagged `tracking`/`camera-tracking` — future tracking tutorials should cross-link here.
 
+
+### Nuke Tutorial | Compositing a Rainbow [Intermediate]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=1lmyihzZHio
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-tutorial-compositing-a-rainbow-intermediate.md
+
 ---
 
 ## Tag Reference
