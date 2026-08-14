@@ -870,6 +870,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/high-level-vfx-compositing-that-nobody-shows-on-youtube.md
 - **Related:** 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`), This ONE Step Makes CG Look Cinematic (Most Artists Skip It) (`this-one-step-makes-cg-look-cinematic-most-artists-skip-it.md`), How I Use Compositing to Skip THOUSANDS of Hours Rendering (`how-i-use-compositing-to-skip-thousands-of-hours-rendering.md`).
 
+
+### VFX Techniques: Impressions V.S Reality | Nuke Tutorial
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=SKwymheLksc
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/vfx-techniques-impressions-vs-reality-nuke-tutorial.md
+
 ---
 
 ## Tag Reference
