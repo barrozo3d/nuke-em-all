@@ -846,6 +846,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/nuke-keying-tutorial-greenscreen-beginner-concepts.md
 - **Related:** Nuke Tutorial | Keying with Math Expressions [Intermediate] (`nuke-tutorial-keying-with-math-expressions-intermediate.md`) — hands-on expression-driven keying counterpart to this theory primer.
 
+
+### Compositing EPIC VFX Godrays | Nuke Tutorial
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=PqbqxnBFOHg
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/compositing-epic-vfx-godrays-nuke-tutorial.md
+
 ---
 
 ## Tag Reference
