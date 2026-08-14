@@ -882,6 +882,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/vfx-techniques-impressions-vs-reality-nuke-tutorial.md
 - **Related:** Planning out a Visual Effects Shot | Blender and Nuke (`planning-out-a-visual-effects-shot-blender-and-nuke.md`) — both pure design-methodology videos; Nuke Compositing an Advanced CG Shockwave (`nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md`) — shared "combine simple elements instead of fully simulating" philosophy.
 
+
+### Track Any Surface with This Mocha + Nuke Trick!
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=vgNTBxOXna0
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/track-any-surface-with-this-mocha-nuke-trick.md
+
 ---
 
 ## Tag Reference
