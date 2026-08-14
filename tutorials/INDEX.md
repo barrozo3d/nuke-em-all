@@ -774,6 +774,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** Camera-projection DMP sourced from Photoshop Firefly generative fill instead of hand-painting: iteratively prompt/regenerate a hole-in-the-ground texture, project it in Nuke, then use the classic projection-stretch artifact as a cue to render the *stretched* frame back into Photoshop and generate a second angle (back wall, floor, and a third overlapping "edge wall" layer purely for parallax — 3 layers reads 3D where 2 reads flat). Builds actual 3D depth (Cylinder + noise-driven DisplaceGeo for broken-up walls, a second cylinder for the floor, a displaced Card for near parallax) to receive the second projection, patches the rim with a Luma-keyed region cut from the first generation, fixes dark edge fringing via unpremult→RotoPaint→premult, and reduces projection stretch over time by DisplaceGeo-bending the receiving card with a ramp instead of leaving it flat.
 - **File:** tutorials/creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial.md
 
+
+### Gradient Re-Mapping and Quadratic Luma Keys | Nuke Compositing [Advanced]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=yLnSZxwlOyA
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced.md
+
 ---
 
 ## Tag Reference
