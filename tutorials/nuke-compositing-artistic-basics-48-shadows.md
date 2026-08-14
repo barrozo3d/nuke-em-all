@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=SRgXQPPzVc8
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [relighting, grading, compositing, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-compositing-artistic-basics-48-shadows/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 5
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Compositing Artistic Basics (4/8): Shadows
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-compositing-artistic-basics-48-shadows <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -159,30 +155,53 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:51] tutorials/frames/nuke-compositing-artistic-basics-48-shadows/frame_000.jpg
+- [2:10] tutorials/frames/nuke-compositing-artistic-basics-48-shadows/frame_001.jpg
+- [3:45] tutorials/frames/nuke-compositing-artistic-basics-48-shadows/frame_002.jpg
+- [5:26] tutorials/frames/nuke-compositing-artistic-basics-48-shadows/frame_003.jpg
+- [6:10] tutorials/frames/nuke-compositing-artistic-basics-48-shadows/frame_004.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Part 4 of 8. Two physically-grounded shadow rules for convincing compositing: shadow attenuation (what makes a shadow hard/sharp vs. soft/diffuse) driven by object-to-surface distance and light source size, and black-point matching, driven by atmospheric distance and light contamination.
 
 ### Summary
-[PENDING EXTRACTION]
+Demonstrated with a live 3D scene (a plane floating above a ground surface, lit by a point light): shadow softness ("shadow attenuation") is governed by two relationships. First, the distance between the casting object and the surface it shadows onto — closer to the surface (or equivalently, farther from the light) produces a denser, sharper-edged shadow; raising the object increases the penumbra (the soft transition band) and produces a much softer shadow, because light rays can wrap further underneath the higher object. Second, the size of the light source itself — a small/pinpoint light (like direct sun on a clear day) casts sharp, hard-edged shadows, while a large/diffused light (like an overcast sky, where clouds scatter and enlarge the effective light source) casts soft shadows, because light reaches further underneath the object from a wider source. Practical compositing implication given: a car wheel touching the ground should read a denser/sharper shadow than the underside of the car body sitting slightly off the ground. Second half covers black-point matching: pure black rarely exists in real footage because of two factors — atmospheric distance (light scattering through air adds a blue haze/tint the further back an object is, lifting its blacks) and light contamination (a nearby colored light bleeding a tint into nearby "black" areas). Practical fix demonstrated in the Nuke node graph: sample the darkest tone in the plate immediately adjacent to each CG element (e.g. a rock/hill near a rendered sphere) and match/gamma each CG element's black point to that locally-sampled reference rather than leaving it at a synthetic pure black — shown side-by-side as a clearly weaker "non-matching" result vs. a convincing "matching" result that reads as properly integrated into the scene's depth.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Understand shadow attenuation rule 1 (distance): the closer a floating/elevated object is to the surface below it, the sharper and denser the cast shadow; the higher/farther the object is from that surface, the softer and more spread the shadow (larger penumbra).
+2. Understand shadow attenuation rule 2 (light size): a small/pinpoint light source (direct sun) casts hard, sharp-edged shadows; a large/diffused light source (overcast sky, bounce light) casts soft shadows, because a wider light can send rays further underneath the shadowing object.
+3. Apply both rules together when judging or painting a shadow's softness for a CG element — e.g. a car wheel in contact with the ground gets a dense, sharp shadow, while the car's underside further from the ground gets a softer, lighter one.
+4. For black-point matching: recognize that real-world blacks are rarely pure black due to (a) atmospheric scattering — objects further from camera pick up a blue-ish haze that lifts their black level, and (b) light contamination — nearby colored light sources tint supposedly-black areas.
+5. Sample the darkest tone in the live-action plate immediately adjacent/nearest to each CG element (not a generic scene-wide black point).
+6. Grade/gamma each CG element's black point to match that locally-sampled reference value rather than leaving it at a default pure black — repeat per-element if multiple CG objects sit at different depths/distances in the shot.
+7. Compare non-matched vs. matched results — matched black points make CG elements read as properly embedded at their correct depth in the scene; unmatched pure blacks break the sense of distance/depth.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+No single node is the star of this lesson (conceptual/theory-driven), but the node graph shown for black-point matching uses a `Grade`-style gamma/black-point adjustment per CG sphere, driven by a locally-sampled reference color/swatch pulled from the plate next to each element — consistent with a `ColorPicker`/`Grade` gamma workflow referenced from the presenter's prior "Nuke 101" class.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — conceptual lesson in physically-based shadow and black-level judgment, prerequisite grounding before grading CG shadows/blacks by eye.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+relighting, grading, compositing, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+**Nuke Compositing Artistic Basics — 8-part series** (this is Part 4 of 8; all parts cross-link to each other):
+- Part 1/8: Roles of Production (`nuke-compositing-artistic-basics-18-roles-of-production.md`)
+- Part 2/8: 3 Point Lighting (`nuke-compositing-artistic-basics-28-3-point-lighting.md`)
+- Part 3/8: Exposure (`nuke-compositing-artistic-basics-38-exposure.md`)
+- Part 5/8: Reflections and Fresnel (`nuke-compositing-artistic-basics-58---reflections-and-fresnel.md`)
+- Part 6/8: Whitepoint and white balance (`nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md`)
+- Part 7/8: Glows (`nuke-compositing-artistic-basics-78-glows.md`)
+- Part 8/8: Camera Artifacts (`nuke-compositing-artistic-basics-88-camera-artifacts.md`)

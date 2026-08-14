@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=cQV6c291fBU
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Cross-app theory (no software shown — VFX pipeline/production-role overview, applicable to any comp app including Nuke)"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021)"
+tags: [compositing, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-compositing-artistic-basics-18-roles-of-production/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 4
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Compositing Artistic Basics (1/8): Roles of Production
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-compositing-artistic-basics-18-roles-of-production <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -170,30 +166,49 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:00] tutorials/frames/nuke-compositing-artistic-basics-18-roles-of-production/frame_000.jpg
+- [4:15] tutorials/frames/nuke-compositing-artistic-basics-18-roles-of-production/frame_001.jpg
+- [7:11] tutorials/frames/nuke-compositing-artistic-basics-18-roles-of-production/frame_002.jpg
+- [9:00] tutorials/frames/nuke-compositing-artistic-basics-18-roles-of-production/frame_003.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Part 1 of 8. A theory-only overview of standard VFX studio production pipeline roles (Match Move, Effects, Texturing/Shading, Rigging, Animation, Lighting, Editorial) and where the compositor sits at the very end of that chain — framing context for the rest of the "Artistic Basics" series, which simulates receiving assets from each of these departments.
 
 ### Summary
-[PENDING EXTRACTION]
+No software shown — a whiteboard/slide-style lecture. Walks through the standard order of operations in a mid-to-large VFX studio: Match Move (3D camera tracking/solving — sometimes handled by a dedicated department, sometimes the compositor's own job on smaller teams/freelance work) feeds into two parallel paths — an Effects path (simulation artists doing explosions, fluids, destruction, particles → handed to Texturing/Shading → Lighting to match the real plate) and a CG-asset path (a modeled object like a car, optionally Rigging + Animation for characters, then Lighting). Both paths converge at the Compositor, who is described as "a jack of all trades" needing baseline knowledge of particle sim, camera tracking, basic modeling, and especially a strong understanding of lighting and a "photographic eye," since CG lighting handed off to comp is often close but rarely 100% correct — fixing that gap is core compositor work. Previews the class's own simulated production hand-off: a background plate (from Editorial), rain/texture/sky elements, a lit car + tracked ground plane (from Lighting), a pre-solved camera + lens distortion (from Match Move), and effects elements that may not yet match the plate's lighting — establishing that the compositor's job across this whole series is to make all of these disparate, imperfectly-matched elements look like they belong in the same shot.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Recognize the studio pipeline order: Match Move (camera tracking/solving) → splits into (a) Effects → Texturing/Shading → Lighting, and (b) CG asset modeling → Rigging/Animation (if needed) → Lighting → both converge at the Compositor.
+2. Understand each department's deliverable: Editorial supplies the background plate; Match Move supplies a solved camera, tracked ground geometry, and lens distortion data; Lighting supplies lit CG assets (e.g. a car) and a lit ground plane; Effects supplies simulated elements (e.g. rain) that may or may not already be lighting-matched to the plate.
+3. Recognize the compositor's core value-add: reconciling mismatches (e.g. an effects element lit differently than the car/plate), fixing "relatively close but not 100%" CG lighting, and creatively solving problems the other departments didn't fully resolve.
+4. Adopt the "jack of all trades" mindset for compositors — baseline fluency in particle simulation, camera tracking, basic modeling, and especially lighting/photographic judgment, since these adjacent skills inform better compositing decisions even when another department did the primary work.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+None — pure pipeline/production-role theory, no Nuke UI or nodes shown; sets up the practical shot-building work in the rest of this 8-part series.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — conceptual/theory primer, no software operations.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Not applicable — no app shown on screen; pipeline concepts apply across any studio/compositing package. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021); the rest of this series is hands-on in Nuke.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+**Nuke Compositing Artistic Basics — 8-part series** (this is Part 1 of 8; all parts cross-link to each other):
+- Part 2/8: 3 Point Lighting (`nuke-compositing-artistic-basics-28-3-point-lighting.md`)
+- Part 3/8: Exposure (`nuke-compositing-artistic-basics-38-exposure.md`)
+- Part 4/8: Shadows (`nuke-compositing-artistic-basics-48-shadows.md`)
+- Part 5/8: Reflections and Fresnel (`nuke-compositing-artistic-basics-58---reflections-and-fresnel.md`)
+- Part 6/8: Whitepoint and white balance (`nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md`)
+- Part 7/8: Glows (`nuke-compositing-artistic-basics-78-glows.md`)
+- Part 8/8: Camera Artifacts (`nuke-compositing-artistic-basics-88-camera-artifacts.md`)

@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=bmwOCLwiYM0
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (theory-focused; real reference footage inspected in Nuke's viewer, chromatic-aberration/bokeh matching workflow set up for later lessons)"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [compositing, defocus, digital-matte-painting, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-compositing-artistic-basics-88-camera-artifacts/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 4
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Compositing Artistic Basics (8/8): Camera Artifacts
@@ -31,12 +32,7 @@ _Auto-generated at ingest/frame-capture time — explains why `extraction_status
 
 ---
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-compositing-artistic-basics-88-camera-artifacts <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -109,30 +105,51 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:41] tutorials/frames/nuke-compositing-artistic-basics-88-camera-artifacts/frame_000.jpg
+- [2:38] tutorials/frames/nuke-compositing-artistic-basics-88-camera-artifacts/frame_001.jpg
+- [3:28] tutorials/frames/nuke-compositing-artistic-basics-88-camera-artifacts/frame_002.jpg
+- [4:44] tutorials/frames/nuke-compositing-artistic-basics-88-camera-artifacts/frame_003.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Part 8 of 8 (series finale). Introduces three lens/camera artifacts a compositor must observe in the real plate and later replicate on CG/added elements to sell integration: chromatic aberration, defocus, and bokeh.
 
 ### Summary
-[PENDING EXTRACTION]
+Chromatic aberration is explained as the imperfect bending/splitting of light through a lens, most visible as colored fringing (commonly green and/or purple/cyan) around the edges of bright highlights — demonstrated on footage shot with a Sony Zeiss lens, and more clearly on the actual production plate being used for the class's car shot, where green and purple fringing is clearly visible around highlight edges. Framed as something more expensive lenses reduce but rarely eliminate entirely, and something directors sometimes intentionally amplify for stylistic effect; the compositor's job is to inspect the plate's edges closely and match that same fringing on any inserted CG elements. Camera defocus is covered briefly as the self-explanatory blur applied to out-of-focus regions, illustrated by comparing sharp near-ground detail against progressively blurrier distant rocks in the plate — flagged as requiring a fuller depth-of-field lesson later in the course to fade CG elements in/out of focus based on their distance from the real camera. Bokeh is introduced as the specific out-of-focus highlight-dot pattern created by a lens, demonstrated with reference footage of an extremely defocused light source; different lenses produce visibly different bokeh shapes/characters, and the presenter points to Google Images searches as a fast way to study varied real-world bokeh looks before attempting to fake it on CG lights. Briefly mentions "glint" as a related artifact that will actually be covered in the next (separate, non-series) lesson rather than here.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Inspect the real plate closely (zoomed in on bright highlight edges) to identify whether chromatic aberration is present, and what colors it fringes toward (commonly green and purple/cyan, sometimes red/blue) — sample directly from the actual production plate being matched, not a generic assumption.
+2. When adding CG or other inserted elements, match that same chromatic-aberration fringing on their highlight edges so they don't read as artificially "clean" compared to the real footage.
+3. Assess camera defocus/depth of field in the plate by comparing sharpness across depth — near/ground-level detail typically stays sharp while distant elements (background rocks, etc.) go progressively softer — noting this requires a full depth-of-field treatment (covered in a separate future lesson) to correctly fade CG elements in and out of focus based on their distance from the real tracked camera.
+4. Recognize bokeh as the specific shape/character of out-of-focus highlight points produced by a given lens (demonstrated via extremely defocused reference footage of a light source) — different lenses yield visibly different bokeh shapes, so reference real bokeh examples (e.g. via image search) before replicating it on CG light sources.
+5. Note "glint" as a related but separate artifact deferred to the next lesson outside this 8-part series.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+None built in this segment — theory/observation lesson using real reference footage viewed in Nuke's viewer (including a color-sample circle used to isolate/inspect a specific fringe color on a highlight edge), setting up techniques (chromatic aberration matching, defocus/depth-of-field, bokeh creation) that are built out in later, non-series lessons.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — observational/diagnostic lesson training the eye to spot lens artifacts in a plate before attempting to replicate them; the actual node-based techniques for each are deferred to dedicated future lessons.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, defocus, digital-matte-painting, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+**Nuke Compositing Artistic Basics — 8-part series** (this is Part 8 of 8, the series finale; all parts cross-link to each other):
+- Part 1/8: Roles of Production (`nuke-compositing-artistic-basics-18-roles-of-production.md`)
+- Part 2/8: 3 Point Lighting (`nuke-compositing-artistic-basics-28-3-point-lighting.md`)
+- Part 3/8: Exposure (`nuke-compositing-artistic-basics-38-exposure.md`)
+- Part 4/8: Shadows (`nuke-compositing-artistic-basics-48-shadows.md`)
+- Part 5/8: Reflections and Fresnel (`nuke-compositing-artistic-basics-58---reflections-and-fresnel.md`)
+- Part 6/8: Whitepoint and white balance (`nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md`)
+- Part 7/8: Glows (`nuke-compositing-artistic-basics-78-glows.md`)
+- Skill Up with Nuke | How To Think Like A Pro Compositor (`skill-up-with-nuke-how-to-think-like-a-pro-compositor.md`) — shares `defocus`; that video's CG-to-plate matching also covers focus-matching via an inverted defocus control mask.

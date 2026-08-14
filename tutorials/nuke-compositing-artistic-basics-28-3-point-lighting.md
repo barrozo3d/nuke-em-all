@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=EdYZwn8Kwv4
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Cross-app theory (no software shown — lighting terminology used throughout the presenter's Nuke compositing vocabulary)"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021)"
+tags: [relighting, grading, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-compositing-artistic-basics-28-3-point-lighting/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 3
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Compositing Artistic Basics (2/8): 3 Point Lighting
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-compositing-artistic-basics-28-3-point-lighting <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -60,30 +56,49 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:43] tutorials/frames/nuke-compositing-artistic-basics-28-3-point-lighting/frame_000.jpg
+- [1:20] tutorials/frames/nuke-compositing-artistic-basics-28-3-point-lighting/frame_001.jpg
+- [1:46] tutorials/frames/nuke-compositing-artistic-basics-28-3-point-lighting/frame_002.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Part 2 of 8. Defines the standard photography/CG "3-point lighting" vocabulary (key, fill, rim) that the presenter uses throughout the series when giving grading/compositing notes like "bring up the key" or "there's too much fill light."
 
 ### Summary
-[PENDING EXTRACTION]
+No software shown — a labeled 3D-viewport diagram of a sphere lit by three lights. Key light is the brightest, front-facing main light source; fill light is the secondary light that softens/fills shadows cast by the key (and doesn't have to be an actual light — it can be indirect bounce, e.g. sunlight bouncing off gravel ground); rim light sits behind the subject, creating a thin highlight/silhouette edge. The demo sphere uses a blue key and reddish fill for color contrast (illustrating how colored 3-point setups can add mood). Reducing the fill light visibly deepens shadow contrast — establishing the vocabulary ("bring up the key," "too much fill") the presenter uses in later grading/compositing discussions throughout the series.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Identify the key light: the brightest, primary front-facing light source in a scene — usually a direct light like a sun or a practical.
+2. Identify the fill light: a secondary, dimmer light that fills in shadows cast by the key; can be an actual light or simply ambient/bounce light off nearby surfaces (e.g. sunlight reflecting off gravel).
+3. Identify the rim light: positioned behind the subject, creating a thin edge highlight that separates/silhouettes the subject from its background.
+4. Use color contrast between key and fill (e.g. cool key + warm fill, or vice versa) as a mood/interest tool depending on the scene.
+5. Recognize the practical effect of adjusting each: reducing fill deepens/darkens shadows; raising key brightens the main light read — vocabulary used directly when giving or receiving compositing/grading notes.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+None — pure lighting-terminology theory illustrated with a labeled 3D diagram (no Nuke UI).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — conceptual primer; skippable for anyone with a photography/lighting background per the presenter's own framing.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Not applicable — no app shown on screen; standard lighting terminology used across any comp/lighting/photography context. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021).
 
 ### Tags
-[PENDING EXTRACTION]
+relighting, grading, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+**Nuke Compositing Artistic Basics — 8-part series** (this is Part 2 of 8; all parts cross-link to each other):
+- Part 1/8: Roles of Production (`nuke-compositing-artistic-basics-18-roles-of-production.md`)
+- Part 3/8: Exposure (`nuke-compositing-artistic-basics-38-exposure.md`)
+- Part 4/8: Shadows (`nuke-compositing-artistic-basics-48-shadows.md`)
+- Part 5/8: Reflections and Fresnel (`nuke-compositing-artistic-basics-58---reflections-and-fresnel.md`)
+- Part 6/8: Whitepoint and white balance (`nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md`)
+- Part 7/8: Glows (`nuke-compositing-artistic-basics-78-glows.md`)
+- Part 8/8: Camera Artifacts (`nuke-compositing-artistic-basics-88-camera-artifacts.md`)

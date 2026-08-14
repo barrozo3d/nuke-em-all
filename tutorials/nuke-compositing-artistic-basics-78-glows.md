@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=FFutBgMZBLo
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [compositing, grading, digital-matte-painting, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-compositing-artistic-basics-78-glows/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 5
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Compositing Artistic Basics (7/8): Glows
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-compositing-artistic-basics-78-glows <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -153,30 +149,59 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:42] tutorials/frames/nuke-compositing-artistic-basics-78-glows/frame_000.jpg
+- [2:49] tutorials/frames/nuke-compositing-artistic-basics-78-glows/frame_001.jpg
+- [3:21] tutorials/frames/nuke-compositing-artistic-basics-78-glows/frame_002.jpg
+- [4:26] tutorials/frames/nuke-compositing-artistic-basics-78-glows/frame_003.jpg
+- [4:55] tutorials/frames/nuke-compositing-artistic-basics-78-glows/frame_004.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Part 7 of 8. Distinguishes bloom from lens diffusion, establishes that glows/post-processing effects are optically the *last* thing to happen (in the lens/eye, not the scene) and therefore must never be occluded by objects placed in front of a glowing element — and demonstrates two ways to make a glow correctly wrap around a foreground object: a `Light Wrap`-style node, or a manual luminance-key + pre-multiply + glow build.
 
 ### Summary
-[PENDING EXTRACTION]
+Bloom is defined as a broad glow radiating from an overexposed/bright light source, caused by scattering inside the camera lens (or the eye) — not something physically present in the scene's atmosphere (the example: bloom appearing to sit "in front of" trees, which could never happen with real atmospheric light/smoke). Lens diffusion is visually similar but distinct — created by blurring the image and screening/merging it back over itself at low opacity, simulating light scattering across smudges/imperfections on the glass; bloom concentrates specifically in the highlights, while lens diffusion is a more uniform overall softening. The key rule: since glows/post-processing happen optically after the real scene (in the lens/eye), they must never be visually blocked by something placed in front of the light source in the composite — if an opaque object sits between camera and a glowing light, the glow should wrap around that object's silhouette, not disappear behind it. Two methods are demonstrated on a simple two-sphere test scene (bright glowing sphere + dark sphere in front): (1) the standard `Light Wrap` node/effect placed after compositing the foreground object over the glow; (2) an alternative manual technique — place the foreground object over the glowing element, luminance-key the combined result to isolate just the glow-shape (which naturally excludes the now-opaque foreground silhouette), `Premult`, apply an exponential glow, then `Plus`/screen that back over the comp, producing a glow correctly wrapped around the foreground object's edge with no extra node needed. The manual method is judged by the presenter to look slightly more realistic/less "too quadratic falloff" than the pure Light Wrap result in this test, though either is presented as valid; adding a subtidal light-wrap pass on top of the manual method for just the brightest hot edge is suggested as an optional refinement. Notes the glow's falloff should be quadratic (cross-referenced to the presenter's separate photo-real compositing class), and that the `Exponential Glow` node used is provided in the accompanying project script.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Distinguish bloom (concentrated broad glow specifically from bright highlights/overexposed light sources, caused by lens/eye scattering) from lens diffusion (a more uniform blur-and-screen-merge-back-at-low-opacity softening simulating a smudged/imperfect lens surface) — visually similar but different causes and looks.
+2. Internalize the core rule: glows and other post-processing/lens effects are the very last thing applied in a real optical system — nothing in the actual scene can occlude them, so in comp, no foreground object should ever visually cut off or sit in front of a glow's edge; instead the glow must wrap around that object's silhouette.
+3. Build a simple two-object test (a bright/glowing element behind, an opaque element in front) to practice and verify correct glow wrapping before applying it to production shots.
+4. Method A — dedicated node: composite the foreground object over the glowing background element first, then apply a `Light Wrap`-style node/effect to bleed the background glow color around the foreground object's edge.
+5. Method B — manual luminance-key build: composite the foreground (opaque) object over the glowing element first (so the glow is naturally occluded/cut correctly by the object's silhouette in the beauty), then take a `Keyer` (luminance key) of that combined result to isolate just the bright glow-source shape (now automatically excluding the foreground object's silhouette), `Premult` that isolated matte, apply an `Exponential Glow`/blur to it, and `Plus` (additive screen) it back over the composite — the resulting glow naturally wraps around the foreground object's edge because it was derived from the already-occluded shape.
+6. Compare results side by side: judge whether the Light Wrap or the manual luminance-key method reads more realistic for the specific shot — the presenter preferred the manual method here, finding the pure Light Wrap result fell off "too quadratically" for their test scene.
+7. Optionally layer an additional subtle light-wrap pass on top of the manual method to add just a very hot, bright rim at the object's edge for extra sell.
+8. Keep glow falloff quadratic (not linear), matching real-world light falloff behavior (cross-referenced to the presenter's separate class on quadratic falloff in photo-real compositing).
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Light Wrap` — standard node/technique for bleeding a background glow's color around a foreground object's silhouette edge.
+- `Keyer` (luminance key) — manual-method alternative: keys the bright glow-source shape out of the already-composited (foreground-occluded) beauty, so the resulting matte is naturally already wrapped correctly.
+- `Premult` — applied to the keyed glow-source matte before glowing it.
+- `Exponential Glow` (referred to as a specific gizmo/node provided in the accompanying project script) — glow/blur applied to the isolated, pre-multiplied glow-source matte.
+- `Plus` (additive/screen merge) — re-composites the isolated, glowed matte back over the shot.
+- Quadratic falloff — the correct physical falloff curve for glow intensity, referenced from the presenter's separate photo-real compositing class.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — conceptual lesson (bloom vs. lens diffusion, glow-occlusion physics) plus a straightforward node recipe (Keyer → Premult → Glow → Plus) as the practical alternative to a dedicated Light Wrap node.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, grading, digital-matte-painting, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+**Nuke Compositing Artistic Basics — 8-part series** (this is Part 7 of 8; all parts cross-link to each other):
+- Part 1/8: Roles of Production (`nuke-compositing-artistic-basics-18-roles-of-production.md`)
+- Part 2/8: 3 Point Lighting (`nuke-compositing-artistic-basics-28-3-point-lighting.md`)
+- Part 3/8: Exposure (`nuke-compositing-artistic-basics-38-exposure.md`)
+- Part 4/8: Shadows (`nuke-compositing-artistic-basics-48-shadows.md`)
+- Part 5/8: Reflections and Fresnel (`nuke-compositing-artistic-basics-58---reflections-and-fresnel.md`)
+- Part 6/8: Whitepoint and white balance (`nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md`)
+- Part 8/8: Camera Artifacts (`nuke-compositing-artistic-basics-88-camera-artifacts.md`)

@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=xFUOuK3lFro
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (theory-focused; brief node-graph glimpses of over/underexposed and HDR tone-mapped comparisons)"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [grading, digital-matte-painting, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-compositing-artistic-basics-38-exposure/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 4
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Compositing Artistic Basics (3/8): Exposure
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-compositing-artistic-basics-38-exposure <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -80,30 +76,49 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:33] tutorials/frames/nuke-compositing-artistic-basics-38-exposure/frame_000.jpg
+- [0:47] tutorials/frames/nuke-compositing-artistic-basics-38-exposure/frame_001.jpg
+- [1:28] tutorials/frames/nuke-compositing-artistic-basics-38-exposure/frame_002.jpg
+- [1:51] tutorials/frames/nuke-compositing-artistic-basics-38-exposure/frame_003.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Part 3 of 8. Explains why a single real camera exposure can never show full highlight *and* full shadow detail simultaneously, and why grading CG to look "HDR" (detail everywhere at once) is the most common tell that gives away a fake/matte-painted shot.
 
 ### Summary
-[PENDING EXTRACTION]
+Compares over-exposed (blown highlights, more shadow detail), normal, and under-exposed (crushed shadows, more highlight detail) versions of the same footage side by side in the Nuke node graph (backdrops labeled "Over-exposed / Detail in highlights lost" and similar). Explains HDR photography as literally compositing multiple bracketed exposures together to reveal detail in both shadows and highlights simultaneously — demonstrated with a landscape example where the normal exposure has full sky detail but dark trees, the overexposed version has bright/detailed trees but a blown sky, and the HDR merge shows both at once, which reads as distinctly "not realistic," an aesthetic photography technique rather than how a real video camera captures a single frame. Since video never captures HDR in-camera (a shot is always in one exposure state at a time — normal, over, or under), grading CG to preserve full detail in both shadows and highlights simultaneously breaks that physical relationship and immediately reads as fake — flagged as a very common mistake in beginner matte paintings and sky replacements (e.g. showing full cloud detail on a bright day when the real exposure wouldn't retain it).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Understand the three exposure states a real camera/shot exists in at any moment: normal, overexposed (blown highlights, more shadow detail visible), or underexposed (crushed shadows, more highlight detail visible) — never all three/full range at once in a single video frame.
+2. Understand HDR as a compositing technique (typically merging ~3 bracketed exposures) that reveals detail in both shadows and highlights simultaneously — recognizably "not realistic" for video, even though used intentionally in still photography.
+3. When grading CG or matte-painting a sky/environment to integrate with a plate, deliberately preserve the same broken highlight/shadow relationship the real footage's exposure has — don't let CG elements retain full detail in areas that would be blown or crushed in the real camera's actual exposure state.
+4. Watch specifically for this mistake in matte paintings and sky replacements: a bright-day sky replacement showing full, crisp cloud detail everywhere is a common beginner tell that the exposure relationship wasn't respected.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+No specific node techniques taught (conceptual lesson); brief node-graph glimpses show labeled backdrop groups comparing "Over-exposed / Detail in highlights lost" vs. normal vs. an "HDR Tone-mapped" merge result, illustrating the concept rather than teaching a build.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — conceptual grading/exposure primer, prerequisite understanding before using the Grade node meaningfully (explicitly stated: "I can show you the grade node, but you don't know what you're doing" without this foundation).
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+grading, digital-matte-painting, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+**Nuke Compositing Artistic Basics — 8-part series** (this is Part 3 of 8; all parts cross-link to each other):
+- Part 1/8: Roles of Production (`nuke-compositing-artistic-basics-18-roles-of-production.md`)
+- Part 2/8: 3 Point Lighting (`nuke-compositing-artistic-basics-28-3-point-lighting.md`)
+- Part 4/8: Shadows (`nuke-compositing-artistic-basics-48-shadows.md`)
+- Part 5/8: Reflections and Fresnel (`nuke-compositing-artistic-basics-58---reflections-and-fresnel.md`)
+- Part 6/8: Whitepoint and white balance (`nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md`)
+- Part 7/8: Glows (`nuke-compositing-artistic-basics-78-glows.md`)
+- Part 8/8: Camera Artifacts (`nuke-compositing-artistic-basics-88-camera-artifacts.md`)

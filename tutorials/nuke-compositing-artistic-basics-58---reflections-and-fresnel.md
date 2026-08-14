@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=YeGZP5xlBGg
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (theory-focused; real-world reference footage viewed in Nuke's viewer, no node-graph build)"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [relighting, digital-matte-painting, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-compositing-artistic-basics-58---reflections-and-fresnel/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 4
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Compositing Artistic Basics (5/8) - Reflections and Fresnel
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-compositing-artistic-basics-58---reflections-and-fresnel <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -120,30 +116,49 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:40] tutorials/frames/nuke-compositing-artistic-basics-58---reflections-and-fresnel/frame_000.jpg
+- [1:03] tutorials/frames/nuke-compositing-artistic-basics-58---reflections-and-fresnel/frame_001.jpg
+- [3:16] tutorials/frames/nuke-compositing-artistic-basics-58---reflections-and-fresnel/frame_002.jpg
+- [3:53] tutorials/frames/nuke-compositing-artistic-basics-58---reflections-and-fresnel/frame_003.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Part 5 of 8. Explains the Fresnel effect (glancing-angle surfaces reflect more strongly than surfaces viewed straight-on) and the CG-specific distinction between "specular" and "reflection," both needed to judge how reflective a composited surface (car body, windows, puddles) should look from a given camera angle.
 
 ### Summary
-[PENDING EXTRACTION]
+Illustrated with real reference footage of a puddle and ocean waves filmed by the presenter (not a Nuke node build — a theory lesson viewed in Nuke's viewer). The Fresnel effect: a reflective surface viewed at a glancing/grazing angle (camera low, looking across the surface) appears much more reflective — the puddle looks almost white/mirror-like — while the same surface viewed straight-on/from directly above appears far less reflective, closer to its base dark color; demonstrated live by the presenter walking toward the puddle and watching the reflection weaken as the viewing angle steepens. The same principle applies to a car's painted surfaces and, notably, its windows, which face different directions and therefore need different reflectivity treatment depending on their angle to camera. Second concept: in the real world there's only one physical phenomenon (reflection), but CG workflows conventionally split it into "specular" (the small, bright highlight glints riding on top of a reflective surface, e.g. the little white ripples catching light on the puddle) versus the broader base "reflection" itself — compositing notes like "bring up the spec" specifically mean boosting those small highlight details, not the overall reflection. Fresnel is also shown driving the varied light/dark banding seen across ocean wave surfaces, since each wave facet sits at a different angle relative to camera.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Recognize the Fresnel effect rule: the more glancing/grazing the viewing angle to a reflective surface (camera low, looking across it), the stronger/brighter the reflection appears; viewed straight-on/from above, the same surface reflects far less and reads closer to its base color.
+2. Apply this when compositing reflective CG or real elements at different camera angles in the same shot — e.g. a car's side panels and windows will each need a different reflectivity treatment depending on their individual angle relative to camera, not one uniform reflection value.
+3. Distinguish "specular" from "reflection" in CG-authoring/note-giving vocabulary: specular = the small, bright highlight glints/ripples sitting on top of a reflective surface; reflection = the broader base mirror-like image itself. In reality both are the same physical phenomenon, but CG pipelines and comp notes treat them separately (e.g. "bring up the spec" = boost just the small highlights).
+4. Recognize Fresnel-driven banding on complex reflective surfaces like ocean waves: different facets of the same surface sit at different angles to camera, producing visibly brighter (glancing-angle) and darker (straight-on) bands even without added shadow.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+None — pure optical-theory lesson illustrated with real-world reference footage (puddle, ocean waves) viewed directly in Nuke's viewer; no node graph built in this segment.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — conceptual lesson in reflection/Fresnel judgment, useful before grading reflectivity or specular passes on CG/composited surfaces.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+relighting, digital-matte-painting, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+**Nuke Compositing Artistic Basics — 8-part series** (this is Part 5 of 8; all parts cross-link to each other):
+- Part 1/8: Roles of Production (`nuke-compositing-artistic-basics-18-roles-of-production.md`)
+- Part 2/8: 3 Point Lighting (`nuke-compositing-artistic-basics-28-3-point-lighting.md`)
+- Part 3/8: Exposure (`nuke-compositing-artistic-basics-38-exposure.md`)
+- Part 4/8: Shadows (`nuke-compositing-artistic-basics-48-shadows.md`)
+- Part 6/8: Whitepoint and white balance (`nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md`)
+- Part 7/8: Glows (`nuke-compositing-artistic-basics-78-glows.md`)
+- Part 8/8: Camera Artifacts (`nuke-compositing-artistic-basics-88-camera-artifacts.md`)

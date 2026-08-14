@@ -791,4 +791,4 @@ compositing, nuke-studio, color-management, ocio, tracking, keying, roto, gradin
 ---
 
 ## Related Tutorials
-None yet — first Nuke tutorial in this library. Cross-link future compositing-fundamentals or Nuke Studio workflow tutorials here.
+- Nuke Compositing Artistic Basics (8/8): Camera Artifacts (`nuke-compositing-artistic-basics-88-camera-artifacts.md`) — shares `defocus`; that video's chromatic-aberration/bokeh/defocus observation lesson pairs with this one's practical inverted-defocus-mask focus-matching technique.
