@@ -109,4 +109,4 @@ keying, compositing, intermediate
 ---
 
 ## Related Tutorials
-[No existing tutorials in the knowledge base share 2+ tags yet — will be cross-linked as more keying-focused entries are ingested.]
+- Parallax HAX | Nuke Compositing [Advanced] (`parallax-hax-nuke-compositing-advanced.md`) — shares the self-referencing/user-knob expression-driven approach to building a reusable, tunable effect (there: parallax speed; here: keying math) instead of manual per-shot values.

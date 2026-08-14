@@ -676,10 +676,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=avtDQcZNThI
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2021 upload, Nuke 13.0 era)
+- **Tags:** compositing, roto, rotopaint, st-map, channels, procedural-texture, grading, digital-matte-painting, advanced
+- **Summary:** Fakes 3D parallax from a single flat still using only 2D Transforms, feathered roto depth-planes blended with KeyMix, and a self-normalizing expression that links each plane's scale to a master push-in curve via a tunable "movement" user knob — no 3D projection or geometry required. Bonus: fake sliding window reflections and noise-driven bokeh flicker.
 - **File:** tutorials/parallax-hax-nuke-compositing-advanced.md
 
 

@@ -506,3 +506,4 @@ compositing, grading, roto, relighting, intermediate
 ## Related Tutorials
 - Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`) — shares `grading`, `relighting`; both are process/methodology lessons on believable light integration by the same presenter.
 - 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — shares `relighting`, `grading`, `roto`, `compositing`; that video's "finding connection points" methodology closely parallels this one's value-conflict/dynamic-range diagnostic approach, just applied to CG rather than a keyed live-action character.
+- Parallax HAX | Nuke Compositing [Advanced] (`parallax-hax-nuke-compositing-advanced.md`) — shares the "level of detail" / good-enough-for-the-shot pragmatic mindset explicitly argued in both videos.
