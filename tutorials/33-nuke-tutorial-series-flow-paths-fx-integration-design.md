@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=_Fu8yl_p0vM
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX (cross-platform: Google Tilt Brush VR geometry authoring, otherwise pure Nuke)"
+version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)"
+tags: [compositing, 3d-system, projection, st-map, gizmo, fx-simulation, rotopaint, grading, expert]
+extraction_status: complete
 frames_dir: tutorials/frames/33-nuke-tutorial-series-flow-paths-fx-integration-design/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # [3/3] Nuke Tutorial Series (Flow Paths, FX Integration, Design)
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py 33-nuke-tutorial-series-flow-paths-fx-integration-design <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction (Hit LIKE!) [0:00]
@@ -957,30 +953,62 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [3:52] tutorials/frames/33-nuke-tutorial-series-flow-paths-fx-integration-design/frame_000.jpg
+- [9:50] tutorials/frames/33-nuke-tutorial-series-flow-paths-fx-integration-design/frame_001.jpg
+- [14:45] tutorials/frames/33-nuke-tutorial-series-flow-paths-fx-integration-design/frame_002.jpg
+- [29:43] tutorials/frames/33-nuke-tutorial-series-flow-paths-fx-integration-design/frame_003.jpg
+- [34:23] tutorials/frames/33-nuke-tutorial-series-flow-paths-fx-integration-design/frame_004.jpg
+- [38:50] tutorials/frames/33-nuke-tutorial-series-flow-paths-fx-integration-design/frame_005.jpg
+- [48:34] tutorials/frames/33-nuke-tutorial-series-flow-paths-fx-integration-design/frame_006.jpg
+- [52:04] tutorials/frames/33-nuke-tutorial-series-flow-paths-fx-integration-design/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Part 3/3, the finale: wrapping stock energy-effect textures onto heavily-curved paths using Tilt Brush VR geometry with pre-normalized 0–1 UVs (instead of hand grid-warping every bend), kitbashing multiple stock elements together by using one as an organic reveal mask for another, edge-detail tricks (lingering time-echoed flame at silhouette edges) to hide the "2D-ness" of CG elements, physically-motivated ember/cloth-energy design, animated RotoPaint-stroke reveals for organic crack-appearance timing, and interactive 2D point-lights + multiply-based element interaction so every effect visibly affects its neighbors instead of just sitting "A over B" on top of the plate.
 
 ### Summary
-[PENDING EXTRACTION]
+**Flow paths (frame_000, a hand-drawn curve diagram):** the video opens explaining *why* Tilt Brush (Google's free VR sculpting app) is used for the curved "flow path" geometry the energy textures travel along — texturing something with heavy, irregular curvature by hand-`GridWarp`-ing in Nuke is prohibitively slow, and building extruded-card geometry with correct UVs in a DCC (Maya) is extra modeling work. Tilt Brush's **"Tapered Flat" brush specifically** (not just any brush) automatically lays out a stroke's UVs normalized to a clean 0-to-1 space along its whole length — critical detail: other Tilt Brush brushes tile the texture across multiple UV tiles instead, which breaks a single-texture-along-the-whole-path design, so brush choice matters. Strokes are drawn directly in VR, exported (Tilt Brush's own export button, saved to the headset's storage) as OBJ geometry, and imported into Nuke's 3D system — a texture plugged directly onto that geometry (UVProject is optional, not required — the author notes he isn't even sure why he UV-projected in this project) automatically stretches correctly along the whole curve, matching the same "avoid brute-force node-by-node distortion when the right geometry solves it structurally" philosophy from earlier videos in the series.
+
+**Main body "flow" effect:** built from the same crack-matte technique as Part 2 (frequency separation on the flattened UV face/torso, hand-painted fill-ins where the automatic separation misses spots, frame-held since it drives an ST map) used here as a mask rather than a final alpha. The actual visual comes from **combining multiple stock energy elements as masks for each other** rather than stacking them additively: a `TimeOffset`("TimePin")-shifted, heavily `Grade`d (isolate bright edges, push warm tones into highlights) stock flow element is layered under a second stock "nebula explosion" element used *as a mask* to reveal the first organically — frame_002/003 show this kitbashed compositing tree — producing cut-out, non-uniform reveal edges instead of a flat roto feather, which the author explicitly frames as the difference between "kitbashing for compositors" and just slapping one pre-rendered element over footage. A `Rotate`-based fake-perspective warp (not a true 3D reproject) is applied so the flow direction follows the neck's actual angle instead of reading as a flat pasted video. Where two effects are combined, the author flags a recurring gotcha: some stock elements have extreme bright/dark values that produce **NaN ("Not a Number") pixels** downstream — diagnosable by Ctrl-sampling a suspicious pixel and seeing a literal "nan" readout — fixed with either a high-value `Clamp` or a small reusable `Expression` node (three channel boxes) that zeroes out non-numeric values; the author recommends saving this as a personal gizmo since it recurs constantly when combining bright stock elements. **Edge softening via lingering flame (frame_003 context):** a hard black-plate-edge silhouette reads as an obvious compositing giveaway, so rather than fix it with grading alone, the author keys the brightest highlights of the flow effect, runs a `TimeEcho` on that key so bright hits "linger" for a couple of extra frames instead of vanishing instantly, feeds that lagged alpha into a `GodRays`-style stock flame element, and masks/adds the result at the silhouette edge — producing small flickering flame licks that soften contrast right where the eye is most likely to notice a fake edge. **Embers:** small embers (frame_004) come pre-rendered with natural brightness variance; the workflow is mostly standard (NaN-kill, `Glow`, mask-to-taste via a crushed black/white/gamma grade to thin out density) but the video stresses *physical* reasoning over just "add embers" — think about ember temperature (hotter = more yellow/white, cooling = redder) and vary color/brightness per group rather than uniform copies. Big embers (frame_005) come as a small multi-pass render kit (beauty with a red/blue top/bottom ID split for independent grading, UV pass, position, normals — enough to build reflections from normals alone if desired); the technique is find-a-flat-skin-area, grade it to look burned, `STMap` the ember render onto the UV pass, copy the original alpha back in (fixes background-color bleed at the edges), optionally multiply in an ambient-occlusion pass, retime for variety, then shrink/position at each "peeling" spot timed to the main effect's spread and finish with a pre-multiplied exponential glow (slight red push) plussed on top. **Cloth energy effects:** the simplest of the set — reformat + grade a stock "line" element for intensity, `SplineWarp`/`GridWarp` it onto the shoulder/cloth shape, kept deliberately subtle (author says he reduced intensity further than his first pass) since it's a background detail, not a focal point; concatenation/quality care is explicitly relaxed here since the element is being shrunk and defocused anyway (a general "know when precision matters vs. when it doesn't" note). **Face effects and animated reveal (frame_006/007):** face-area cracks reuse the Part-2 crack matte to isolate where effects show, then the *appearance timing* is driven by hand-drawn, **individually keyframed `RotoPaint` strokes** on the flattened UV face — each stroke's Stroke-tab "start/end" (birth/death) parameters keyframed so it fades on progressively, tracing the crack's actual growth path rather than a single uniform mask; strokes are drawn slightly wider than the crack itself and at varied speeds/directions per stroke for natural-feeling variation instead of a uniform spread rate. A brightness-graded edge (bright leading edge, darker trailing) plus `Glow` exaggerates highlights disproportionately as things "heat up," and a Luma-keyed highlight pass + light `VolumeRays` adds occasional bright "pings," masked through noise to break the pattern into something read as mist rather than a hard shape. **Element/light interaction (frame_007):** 2D point lights are manually keyed and animated in sync with each crack's spread (Nuke lacks ray-traced/GI lighting — the author explicitly wishes it had one), masked/varied through a Luma-keyed copy of the plate for subtle highlight catch, then `Plus`ed over for believable bounce lighting — author demonstrates the difference is stark by toggling it off. Smoke/mist elements are lit the same way but via `Multiply` instead of `Plus`: pre-comp a glow layer (Luma-keyed highlights, glowed) and multiply it against a separate 2D-noise-driven smoke layer so the smoke visibly picks up nearby light color/brightness instead of reading as a flat white/gray overlay untouched by its surroundings — the author frames all of this "does element A visibly affect element B" thinking as the single biggest lever separating a believable composite from a pile of separately-designed layers.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. For textures that need to flow along a heavily curved path: build the path as geometry in Tilt Brush VR using the **"Tapered Flat" brush specifically** (not other brushes, which tile UVs across multiple tiles instead of one normalized 0–1 span) — export as OBJ, import into Nuke's 3D system, plug a texture directly onto the geometry (no UVProject strictly required).
+2. Build the main "flow" mask the same way as Part 2's crack matte: frequency-separate the flattened UV face/torso, hand-paint fill gaps, frame-hold (it drives a static ST map).
+3. Combine 2+ stock elements as a *kitbash*, not a stack: grade/isolate one element's bright edges as a base look, then use a second, differently-shaped stock element (e.g. an "explosion" pattern) purely as a **reveal mask** for the first, producing organic non-feathered cutout edges instead of a roto feather.
+4. Fake perspective flow direction with a simple `Rotate`/`Transform` warp so a 2D stock element's apparent flow follows the underlying surface's actual angle (e.g. neck curvature) rather than reading as a flat pasted video.
+5. Watch for NaN pixels whenever combining very bright/high-contrast stock elements — diagnose by Ctrl-sampling a suspicious pixel (readout literally says "nan"); fix with a high-value `Clamp` or a small reusable NaN-killer `Expression` node (save as a personal gizmo).
+6. Soften a hard CG-silhouette edge with a *lingering flame* trick instead of pure grading: key the brightest highlights of the effect passing near the edge, `TimeEcho` that key so hits fade out over a few extra frames rather than vanishing instantly, drive a `GodRays`/flame stock element with that lagged alpha, mask/add at the edge.
+7. Design embers with physical logic, not just density: vary brightness/color per group (hotter = more yellow/white, cooling = redder), use a crushed black/white/gamma grade on the source render to thin out density to taste instead of manual per-ember masking.
+8. For a multi-pass ember/element render kit (beauty + top/bottom ID split + UV + position + normals): grade a flat area of the plate to look "burned," `STMap` the element render onto the UV pass, copy the original plate's alpha back in to fix edge color bleed, optionally multiply in AO, retime per instance for variety, shrink/position/time to the main effect's spread, finish with pre-multiply + exponential glow (push warm) + Plus.
+9. For lower-priority background detail elements (e.g. cloth energy lines): reformat + grade for intensity, `SplineWarp`/`GridWarp` to fit the surface, keep it deliberately subtle, and relax concatenation/precision discipline when the element will be heavily shrunk/defocused anyway.
+10. Animate organic crack-reveal timing with individually hand-drawn, keyframed `RotoPaint` strokes on a flattened UV face (Stroke tab's fade-on/birth-death parameters), drawn slightly wider than the crack and at varied per-stroke speed/direction, rather than a single uniform mask.
+11. Exaggerate a "heating up" read by grading the leading edge of an effect brighter than its trailing edge before applying `Glow` — the glow will amplify that asymmetry automatically.
+12. Add interactive 2D point-lights, keyframed to move with each spreading effect, masked/textured through a Luma-keyed copy of the plate for realistic highlight catch, `Plus`ed over — cheap substitute for ray-traced bounce lighting Nuke doesn't natively have.
+13. Make ambient/secondary elements (smoke, mist) visibly react to nearby light by `Multiply`-ing a glow pass against them, instead of `Plus`-ing a flat, unlit-looking element on top.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke/NukeX:** `TimeOffset`/"TimePin" (custom time-offset gizmo), `Grade`, keying/Luma key, `TimeEcho`, `GodRays`, `Glow` (exponential), `Clamp`, `Expression` (NaN-killer), `STMap`, `Shuffle` (UV/ID-pass extraction), `SplineWarp`, `GridWarp`, `Rotate`/`Transform`, `RotoPaint` (Stroke tab keyframed birth/death for animated reveals), point `Light` (2D-animated, faked bounce lighting), `Multiply`/`Plus` merges chosen deliberately for different interaction semantics
+- **Third-party / cross-app:** **Google Tilt Brush** (free VR sculpting app) — specifically its "Tapered Flat" brush, chosen because it auto-normalizes stroke UVs to 0–1 space (other brushes tile across multiple UV tiles); geometry exported as OBJ
+- **Author's own stock library (referenced repeatedly):** flow/energy elements, "nebula explosion" mask elements, small/big ember render kits (multi-pass: beauty w/ top-bottom ID split, UV, position, normals), cloth "line" energy elements — all part of the ~200-effect LookDev pack referenced across this whole series
+- **Workflow habits called out explicitly:** hidden/named inputs are used sparingly and flagged as bad practice for handing off scripts professionally; heavy comps are broken into off-to-the-side mini-precomps for iteration speed; design is judged against the *final* composited image, not each isolated intermediate step
 
 ### Difficulty
-[PENDING EXTRACTION]
+Expert — capstone of a 3-part advanced series; assumes everything from Parts 1–2 (SmartVector, KeenTools 3D tracking, UV-space compositing, crack mattes) as a prerequisite and adds VR-authored geometry, multi-element kitbashing judgment, and interaction-design thinking on top.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX for all compositing (majority of this video and the reason it's extracted fully here); Google Tilt Brush (free, cross-platform, not Foundry) only for authoring the flow-path curve geometry. Nuke version not stated on screen; per this skill's version-tracker, a 2022 upload falls in the Nuke 13.1 (Nov 2021) → 13.2 (Apr 2022) window. Uses only the Classic 3D system (geometry import, UVProject) — predates the 14.0-beta USD 3D overhaul; nothing here needs a ray tracer, which the author explicitly notes Nuke still lacks as of this recording.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, 3d-system, projection, st-map, gizmo, fx-simulation, rotopaint, grading, expert
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [1/3] Nuke Tutorial Series (Practical SFX, Lighting, Script Overview) (`13-nuke-tutorial-series-practical-sfx-lighting-script-overview.md`) and [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors) (`23-nuke-tutorial-series-cracks-keentools-smartvectors.md`) — direct prequels; this video is the payoff that puts Part 2's tracking/UV-space/crack-matte work to use with the actual energy-effect kitbashing.
+- Nuke Compositing an Advanced CG Shockwave | VFX (LookDev) (`nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md`) — shares the same author's stock-energy-effects-library kitbashing philosophy (multiple elements re-mapped and combined as masks for each other, not stacked additively) and several of the same Nukepedia gizmos.
+- A new way to design VFX | Virtual Reality | Gravity Sketch + Nuke Tutorial (`a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial.md`) — shares the "author 2D textures in Nuke, hand-sculpt supporting geometry in a VR app, bring it back into Nuke" pipeline shape (there: Gravity Sketch NURBS models; here: Tilt Brush flow-path curves).
