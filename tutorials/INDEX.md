@@ -751,6 +751,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/uv-st-maps-part-2-nuke-compositing-beginner-intermediate.md
 
+
+### Did Corridor Crew SOLVE Greenscreen?
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=abNygtFqYR8
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/did-corridor-crew-solve-greenscreen.md
+
 ---
 
 ## Tag Reference
