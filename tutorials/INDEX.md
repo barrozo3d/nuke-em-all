@@ -217,6 +217,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot.md
 
+
+### Ray Render in Nuke Tutorial | Compositing 3d Reflections
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=UQlTyaVKog4
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/ray-render-in-nuke-tutorial-compositing-3d-reflections.md
+
 ---
 
 ## Tag Reference
