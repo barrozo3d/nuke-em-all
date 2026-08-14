@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=M-iKJu9hYBk
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified — free 3rd-party gizmo set (Normals Toolkit: CA Detail Normals, Normal Mixer, CA_NormalMask) by Compositing Academy. CONFIRMED NOT Nuke's native Gaussian Splat / SplatRender relighting (Direct/Point/Spot lights, added Nuke 17.1) — same disambiguation as H7dBKDLXwPo and 8f2w7JxRaq4; this toolkit is 2D-normals-based, has nothing to do with Gaussian Splats or the 3D system"
+tags: [relighting, gizmo, digital-matte-painting, compositing, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # The BEST Way to Use Normals to Relight in Nuke (NEW Toolset)
@@ -23,169 +24,69 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py the-best-way-to-use-normals-to-relight-in-nuke-new-toolset <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below. Condensed transcript summary (full timestamped version retained in git history at commit f9ef145):
 
+[0:00] Releasing a free "Normals Toolkit" — three nodes that work together to fix normals-relighting quality issues, whether from CG renders or AI-generated normals.
+[1:00] Example subject: an Iceland photogrammetry mountain scan (thousands of photos → proxy mesh) being turned into a moody cinematic digital matte painting.
+[1:41] Baseline relight without the toolkit looks "plasticky" — sharp, triangulated highlights from the low-res proxy mesh's normals.
+[2:37] CA Detail Normals extracts high-frequency detail from an image via luminance OR frequency-size separation (can use both to target different areas).
+[3:23] Normal Mixer re-orients the detail normals to match the base normals' facing direction before blending — necessary because relight math breaks with inconsistently-oriented normals.
+[3:53] Mixed result recovers micro-shadow/highlight detail lost in the flat proxy-mesh relight; toggling the node on/off live shows the before/after.
+[5:11] Simpler CG sphere example: generating detail normals straight from an image without mixing doesn't follow the model's curvature; Normal Mixer fixes this by using the base normals as the "master" orientation.
+[6:23] Roto-shape-targeted detail normals let you selectively pop specific features (e.g. a few rocks) more three-dimensional, with adjustable strength.
+[7:30] Third node, CA_NormalMask, converts the combined normals into a light mask: rotation or click-to-sample light direction, plus a softness control that goes from diffuse-like falloff to a tight specular highlight — avoids needing Nuke's full 3D-system ReLight setup ("overkill... too many nodes") for fast 2D relight/specular work.
+[8:34] Free download, three nodes plus an example scene.
 
-### Full Content [0:00]
-**Transcript (timestamped):**
-[0:00] Hey guys, welcome to this video. Today I'm going to be releasing a brand new toolkit for composters for free, which is the Normals Toolkit.
-[0:06] So if you watch videos on this channel before, you see me do normals relighting a few different times,
-[0:11] whether it's for a CG render and sort of enhancing the different light sources or detail on the surface,
-[0:15] or if we're using AI generated normals and enhancing or adding specific light sources to the footage, which is a newer workflow.
-[0:22] Both of these workflows still rely on having normals, but the quality of your normals can differ depending on the source that you're getting it from,
-[0:29] and so I'm going to show you a few different examples on how we can actually enhance the normal result by using a specific technique.
-[0:36] In this toolkit, there are three different nodes that actually work together to solve the entire problem, to make it more systematized and repeatable,
-[0:43] especially if you're doing it on a team or if you're doing it for a larger project.
-[0:46] So I'm going to hop into Nuke and show you how these three nodes work together to create a better result than just doing a simple relight.
-[0:51] Alright, so to give some context on what we're going to try to relight, this is for a digital map painting that I'm working on for a larger sequence
-[0:57] for a YouTube video coming out in a few months.
-[1:00] So this is going to be a good example for relighting because we can add some more cinematic lighting to this scan that I have of a mountain.
-[1:07] So basically I have this mesh that is scanned in Iceland and it's like a huge mesh.
-[1:12] This is a few thousand photos basically taken around a mountain, and this gives us a really nice proxy geometry for the base of our map painting.
-[1:20] So if I look at this in 2D, we can see that the texture here is pretty nice and it gives us something a little bit easier to work with than just completely two dimensional images,
-[1:27] because we get the perspective, we also get the utility passes.
-[1:30] Even if it's far away, the extra information can help us do our job.
-[1:34] What I want to do is to make this have more cinematic lighting.
-[1:37] So this is going to be more of a moody shot.
-[1:39] It's going to be a little bit more stormy and all those type of things.
-[1:41] So if I look at this without the sort of enhancement that I'm talking about, and we just do the base relighting using a variety of techniques here,
-[1:49] this is sort of a good starting point of what I want to do.
-[1:52] Now this doesn't have haze yet or anything like that.
-[1:54] We're sort of just playing with this idea of sort of a cloudy day with some holes punched into the clouds and lighting the mountain in this nice cinematic way.
-[2:02] Now how do we make this better?
-[2:03] And what's the problem exactly with this?
-[2:05] So if you zoom in here, we can see it looks a little bit CG.
-[2:09] We have some very sharp edges, some sort of triangular feeling things.
-[2:12] And it just feels a little bit plasticky.
-[2:14] It's kind of the same problem that I mentioned on some of those other videos that this is normally the mistake.
-[2:19] Anytime you're doing normals, relighting people miss this if they're just doing it for the first time.
-[2:23] But it's the most important thing.
-[2:25] And so how do we improve it in this example?
-[2:27] Now in the past, I would have probably just pulled the highlights and shadows and mixed a few different keys to break up this surface, make it not look so plasticky.
-[2:35] But basically this is a better way to actually do it.
-[2:37] So this node, what it does is it takes the normals that we have.
-[2:41] So this is a low resolution result from the proxy mesh.
-[2:44] What we want to do is add high frequency detail mixed into the normals.
-[2:48] And so how do we get the high frequency detail first?
-[2:50] And then how do we mix it?
-[2:52] So that's what the two nodes actually do.
-[2:55] So we have the CA detail normals, which will actually extract normals from either the luminance or frequency.
-[3:01] So it's either or.
-[3:03] And we can actually, by having both, we can target different areas.
-[3:06] So that's the first principle here is that we're going to basically either target by doing a frequency separation,
-[3:12] which means we're targeting the size of the details on the specific image, not necessarily the luminance, but the size.
-[3:18] And then the other one is more just targeting the luminance.
-[3:21] So we get something slightly different.
-[3:23] And then we have a node called normal mixer.
-[3:25] So what this node does is really cool.
-[3:27] It basically reorients these normals to all face the same direction so that you're realizing will actually behave properly.
-[3:33] You can't have normals pointing in different random directions.
-[3:36] Otherwise, it's not going to work.
-[3:37] So what this does is actually does a calculation to orient them in the same direction here.
-[3:42] So what we can do is we can take our base CG normals like this and we can throw a normal mixer with these two that I just mixed together.
-[3:50] Two different types of frequencies that we've kind of targeted.
-[3:53] And if we mix this onto the result, this is what we actually get.
-[3:56] So if we zoom in here, we can actually see that this is adding detail to the normals, but not only is it adding detail,
-[4:02] it's adding it in the correct orientation.
-[4:04] So that means we just get the result that we're going to be looking for with our relighting.
-[4:08] So if we add this onto here and we just go back to the result.
-[4:12] Essentially, we can see like an area over here.
-[4:14] If I were to like unplug this and put it back into the basic proxy mesh,
-[4:19] we could see it looks a bit flat in CG.
-[4:22] We lose all the little micro details, the micro shadows and highlights that we're supposed to get on a terrain.
-[4:27] So if I plug that back in, we wait a second, we can see like that detail gets pulled back out and this works pretty well.
-[4:33] Now some areas might need to tone it down a little bit.
-[4:35] Maybe there's a little bit in bossy if we look at it like that.
-[4:38] But really just everywhere is just going to look significantly better.
-[4:41] So if I just switch this back once again, just to look at again,
-[4:44] we can see that's doing a really nice job just to add detail across the map painting.
-[4:48] Now just before I jump into the other examples, it's worth mentioning.
-[4:50] If you're interested in more of these creative techniques or how you layer all these images with all these techniques combined,
-[4:56] there's a lot of stuff in the advanced classes for people who already know a little bit of Nuke,
-[4:59] but they're really looking for creative projects or higher level projects that show a lot more techniques
-[5:04] that you can only learn really by doing the job.
-[5:07] So let's take a look at a simpler example just to see again the idea and how it goes further.
-[5:11] So if we have like an image here that has some normals in it.
-[5:14] So I've just took in a sphere here, Nuke put a basic texture on it and we have some basic image here.
-[5:19] If we were to just cast light on this using the normals, it would look very flat.
-[5:24] So we have to do this approach where we mix the normals in order to get some kind of alpha that's going to represent it properly.
-[5:29] And so what we can do is we can use the color of the image to create a bit of a detailed normal pass.
-[5:35] And we can take the normals from the render and we use the normal mixer and then we get the best result.
-[5:41] Now notice in the detail normals, if you just generate normals from the image and you don't do anything to it and we look at it,
-[5:47] that's not that useful because it doesn't follow the curvature of the actual model or the shape of the surface.
-[5:53] So why this normal mixer is really cool is because it's taking this, the base as the sort of master normals and adding this to it.
-[6:02] So if we create an alpha based on that using this, we can see it's following the curvature of the sphere, but also interacting with the normals.
-[6:10] So if we just did normal mask on this very flat image, that's not exactly what we'd want.
-[6:14] We have to do a bunch of masking to compensate for it.
-[6:16] So by mixing this approach, we get these nice like feathering approach and you know, if we move the light around, we get a result that we would kind of expect.
-[6:23] Now what's cool about this is if we wanted to pop out certain details by separating the normal into layers of frequencies like this,
-[6:29] we can actually get more control than any other approach really.
-[6:33] So if we have like a detailed normals here and let's say I want to make some of the rocks look a little bit more three dimensional.
-[6:38] Maybe it's not doing the best job popping those out as much as we want.
-[6:42] We can take something like a roto shape and just circle a few of the rocks and create a normals from that.
-[6:47] And then taking this result, we can mix that with the one we just saw before.
-[6:50] So here's what we have and then we mix that together and now that's going to make those areas look a little bit more three dimensional.
-[6:56] If we mix this result onto the base result, this will now follow the curve to the sphere and it has the detail of the normals that we've just added.
-[7:04] So if we take this result and we do a bit of a relight on it, essentially we're going to get something that makes it look more 3D in those different areas.
-[7:11] So if we just rotate this around again, we get something that we can kind of expect.
-[7:15] So if we want to control the height of just those three little dots, we can go back to our detailed normals and maybe we just pull down the strength a little bit
-[7:22] and that will make it look less 3D.
-[7:24] So we have a lot of control over different specific targeted areas and how much detail we want to pull out or pull in.
-[7:30] So really the tool set is just these three nodes.
-[7:32] It's the detail normals to generate from images.
-[7:35] We have the mixer and then we just have a masking node which is kind of convenient because we have a few different controls like rotation or we can switch to sampling if you want.
-[7:44] So if you want to sample from a specific angle, like if I sample down here, it will just automatically orient the light in the right direction.
-[7:51] If you'll want to think too much about it.
-[7:53] So whichever way you prefer rotation or sampling either works.
-[7:56] The nice thing about this normal node as well in terms of the masking one is you also want to make sure that you have a certain angle.
-[8:00] We also have softness so we can create something that looks a little bit more specular as well.
-[8:04] So if we go here and then we kind of rotate this light around and we increase this a lot, we can get something that looks much more specular.
-[8:12] So we could create a nice specular highlight without having to do the full realize setup that new cast by default, which I don't think is that good.
-[8:18] It's too many nodes for what you're trying to achieve.
-[8:20] Like this is just supposed to be fast.
-[8:22] We want to add a specular.
-[8:23] We want to relight it without having to open a whole 3D system, you know, for example, most of the time that's overkill.
-[8:28] So at least for my personal preference, this is the workflow that I've kind of been establishing.
-[8:34] So I wanted to put out there free if other people find it useful.
-[8:37] So that's pretty much it.
-[8:38] You can grab it on the link here and there's the three nodes here and you can play around with it and a little bit of an example scene that just opened there.
-[8:45] And some definition of the specific knobs in the nodes.
-[8:48] Pretty simple to figure out, but the workflow is what's more interesting here.
-[8:52] I think so that's here for those who want it and that's about it.
+---
 
+## Captured Frames
 
+- [0:03] tutorials/frames/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset/frame_000.jpg
+- [1:41] tutorials/frames/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset/frame_001.jpg
+- [2:37] tutorials/frames/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset/frame_002.jpg
+- [3:53] tutorials/frames/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset/frame_003.jpg
+- [5:14] tutorials/frames/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset/frame_004.jpg
+- [6:42] tutorials/frames/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset/frame_005.jpg
+- [8:04] tutorials/frames/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset/frame_006.jpg
 
 ---
 
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Releases a free 3-node "Normals Toolkit" gizmo set that fixes the classic "plasticky/CG" look of normals-based relighting by extracting high-frequency detail normals from an image (via luminance or frequency-size separation) and re-orienting/mixing them onto a low-resolution base normal pass, so the relight picks up believable micro-shadows and micro-highlights instead of flat CG facets.
 
 ### Summary
-[PENDING EXTRACTION]
+The video diagnoses the standard mistake in normals relighting: using a low-res proxy-mesh normal pass (e.g. a photogrammetry scan) directly produces sharp, triangulated, "plasticky" highlights because the normals lack surface micro-detail. The fix is a 3-node toolkit: CA Detail Normals extracts extra normal detail from a 2D image by either luminance or frequency-size separation (targeting either brightness variation or the physical size of details — using both together lets you target different kinds of surface detail independently); Normal Mixer takes this extracted detail and the base (master) normals and re-orients the detail normals to face the same direction as the base — critical because relighting math breaks if normals point in inconsistent directions — then blends them together; a CA_NormalMask node turns the combined normals into a directional light mask, with controls for rotation or click-to-sample light direction, and a softness control that can push the result from soft diffuse-like falloff to a tight specular highlight. Demonstrated on two examples: (1) an Iceland mountain photogrammetry scan being turned into a moody cinematic digital matte painting — before/after comparison shows the detail-normals mix recovering all the micro-shadow/highlight detail that a flat proxy-mesh relight loses; (2) a simpler CG sphere example showing how targeted roto-shape-driven detail normals can selectively "pop" specific surface features (e.g. making a few rocks read more 3D) with fine per-region strength control, and how the CA_NormalMask's softness knob can fake either a diffuse relight or a fast specular highlight without opening Nuke's full 3D system/relight setup (author explicitly calls the native ReLight-via-3D-system route "overkill" and not great for this kind of fast 2D work).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Start from any normal pass (CG render normals, AI-generated normals, or photogrammetry-scan proxy-mesh normals) — quality varies by source, and this toolkit exists to compensate for that.
+2. Feed the source image (color/texture, not the normals) into CA Detail Normals; choose luminance-based or frequency-size-based extraction (or both, separately, to target different surface qualities) to generate a high-frequency detail normal map.
+3. Feed the base/master normals and the extracted detail normals into Normal Mixer — it automatically re-orients the detail normals to match the base normals' facing direction before blending, so the combined result stays physically coherent for relighting.
+4. Plug the mixed normals into CA_NormalMask to generate a light-direction mask: set light angle via rotation control or by directly sampling a point in the viewer (auto-orients the light toward that sample).
+5. Adjust the softness control on CA_NormalMask to move between a broad diffuse-style falloff and a tight, rotatable specular highlight — a fast way to add believable specular without building a full 3D relight/ReLight setup.
+6. For selective detail-popping (e.g. making specific rocks/features read more 3D): draw a roto shape over just those features, generate detail normals from that isolated region, mix it into the combined result, and use per-region strength to dial the effect up or down without affecting the rest of the surface.
+7. Compare with/without the detail-normals mix live (toggle the node) to confirm the fix — the flat/plasticky proxy-mesh look should recover convincing micro-shadow and micro-highlight variation once mixed in.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- CA Detail Normals — free Compositing Academy gizmo; extracts high-frequency normal detail from a 2D image via luminance separation or frequency/size-based separation (selectable)
+- Normal Mixer — free Compositing Academy gizmo; re-orients a detail-normal input to match a base/master normal input's facing direction, then blends them (prevents relight artifacts from inconsistently-oriented normals)
+- CA_NormalMask — free Compositing Academy gizmo; converts normals into a directional light/relight mask; controls include rotation, click-to-sample light direction, and softness (diffuse to specular)
+- Roto shape — used to isolate specific surface regions for targeted detail-normal generation/mixing
+- Contrasted against: Nuke's native 3D-system-based ReLight workflow, described by the author as "overkill" and too many nodes for fast 2D relighting tasks
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — requires understanding of normal maps and relighting fundamentals, but the toolkit itself is designed to reduce node-graph complexity versus a manual approach.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke; exact version not stated on-screen. This is a free third-party/house gizmo set (Normals Toolkit), not a bundled Nuke feature. Explicitly confirmed NOT related to Nuke's native Gaussian Splat/SplatRender relighting toolset (Direct/Point/Spot lights in SplatRender, added Nuke 17.1) — this toolkit operates entirely on 2D normal passes and has no connection to the 3D Gaussian Splat system. Same disambiguation pattern as "I Made VFX Relighting WAY Better in Nuke" (H7dBKDLXwPo, CA Relight gizmo) and to be re-verified against "Finally! The Volumetric Tool Nuke Has Always Needed" (8f2w7JxRaq4) in this same batch.
 
 ### Tags
-[PENDING EXTRACTION]
+relighting, gizmo, digital-matte-painting, compositing, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- I Made VFX Relighting WAY Better in Nuke (tutorials/i-made-vfx-relighting-way-better-in-nuke.md) — shares relighting, gizmo; same channel's other free relighting gizmo (CA Relight), same "not native SplatRender" disambiguation.
+- 2 Expert VFX Tips to PERFECTLY Blend CG (tutorials/2-expert-vfx-tips-to-perfectly-blend-cg.md) — shares relighting; covers painted-light/RotateNormals technique that this toolkit's Normal Mixer partially automates.
+- Can I Create a Speeder Chase on a TINY Greenscreen? (tutorials/can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md) — shares relighting, gizmo, digital-matte-painting; that BTS case study used the channel's CA_Relight gizmo and Nuke map-painting/projection on the same kind of Iceland photogrammetry-scan terrain.
