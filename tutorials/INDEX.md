@@ -253,6 +253,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2.md
 
+
+### Nuke Compositing Artistic Basics (1/8): Roles of Production
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=cQV6c291fBU
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-artistic-basics-18-roles-of-production.md
+
 ---
 
 ## Tag Reference
