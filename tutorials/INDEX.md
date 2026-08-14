@@ -717,6 +717,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/uvs-and-uv-passes-in-nuke-part-1-beginner.md
 
+
+### The BEST Way to Use Normals to Relight in Nuke (NEW Toolset)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=M-iKJu9hYBk
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md
+
 ---
 
 ## Tag Reference
