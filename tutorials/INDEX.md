@@ -469,6 +469,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/planning-out-a-visual-effects-shot-blender-and-nuke.md
 
+
+### Tracking Concepts in Nuke for Beginners
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=lpyZsAoiFMc
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/tracking-concepts-in-nuke-for-beginners.md
+
 ---
 
 ## Tag Reference
