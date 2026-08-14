@@ -79,11 +79,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=goTeNehxrhY
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Cross-app theory (no software shown)
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021)
+- **Tags:** relighting, grading, digital-matte-painting, beginner
+- **Summary:** Pure animated-diagram terminology primer (no software shown) distinguishing physicist vs. CG-artist vocabulary: specular/diffuse reflection maps to "glossiness" in CG; smooth surfaces give sharp mirror highlights, microscopic roughness scatters them into soft broad ones; color diffuse/absorption is a separate subsurface-scatter process giving a material its base color; specular highlights are view-dependent per the angle of incidence. Theory foundation for the channel's practical grading/relighting videos.
 - **File:** tutorials/physics-of-light-for-vfx-artists-updated.md
+- **Related:** Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`) — shares `relighting`, `grading`, `digital-matte-painting`.
 
 ---
 

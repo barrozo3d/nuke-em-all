@@ -320,3 +320,4 @@ compositing, grading, relighting, digital-matte-painting, intermediate
 ## Related Tutorials
 - Skill Up with Nuke | How To Think Like A Pro Compositor (`skill-up-with-nuke-how-to-think-like-a-pro-compositor.md`) — shares `compositing`, `grading`.
 - Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `compositing`, `grading`.
+- Physics of Light for VFX Artists [Updated] (`physics-of-light-for-vfx-artists-updated.md`) — shares `relighting`, `grading`, `digital-matte-painting`; that video is the theory foundation for this one's "four layers of pinging" technique.

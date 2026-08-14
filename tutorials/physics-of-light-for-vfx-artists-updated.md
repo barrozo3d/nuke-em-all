@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=goTeNehxrhY
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Cross-app theory (no software shown — CG/VFX lighting terminology, applicable to Nuke relighting/grading work)"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021)"
+tags: [relighting, grading, digital-matte-painting, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/physics-of-light-for-vfx-artists-updated/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Physics of Light for VFX Artists [Updated]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py physics-of-light-for-vfx-artists-updated <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Physics vs CG terminology [0:00]
@@ -87,30 +83,45 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:35] tutorials/frames/physics-of-light-for-vfx-artists-updated/frame_000.jpg
+- [1:28] tutorials/frames/physics-of-light-for-vfx-artists-updated/frame_001.jpg
+- [1:57] tutorials/frames/physics-of-light-for-vfx-artists-updated/frame_002.jpg
+- [2:32] tutorials/frames/physics-of-light-for-vfx-artists-updated/frame_003.jpg
+- [4:04] tutorials/frames/physics-of-light-for-vfx-artists-updated/frame_004.jpg
+- [4:56] tutorials/frames/physics-of-light-for-vfx-artists-updated/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A terminology/theory clarification (follow-up to an earlier "Physics of Light" video) distinguishing physicist vs. CG-artist vocabulary for specular reflection, glossiness, and diffuse color — the conceptual foundation behind the channel's grading/relighting technique videos (e.g. "Grading Highlights and Pools of Light").
 
 ### Summary
-[PENDING EXTRACTION]
+No software is shown — this is a pure animated-diagram lecture. Explains that what physicists call "specular"/"diffuse" reflection maps to "glossiness" in CG terms. A perfectly smooth (non-glossy) surface produces a sharp mirror-like virtual image of a light source; microscopic surface roughness scatters incoming rays in many directions, blurring that image into a broader, softer highlight — the more roughness/gloss, the more scattered and soft the highlight. Separately, "color diffuse"/"color absorption" is explained as light entering the surface, undergoing slight subsurface scattering, and bouncing back out with certain wavelengths absorbed (e.g. blue/green absorbed, red reflected = a reddish surface) — this is what gives a diffuse material its base color, distinct from its specular reflectivity. Finally covers angle of incidence: the specular highlight position is view-dependent, moving as the camera/eye rotates around a surface, because it only appears where the reflected ray happens to line up with the viewer's eye.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Understand non-glossy (mirror) reflection: a smooth surface reflects a light source as a sharp, undistorted virtual image at the angle of incidence.
+2. Understand glossy reflection: microscopic surface roughness scatters the reflected rays into a cone, producing a broader/blurrier highlight — the rougher the surface, the more spread out and dim the highlight becomes.
+3. Recognize that most real surfaces show both at once (e.g. wet asphalt: sharp specular streak + soft glossy scatter around it), and that this response should be driven by a roughness/specular map, not a single flat value.
+4. Separate specular response from diffuse/base color: color diffuse is a subsurface-scatter-and-absorb process (certain wavelengths absorbed, others bounced back out) — independent of the surface's mirror-like reflectivity.
+5. Remember the angle of incidence rule when relighting/painting fake highlights (as in the companion "pinging" grading technique): a specular highlight only appears where the reflection angle lines up with the viewer, so it moves/repositions as the camera or light angle changes — don't paint it as a static decal.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+None — no Nuke UI or node graph appears; entirely animated slide/diagram explanation (spheres, rough-surface renders, ray diagrams) of terminology used elsewhere in the channel's grading/relighting workflow.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — pure conceptual/theory primer, no software operations.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Not applicable — no app shown on screen. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021); the companion practical videos in this series are Nuke.
 
 ### Tags
-[PENDING EXTRACTION]
+relighting, grading, digital-matte-painting, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`) — shares `relighting`, `grading`, `digital-matte-painting`; this video is the theory foundation for that one's "four layers of pinging" highlight-painting technique (both reference the same in-progress "Nuke 404: Advanced Grading and Relighting" class).
