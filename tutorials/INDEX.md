@@ -336,7 +336,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** roto, tracking, camera-tracking, compositing, beginner
 - **Summary:** Five methodology tips for faster/more stable RotoPaint work: place keyframes at real motion-direction changes rather than fixed intervals; separate shapes by object/parallax plane and keep points anchored to fixed features instead of letting them slide; stabilize shaky footage with a baked Tracker (Stabilize → Roto → Match-Move chain) so the roto is drawn against a near-static plate; decompose complex silhouettes into primary + secondary shapes; and animate jointed/rotating parts via each shape's pivot point instead of hand-keying every control point.
 - **File:** tutorials/rotoscoping-in-nuke-tutorial-5-beginner-tips.md
-- **Related:** Why your VFX Tracks aren't "Sticking" (and how to Fix it) (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — shares `tracking`, `camera-tracking`, `compositing`, `roto`.
+- **Related:** Why your VFX Tracks aren't "Sticking" (and how to Fix it) (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — shares `tracking`, `camera-tracking`, `compositing`, `roto`; How SMART is State of the Art A.I Rotoscoping? (`how-smart-is-state-of-the-art-ai-rotoscoping.md`) — shares `roto`, `tracking`, `compositing` (manual fundamentals vs. AI-assisted follow-up).
 
 
 ### 2 Expert VFX Tips to PERFECTLY Blend CG
@@ -607,10 +607,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=Yb3Cn3JnkUI
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2021 upload, Nuke 13.0 era)
+- **Tags:** compositing, relighting, grading, roto, channels, gizmo, color-management, advanced
+- **Summary:** Builds an HSV-flattened "shadow clean plate" (chained Keyer/Grade highlight rolloff, masked back through hue/saturation) to avoid double shadows where a CG shadow crosses real ones, plus EyeBlur/EyeDistort/EyeTransform gizmo tricks for attenuation, ground-ripple, and contact realism.
 - **File:** tutorials/compositing-complex-shadows-in-nuke-advanced.md
 
 

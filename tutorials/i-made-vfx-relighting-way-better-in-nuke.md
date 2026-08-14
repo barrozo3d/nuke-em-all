@@ -202,4 +202,4 @@ relighting, gizmo, compositing, 3d-system, intermediate
 ---
 
 ## Related Tutorials
-Direct follow-up to Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`), referenced explicitly in this video as "my other video" on normals-based relighting and metallic/diffuse key-mixing. Shares `relighting` with 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`).
+Direct follow-up to Transform your FLAT Green Screen into Cinematic Lighting (`transform-your-flat-green-screen-into-cinematic-lighting.md`), referenced explicitly in this video as "my other video" on normals-based relighting and metallic/diffuse key-mixing. Shares `relighting` with 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) and Compositing Complex Shadows in Nuke [Advanced] (`compositing-complex-shadows-in-nuke-advanced.md`).

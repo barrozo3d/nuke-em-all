@@ -205,3 +205,5 @@ relighting, grading, compositing, beginner
 - Part 6/8: Whitepoint and white balance (`nuke-compositing-artistic-basics-68-whitepoint-and-white-balance.md`)
 - Part 7/8: Glows (`nuke-compositing-artistic-basics-78-glows.md`)
 - Part 8/8: Camera Artifacts (`nuke-compositing-artistic-basics-88-camera-artifacts.md`)
+
+**Also related:** Compositing Complex Shadows in Nuke [Advanced] (`compositing-complex-shadows-in-nuke-advanced.md`) — applies this episode's shadow-attenuation theory practically, building a full shadow-clean-plate workflow to avoid double shadows.

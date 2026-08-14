@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=Yb3Cn3JnkUI
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (2021 upload, Nuke 13.0 era — see version-tracker.md)"
+tags: [compositing, relighting, grading, roto, channels, gizmo, color-management, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/compositing-complex-shadows-in-nuke-advanced/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Compositing Complex Shadows in Nuke [Advanced]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py compositing-complex-shadows-in-nuke-advanced <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Traditional Methods for Shadows [0:00]
@@ -374,30 +370,75 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:25] tutorials/frames/compositing-complex-shadows-in-nuke-advanced/frame_000.jpg
+- [3:20] tutorials/frames/compositing-complex-shadows-in-nuke-advanced/frame_001.jpg
+- [7:40] tutorials/frames/compositing-complex-shadows-in-nuke-advanced/frame_002.jpg
+- [9:45] tutorials/frames/compositing-complex-shadows-in-nuke-advanced/frame_003.jpg
+- [11:05] tutorials/frames/compositing-complex-shadows-in-nuke-advanced/frame_004.jpg
+- [12:45] tutorials/frames/compositing-complex-shadows-in-nuke-advanced/frame_005.jpg
+- [15:50] tutorials/frames/compositing-complex-shadows-in-nuke-advanced/frame_006.jpg
+- [17:45] tutorials/frames/compositing-complex-shadows-in-nuke-advanced/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Building a "shadow clean plate" (an HSV-luma-flattened version of the background plate) and masking it through the CG shadow alpha, instead of simply multiplying a CG alpha over the plate — avoids "double shadows" where a CG shadow crosses an existing real shadow.
 
 ### Summary
-[PENDING EXTRACTION]
+The tutorial composites a CG cube onto a forest-path plate that already has real tree shadows crossing the ground. A naive alpha-multiply approach produces a visible "double shadow" where the CG shadow overlaps a real one. The video walks through why (shadow attenuation depends on both light size AND distance-to-object, so a real shadow's edge softness varies along its length) then builds a shadow clean plate: convert the plate to HSV via `Colorspace`, chain ~8-10 copies of `Keyer` (blue/luminance channel) → `Grade` (mask input, gain 0.5) to progressively flatten highlights toward shadow-black without touching hue/saturation, then copy the original red/green (hue/saturation) channels back in and convert back to the original colorspace with a second `Colorspace` node. The flattened clean plate is masked by the CG shadow's alpha and merged over the plate — this reads as a shadow because the plate's own contrast/texture is preserved (unlike a flat multiply). A `KeyMix` blends the clean-plate shadow area with the real, un-flattened plate texture so the composite doesn't lose detail where they overlap. Final polish: an EyeBlur gizmo (Nukepedia, by "Mairs"/similar) for shadow attenuation (soft-at-distance falloff via roto-driven feather rather than a uniform blur), an EyeDistort gizmo fed a blurred/clamped noise pattern (pushed into negative values, copied into backward-U/backward-V channels) to make the shadow ripple realistically across the uneven dirt road surface, an EyeTransform gizmo to bend the shadow across a small ridge in the ground, fake rotoscoped reflections and a blown-highlight grade on the cube to sell contact, a cheap ambient-occlusion fake (blurred cube alpha masked by the shadow alpha, protected by an inverted Luma key so small rocks aren't over-darkened), Edge Extend before premult to kill a bright fringe on the CG render, and a Keyer-driven bloom pass on the cube's highlights.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Identify the double-shadow problem: naive `Multiply`/stencil of a CG alpha over a plate breaks where the CG shadow crosses a real shadow already in the footage.
+2. Convert the plate to HSV with `Colorspace` (in: linear/original, out: HSV) — hue in red channel, saturation in green, luminance/value in blue.
+3. Build a luma-key stack: chain repeated `Keyer` (reading only the blue/value channel) → `Grade` nodes (each Grade's mask input fed by the paired Keyer, gain set to 0.5) — copy/pasted many times in series to progressively roll off and flatten the highlights toward the shadow value.
+4. Copy the original red (hue) and green (saturation) channels back into the flattened chain (only luminance was being corrected) with a `Copy`/expression node, plus a slight blur to hide the seam.
+5. Convert back to the original colorspace: second `Colorspace` node, in: HSV, out: linear — this produces the "shadow clean plate."
+6. Mask the shadow clean plate through the CG shadow's alpha and merge it over the original plate.
+7. Use a `KeyMix` with a rotoshape to bring back the real (un-flattened) plate texture in areas where real shadows already existed, avoiding a texture/contrast shift.
+8. Add shadow attenuation via the EyeBlur gizmo (Nukepedia) driven by a roto shape — softer falloff farther from the object, sharp at the base, instead of a uniform Blur/Feather.
+9. Fake ground-ripple in the shadow: create a noise pattern, push blacks negative (disable black clamp), blur slightly, copy red channel → backward-U and green channel → backward-V (empty channels), feed into an `EyeDistort` gizmo set to use those backward channels — distorts the shadow edge to appear to roll over the dirt road's surface irregularities.
+10. Use an `EyeTransform` gizmo + roto shape to bend the shadow where it crosses a small ridge in the ground for extra realism.
+11. Grade/roto in fake reflections on the cube (rotoscoped, aligned to the CG shadow) and a slight highlight/shadow-top rebalance so the CG cube doesn't look flat/uncontacted.
+12. Add fake ambient occlusion: blur the CG alpha outward, mask by the shadow alpha, protect small rocks with an inverted Luma key so AO doesn't over-darken detail already in shadow.
+13. Premult the CG render, use `Edge Extend` before the premult to remove a bright fringe artifact at the CG edge, then key/premult the highlights and put a bloom pass below for exposure-driven glow.
+14. Finish with expression nodes used purely as channel shufflers (e.g. copying a correction from RGB into the alpha channel to drive a mask-by-alpha grade) and fake camera movement.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Colorspace` — in→HSV (first pass, separates hue/sat/luminance into R/G/B) and HSV→in (second pass, reverts to original colorspace after correction)
+- `Keyer` — reads blue (value/luminance) channel only, chained repeatedly to build a progressive flattening stack
+- `Grade` — mask input fed by paired Keyer, gain = 0.5, default settings otherwise, chained ~8-10x
+- `Copy` / expression — restores original hue (red) and saturation (green) channels post-flattening; also used purely as a Shuffle substitute to move a correction's red channel into the alpha channel
+- `Blur` — slight blur to hide the seam where hue/sat is copied back over the flattened luminance chain
+- `KeyMix` — blends the real (un-flattened) plate texture back into shadow-clean-plate areas using a rotoshape mask
+- `EyeBlur` (Nukepedia gizmo, credited to "Mairs"/similar spelling in video) — roto-driven distance-based feather/attenuation, more realistic than a uniform Blur
+- Noise generator → blur → black-clamp disabled, values pushed negative; red channel → backward-U, green channel → backward-V
+- `EyeDistort` (Nukepedia gizmo) — set to use backward-U/backward-V channels to ripple the shadow edge across uneven ground
+- `EyeTransform` (Nukepedia gizmo) — roto-shape-driven local pixel push to bend the shadow across a ground ridge
+- `Roto`/`RotoPaint` — fake reflections on the cube, ambient-occlusion protection mask, shadow-clean-plate blend mask, ridge-bend mask
+- Inverted `Luma key` — protects small rocks/detail from over-darkening by the fake AO pass
+- `Edge Extend` — removes a bright fringe artifact around the premultiplied CG cube edge
+- `Premult` — standard premultiply of the Arnold-rendered CG cube (background baked into the render/image plane)
+- `Keyer` (on cube highlights) + `Premult` + merge-under — bloom pass for the overexposed/bright scene
+- Fake camera movement (unspecified transform/shake node) added at the end for extra realism
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (core toolset only — no NukeX-exclusive features required; the EyeBlur/EyeDistort/EyeTransform tools are third-party Nukepedia gizmos, not native nodes). No on-screen version number visible in the captured frames and none stated in the transcript. Video published 2021 — falls in the Nuke 13.0 era (13.0 released 2021-03-17, 13.1 released 2021-11-23); see `references/version-tracker.md`.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, relighting, grading, roto, channels, gizmo, color-management, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Nuke Compositing Artistic Basics (4/8): Shadows](nuke-compositing-artistic-basics-48-shadows.md) — the theory (shadow attenuation, light size vs. distance) this tutorial applies practically
+- [Nuke Tutorial | Compositing a Rainbow \[Intermediate\]](nuke-tutorial-compositing-a-rainbow-intermediate.md) — shares the HSV round-trip (Colorspace in/out, isolate hue/sat from luminance) technique used here for the shadow clean plate
+- [Grading Highlights and Pools of Light | Nuke Compositing](grading-highlights-and-pools-of-light-nuke-compositing.md) — related highlight-rolloff grading approach
+- [I Made VFX Relighting WAY Better in Nuke](i-made-vfx-relighting-way-better-in-nuke.md) — shares the relighting/gizmo-driven realism theme
+- [2 Expert VFX Tips to PERFECTLY Blend CG](2-expert-vfx-tips-to-perfectly-blend-cg.md) — shares the painted-light/fake-reflection contact-selling technique used on the cube here
