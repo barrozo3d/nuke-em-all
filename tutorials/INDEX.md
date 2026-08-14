@@ -240,6 +240,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/how-to-use-nuke-to-composite-blender-renders.md
 
+
+### Stormy Crystal Skull | Nuke, Blender, Ai, Embergen, Mixed VFX Medium Part 2
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=prhQhQ5AnNM
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2.md
+
 ---
 
 ## Tag Reference
