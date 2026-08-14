@@ -299,6 +299,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-compositing-artistic-basics-38-exposure.md
 
+
+### Nuke Compositing Artistic Basics (4/8): Shadows
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=SRgXQPPzVc8
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-artistic-basics-48-shadows.md
+
 ---
 
 ## Tag Reference
