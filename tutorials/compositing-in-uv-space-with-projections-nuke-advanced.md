@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=F-q8tgk8QCc
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX (ScanlineRender UV projection mode, ModelBuilder, Project3D, RayRender/AmbientOcclusion all require NukeX)"
+version: "not specified on screen; 2021 upload, close to the Nuke 13.0 launch (2021-03-17) — likely Nuke 12.2/13.0-era, per version-tracker.md"
+tags: [3d-system, digital-matte-painting, rotopaint, procedural-texture, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/compositing-in-uv-space-with-projections-nuke-advanced/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Compositing in UV space with Projections | Nuke [Advanced]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py compositing-in-uv-space-with-projections-nuke-advanced <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -607,30 +603,64 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:33] tutorials/frames/compositing-in-uv-space-with-projections-nuke-advanced/frame_000.jpg
+- [5:22] tutorials/frames/compositing-in-uv-space-with-projections-nuke-advanced/frame_001.jpg
+- [8:53] tutorials/frames/compositing-in-uv-space-with-projections-nuke-advanced/frame_002.jpg
+- [14:11] tutorials/frames/compositing-in-uv-space-with-projections-nuke-advanced/frame_003.jpg
+- [19:12] tutorials/frames/compositing-in-uv-space-with-projections-nuke-advanced/frame_004.jpg
+- [30:34] tutorials/frames/compositing-in-uv-space-with-projections-nuke-advanced/frame_005.jpg
+- [36:24] tutorials/frames/compositing-in-uv-space-with-projections-nuke-advanced/frame_006.jpg
+- [39:53] tutorials/frames/compositing-in-uv-space-with-projections-nuke-advanced/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Switching a `ScanlineRender`'s projection mode from Perspective to UV converts a moving/perspective-distorted 3D projection into a stabilized, distortion-free 2D texture-space image — letting a compositor paint, blend, or track-modify content in flat UV space, then switch the mode back to re-apply the result as a perspective-correct texture stuck to the original geometry.
 
 ### Summary
-[PENDING EXTRACTION]
+A long-form advanced workflow video covering four escalating use cases of the UV-space technique, bookended by a manhole-cover/cloth-simulation "bake projection into moving geometry" showcase. Core concept: a normal `Project3D`/`ScanlineRender` projection setup renders footage from the camera's perspective onto a card each frame; switching the ScanlineRender's projection-mode dropdown from "Perspective" to "UV" instead renders the card's flat texture-space layout — meaning the output no longer depends on camera position/rotation, effectively "stabilizing" a moving/rotating shot into 2D. Because UV layouts are conventionally square, the video stresses reformatting to a square resolution (e.g. 4K square) and disabling the card's "image aspect" option before switching modes. Once in UV space: (1) drone-footage matte-painting example — multiple frame-held views of the same rotating landscape can be blended (KeyMix) into one wide stabilized texture covering more of the environment than any single frame, ideal for painting a clean matte painting without re-tracking; RotoPaint work is kept in a separate node plugged into the UV-space stream via the background+"replace" button trick (grabs the incoming format automatically, avoiding manual reformatting); the final touched-up UV image is switched back to Perspective mode and reapplied as a texture (not a projection) via Project3D + ScanlineRender, so it "sticks" perfectly to the original footage's motion — and only the localized change (not the whole re-projected frame) should be merged back over the untouched original plate to avoid resampling/quality loss. (2) Removing perspective from a flat photo (tiled floor) by projecting onto a matched card and reading it back in UV mode, producing an undistorted top-down texture that's far easier to edit/replace individual tiles on than corner-pinning/warping in perspective space — critical if the camera later moves closer/at a different angle, since UV-space edits don't stretch the way a flat perspective projection would. (3) A hand-built proxy model (`ModelBuilder`, lining up card/extruded-edge points against a camera-tracked curb) whose UV layout is manually unwrapped/adjusted in the built-in UV editor (moving overlapping points, scaling sub-UVs proportionally to real geometry size to avoid stretching) so that an animated RotoPaint stroke drawn straight in UV space (e.g. a "crack" or edge line, keyed from stroke 0→1 over the shot) automatically follows the real-world curved geometry once switched back to Perspective — avoiding manual grid-warping of a straight design element to match a curved surface. (4) The showcase example: baking a still-image manhole-cover texture onto an animated cloth-sim Alembic import (from Maya) via the exact same UV-round-trip, with texture painted flat/without highlights in UV space so that dynamic lighting (a `RayRender`-based `Fog`/specular material pass masked through a luma key of the metal areas, plus a separate shadow-multiply pass and an `AmbientOcclusion` pass) can be re-added procedurally as the geometry deforms — explicitly noting that a static flat-image projection on moving/warping geometry looks fake specifically because it can't show reflections/highlights reacting to the object's changing orientation, which this rendered specular/AO layering fixes.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Set up a standard projection: undistorted footage → `Project3D` (fed by camera) → texture input on a `Card`/geometry → `ScanlineRender` (Perspective mode, the default) — confirm the projection tracks correctly with the camera before converting to UV space.
+2. Before switching to UV mode, reformat the render to a square resolution (e.g. 4K square) and, on planar cards, disable "image aspect" so the card doesn't inherit the source footage's non-square aspect ratio — UV layouts are conventionally square and mixing formats causes distortion.
+3. Double-click the `ScanlineRender`, change the projection-mode dropdown from **Perspective** to **UV** — this renders the card's flat texture layout instead of the camera-perspective view, independent of camera position.
+4. For matte-painting/texture-extraction use cases: frame-hold different moments of a moving shot in UV mode to capture different partial views of the environment, then `KeyMix`/blend them together to build one composite texture covering more area than any single frame — paint or edit that flat, stabilized texture (e.g. in Photoshop or with RotoPaint) without fighting camera motion.
+5. Keep paint/roto work in a separate `RotoPaint` node fed via a background input + the node's "replace" format button (rather than reformatting manually) — this auto-matches the incoming UV-space format.
+6. To avoid quality loss, don't push the entire re-projected frame back through the ScanlineRender: isolate only the actual change/addition (via a small-format reformat + merge-over-as-a-layer) so untouched original pixels never pass through an extra resample.
+7. Switch the ScanlineRender's mode back from UV to Perspective and feed the (possibly edited) UV-space image back into the same `Project3D`/geometry chain as a texture — this reapplies it correctly stuck to the object's motion rather than as a moving projection.
+8. For perspective removal on a flat surface (e.g. tiled floor): line up a card to match a photographed surface's perspective, switch its ScanlineRender to UV to get an undistorted top-down texture, edit/replace elements in that flat space, then switch back — preserves texture resolution/sharpness and avoids the stretching a normal projection would show if the camera moves to a different viewing angle later.
+9. For custom hand-built proxy geometry: use `ModelBuilder` fed the tracked camera, manually place/drag card points onto matching features across at least two frames (use Alt+Left/Right arrow to flip between compare frames and check point alignment), extrude edges to build out simple additional geometry, then use Nuke's built-in vertex/face UV editor to un-stack/separate overlapping UVs created by extrusion and scale sub-regions proportionally to their real-world size (to prevent texture stretching) before baking the model out as a card.
+10. Draw straight/simple paint elements (e.g. a crack line) directly in UV space so they render undistorted, then switch back to Perspective — the design automatically follows the real geometry's curvature/perspective without manual grid-warping.
+11. For dynamic/deforming geometry (e.g. imported Alembic cloth sim): apply the projected/baked texture with highlights painted out (flat), then layer procedural lighting reactivity back in — a `RayRender`+`Fog`/specular material pass masked by a luma key of the metallic areas for moving highlights, a separately gained/multiplied shadow pass, and an `AmbientOcclusion` pass (via `Constant` + geometry + `RayRender`) multiplied in for self-contact shadows — this sells the illusion of the object actually reacting to light as it moves/warps, which a flat static projection cannot do.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `ScanlineRender` — projection-mode dropdown: **Perspective** (default, camera-driven) vs. **UV** (renders flat texture-space layout, camera-independent); central node of the entire technique.
+- `Project3D` — projects undistorted footage from the tracked camera onto geometry.
+- `Card` — planar geometry; "Image Aspect" option disabled when working toward UV space to prevent non-square distortion.
+- `ModelBuilder` — used to hand-build simple proxy geometry (points/edges dragged onto tracked footage across frames) when not exporting a model from Maya/Blender; includes a built-in (if "finicky," per the presenter) UV editor for un-stacking/adjusting extruded-face UVs.
+- `RotoPaint` — paint/roto work kept in a separate node, fed via background input + "replace" format button to auto-match the UV-space format; brush strokes animated with keyed Stroke values (0 at start, 1 at end) to draw an element progressively down a surface.
+- `KeyMix` — blends multiple frame-held UV-space views together to build a wider composite texture.
+- `Reformat` — used to force square UV-space resolutions (e.g. "square 2K"/"square 4K") and to isolate localized edits before merging back over the untouched original.
+- `FrameRange` — inserted to force the viewer to jump to each example's correct frame range when working across multiple differently-ranged shots in one script.
+- `RayRender` + `Fog` material — used for a dynamic specular/highlight pass on deforming geometry, masked by a luma key of the metallic texture areas.
+- `AmbientOcclusion` (RayRender-based) + `Constant` + `Multiply` — self-contact shadow pass for deforming geometry.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced — combines projection/UV theory, hand-built proxy modeling with Nuke's non-ideal built-in UV editor, animated RotoPaint-in-UV-space workflows, and RayRender-based dynamic relighting on deforming Alembic geometry; explicitly labeled [Advanced] and assumes prior familiarity with basic UV/projection concepts (presenter recommends watching earlier fundamentals videos first).
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX — `ScanlineRender`'s UV projection mode, `ModelBuilder`, `Project3D`, and `RayRender`/`AmbientOcclusion` are all NukeX-tier 3D-system features. Version not stated on screen. 2021 upload, close to the Nuke 13.0 launch (2021-03-17 per `references/version-tracker.md`) — likely Nuke 12.2 or early 13.0, not stated explicitly enough to pin down further.
 
 ### Tags
-[PENDING EXTRACTION]
+3d-system, digital-matte-painting, rotopaint, procedural-texture, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Ray Render in Nuke Tutorial | Compositing 3d Reflections (`ray-render-in-nuke-tutorial-compositing-3d-reflections.md`) — shares `3d-system`, and the same `RayRender`/`AmbientOcclusion` nodes used here for the deforming-geometry relight pass.
+- Re-lighting Real Footage | Nuke Compositing [Advanced] (`re-lighting-real-footage-nuke-compositing-advanced.md`) — shares `3d-system`, `advanced`; both build convincing dynamic lighting/reflectivity on top of otherwise-static projected footage using NukeX's 3D toolset.
+- Preserve Quality | Projections in Nuke (`preserve-quality-projections-in-nuke.md`) — shares `3d-system`; that video's "only re-project the changed area, not the whole frame" principle is directly echoed in this tutorial's UV-space quality-preservation step.

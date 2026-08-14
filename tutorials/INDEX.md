@@ -535,11 +535,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=F-q8tgk8QCc
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX (ScanlineRender UV mode, ModelBuilder, Project3D, RayRender/AmbientOcclusion)
+- **Version:** not specified on screen; 2021 upload, close to the Nuke 13.0 launch (2021-03-17) — likely Nuke 12.2/13.0-era
+- **Tags:** 3d-system, digital-matte-painting, rotopaint, procedural-texture, advanced
+- **Summary:** Switches `ScanlineRender`'s projection mode from Perspective to UV to convert a moving 3D projection into a stabilized, camera-independent 2D texture — enabling matte-painting on blended frame-held views, perspective-free texture editing (tiles), animated RotoPaint strokes that automatically follow hand-built proxy geometry (`ModelBuilder` + manual UV unwrap), and baking a static texture onto deforming Alembic geometry (cloth sim) with dynamic `RayRender`-based specular/AO relighting layered back on top so it doesn't look like a flat pasted image.
 - **File:** tutorials/compositing-in-uv-space-with-projections-nuke-advanced.md
+- **Related:** Ray Render in Nuke Tutorial (`ray-render-in-nuke-tutorial-compositing-3d-reflections.md`), Re-lighting Real Footage (`re-lighting-real-footage-nuke-compositing-advanced.md`) — shares `3d-system`; Preserve Quality | Projections in Nuke (`preserve-quality-projections-in-nuke.md`) — shares the re-project-only-the-change principle.
 
 
 ### Nuke Compositing an Advanced CG Shockwave | VFX (LookDev)
