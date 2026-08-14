@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=ifsOs84Ps2g
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated on screen or in transcript)"
+tags: [compositing, 3d-system, digital-matte-painting, roto, rotopaint, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/360-spherical-latlong-textures-nuke-tutorial/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # 360 Spherical LatLong Textures | Nuke Tutorial
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py 360-spherical-latlong-textures-nuke-tutorial <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -245,30 +241,59 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:33] tutorials/frames/360-spherical-latlong-textures-nuke-tutorial/frame_000.jpg
+- [3:29] tutorials/frames/360-spherical-latlong-textures-nuke-tutorial/frame_001.jpg
+- [5:28] tutorials/frames/360-spherical-latlong-textures-nuke-tutorial/frame_002.jpg
+- [6:32] tutorials/frames/360-spherical-latlong-textures-nuke-tutorial/frame_003.jpg
+- [8:42] tutorials/frames/360-spherical-latlong-textures-nuke-tutorial/frame_004.jpg
+- [10:07] tutorials/frames/360-spherical-latlong-textures-nuke-tutorial/frame_005.jpg
+- [13:07] tutorials/frames/360-spherical-latlong-textures-nuke-tutorial/frame_006.jpg
+- [14:10] tutorials/frames/360-spherical-latlong-textures-nuke-tutorial/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Converting a flat/rectilinear photo (or a 360° CG render) into a seamless lat-long (equirectangular) texture by artificially warping the poles, so it wraps cleanly onto a sphere/skydome from any camera angle — done two ways: the custom `PolarDistort` gizmo method, and the built-in `SphericalTransform` fisheye round-trip method.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy explains why a plain photo breaks when projected onto a sphere in Nuke's 3D view: it shows a visible seam (left/right edge mismatch) and a "pole" pinch at the top, because true lat-long textures need deliberate warping near the poles that a flat photo doesn't have. Frame 000 shows this exact failure case — a flat sky image wrapped on a `Sphere` in the 3D viewer with a visible pole artifact. The video demonstrates two fixes: (1) a Nukepedia `PolarDistort`/`Offset` gizmo pair that converts rectangular↔polar, patched with a `Roto` mask and reorganized (via `Crop` before `PolarDistort`) so only the center patch gets warped instead of the whole image, keeping the rest of the picture sharp; (2) a cleaner method using the built-in `SphericalTransform` node set to `fisheye` projection, rotated 90° in pan/tilt/roll so the pole faces the camera, patched, then flipped back to `lat long` projection — described by the author as the fastest/simplest of the two. Both methods are checked via a second `SphericalTransform` (lat-long → rectilinear) at the end of the chain, which turns the 2D image into an interactively-navigable fake-camera preview (Ctrl+Alt+drag in the viewer) without needing an actual `Sphere` + `ScanlineRender` + `Camera` setup. The seam itself is fixed separately with `Offset` + `RotoPaint` (low opacity/hardness cloning). The video closes with a real production use case: texturing a 360°-rendered CG environment (a "glass dome in space" VR scene) with a nebula sky, using the same lat-long/rectilinear preview trick to check lighting and pole placement before committing to a full 3D render — frames 006–007 show a CG interior/dome render with a starfield mapped as its lat-long sky.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Diagnose the problem: project a flat rectangular photo onto a `Sphere` in Nuke's 3D view — a visible seam (edge wrap) and pole pinch appear because the image lacks lat-long-style pole warping (see frame_000).
+2. **Method A — PolarDistort gizmo:** feed the image into a `PolarDistort` node (Nukepedia gizmo) set rectangular→polar; this "pseudo-sphere" wrap reproduces the pole pinch predictably.
+3. Patch the pole: `Roto` a circular shape at the center, use it to key-mix the original (unwarped, transformed/scaled-up) picture over the polar-distorted one so only the pole region is patched.
+4. Reorganize for efficiency: `Crop` the patch region before re-applying `PolarDistort` (back to polar→rectangular) so only the small patched area gets warped/re-blurred, not the whole frame — avoids unnecessary filtering/blur on the rest of the image. `Merge` the patched piece back over the original.
+5. Preview without a full 3D setup: add a `SphericalTransform` node at the end, set Input=lat long, Output=rectilinear — this simulates sitting inside the sphere; adjust `focal_length` (acts like a virtual camera lens) and Ctrl+Alt+drag in the viewer (with the Q overlay on) to look around and check pole/texture quality (frame_003).
+6. **Method B — SphericalTransform fisheye round-trip (preferred/faster):** on the original image, set `SphericalTransform` to lat long → fisheye; tune `focal_length` (wider = full circular fisheye visible) and keep sensor size roughly square (frame_004).
+7. Rotate `pan/tilt/roll` by 90° so the pole area faces the viewer/center of the fisheye circle instead of the edge — makes it paintable (frame_005 shows the rotated fisheye circle with pole facing camera).
+8. Patch the now-centered pole the same way (`Roto` + key-mix against the original), then add a second `SphericalTransform` set to fisheye → lat long to convert back — yields a properly pole-warped lat-long image with far fewer nodes than Method A.
+9. Fix the horizontal seam: `Offset` the image ~200px, `RotoPaint` over the seam at low opacity/hardness to blend it invisibly, then offset back — verify by toggling the final `SphericalTransform` preview on/off.
+10. Production example: render a 360° camera pass directly from any DCC (author notes this is a one-Google-search setup in most 3D packages), bring the equirect render into the same lat-long/rectilinear `SphericalTransform` preview to spin around and check that stars/lighting/pole placement read correctly before finalizing the matte-painted sky (frames 006–007).
+11. Artistic note (not technical): watch for scale mismatches in VR/360 skies — e.g. stars painted too large read as fake; this is a matte-painting judgment call, not a node setting.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** `Sphere` (3D), `ScanlineRender`/3D viewer (for the initial failure demo only — bypassed later via `SphericalTransform` preview), `Roto`, `RotoPaint` (low opacity + low hardness for seam cloning), `Transform`, `Crop`, `Merge` (key-mix / over), `Offset`
+- **`SphericalTransform`** (built-in Nuke node) — the star of Method B; toggled between `lat long ↔ fisheye` and `lat long ↔ rectilinear` projections; `focal_length` controls virtual-lens FOV, `pan/tilt/roll` rotates the projection so the pole lands somewhere paintable, sensor size affects framing/aspect
+- **Nukepedia gizmos (Method A):** `PolarDistort` (rectangular ↔ polar remap) and a companion `Offset` gizmo — noted as not working well with non-square formats, requiring extra reformatting compared to Method B
+- **Interaction:** viewer overlay toggle `Q`, then Ctrl+Alt+left-mouse-drag to orbit the fake camera inside a `SphericalTransform`-previewed lat-long/fisheye image
+- **Source assets:** Unsplash sky photo (2D matte-painting case) and a low-res CG 360° camera render with a nebula texture pack (VR/game-environment case)
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — no scripting, but requires spatial intuition about lat-long/equirectangular projection math and comfort reorganizing node trees for efficiency (Method A's crop-before-distort reorganization in particular).
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (2D + Classic 3D system only — `Sphere`/3D view and `SphericalTransform` predate the USD-based 3D system that began beta in 14.0; nothing here uses or is affected by that overhaul). Exact point release not stated on screen or in the transcript; per this skill's version-tracker, a 2022 Compositing Academy upload falls in the Nuke 13.1 (Nov 2021) → 13.2 (Apr 2022) window.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, 3d-system, digital-matte-painting, roto, rotopaint, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`) — shares `compositing`, `digital-matte-painting`, `intermediate`; that tutorial builds a hand-painted night relight matte painting, this one builds a spherical/lat-long sky matte painting — same discipline, different projection problem.
+
+No other existing knowledge-base entries share enough tags for a strong cross-link yet. Revisit once other `digital-matte-painting` or `3d-system` tutorials (e.g. the 2024 "Blender + Nuke A.I Enhanced Digital Matte Painting Workflow" video, once ingested) land in the index.
