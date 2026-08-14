@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=F6Ru0K0PwZM
 author: Compositing Academy
 ingested: 2026-08-12
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [compositing, grading, relighting, digital-matte-painting, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/grading-highlights-and-pools-of-light-nuke-compositing/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Grading Highlights and Pools of Light | Nuke Compositing
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py grading-highlights-and-pools-of-light-nuke-compositing <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -274,30 +270,53 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:25] tutorials/frames/grading-highlights-and-pools-of-light-nuke-compositing/frame_000.jpg
+- [4:20] tutorials/frames/grading-highlights-and-pools-of-light-nuke-compositing/frame_001.jpg
+- [6:50] tutorials/frames/grading-highlights-and-pools-of-light-nuke-compositing/frame_002.jpg
+- [9:45] tutorials/frames/grading-highlights-and-pools-of-light-nuke-compositing/frame_003.jpg
+- [13:05] tutorials/frames/grading-highlights-and-pools-of-light-nuke-compositing/frame_004.jpg
+- [16:30] tutorials/frames/grading-highlights-and-pools-of-light-nuke-compositing/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Hand-painting believable specular "pings" (highlight hotspots) with a layered RotoPaint approach — the "four layers of pinging" mental model — to relight/grade a still photo into a moody, glossy night-alley matte painting.
 
 ### Summary
-[PENDING EXTRACTION]
+Theory/process preview from Compositing Academy's "Nuke 404: Advanced Grading and Relighting" course. The artist explains why a single broad radial grade under each light reads as flat and unconvincing, and instead breaks specular response into four concentric "pings" per pool of light: (1) a broad diffuse color-absorb layer, (2) mid-range glossy highlights that scatter along a surface depending on material roughness, (3) hot mirror-like pings at the true reflection angle, and (4) sparse far-field glint pings on surfaces angled just right to catch the light from a distance (angle-of-incidence reflections). He stresses reading material properties per-surface (metal pipe = sharp/mirror-like vs. plaster wall = broad/soft) rather than randomly scattering highlights, and demonstrates building the effect live over a Tokyo-alley photo comp, layering RotoPaint brush strokes from broad/dim to small/bright on top of the base grade and light-pool diffuse layers.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Grade/build the base "pools of light" — broad soft falloff regions (quadratic decay) around each practical light source in the plate.
+2. Within each pool, lay a broad diffuse "color absorb" layer first (the material's base color response, not yet reflective).
+3. Add layer 2: mid glossy pings — scattered, softer-edged highlights following surface roughness, concentrated nearer the light.
+4. Add layer 3: hot/mirror pings — small, bright, high-contrast dots only where the surface is glancing exactly at the light (metal edges, wet ground, glass).
+5. Add layer 4: sparse far-field pings outside the main pool — isolated glints on surfaces angled to catch a reflection from far away (treat the "eye"/camera as the reflection target).
+6. Use a RotoPaint node with multiple brush layers (visible as stacked `Brush1xx` shapes in the Roto/Paint list) to hand-paint each ping layer directly over the plate, blurring/softening the broader layers and keeping the hottest layer tight and small.
+7. Merge the painted RotoPaint output back over the base grade/diffuse comp; iterate by reviewing "where's the ping missing" on flat-looking areas and going back in with a small paintbrush.
+8. Repeat the same four-layer logic per light pool across the whole frame, and again later for reflective surfaces (e.g. wet ground) as a separate comp pass.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `RotoPaint` — core tool for hand-painting each highlight layer; multiple named brush shapes (`Brush118`, `Brush119`, `Brush120`, `Brush121`...) stacked as separate strokes/layers inside one RotoPaint node, each with its own color/opacity/softness.
+- Node graph shows a `Merge` chain compositing the RotoPaint output over upstream grade nodes, feeding a labeled `FINAL` output node.
+- Roto shapes are also used as planning annotations (white circle outlines) directly over the plate to block out where each "pool of light" and ping ring will sit before painting.
+- Background Renders / RotoPaint auto-render progress bar visible — RotoPaint is being cached/rendered as strokes are added.
+- No numeric grade values are readable on screen; the technique is presented as an artistic/perceptual model rather than a parameter recipe.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — no complex node scripting, but requires strong grounding in light/material theory (this is a follow-up to the channel's "Physics of Light" lecture) and manual paint-layering discipline.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (which starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, grading, relighting, digital-matte-painting, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Skill Up with Nuke | How To Think Like A Pro Compositor (`skill-up-with-nuke-how-to-think-like-a-pro-compositor.md`) — shares `compositing`, `grading`.
+- Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `compositing`, `grading`.

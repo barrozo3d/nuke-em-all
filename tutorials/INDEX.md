@@ -45,11 +45,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=F6Ru0K0PwZM
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** compositing, grading, relighting, digital-matte-painting, intermediate
+- **Summary:** Theory/process preview from Compositing Academy's "Nuke 404: Advanced Grading and Relighting" course. Breaks specular highlight response into a "four layers of pinging" model per light pool — broad diffuse absorb, mid glossy scatter, hot mirror pings, and sparse far-field glints — hand-painted with a layered RotoPaint node over a Tokyo-alley photo to build a convincing night relight/matte painting.
 - **File:** tutorials/grading-highlights-and-pools-of-light-nuke-compositing.md
+- **Related:** Skill Up with Nuke | How To Think Like A Pro Compositor (`skill-up-with-nuke-how-to-think-like-a-pro-compositor.md`), Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `compositing`, `grading`.
 
 
 ### 360 Spherical LatLong Textures | Nuke Tutorial
