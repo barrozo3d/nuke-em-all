@@ -157,6 +157,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/this-forgotten-vfx-trick-is-still-shockingly-effective.md
 
+
+### Re-lighting Real Footage | Nuke Compositing [Advanced]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=VYjmvB6d9NA
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/re-lighting-real-footage-nuke-compositing-advanced.md
+
 ---
 
 ## Tag Reference
