@@ -275,6 +275,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/how-i-use-compositing-to-skip-thousands-of-hours-rendering.md
 
+
+### Nuke Compositing Artistic Basics (2/8): 3 Point Lighting
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=EdYZwn8Kwv4
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-artistic-basics-28-3-point-lighting.md
+
 ---
 
 ## Tag Reference
