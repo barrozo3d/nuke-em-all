@@ -790,11 +790,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=GG7c29nWD68
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Blender (concept directly transferable to Nuke's Card3D/ImagePlane workflow); Nuke used briefly for slap-comp review
+- **Version:** not specified
+- **Tags:** 3d-system, camera-tracking, compositing, digital-matte-painting, virtual-production, intermediate
+- **Summary:** The "re-rack"/"reposition"/"card rig" studio technique: duplicate a camera-tracked camera and exaggerate the duplicate's motion (shake, push in/out, limited orbit) on top of a projected 2D plate card, without re-shooting. Side-to-side orbit breaks the flat-card illusion past ~15-20°; forward/back push is far more forgiving and can even "hand off" from a virtual camera into the real one. Built via a Blender ImagePlane tool (Patreon, replicates Nuke's Card3D workflow) + Camera Shakeify + empty-parented orbit rotation, nested under a master empty.
 - **File:** tutorials/normally-it-costs-50000-for-this-camera-move.md
+- **Related:** Nuke Compositing Technique | Card3D + PixelsToPos [Beginners] (`nuke-compositing-technique-card3d-pixelstopos-beginners.md`), Can I Create a Speeder Chase on a TINY Greenscreen? (`can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md`), Render World Position in Blender for Nuke (`render-world-position-in-blender-for-nuke.md`).
 
 
 ### Cleanplate Projections | Nuke Compositing Guide
