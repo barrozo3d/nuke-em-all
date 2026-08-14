@@ -822,6 +822,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/shuffle-and-channel-management-nuke-compositing-beginner-intermediate.md
 
+
+### Finally! The Volumetric Tool Nuke Has Always Needed
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=8f2w7JxRaq4
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/finally-the-volumetric-tool-nuke-has-always-needed.md
+
 ---
 
 ## Tag Reference
