@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=wb1WjHlXbn0
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (concepts explained via Maya) + Nuke"
+version: "not specified (2021 upload, Nuke 13.0 era — see version-tracker.md)"
+tags: [compositing, st-map, channels, 3d-system, digital-matte-painting, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/uvs-and-uv-passes-in-nuke-part-1-beginner/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # UVs and UV Passes in Nuke: PART 1 [Beginner]
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py uvs-and-uv-passes-in-nuke-part-1-beginner <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -319,30 +315,60 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:15] tutorials/frames/uvs-and-uv-passes-in-nuke-part-1-beginner/frame_000.jpg
+- [4:00] tutorials/frames/uvs-and-uv-passes-in-nuke-part-1-beginner/frame_001.jpg
+- [5:10] tutorials/frames/uvs-and-uv-passes-in-nuke-part-1-beginner/frame_002.jpg
+- [7:20] tutorials/frames/uvs-and-uv-passes-in-nuke-part-1-beginner/frame_003.jpg
+- [8:10] tutorials/frames/uvs-and-uv-passes-in-nuke-part-1-beginner/frame_004.jpg
+- [11:05] tutorials/frames/uvs-and-uv-passes-in-nuke-part-1-beginner/frame_005.jpg
+- [12:20] tutorials/frames/uvs-and-uv-passes-in-nuke-part-1-beginner/frame_006.jpg
+- [13:45] tutorials/frames/uvs-and-uv-passes-in-nuke-part-1-beginner/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Fundamentals of UV coordinates and UV render passes: what UVs are (a 2D unwrap of a 3D model's surface, X/Y renamed U/V to avoid clashing with 3D's X/Y/Z), what a rendered "UV pass" encodes (world UV coordinates baked into an image's R/G channels as a gradient, standing in for the full 3D model), and how the `STMap` node uses that UV pass to re-project or replace a 2D texture onto CG geometry in comp — without ever loading the 3D model into Nuke.
 
 ### Summary
-[PENDING EXTRACTION]
+Part 1 of a beginner→intermediate→advanced UV series. Opens with pure 3D fundamentals demonstrated in Maya (not Nuke) for viewers without a 3D background: a numbered/checkerboard texture is wrapped onto a cube, and selecting a face shows exactly which square of the flat "unwrapped" 2D layout maps to it; dragging a UV point in the unwrap view distorts only the texture mapping, not the geometry, and stretched/diagonal UV shells are called out as a mapping problem to avoid. Explains the distinction between a genuinely unwrapped UV layout (each face maps to a different part of the texture) versus a "normalized" UV layout (every face maps to the exact same square — Nuke's built-in default cube uses this simpler kind). Moves into Nuke to explain what a UV render pass actually is: a 2D image where the R and G channels encode a smooth gradient corresponding to the model's U and V coordinates — it looks like colored gradient ramps but is actually 3D positional data flattened into 2D, letting Nuke "know" the 3D coordinate system without ever loading the actual model. Demonstrates plugging that UV pass into an `STMap` node set to RGB channels (because UV data lives in red+green), with a new 2D source texture (a vine photo) plugged into the STMap's second input — the vines wrap around the cube's rendered shape purely as a 2D operation, and can be repositioned instantly with a `Transform` with no re-render needed. Extends to a real production example: a rendered car beauty pass, its corresponding UV render, and the car's "UV layout" (all body panels cut apart and laid flat, reformatted into a square) are used together to place a decal (a color wheel graphic) precisely on the rear bumper — position the decal within the flat UV layout reference, transform it, then run the UV render + positioned decal through an `STMap` and merge the result over the beauty render. For cases where the correct UV-layout location isn't obvious (complex models with many pieces), introduces a "tester material" — a colorful numbered checker texture pre-applied through the STMap so every numbered square is visible directly on the 3D-looking rendered surface, letting the artist visually match a UV-layout region (e.g. "3" and "4") to its real-world location on the model before placing artwork there. Explicitly frames all of this as a time/cost-saving compositing trick (re-texturing, adding water/rain-drip elements, etc. without going back into 3D or simulation software) that's most appropriate when the CG element isn't a hero close-up.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. (Conceptual, in Maya) Understand that a UV unwrap is a 2D "flattened" layout of a 3D model's surface — selecting a face on the model highlights the corresponding square in the flat layout.
+2. Distinguish a genuinely unwrapped layout (each face → distinct texture region) from a "normalized" layout (every face → the same square, e.g. Nuke's default built-in Cube geometry).
+3. Understand axis naming: U = horizontal, V = vertical, in a 2D texture-space coordinate system — named U/V specifically to avoid clashing with 3D's X/Y/Z.
+4. In Nuke, read in a rendered "UV pass" — a 2D image whose R and G channels contain a smooth gradient encoding each pixel's U/V coordinate on the original 3D model (this stands in for the model itself; no 3D geometry needs to be loaded).
+5. Plug the UV pass into an `STMap` node's first input; set the STMap's channels to RGB (since UV data is carried in the red/green channels).
+6. Plug a new 2D texture (photo/graphic) into the STMap's second input — the STMap remaps/warps that 2D texture to follow the original model's surface, wrapping it convincingly around the CG shape using only 2D operations.
+7. Reposition the applied texture instantly with a `Transform` upstream of the STMap input — no 3D re-render required.
+8. For production use on a complex asset (e.g. a car): obtain the beauty render, its UV render, and its flat UV layout reference image.
+9. In the UV layout reference, locate the flat "piece" corresponding to the target placement area (e.g. rear bumper), reformat/crop it to a square if needed, and transform a new graphic/decal into that piece's position (using a `Merge` purely as visual reference against the layout, separate from the actual STMap chain).
+10. Run the UV render + positioned decal through the `STMap`, then `Merge` the STMap's output over the beauty render — the decal now appears correctly wrapped and positioned on the CG surface.
+11. When the correct UV-layout region isn't obvious (many small pieces on a complex model), first run a colorful numbered "tester material" texture through the same STMap chain to visually cross-reference numbered squares in the flat layout against their real location on the rendered model, before placing final artwork.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `STMap` — core node; Channels set to RGB (UV data lives in R/G); Input 1 = UV render pass, Input 2 = new 2D texture/decal to be wrapped/mapped
+- `Transform` — repositions/animates the mapped 2D texture without any 3D re-render (upstream of the STMap's texture input)
+- `Merge` — composites the STMap's remapped output over the beauty/CG render; also used separately, purely as a visual reference aid, to preview decal placement against the flat UV-layout image before running it through the STMap
+- UV render pass — a rendered 2D image (not a geometry) whose R/G channel gradients encode the model's UV coordinates; substitutes for loading actual 3D geometry into Nuke
+- "Tester material" / numbered checker texture — a reference texture run through the STMap to visually map UV-layout regions to their corresponding location on the rendered model
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (native `STMap`, `Transform`, `Merge` — no third-party gizmos); the UV/unwrap fundamentals segment is demonstrated in Maya, not Nuke, purely for conceptual explanation. No on-screen version number visible in the captured frames and none stated in the transcript. Video published 2021 — falls in the Nuke 13.0 era (13.0 released 2021-03-17); see `references/version-tracker.md`.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, st-map, channels, 3d-system, digital-matte-painting, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [UV / ST Maps [Part 2] | Nuke Compositing [Beginner/Intermediate]](uv-st-maps-part-2-nuke-compositing-beginnerintermediate.md) — direct sequel (Part 2/2), continues into intermediate UV-expression techniques for generating UV patterns.
+- [Compositing in UV space with Projections | Nuke [Advanced]](compositing-in-uv-space-with-projections-nuke-advanced.md) — the advanced-tier follow-up this series builds toward, applying UV-space compositing to full projection/relighting workflows.
+- [Parallax HAX | Nuke Compositing [Advanced]](parallax-hax-nuke-compositing-advanced.md) — uses an ST map/UV-coordinate remap as a prerequisite step, referencing this series' UV fundamentals directly.
+- [Nuke Compositing Technique | Card3D + PixelsToPos [Beginners]](nuke-compositing-technique-card3d-pixelstopos-beginners.md) — shares the beginner-level "avoid going back into 3D" time-saving compositing philosophy, applied via a different mechanism (tracked-camera anchoring instead of UV remapping).

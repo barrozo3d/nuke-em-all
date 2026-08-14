@@ -711,10 +711,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=wb1WjHlXbn0
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (concepts explained via Maya) + Nuke
+- **Version:** not specified (2021 upload, Nuke 13.0 era)
+- **Tags:** compositing, st-map, channels, 3d-system, digital-matte-painting, beginner
+- **Summary:** Part 1/2 beginner UV fundamentals: what UVs/UV unwraps are (explained in Maya), what a rendered UV pass encodes (UV coordinates as an R/G gradient), and how `STMap` uses that pass to wrap/replace 2D textures onto CG geometry without loading the 3D model — includes a car decal-placement example and a "tester material" trick for locating UV regions on complex models.
 - **File:** tutorials/uvs-and-uv-passes-in-nuke-part-1-beginner.md
 
 

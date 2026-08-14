@@ -379,3 +379,4 @@ compositing, camera-tracking, 3d-system, gizmo, grading, roto, beginner
 - [Preserve Quality | Projections in Nuke](preserve-quality-projections-in-nuke.md) — shares the 3D-system/projection theme, alternate approach to sticking paint/roto onto tracked footage.
 - [Ray Render in Nuke Tutorial | Compositing 3d Reflections](ray-render-in-nuke-tutorial-compositing-3d-reflections.md) — shares `3d-system`/`camera-tracking` tags; both build practical tricks on top of a tracked camera setup.
 - [This Forgotten VFX Trick Is Still Shockingly Effective](this-forgotten-vfx-trick-is-still-shockingly-effective.md) — shares the `Card3D`/`ScanlineRender` sprite-card technique this video's ImagePlane gizmo wraps up.
+- [UVs and UV Passes in Nuke: PART 1 [Beginner]](uvs-and-uv-passes-in-nuke-part-1-beginner.md) — shares the beginner-level "avoid going back into 3D" time-saving compositing philosophy, applied via UV/`STMap` remapping instead of tracked-camera anchoring.
