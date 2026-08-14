@@ -332,6 +332,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/rotoscoping-in-nuke-tutorial-5-beginner-tips.md
 
+
+### 2 Expert VFX Tips to PERFECTLY Blend CG
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=DFb9dnOWTxw
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/2-expert-vfx-tips-to-perfectly-blend-cg.md
+
 ---
 
 ## Tag Reference
