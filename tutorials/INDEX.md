@@ -235,11 +235,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=peygC-ZxaP8
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** aovs, cryptomatte, channels, color-management, grading, compositing, intermediate
+- **Summary:** Free one-click Blender-to-Nuke plugin auto-wires denoised, correctly-named AOV/Cryptomatte exports from Blender's compositor, paired with a Nuke "CG Compositing Template" that unpacks diffuse/specular/transmission/indirect-lighting so each is independently gradeable (HueCorrect on diffuse color, masked Grade on glossy indirect via a Cryptomatte object matte, direct object recoloring via Cryptomatte). Critical caveat: Blender denoises AOV layers independently, so color-type passes must be re-premultiplied before recombining or the result gets dark/damaged edges versus the true beauty render.
 - **File:** tutorials/how-to-use-nuke-to-composite-blender-renders.md
+- **Related:** Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `cryptomatte`, `aovs`.
 
 
 ### Stormy Crystal Skull | Nuke, Blender, Ai, Embergen, Mixed VFX Medium Part 2

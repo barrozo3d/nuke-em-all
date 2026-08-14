@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=peygC-ZxaP8
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [aovs, cryptomatte, channels, color-management, grading, compositing, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/how-to-use-nuke-to-composite-blender-renders/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # How to use NUKE to Composite Blender Renders
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py how-to-use-nuke-to-composite-blender-renders <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -189,30 +185,56 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [3:04] tutorials/frames/how-to-use-nuke-to-composite-blender-renders/frame_000.jpg
+- [4:04] tutorials/frames/how-to-use-nuke-to-composite-blender-renders/frame_001.jpg
+- [4:40] tutorials/frames/how-to-use-nuke-to-composite-blender-renders/frame_002.jpg
+- [5:09] tutorials/frames/how-to-use-nuke-to-composite-blender-renders/frame_003.jpg
+- [5:41] tutorials/frames/how-to-use-nuke-to-composite-blender-renders/frame_004.jpg
+- [7:20] tutorials/frames/how-to-use-nuke-to-composite-blender-renders/frame_005.jpg
+- [7:44] tutorials/frames/how-to-use-nuke-to-composite-blender-renders/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A free one-click Blender-to-Nuke plugin auto-wires a fully denoised, correctly-named AOV/Cryptomatte export from Blender's compositor and pairs it with a matching Nuke "CG Compositing Template" that breaks the beauty render back into its diffuse/specular/transmission/indirect components — each independently gradeable — with the single most commonly-missed detail being that the color-type AOVs must be re-premultiplied before recombining, or edges go dark.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy (Alex Hanaman) releases a free Blender-Nuke bridge plugin: a Python add-on for Blender that, with one click, wires the compositor node graph to output two properly denoised multi-layer OpenEXRs (a "utilities" file with depth/Cryptomatte/data passes, and an AOV file with diffuse/specular/transmission/indirect-lighting layers), plus a matching Nuke template that unpacks those AOVs into an editable, art-directable CG comp. The template lets an artist isolate and grade individual light components without touching others — e.g. hue-correcting just the diffuse color of an object, or boosting just its indirect glossy reflection via a `Grade` masked by a Cryptomatte-extracted object matte — and demonstrates using Cryptomatte both as a grade mask source and to directly recolor an individual object. The critical technical caveat: because Blender denoises each AOV layer independently (so per-layer results won't exactly subtract/reconstruct from the beauty pass), the color-type passes (diffuse color, specular, etc., as opposed to the "hard-edged" lighting-intensity passes) must be re-premultiplied before merging back together, or the recombined image gets visibly dark/damaged edges versus the true beauty render — a step the video calls out as commonly missing from other Blender-to-Nuke templates found online.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Install the free Blender plugin (Edit > Preferences > Add-ons > Install from Disk) and open the paired Nuke template file.
+2. In Blender's render output settings, set format to OpenEXR multi-layer and configure a "utilities" output path.
+3. Enable required Blender view-layer passes: denoising data, Cryptomatte (by object/material/asset — skip index passes), so utilities and Cryptomatte data are packed into one EXR.
+4. In the Compositing tab, enable "Use Nodes" and run the plugin's one-click button — it auto-wires all AOV passes with correct per-channel denoising and naming conventions, and sets up a second `File Output` node for a separate AOV-only EXR (diffuse/specular/transmission/indirect lighting, etc.), typically rendered alongside the utilities EXR in the same directory.
+5. In Nuke, save the provided template to the node toolbar (Create menu) so it's available for any future shot paired with this plugin.
+6. Use the template's per-AOV breakdown to grade individual light components independently — e.g. a `HueCorrect` targeting just the diffuse color pass to shift an object's base color without touching lighting.
+7. Isolate and boost specific reflection/indirect layers (e.g. glossy indirect) with a `Grade` node, applied selectively rather than globally.
+8. Use Cryptomatte two ways: (a) extract an object matte from the Cryptomatte node and feed it into a `Grade`'s mask input to constrain a correction (e.g. only boost reflection on one object); (b) directly recolor a specific object (e.g. shift a cube's hue) by isolating it via Cryptomatte (by object, material, or asset) and grading just that region.
+9. Critical technical rule: because Blender's denoiser processes each AOV layer independently, you cannot subtract one pass from the beauty render and expect an exact match — always work through the full provided template rather than improvising a reduced pass stack.
+10. Re-premultiply the color-type AOV passes (diffuse color, specular color, etc. — the ones with soft/anti-aliased edges) before merging/recombining, since Blender's lighting-intensity passes come out hard-edged (no alpha baked in) while the color passes are already partially multiplied; skipping this step produces visibly dark edges when the recombined CG element is merged `over` a background, versus a clean match when the premult step is respected.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- Blender: Compositor "Use Nodes" + the plugin's auto-wire button — denoises and names all AOV/Cryptomatte passes for OpenEXR multi-layer output (two files: utilities + AOVs)
+- Nuke `CG Compositing Template` (bundled with the plugin) — breaks a Blender beauty render into diffuse/specular/transmission/indirect-lighting components with a premult stage flagged "this part matters"
+- `HueCorrect` — targeted color shifts on isolated diffuse/color AOV passes
+- `Grade` — targeted intensity boosts on isolated reflection/indirect passes, optionally masked
+- `Cryptomatte` — extracted per-object/material/asset mattes used both as grade masks and for direct object recoloring
+- Premult/Unpremult stage — re-applies premultiplication to color-type AOV passes before recombining (the step most other Blender-Nuke templates online reportedly omit)
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (paired with Blender's Compositor via a free plugin). No on-screen version banner or OCIO metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+aovs, cryptomatte, channels, color-management, grading, compositing, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares `cryptomatte` and `aovs` with Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — both use Cryptomatte/AOV region masking to art-direct CG renders in comp without re-rendering.
