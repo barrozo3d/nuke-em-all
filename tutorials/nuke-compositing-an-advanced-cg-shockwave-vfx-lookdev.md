@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=ErwClH-dQA0
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX (deep compositing requires NukeX)"
+version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)"
+tags: [compositing, 3d-system, deep-compositing, st-map, projection, gizmo, fx-simulation, grading, expert]
+extraction_status: complete
 frames_dir: tutorials/frames/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nuke Compositing an Advanced CG Shockwave | VFX (LookDev)
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -375,30 +371,58 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:33] tutorials/frames/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev/frame_000.jpg
+- [5:14] tutorials/frames/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev/frame_001.jpg
+- [10:28] tutorials/frames/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev/frame_002.jpg
+- [12:50] tutorials/frames/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev/frame_003.jpg
+- [14:26] tutorials/frames/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev/frame_004.jpg
+- [18:39] tutorials/frames/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev/frame_005.jpg
+- [20:16] tutorials/frames/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev/frame_006.jpg
+- [26:03] tutorials/frames/nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+"Kitbashing" a complex, multi-layered CG shockwave/explosion entirely in 2D compositing by combining pre-rendered stock energy-effect elements (from the author's own 200-effect library) through re-projection, distortion, deep occlusion, and color-scheme-driven grading — rather than treating any single element as a literal, un-transformed overlay.
 
 ### Summary
-[PENDING EXTRACTION]
+An advanced, concept-first (not node-by-node) breakdown of a "ball drops in, huge glassy shockwave explosion" shot (frame_000), built almost entirely from generic pre-simulated "energy effects" stock elements — the author's own paid library (composingacademy.com/energy-fx) — reworked so aggressively that their circular/spherical stock origin is unrecognizable in the final comp. Two techniques recur throughout: **re-mapping a stock element's shape** (a circular pattern polar-distorted into a straight line, then ST-mapped onto scene UVs, or a flat 2D texture UV-projected onto both sides of a 3D sphere for multi-layered depth) and **using the same element for multiple unrelated purposes** (one "wormhole/EMP" element is used simultaneously as the shockwave's refractive glass texture, a lens flare, and — frame-held on a single interesting frame — an "optical flare"). The core shockwave has two coupled parts: (1) a 3D sphere (frame_003) whose surface is doubled via `UVProject` (planar YZ projection from a movable axis, giving two overlapping copies of the same texture — frame_004) then transform+merged 90°-rotated over itself for a 4-layer pattern, and whose shape is animated via `DisplaceGeo` fed a radial gradient so the sphere pinches inward at the start of the explosion and relaxes into a perfect sphere as it expands (an explosive "coming from a point" read, not just a scaling ball); and (2) a separate "contact" pass — a circular library element `PolarDistort`-unwrapped into a straight line, `STMap`-projected across the scene's UVs, then masked with an expanding `PMatte` (Nukepedia) driven at the same rate as the shockwave's growth so the energy texture is only revealed right at the shockwave's leading edge (frame_001/002) — making two separately-authored elements read as one continuous physical event traveling across the geometry. `Glass` (Nukepedia, an IDistort variant that can distort R/G/B slightly differently) applied with another liquid-look stock element as the displacement source gives the shockwave sphere its chromatic-aberration/glass-refraction look. Where the shockwave crosses in front of scene geometry it needs to occlude correctly, so a `Deep` merge (ScanlineRender's deep output merged against the live-action/CG geometry's deep data, sped up with `DeepReformat`) cuts the shockwave where it passes behind objects — described only at a conceptual level, not step-by-step, since deep compositing is a large topic on its own. `Cryptomatte` IDs are used to re-scale the same ST-mapped texture per-piece-of-geometry so UV stretching doesn't read as obviously wrong across differently-scaled surfaces. A recurring "make anything a rainbow" trick (Linear→HSV round-trip, cross-referenced to the channel's dedicated rainbow tutorial, frame_006 shows the resulting rainbow-mapped color wheel/element) recolors black-and-white stock elements to match a deliberately chosen **color scheme** — the video spends real time on this: a mostly monochromatic blue/teal base with desaturated highlights (sketched live as a literal color-swatch diagram) plus small, careful "pops" of a second/third accent hue (purple, a little yellow-green) so the shot doesn't read as an untethered rainbow — explicitly citing Doctor Strange/Marvel-style disciplined stylization as the reference point, and warning that "compositors rarely talk about the art side" despite it mattering more than the pass list. Lens flares are built the same kitbashing way: an edge-flare element scaled to frame edge, frame-held on different frames and `Dissolve`d between them so overlapping highlights shift organically within the shape (frame_007, mimicking a real drone-footage reference clip of natural lens flare behavior the author studied directly) — plus one shot's actual first frame repurposed as a static "optical" flare because it coincidentally looked like a lens artifact rather than an explosion start frame, and a genuine third-party Optical Flares plugin pass mixed in for additional complexity.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Source stock/library energy elements (author's own 200-effect pack, but the technique generalizes to any similar stock library) — load many candidates into Nuke simultaneously to browse for a pattern that suits the target look, since elements are high-res (4K) enough to survive heavy re-warping.
+2. **Contact-point pass:** `PolarDistort` (Nukepedia) a circular stock element into a straight linear pattern; `STMap` it onto the scene's UV pass so it wraps correctly across the actual geometry; mask its visibility with an expanding `PMatte` (Nukepedia, position-pass-driven) timed to grow at the same rate as the shockwave itself, so the texture only shows right at the shockwave's leading edge — this is what sells "energy traveling across the surface" instead of a static decal.
+3. **Main shockwave shape:** build a 3D `Sphere`; use `UVProject` with a planar projection (YZ plane, from a movable `Axis`) to re-map the sphere's UVs so a flat texture wraps identically on both front and back instead of once around the whole sphere — doubles the perceived layering; `Transform`+`MergeGeo` a 90°-rotated copy over itself for a 4-layer composite pattern (time-offset the copies for asymmetry if desired).
+4. Animate the explosion's shape (not just its scale) with `DisplaceGeo` fed a radial gradient centered on the sphere: keyframe the displacement scale from strong (pinched/triangular, near the origin point) at the shot's start down to zero (perfect sphere) as the shockwave expands — reads as energy radiating from a point rather than a ball simply growing.
+5. Distort the sphere's surface texture with `Glass` (Nukepedia — an `IDistort` variant with independent per-channel R/G/B displacement) using a separate stock "liquid" element as the displacement source, for a chromatic-aberration/glass-refraction highlight quality.
+6. Occlude the shockwave correctly against scene geometry it passes behind using `Deep` compositing: render/derive deep data for both the shockwave pass and the scene geometry, `DeepMerge` them (speed up with `DeepReformat` beforehand), so the shockwave is cut where it's behind objects instead of always drawing on top.
+7. Fix UV-stretch artifacts from the single global ST-map by isolating individual geometry pieces with `Cryptomatte` and key-mixing in a differently-scaled copy of the same ST-mapped texture per piece.
+8. Color-grade the shockwave/scene toward a deliberately chosen, mostly-monochromatic color scheme (sketch it as literal color swatches if it helps) — one dominant hue family (here blue/teal) with desaturated highlights, then add small, careful "pops" of one or two accent hues rather than using many saturated colors freely (which reads cheap) — cite strong stylized-but-disciplined references (e.g. Doctor Strange) as a target.
+9. Recolor black-and-white stock elements to fit that scheme using the Linear→HSV "rainbow" trick (own dedicated tutorial), then subtract unwanted hue ranges (e.g. remove greens) via a `HueCorrect`-style shuffle/keyer before merging.
+10. Build lens flares from the same stock-element philosophy: scale an element to a frame edge, `FrameHold` several different frames of it, `Dissolve` between the frame-holds so internal highlight shapes shift organically (study real reference footage — the author reviews his own drone footage's natural flares directly on camera to justify the look) — reuse a single element in multiple roles (refractive sphere texture, edge flare, frame-held "optical" flare) rather than sourcing a new element per need.
+11. Layer in a genuine third-party plugin pass (Optical Flares) alongside the from-scratch kitbashed flares for additional complexity where useful.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke/NukeX:** `Sphere`, `Axis`, `UVProject` (planar, YZ plane), `MergeGeo`/Transform-and-merge-over-itself, `DisplaceGeo` (radial-gradient-driven), `ScanlineRender`, `Deep`/`DeepMerge`/`DeepReformat` (NukeX-only feature), `Cryptomatte`, `STMap`, `FrameHold`, `Dissolve`, HSV colorspace round-trip (Linear→HSV→remap→back) for the "rainbow" recolor trick
+- **Nukepedia gizmos:** `PolarDistort` (circle↔line unwrap — author prefers it over `SphericalTransform` to avoid memorizing more settings), `PMatte` (position-pass-driven expanding reveal mask), `Glass` (per-channel `IDistort` variant for chromatic-aberration-style refraction)
+- **Third-party:** the author's own "Energy FX" stock library (200 pre-simulated elements, compositingacademy.com/energy-fx) as raw material; **Video Copilot Optical Flares** (or similar) plugin for one flare layer
+- **Reference-gathering habit worth noting:** the author keeps and directly reviews his own reference footage (a drone clip with natural lens flares) on camera while explaining the flare-kitbashing technique, to justify why the frame-hold+dissolve overlapping-highlight approach reads as organic
 
 ### Difficulty
-[PENDING EXTRACTION]
+Expert — this is explicitly a concept-level walkthrough, not a followable node-by-node recipe (the author states this directly); requires prior comfort with Nuke's 3D system, ST-maps, Cryptomatte, and deep compositing to reconstruct any of it, plus color-theory judgment for the grading pass.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX (deep compositing — `Deep`/`DeepMerge`/`DeepReformat` — requires NukeX, not base Nuke). Version not stated on screen; per this skill's version-tracker, a 2022 upload falls in the Nuke 13.1 (Nov 2021) → 13.2 (Apr 2022) window. Uses only the Classic 3D system (Sphere/Axis/UVProject/DisplaceGeo/ScanlineRender) — predates the 14.0-beta USD 3D overhaul.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, 3d-system, deep-compositing, st-map, projection, gizmo, fx-simulation, grading, expert
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Nuke Tutorial | Compositing a Rainbow [Intermediate] (`nuke-tutorial-compositing-a-rainbow-intermediate.md`) — this tutorial directly reuses that video's Linear→HSV rainbow recolor trick to colorize black-and-white stock elements.
+- 360 Spherical LatLong Textures | Nuke Tutorial (`360-spherical-latlong-textures-nuke-tutorial.md`) and Mixed Medium VFX P1 (`mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md`) — both also use `PolarDistort` for a different purpose than this tutorial's circle-to-line stock-element unwrap.
+- Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares the underlying philosophy of driving comp-side FX from position/UV passes and Cryptomatte-isolated regions rather than re-rendering.
