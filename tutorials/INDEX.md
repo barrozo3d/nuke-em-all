@@ -193,6 +193,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/preserve-quality-projections-in-nuke.md
 
+
+### Mixed Medium VFX P1 | Blender, Nuke, Ai, Embergen, VR Tutorial
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=2V7eYe8D3nY
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md
+
 ---
 
 ## Tag Reference
