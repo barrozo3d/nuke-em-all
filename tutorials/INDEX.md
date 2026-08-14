@@ -310,6 +310,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-compositing-artistic-basics-48-shadows.md
 
+
+### Nuke Compositing Artistic Basics (5/8) - Reflections and Fresnel
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=YeGZP5xlBGg
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-artistic-basics-58---reflections-and-fresnel.md
+
 ---
 
 ## Tag Reference
