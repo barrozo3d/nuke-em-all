@@ -85,7 +85,11 @@ if ($ffmpegPath) {
 
 # ── Step 4: pip packages ──────────────────────────────────────────────────────
 Write-Host "`n[4/6] Installing pip packages (yt-dlp, openai-whisper)..." -ForegroundColor Cyan
-pip install yt-dlp openai-whisper --quiet
+# --pre pulls the nightly yt-dlp channel: ingest.py's default player client
+# (web_embedded, since 2026-08) needs the bundled EJS JS-challenge solver,
+# which plain stable yt-dlp releases don't ship yet.
+pip install -U --pre "yt-dlp[default]" --quiet
+pip install openai-whisper --quiet
 if ($LASTEXITCODE -eq 0) {
     Write-OK "pip packages installed"
 } else {

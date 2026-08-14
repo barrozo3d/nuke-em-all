@@ -155,17 +155,21 @@ General shape of the setup (exact steps live in the chosen repo's own README —
 
 ---
 
-## YouTube Bot Detection (cookies.txt)
+## YouTube Bot Detection / SABR streaming (cookies.txt)
 
-As of 2026-08, `ingest.py` automatically passes `--extractor-args youtube:player_client=android` on every call that doesn't have a `cookies.txt` present, since YouTube's default `web_safari` client started throwing HTTP 429 + `Sign in to confirm you're not a bot` on many (not all) videos. This needs no setup — it's built into `_ytdlp_cmd()` in `ingest.py`. The android client only exposes a single combined mp4 (no audio-only stream); `download_audio()` handles that fine since it re-encodes to mp3 either way.
+`ingest.py` automatically passes `--extractor-args youtube:player_client=web_embedded` on every call that doesn't have a `cookies.txt` present. This needs no setup — it's built into `_ytdlp_cmd()` in `ingest.py`. History of why:
 
-If a video *still* fails under the android client (rare — seen mainly on age-restricted or region-locked videos), fall back to cookies. Chrome 127+ broke yt-dlp's automatic cookie extraction (`--cookies-from-browser` fails with DPAPI error), so this has to be manual:
+- Originally the plain `web_safari` default client started throwing HTTP 429 + `Sign in to confirm you're not a bot` on many videos, so the `android` client was forced instead (its single combined mp4, itag 18, needed no PO token).
+- As of 2026-08, `android`'s itag-18 stream started tripping YouTube's **SABR-only streaming experiment** on some connections: the download would repeatedly die mid-transfer with `Connection aborted` after ~1%, even across retries, `--limit-rate`, or a fresh yt-dlp nightly (see [yt-dlp#12482](https://github.com/yt-dlp/yt-dlp/issues/12482)). `web_embedded` sidesteps this — it doesn't need a PO token (unlike bare `web`/`mweb`), doesn't hit the `tv` client's DRM flag, and exposes real audio-only (opus/m4a) and video-only DASH streams, so `download_audio()` requests `bestaudio/best` and `download_video_low()` requests `bestvideo[height<=240]` directly instead of being stuck with one flaky muxed format.
+- `web_embedded` requires solving YouTube's JS "n-challenge" (via `deno`, see the Deno section above) and a yt-dlp build recent enough to ship the bundled EJS challenge solver — the nightly/`--pre` channel pulled in by `requirements.txt` (see below) covers this; if you installed yt-dlp long ago via a plain `pip install yt-dlp`, re-run `pip install -U --pre "yt-dlp[default]"` to pick up EJS support.
+
+If a video *still* fails under `web_embedded` too (rare — seen mainly on age-restricted or region-locked videos), fall back to cookies. Chrome 127+ broke yt-dlp's automatic cookie extraction (`--cookies-from-browser` fails with DPAPI error), so this has to be manual:
 
 1. Install the **"Get cookies.txt LOCALLY"** extension in Chrome/Edge/Firefox
 2. Go to **youtube.com** while logged in to your Google account
 3. Click the extension icon → **Export** → save as **`cookies.txt`**
 4. Place `cookies.txt` in `~/.claude/skills/nuke-em-all/` (same folder as `ingest.py`)
-5. `ingest.py` detects it automatically and switches to cookie auth (dropping the android-client arg) — no other changes needed
+5. `ingest.py` detects it automatically and switches to cookie auth (dropping the `web_embedded`-client arg) — no other changes needed
 
 > `cookies.txt` is in `.gitignore` and will never be committed to GitHub.
 

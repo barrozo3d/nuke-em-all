@@ -65,14 +65,19 @@ def slugify(text):
 def _ytdlp_cmd():
     """Return yt-dlp invocation, using cookies.txt if present for YouTube bot bypass.
 
-    Without cookies.txt, the 'android' player client is forced — as of 2026-08
-    YouTube's default web_safari client started throwing HTTP 429 + "Sign in
-    to confirm you're not a bot" on many (not all) videos. The android client
-    sidesteps that check without needing authentication. It only exposes a
-    single combined mp4 (no audio-only stream), which is fine here since
-    download_audio() re-encodes whatever format it gets to mp3 anyway.
+    Without cookies.txt, the 'web_embedded' player client is forced. As of
+    2026-08 the previously-used 'android' client started hitting YouTube's
+    SABR-only streaming experiment on some connections/videos: its single
+    combined format (itag 18) would repeatedly die mid-download with
+    "Connection aborted" after ~1% (see yt-dlp issue #12482), even after
+    retries, rate-limiting, or a fresh yt-dlp nightly build. 'web_embedded'
+    sidesteps that — it doesn't require a PO token (unlike plain 'web'/'mweb'
+    client) or trigger the tv client's DRM flag, and it exposes proper
+    audio-only (opus/m4a) and video-only DASH streams, so download_audio()/
+    download_video_low() can now request `bestaudio`/small `bestvideo` directly
+    instead of being stuck with one flaky muxed format.
 
-    If a video still fails under the android client too, fall back to cookies:
+    If a video still fails under web_embedded too, fall back to cookies:
     1. Install browser extension: 'Get cookies.txt LOCALLY' (Chrome/Edge/Firefox)
     2. Go to youtube.com while logged in
     3. Click the extension -> Export -> save as cookies.txt in this skill directory
@@ -82,7 +87,7 @@ def _ytdlp_cmd():
     cookies_file = SKILL_DIR / "cookies.txt"
     if cookies_file.exists():
         return base + ["--cookies", str(cookies_file), "--remote-components", "ejs:github"]
-    return base + ["--extractor-args", "youtube:player_client=android"]
+    return base + ["--extractor-args", "youtube:player_client=web_embedded"]
 
 def check_prerequisites():
     missing = []
@@ -147,8 +152,11 @@ def whisper_transcribe(audio_path, model_name):
 
 def download_audio(url, tmp):
     out = str(tmp / "audio.%(ext)s")
-    cmd = _ytdlp_cmd() + ["-x", "--audio-format", "mp3", "--audio-quality", "0",
-         "--no-playlist", "-o", out, url]
+    # Explicit bestaudio/best: with web_embedded's separate audio/video-only
+    # DASH streams, an unqualified -f would default-resolve to bestvideo+bestaudio
+    # (downloading a full-res video track just to discard it after extraction).
+    cmd = _ytdlp_cmd() + ["-f", "bestaudio/best", "-x", "--audio-format", "mp3",
+         "--audio-quality", "0", "--no-playlist", "-o", out, url]
     # YouTube throttling makes one-off download failures common; a single retry
     # usually recovers and preserves the timestamped Whisper transcript instead
     # of degrading to the timestamp-less captions fallback.
@@ -215,7 +223,13 @@ def segment_by_chapters(transcript, chapters):
 
 def download_video_low(url, tmp):
     out = str(tmp / "video.%(ext)s")
-    cmd = _ytdlp_cmd() + ["-f", "worst[ext=mp4]/worst", "--no-playlist", "-o", out, url]
+    # height<=240 (not "worst") — under web_embedded, unqualified "worst" ties
+    # on height between the muxed itag-18 (360p, ~26MiB, the flaky format the
+    # SABR workaround above exists to avoid) and the tiny 144p video-only DASH
+    # stream, and doesn't reliably prefer the smaller one. No audio needed for
+    # stills, so video-only is fine and smaller/faster to fetch.
+    cmd = _ytdlp_cmd() + ["-f", "bestvideo[height<=240][ext=mp4]/bestvideo[height<=240]/worst[vcodec!=none]/worst",
+         "--no-playlist", "-o", out, url]
     # Same one-off YouTube throttling failures as the audio download in Step 1;
     # a single retry usually recovers (select_frames.py depends on this helper).
     for attempt in (1, 2):

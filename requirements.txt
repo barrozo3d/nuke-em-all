@@ -1,4 +1,9 @@
 # nuke-em-all skill — ingest.py / select_frames.py dependencies
+# yt-dlp: install from the --pre/nightly channel, not plain `pip install yt-dlp`.
+# As of 2026-08 ingest.py's default (no cookies.txt) player client is
+# web_embedded, which needs yt-dlp's bundled EJS JS-challenge solver to pass
+# YouTube's n-challenge — only shipped in nightly builds circa 2026-08-04+.
+# Install with:  pip install -U --pre "yt-dlp[default]"
 yt-dlp
 openai-whisper    # pip install openai-whisper  (requires torch — already present if ComfyUI is installed)
 
