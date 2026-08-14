@@ -259,11 +259,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=cQV6c291fBU
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Cross-app theory (no software shown)
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021)
+- **Tags:** compositing, beginner
+- **Summary:** Part 1/8 of the "Artistic Basics" series. No software shown — whiteboard overview of VFX studio production roles (Match Move, Effects, Texturing/Shading, Rigging, Animation, Lighting, Editorial) and where the compositor sits at the end of the pipeline, reconciling mismatched assets handed off from every department. Frames the rest of the series' simulated production hand-off (plate, elements, lit CG car, tracked ground/camera).
 - **File:** tutorials/nuke-compositing-artistic-basics-18-roles-of-production.md
+- **Related:** All 8 parts of this series cross-link to each other — see Part 2/8 (`nuke-compositing-artistic-basics-28-3-point-lighting.md`) through Part 8/8 (`nuke-compositing-artistic-basics-88-camera-artifacts.md`).
 
 
 ### How I Use Compositing to Skip THOUSANDS of Hours Rendering
@@ -275,40 +276,43 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** compositing, 3d-system, digital-matte-painting, denoise, grading, gizmo, intermediate
 - **Summary:** Six render-cost-saving compositing techniques: match real flicker to CG lights via `CurveTool` data copied into a desaturated multiply `Constant`; fake small bokeh lights with eroded `Checkerboard` + `Noise` (or the `ScreenFX` plugin); half-res render defocused elements; substitute 2.5D card projections for distant/nodal-pan-only 3D elements (single frame reused); denoise flickering specular by projecting the render back onto geometry and blending frames; mix a slow path-traced hero pass with a fast real-time-engine pass for cheap extra detail on secondary defocused elements.
 - **File:** tutorials/how-i-use-compositing-to-skip-thousands-of-hours-rendering.md
-- **Related:** "How to DENOISE your CG in POST" (2022, not yet ingested) — covers technique 4 in full. Shares `3d-system`/`ScreenFX` with Create a Movie Quality Sci-Fi Laser Effect in Nuke and How I Made a FULL Star Wars Cinematic from JUST One Screenshot.
+- **Related:** How to DENOISE your CG in POST | Blender & Nuke Tutorial (`how-to-denoise-your-cg-in-post-blender-nuke-tutorial.md`) — covers technique 4 in full. Shares `3d-system`/`ScreenFX` with Create a Movie Quality Sci-Fi Laser Effect in Nuke and How I Made a FULL Star Wars Cinematic from JUST One Screenshot.
 
 
 ### Nuke Compositing Artistic Basics (2/8): 3 Point Lighting
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=EdYZwn8Kwv4
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Cross-app theory (no software shown)
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021)
+- **Tags:** relighting, grading, beginner
+- **Summary:** Part 2/8 of the "Artistic Basics" series. Defines key/fill/rim lighting vocabulary used throughout the presenter's grading/compositing notes ("bring up the key," "too much fill") via a labeled 3D-viewport sphere diagram — key is the brightest front light, fill softens shadows (can be bounce light, not necessarily a real light), rim creates a silhouette edge from behind.
 - **File:** tutorials/nuke-compositing-artistic-basics-28-3-point-lighting.md
+- **Related:** All 8 parts of this series cross-link to each other — see Part 1/8 (`nuke-compositing-artistic-basics-18-roles-of-production.md`) and the rest of the series files.
 
 
 ### Nuke Compositing Artistic Basics (3/8): Exposure
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=xFUOuK3lFro
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (theory-focused)
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** grading, digital-matte-painting, beginner
+- **Summary:** Part 3/8 of the "Artistic Basics" series. Explains why a real camera exposure can never show full highlight AND full shadow detail at once (unlike HDR, which merges bracketed exposures and reads as unrealistic for video), and why grading CG/matte-paint elements to retain "impossible" full-range detail is the most common tell that a shot looks fake — especially in sky replacements.
 - **File:** tutorials/nuke-compositing-artistic-basics-38-exposure.md
+- **Related:** All 8 parts of this series cross-link to each other — see Part 1/8 (`nuke-compositing-artistic-basics-18-roles-of-production.md`) and the rest of the series files.
 
 
 ### Nuke Compositing Artistic Basics (4/8): Shadows
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=SRgXQPPzVc8
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** relighting, grading, compositing, beginner
+- **Summary:** Part 4/8 of the "Artistic Basics" series. Shadow attenuation physics (object-to-surface distance and light-source size both govern hard vs. soft shadow edges) demonstrated in a live 3D scene, plus black-point matching — sampling the darkest tone in the plate adjacent to each CG element and grading its black point to match, since atmospheric distance and light contamination mean pure black rarely exists in real footage.
 - **File:** tutorials/nuke-compositing-artistic-basics-48-shadows.md
+- **Related:** All 8 parts of this series cross-link to each other — see Part 1/8 (`nuke-compositing-artistic-basics-18-roles-of-production.md`) and the rest of the series files.
 
 
 ### Nuke Compositing Artistic Basics (5/8) - Reflections and Fresnel
@@ -419,22 +423,24 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=uReRex8xPqs
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (cross-platform: Blender is the source of the CG render being denoised; the technique itself is pure Nuke)
+- **Version:** Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated); Classic 3D system only
+- **Tags:** denoise, projection, compositing, grading, advanced
+- **Summary:** Removes render noise from a glossy CG element in post instead of re-rendering with more samples: `Project3D` the live render onto its own scene geometry, flatten to UV space (factors out camera/geometry motion), then either `TimeEcho` (frame-average) small high-frequency noise, or for larger low-frequency blotches that also carry real lighting change, TimeEcho + manually frame-hold two clean "key" frames and `Dissolve`/crossfade between them with animated timing — then project the cleaned UV-space result back through the original camera. Also covers the paid Neat Video ReduceNoise plugin as a strong single-pass alternative, plus a bonus tip: render a plain ramp through the same geometry once as a 2D grade/lookup map so later color tweaks skip re-touching the heavy 3D scene.
 - **File:** tutorials/how-to-denoise-your-cg-in-post-blender-nuke-tutorial.md
+- **Related:** How I Use Compositing to Skip THOUSANDS of Hours Rendering (`how-i-use-compositing-to-skip-thousands-of-hours-rendering.md`) — that video cites this one as covering its "technique 4" in full; shares `denoise`, `compositing`, `3d-system`/`projection`.
 
 
 ### Goodbye After Effects!  2D Motion Graphics in Nuke!
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=QRAsWDehxhA
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** motion-graphics, gizmo, compositing, 3d-system, digital-matte-painting, intermediate
+- **Summary:** Tour of the `ScreenFX` plugin's GPU-accelerated node library for building 2D motion graphics (glitches, HUD/hologram/CRT effects, transitions) directly in Nuke instead of After Effects: `PolyFlow` shape generator (rain-offset fade animation, ID-pass-style color modes), `Warp Bar` + `Blocky Lines` combined into a 3-layer retro-TV static effect, `JitterDuplicate` for teleport/glitch jumps (replaces a manual Transform+chromatic-aberration+glass-warp chain), `GridDrips`, bar-graph and dot-grid generators, and a 3D-tracked-card technique for projecting a 2D "Sci-Fi Rings" graphic onto a rotating CG model in correct perspective.
 - **File:** tutorials/goodbye-after-effects-2d-motion-graphics-in-nuke.md
+- **Related:** Shares the `ScreenFX` plugin with Create a Movie Quality Sci-Fi Laser Effect in Nuke, How I Made a FULL Star Wars Cinematic from JUST One Screenshot, and How I Use Compositing to Skip THOUSANDS of Hours Rendering.
 
 ---
 

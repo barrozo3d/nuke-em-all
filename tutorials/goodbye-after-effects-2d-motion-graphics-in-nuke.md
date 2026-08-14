@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=QRAsWDehxhA
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [motion-graphics, gizmo, compositing, 3d-system, digital-matte-painting, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/goodbye-after-effects-2d-motion-graphics-in-nuke/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Goodbye After Effects!  2D Motion Graphics in Nuke!
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py goodbye-after-effects-2d-motion-graphics-in-nuke <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -337,30 +333,63 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:52] tutorials/frames/goodbye-after-effects-2d-motion-graphics-in-nuke/frame_000.jpg
+- [4:20] tutorials/frames/goodbye-after-effects-2d-motion-graphics-in-nuke/frame_001.jpg
+- [5:23] tutorials/frames/goodbye-after-effects-2d-motion-graphics-in-nuke/frame_002.jpg
+- [5:53] tutorials/frames/goodbye-after-effects-2d-motion-graphics-in-nuke/frame_003.jpg
+- [6:40] tutorials/frames/goodbye-after-effects-2d-motion-graphics-in-nuke/frame_004.jpg
+- [8:45] tutorials/frames/goodbye-after-effects-2d-motion-graphics-in-nuke/frame_005.jpg
+- [12:02] tutorials/frames/goodbye-after-effects-2d-motion-graphics-in-nuke/frame_006.jpg
+- [12:52] tutorials/frames/goodbye-after-effects-2d-motion-graphics-in-nuke/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Replace hand-animated 2D motion graphics (traditionally an After Effects job) with the GPU-accelerated `ScreenFX` plugin's library of customizable, near-real-time procedural nodes (shape/pattern generators, offset/distortion tools, transitions), layering multiple nodes together — masked and multiplied against each other — to build complex sci-fi HUD/hologram/CRT-screen graphics directly in Nuke's compositing pipeline, including 3D-tracked screen graphics projected onto a card that matches a rotating CG model.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy tours the `ScreenFX` plugin (its own commercial Nuke plugin) for building 2D motion graphics — glitches, transitions, color distortions, HUD/hologram/CRT effects — without leaving Nuke or hand-animating in After Effects. Central to the workflow is `PolyFlow`, a shape generator with a "rain offset" control that fades/flips small shapes on and off for organic-feeling motion hard to fake with plain noise, plus size/edge/fade controls and built-in ID-pass-style color modes (like a CG object-ID pass, used to target different shape regions independently) and shape/side variation for sci-fi vs. other looks. Two offset/distortion tools — a "blocky lines" node (image scattered/distorted through animated rectangles, also usable as a swipe-transition alpha via its preview mode) and a "warp bar" (CRT-style vertical scan distortion) — are layered with PolyFlow (shrunk to near-pixel size) to build a convincing retro TV static/off-screen effect in three simple layers, each independently timed. For a sci-fi hologram graphic, a cheap Blender wireframe render (multiple flat colors for later independent targeting) is multiplied against PolyFlow for a colored-pixel look, then combined with `JitterDuplicate` (randomly splits/duplicates color as an effect appears, replacing what would otherwise require manual Transform+Merge+chromatic-aberration+glass-warp node chains, GPU-accelerated to near-real-time) to fake a teleport/materialize jump. Additional nodes covered: `GridDrips` (Matrix-style rain pattern, multiplied against PolyFlow for more pixel texture), large-square PolyFlow variants used purely to break up flat black levels for a more "glass/screen" feel, an extensive bar-graph generator (many presets: thickness, fade, break-up, color schemes/taper), a dot-grid pattern generator (multiple spawn patterns) for scanning-line effects, and a "sci-fi rings" animated-ring node applied to a 3D-tracked card that rotates in sync with a CG engine model, so the 2D graphic reads as projected onto the rotating 3D surface in perspective. A separate free Nucopedia text-typing node (not part of the ScreenFX plugin) is used for animated text blocks.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Start from a single shape/pattern generator (`PolyFlow`) and explore its core controls: rain offset (fade/flip animation of individual shapes), center/edge size (spread vs. gradient taper), color modes (ID-pass-style per-shape/per-pattern targeting), and shape/sides count for stylistic variation.
+2. Combine a shrunk-down PolyFlow (near-pixel scale) with a `Warp Bar` node (CRT-style vertical scan distortion) and a `Blocky Lines` node (used here as a swipe-transition matte via its alpha/preview mode) to build a layered, independently-timed off-screen/CRT-static base effect in three simple steps.
+3. For CG-sourced graphics: render a cheap low-poly wireframe (e.g. from Blender) with multiple flat colors baked in, so later nodes can target different colored regions independently — same principle as a CG ID/Cryptomatte pass but authored directly into the asset's colors.
+4. Multiply a colored wireframe render against a `PolyFlow` pattern to get a colored-pixel/sci-fi hologram texture quickly.
+5. Use `JitterDuplicate` to fake a teleport/materialize "jump" — it randomly splits and duplicates color as the effect plays, replacing a manual Transform + Merge + chromatic-aberration + glass-warp node chain with one GPU-accelerated node running near real time.
+6. Layer a `GridDrips` (Matrix-rain-style) pattern multiplied against PolyFlow for additional pixel-scale texture/detail.
+7. Use large-scale PolyFlow squares merged over themselves purely to break up otherwise pitch-black regions of a screen graphic, simulating inner-glass reflections/imperfections rather than a flat black.
+8. Add a bar-graph generator node (extensive presets: thickness, fade, break-up, taper, multiple color schemes) layered dark-over-bright and blurred slightly to blend black levels for a more "screen-glass" feel.
+9. Add a dot-grid pattern generator (multiple built-in spawn patterns) for scanning-line/HUD-style detail.
+10. Add animated text via a separate free Nucopedia typing gizmo (outside the ScreenFX plugin) for readable HUD text blocks.
+11. For graphics that need to sit convincingly on a rotating/moving 3D object (e.g. sci-fi rings circling an engine): place the 2D `ScreenFX` graphic (e.g. "Sci-Fi Rings" node) onto a 3D card tracked/matched to the CG model's rotation, so the 2D motion graphic reads as if physically projected onto the rotating 3D surface when viewed through the camera.
+12. Design every graphic element with narrative purpose (what story beat is this graphic communicating), using the plugin's speed to iterate through many looks quickly rather than hand-building each element from scratch.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `PolyFlow` (ScreenFX shape generator) — rain offset, center/edge size, fade, color modes (ID-pass-style per-shape targeting), shape/sides count, fill toggle; usable at both pixel-scale and large-scale
+- `Warp Bar` (ScreenFX) — CRT-style vertical scan-line distortion, multiple styles affecting color/warp
+- `Blocky Lines` (ScreenFX) — animated rectangle-driven image distortion/offset; also usable as an alpha-based swipe-transition matte via preview mode
+- `JitterDuplicate` (ScreenFX) — GPU-accelerated random color split/duplicate for teleport/materialize/glitch jumps, replacing a manual Transform+Merge+chromatic-aberration+glass-warp chain
+- `GridDrips` (ScreenFX) — Matrix-style rain pattern generator
+- Bar-graph generator (ScreenFX) — extensive preset library for loading bars/data graphs (thickness, fade, break-up, color schemes, taper)
+- Dot-grid pattern generator (ScreenFX) — multiple spawn patterns for scanning/HUD dot effects
+- "Sci-Fi Rings" node (ScreenFX) — animated ring graphic, applied via a 3D-tracked card matched to a rotating CG model for perspective-correct screen-graphic projection
+- Nucopedia text-typing gizmo (free, not part of ScreenFX) — animates typed text blocks
+- Cheap multi-color Blender wireframe render — used as an ID-pass substitute to target regions for independent grading/pattern targeting
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (3D system used for the card-projected sci-fi rings). No on-screen version banner or OCIO metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+motion-graphics, gizmo, compositing, 3d-system, digital-matte-painting, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares the `ScreenFX` plugin with Create a Movie Quality Sci-Fi Laser Effect in Nuke (`create-a-movie-quality-sci-fi-laser-effect-in-nuke.md`), How I Made a FULL Star Wars Cinematic from JUST One Screenshot (`how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot.md`), and How I Use Compositing to Skip THOUSANDS of Hours Rendering (`how-i-use-compositing-to-skip-thousands-of-hours-rendering.md`) — all use ScreenFX's procedural pattern library for sci-fi/hologram/glitch effects.
