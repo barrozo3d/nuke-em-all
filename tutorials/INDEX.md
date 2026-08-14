@@ -493,6 +493,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/this-free-tool-warps-images-in-a-way-youve-never-seen.md
 - **Related:** Goodbye After Effects! 2D Motion Graphics in Nuke! (`goodbye-after-effects-2d-motion-graphics-in-nuke.md`), Create a Movie Quality Sci-Fi Laser Effect in Nuke (`create-a-movie-quality-sci-fi-laser-effect-in-nuke.md`) — share roto/procedural stock-element redirection themes.
 
+
+### Moire Patterns | Nuke Tutorial [Intermediate]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=gS4zXJ6sLs8
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/moire-patterns-nuke-tutorial-intermediate.md
+
 ---
 
 ## Tag Reference
