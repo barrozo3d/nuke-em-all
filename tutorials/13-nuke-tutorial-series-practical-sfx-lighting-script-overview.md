@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=NHeqhKOLFgU
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (overview video; live compositing shown but not stepped through node-by-node — that's deferred to Parts 2/3)"
+version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)"
+tags: [compositing, roto, rotopaint, grading, fx-simulation, digital-matte-painting, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/13-nuke-tutorial-series-practical-sfx-lighting-script-overview/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # [1/3] Nuke Tutorial Series (Practical SFX, Lighting, Script Overview)
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py 13-nuke-tutorial-series-practical-sfx-lighting-script-overview <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro And Overview [0:00]
@@ -469,30 +465,54 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:51] tutorials/frames/13-nuke-tutorial-series-practical-sfx-lighting-script-overview/frame_000.jpg
+- [6:46] tutorials/frames/13-nuke-tutorial-series-practical-sfx-lighting-script-overview/frame_001.jpg
+- [8:40] tutorials/frames/13-nuke-tutorial-series-practical-sfx-lighting-script-overview/frame_002.jpg
+- [10:12] tutorials/frames/13-nuke-tutorial-series-practical-sfx-lighting-script-overview/frame_003.jpg
+- [12:38] tutorials/frames/13-nuke-tutorial-series-practical-sfx-lighting-script-overview/frame_004.jpg
+- [15:01] tutorials/frames/13-nuke-tutorial-series-practical-sfx-lighting-script-overview/frame_005.jpg
+- [19:03] tutorials/frames/13-nuke-tutorial-series-practical-sfx-lighting-script-overview/frame_006.jpg
+- [25:52] tutorials/frames/13-nuke-tutorial-series-practical-sfx-lighting-script-overview/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Part 1 of a 3-part flagship demo-reel-shot series: an overview (not a node walkthrough) of the concept/iteration process, the practical (real-world) effects and lighting used to shoot the base plate, and a guided tour of the finished Nuke script's structure — establishing the shot and vocabulary that Parts 2 and 3 will break down node-by-node.
 
 ### Summary
-[PENDING EXTRACTION]
+The shot: a clay/plaster bust of a person "cracking" apart with glowing energy effects emerging from the cracks, conceived as a "shedding the past self" concept (co-designed with the author's wife, who has a fashion/traditional-art background). The video opens with a **compositing-iteration** case study (frame_000/002/003) — showing several intermediate versions side by side and narrating the actual notes-to-self along the way ("too noisy," "too saturated," "shoulder looks flat," "brighten the eyes to soften it") to make the point that even senior compositors iterate heavily and that judging an image is about motion/light/design/composition, not just technical correctness; a specific recurring fix was reducing "too many competing bright highlights" so the eye has one clear focal point, and shaping each crack-glow effect so it's bright at the leading edge and darkens as it spreads (rather than a flat uniform glow) for a more physically believable "spreading" read. **Practical effects:** the base bust was sculpted from real white modeling clay plus "clown white" Halloween face paint (frame_001, a real behind-the-scenes clip of the material), then enhanced digitally with added 2D/3D cracks and painted-in texture detail — the video argues combining practical/traditional filmmaking with CG compositing is underused given how "everything is 3D now." **Practical lighting:** the bust was lit with classic two-light **Rembrandt lighting** (key light from one side, a second light from the opposite side, plus a white-sheet bounce card to fill shadow contrast) — frame_004 shows a literal hand-drawn diagram over the reference photo explaining the technique, including its signature "inverted triangle" of light on the shadow side of the face, and a warning not to let that triangle get too large or the look breaks. A rejected lighting test using only backlighting (frame not separately captured) is shown as a "too creepy, no bounce fill" counterexample — reinforcing that a badly-lit plate can't be rescued in comp. The remainder of the video is a **project-asset/script tour**, not a tutorial: the accompanying paid project file includes 11 CG assets pulled from the author's then-unreleased "~200 simulated effects" LookDev library (liquid, nebula/galaxy, ember/fire elements — frame_005/006 show raw grayscale versions of these simulation elements), shot-specific simulations (a cloth sim with its own UV pass for wrapping ember effects onto both sides of the fabric), Tilt-Brush-generated "flow path" geometry (VR sculpting chosen specifically because Tilt Brush auto-stretches UVs to 0–1 space, sidestepping Nuke's lack of an easy way to bend textures along splines/curves), and a KeenTools-tracked 3D geo of the subject's face plus a subdivided higher-res version for displacement detail (frame_007, the 3D head geometry in Nuke's viewer). The final segment is a guided click-through of the actual (very large) finished script, narrating its overall structure at a conceptual level: 2D SmartVector-based skin enhancement with frequency separation, body tracking mostly via SmartVectors (with named "problem areas" lacking trackable detail, to be solved in Part 2), a **"darken-before-plus"** compositing habit applied to nearly every crack-glow effect (grading the background darker under an effect before merging it in with Plus, rather than a flat additive Plus alone, so the effect reads as truly emitting/spreading light rather than looking pasted-on), IDistort/rotation warps to bend 2D energy-effect footage so its flow direction follows the body's actual form instead of reading as a flat video pasted on, a from-scratch "advanced heat distortion" built from a normals-map-like pass plus GodRays and Luma keys, heavy reuse of a small number of stock ember elements via retiming/time-offset/masking different sub-regions of the same clip to fake variety ("Daisy chains" — merging same-type elements together into one precomp layer one at a time before merging that whole precomp onto the main image, for script organization), 3D displacement/cracks concentrated on the more rotated, higher-parallax face area vs. 2D-only treatment on flatter, lower-parallax areas (a deliberate cost/benefit call, not an oversight), UV-space work (flattening the face via the KeenTools track) for both crack-matte generation and **lighting-stabilized texture integration** (matching a texture into the existing lighting of the plate rather than manually color-correcting it in), and a couple of small "life" details — reflecting an ember highlight into the eye, and running one energy effect through `PolarDistort` to wrap it convincingly onto the spherical eyeball.
 
 ### Key Steps
-[PENDING EXTRACTION]
+This is an overview/context video, not a followable technique recipe — the below is the roadmap it lays out for the two follow-up videos, not steps to execute here:
+1. Concept and iterate visually before committing — review multiple comp versions, name specific problems in each (competing highlights, flat-looking areas, over-saturation) and fix them one at a time.
+2. Shape any "energy" or crack-glow effect with a bright leading edge that darkens as it spreads (not a flat glow) for a more physically convincing "spreading" read.
+3. Where possible, shoot practical/real reference material (clay/paint sculpt, real Rembrandt-lit photography) as the base, then enhance digitally — rather than building everything from scratch in CG.
+4. Light practical reference with intentional technique (two-light Rembrandt setup + bounce fill) — a badly-lit source plate can't be fixed in comp.
+5. (Roadmap for Part 2) Tracking with KeenTools face tracker/builder, SmartVectors, RotoPaint, mixing multiple track types, 2D/3D face enhancement, 3D-light stabilization for texture integration.
+6. (Roadmap for Part 3) Using stock elements to create complex alpha mattes, 3D relighting, making elements interact with the surface they're on, and more detail on the Tilt Brush VR flow-path workflow.
+7. Organize a large script with "Daisy chains" — group same-type elements (e.g. all embers) into one precomp layer merged incrementally, then merge that whole precomp onto the main chain as a single step, instead of a flat pile of individual merges.
+8. Reuse a small number of stock simulation elements broadly by retiming/time-offsetting and masking different regions of the same clip, rather than sourcing many separate elements.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke concepts named (not demonstrated step-by-step in this video):** SmartVector tracking, frequency separation, RotoPaint, IDistort/Transform-based perspective warps, GodRays + Luma keys for heat-distortion, `PolarDistort` (wrapping an effect onto the spherical eye — same gizmo used in several other tutorials in this KB), UV-space work via a KeenTools face track, Grade/darken-then-Plus compositing pattern, precomp "Daisy chain" script organization
+- **Cross-app / non-Nuke tools referenced:** KeenTools (Face Builder/Face Tracker plugin, 14-day trial available) for 3D face geo tracking; Tilt Brush (VR) for flow-path geometry with pre-stretched 0–1 UV space; the author's own ~200-effect LookDev/Energy-FX simulation library (liquid, nebula/galaxy, ember/fire elements) built across "multiple different softwares, multiple different particle systems," not detailed further since this is a compositing-focused project
+- **Practical/physical materials:** white modeling clay + "clown white" Halloween face paint for the sculpted bust; two-light Rembrandt setup + white-sheet bounce card for practical lighting
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate (as context/roadmap) — no specific node technique is taught step-by-step here; the actual difficulty lives in Parts 2 and 3, which this video explicitly defers to.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (script shown/narrated, not built live). Version not stated on screen; per this skill's version-tracker, a 2022 upload falls in the Nuke 13.1 (Nov 2021) → 13.2 (Apr 2022) window.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, roto, rotopaint, grading, fx-simulation, digital-matte-painting, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors) and [3/3] Nuke Tutorial Series (Flow Paths, FX Integration, Design) — direct continuations of this same shot/project; Part 2 covers the tracking/SmartVector/KeenTools techniques this video only names, Part 3 covers the element-interaction/relighting/Tilt-Brush-flow-path techniques this video only previews.
+- 360 Spherical LatLong Textures | Nuke Tutorial (`360-spherical-latlong-textures-nuke-tutorial.md`), Mixed Medium VFX P1 (`mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md`), Nuke Compositing an Advanced CG Shockwave (`nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md`) — all reference or use `PolarDistort` for spherical/radial wrapping, as this video does for the eye effect.

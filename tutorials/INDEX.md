@@ -595,11 +595,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=AinQkgdR6b8
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (SmartRoto add-on)
+- **Version:** Nuke 17.x + SmartRoto plugin (Foundry AI-roto add-on, released ~July 2026)
+- **Tags:** roto, ai-tools, compositing, tracking, nuke-17, intermediate
+- **Summary:** Benchmarks Foundry's paid SmartRoto AI-roto add-on against 5 hard test shots (profile, motion blur, occlusion, lost profile, undefined profile). Workflow: draw base shape, mark hero keyframes with one-click auto-align snap, run Create Smart Keys to propagate. Handles moderate variation well with 2-5 hero keys and multi-shape mutual stabilization; breaks down under heavy occlusion, drastic color shifts, and undefined/flowing profiles.
 - **File:** tutorials/how-smart-is-state-of-the-art-ai-rotoscoping.md
+- **Related:** Rotoscoping in Nuke Tutorial | 5 Beginner Tips (`rotoscoping-in-nuke-tutorial-5-beginner-tips.md`), Why your VFX Tracks aren't "Sticking" (`why-your-vfx-tracks-arent-sticking-and-how-to-fix-it.md`) — share `roto`, `tracking`, `compositing`.
 
 
 ### Compositing Complex Shadows in Nuke [Advanced]
@@ -617,11 +618,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=NHeqhKOLFgU
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (overview/roadmap video — live compositing shown but not stepped through node-by-node)
+- **Version:** Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)
+- **Tags:** compositing, roto, rotopaint, grading, fx-simulation, digital-matte-painting, intermediate
+- **Summary:** Part 1/3 of a flagship demo-reel-shot series (a cracking clay/plaster bust with glowing energy effects). Covers the compositing-iteration mindset (fixing competing highlights, saturation, flatness across versions), practical effects (real modeling-clay + Halloween face-paint sculpt) and practical Rembrandt two-light + bounce-card lighting used to shoot the base plate, a tour of the paid project's stock LookDev-library assets (liquid/nebula/ember sims, a cloth UV pass, Tilt-Brush flow-path geometry, KeenTools-tracked 3D face geo), and a guided click-through of the finished script's structure — SmartVector skin/body tracking, a "darken-then-Plus" habit for every crack-glow effect, IDistort perspective warps to bend 2D elements along the body's form, "Daisy chain" precomp organization for reused stock elements, 3D vs. 2D crack treatment based on parallax, UV-space lighting-stabilized texture integration via the KeenTools track, and `PolarDistort`-wrapped eye effects. Sets up Parts 2 and 3, which cover each technique in node-level detail.
 - **File:** tutorials/13-nuke-tutorial-series-practical-sfx-lighting-script-overview.md
+- **Related:** [2/3] and [3/3] Nuke Tutorial Series (once ingested) — direct continuations of this same shot/project. 360 Spherical LatLong Textures (`360-spherical-latlong-textures-nuke-tutorial.md`) and others — share the `PolarDistort` gizmo.
 
 ---
 
