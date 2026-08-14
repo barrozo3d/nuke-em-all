@@ -612,6 +612,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/compositing-complex-shadows-in-nuke-advanced.md
 
+
+### [1/3] Nuke Tutorial Series (Practical SFX, Lighting, Script Overview)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=NHeqhKOLFgU
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/13-nuke-tutorial-series-practical-sfx-lighting-script-overview.md
+
 ---
 
 ## Tag Reference
