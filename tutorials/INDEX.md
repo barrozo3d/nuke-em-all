@@ -693,6 +693,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/33-nuke-tutorial-series-flow-paths-fx-integration-design.md
 
+
+### A BETTER way to Color Grade in Nuke
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=fNxqXKuAr4A
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/a-better-way-to-color-grade-in-nuke.md
+
 ---
 
 ## Tag Reference
