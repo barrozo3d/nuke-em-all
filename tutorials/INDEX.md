@@ -401,6 +401,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/a-new-way-to-design-vfx-virtual-reality-gravity-sketch-nuke-tutorial.md
 
+
+### This ONE Step Makes CG Look Cinematic (Most Artists Skip It)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=twEVqozvpMk
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/this-one-step-makes-cg-look-cinematic-most-artists-skip-it.md
+
 ---
 
 ## Tag Reference
