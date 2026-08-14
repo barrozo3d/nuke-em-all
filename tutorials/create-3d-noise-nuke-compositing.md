@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=4uHLGGcQzzM
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)"
+tags: [compositing, channels, aovs, procedural-texture, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/create-3d-noise-nuke-compositing/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Create 3D Noise | Nuke Compositing
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py create-3d-noise-nuke-compositing <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -138,30 +134,57 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:11] tutorials/frames/create-3d-noise-nuke-compositing/frame_000.jpg
+- [1:38] tutorials/frames/create-3d-noise-nuke-compositing/frame_001.jpg
+- [2:50] tutorials/frames/create-3d-noise-nuke-compositing/frame_002.jpg
+- [3:49] tutorials/frames/create-3d-noise-nuke-compositing/frame_003.jpg
+- [5:01] tutorials/frames/create-3d-noise-nuke-compositing/frame_004.jpg
+- [5:19] tutorials/frames/create-3d-noise-nuke-compositing/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Driving Nuke's `Expression` node `noise()` function directly from a CG position pass (P/world-space XYZ AOV) to generate true 3D-space procedural noise/dirt/drip patterns that stick to a surface in 3D rather than sliding across it like a 2D screen-space noise.
 
 ### Summary
-[PENDING EXTRACTION]
+Rather than using a flat 2D noise generator (which swims/slides if the camera or object moves), the technique exports a position pass (world-space XYZ) from a `ScanlineRender`'s Shader tab (output vector "surface point," channel `P`), shuffles it to RGB, then feeds `R,G,B` into an `Expression` node's alpha channel as `noise(R,G,B)` — because the position pass encodes true 3D coordinates, the resulting noise pattern is locked to the object's surface in 3D space rather than screen space. A user-added `scale` slider (Floating Point Slider, max 30) multiplied into each expression term controls the noise frequency. A `Grade` node before the expression (with **Black Clamp unchecked**, since position-pass values can be negative and get clipped by the default clamp) with gain split per-channel gives independent X/Y/Z-axis scaling of the noise pattern (red=X, green=Y, blue=Z). Practically demonstrated adding extra water-drip detail/highlights to a CG car's wheels: gain up the pattern for a base highlight, shuffle the alpha into RGB and re-key to get tinier drip dots, then offset a duplicate of the same pattern by 1 pixel and use it to darken underneath — faking a simple drop-shadow for a pseudo-3D raised-drip look.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. In the `ScanlineRender` node's Shader tab, enable output vectors and set the surface-point output channel to `P` (position/world-space pass).
+2. Add a `Shuffle` node reading channel `P`, confirming R/G/B hold the three world-space axes.
+3. Add an `Expression` node. In the alpha channel box, type `noise(R,G,B)` — this samples 3D Perlin-style noise using the position pass as the lookup coordinate, producing a pattern that stays fixed to the surface in 3D (not screen space).
+4. Add a custom User Knob: right-click node → Manage User Knobs → New → Floating Point Slider, name/label `scale`, set max to 30.
+5. Multiply the `scale` knob into each of R, G, B inside the expression (e.g. `R*scale`, `G*scale`, `B*scale`) so the slider controls noise frequency/size interactively.
+6. For finer per-axis control, insert a `Grade` node before the Expression node; **uncheck Black Clamp** (critical — position-pass values are frequently negative, and Nuke's default black clamp on Grade destroys/clips that data, breaking the effect).
+7. Split the Grade's gain into per-channel (R/G/B) controls: red scales the pattern along X, green along Y, blue along Z — giving independent axis stretching of the noise.
+8. Mask/limit the pattern with roto shapes as needed for targeted dirt/drip placement (e.g. only around the base of an object).
+9. Practical build-up for drips: gain the base noise pattern for a soft highlight, `Shuffle` the resulting alpha into all RGB channels, then re-key that result to isolate tiny bright dots (small specular highlights) in the same positions as the base pattern.
+10. Duplicate the same expression pattern, `Transform` it by 1 pixel offset, and use it to darken (subtract/multiply) beneath the highlight layer — creating a fake drop-shadow so the drip reads as slightly 3D/raised rather than flat-painted.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `ScanlineRender` — Shader tab → output vectors → Surface Point enabled, channel set to `P` (world-space position AOV).
+- `Shuffle` — reads the `P` channel into viewable R/G/B.
+- `Expression` — core node; alpha channel formula `noise(R,G,B)`, later `R*scale`, `G*scale`, `B*scale` per channel.
+- Custom User Knob — Floating Point Slider named `scale`, max value 30, drives noise frequency.
+- `Grade` — inserted before the Expression node; **Black Clamp must be unchecked** to preserve negative position-pass values; Gain split per-channel (R/G/B = X/Y/Z axis scale) for anisotropic pattern control. Gamma noted as usable but tends to "break" the pattern.
+- Roto shape — optional mask to constrain where the pattern/dirt appears.
+- `Transform` — 1-pixel offset of a duplicate pattern stream, used to fake a drop-shadow/3D-raised look on drip highlights.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — requires understanding of AOV/position-pass workflows, the `Expression` node's function syntax, and why Grade's Black Clamp default breaks negative-valued data passes.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — version not stated on screen or in narration. 2020 upload, predates this skill's release-notes backfill (starts at Nuke 13.0/March 2021), so treat as Nuke ~12.x era rather than a specific point release.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, channels, aovs, procedural-texture, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `compositing`, `channels`, `aovs`, `procedural-texture`, `intermediate`; both drive procedural comp-side effects entirely from a single world-position AOV.
+- Nuke Tutorial | Compositing a Rainbow [Intermediate] (`nuke-tutorial-compositing-a-rainbow-intermediate.md`) — shares `compositing`, `channels`, `procedural-texture`, `intermediate`; both build procedural patterns purely through channel/expression manipulation.

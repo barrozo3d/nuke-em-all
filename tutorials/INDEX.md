@@ -139,11 +139,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=4uHLGGcQzzM
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified (2020 upload, predates this skill's release-notes backfill which starts at 13.0/March 2021 — likely Nuke ~12.x era)
+- **Tags:** compositing, channels, aovs, procedural-texture, intermediate
+- **Summary:** Drives the `Expression` node's `noise(R,G,B)` function from a CG position pass (`ScanlineRender` Shader tab surface-point output, channel `P`) so the resulting noise pattern is locked to the object's surface in 3D space rather than sliding in screen space. A custom `scale` slider controls frequency; a `Grade` node (Black Clamp unchecked — position data goes negative) with per-channel gain gives independent X/Y/Z axis scaling. Practical demo: adds extra water-drip detail/highlights with a faked 1px-offset drop-shadow for pseudo-3D relief on a CG car's wheels.
 - **File:** tutorials/create-3d-noise-nuke-compositing.md
+- **Related:** Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`), Nuke Tutorial | Compositing a Rainbow [Intermediate] (`nuke-tutorial-compositing-a-rainbow-intermediate.md`) — shares `compositing`, `channels`, `procedural-texture`, `intermediate`.
 
 ---
 
