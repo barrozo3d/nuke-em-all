@@ -796,6 +796,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/normally-it-costs-50000-for-this-camera-move.md
 
+
+### Cleanplate Projections | Nuke Compositing Guide
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=mEeCZFjpO8s
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/cleanplate-projections-nuke-compositing-guide.md
+
 ---
 
 ## Tag Reference
