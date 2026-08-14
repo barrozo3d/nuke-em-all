@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=EDPoJuffubU
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (mentioned only — compositing node work not shown on screen)"
+version: "not specified"
+tags: [compositing, roto, tracking, digital-matte-painting, procedural-texture, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/i-brought-a-greenscreen-in-arctic-conditions-for-this-film/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # I Brought a Greenscreen in Arctic Conditions for this Film
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py i-brought-a-greenscreen-in-arctic-conditions-for-this-film <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -119,30 +115,54 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:15] tutorials/frames/i-brought-a-greenscreen-in-arctic-conditions-for-this-film/frame_000.jpg
+- [2:33] tutorials/frames/i-brought-a-greenscreen-in-arctic-conditions-for-this-film/frame_001.jpg
+- [2:56] tutorials/frames/i-brought-a-greenscreen-in-arctic-conditions-for-this-film/frame_002.jpg
+- [3:18] tutorials/frames/i-brought-a-greenscreen-in-arctic-conditions-for-this-film/frame_003.jpg
+- [3:50] tutorials/frames/i-brought-a-greenscreen-in-arctic-conditions-for-this-film/frame_004.jpg
+- [4:15] tutorials/frames/i-brought-a-greenscreen-in-arctic-conditions-for-this-film/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+BTS/pipeline case study (part 1 of a multi-part series) documenting on-location arctic filming and practical prop-building strategy that sets up an easier VFX pipeline downstream: using a lit, marker-tracked physical stand-in prop (a light-up beach ball) instead of a fragile/reflective real object (glass/fish tank) so a CG element can be tracked and integrated without capturing an unwanted real-world reflection, plus an "invisible visual effects" object-removal step (clean-plate the practical prop out) before adding the final CG replacement.
 
 ### Summary
-[PENDING EXTRACTION]
+Part 1 of a multi-part Compositing Academy breakdown documents the physical production side of an arctic-set VFX short: cutting a hole in real ice, building a small green-screen rig around it with tracking markers (rotoed off where it doesn't fully cover the actor), capturing on-set reference data (texture references, a pre-shoot lighting test, and set measurements for later virtual scene reconstruction), and building key practical props. The central prop-design decision is a light-up beach ball (from Amazon) duct-taped to a handle with hand-drawn black tracking markers, used as a lightweight, trackable physical light source and CG-anchor stand-in for a sci-fi orb — deliberately avoiding a real glass/fish-tank object because it would pick up unwanted reflections of the real set (trees, etc.) and risks shattering on set. A kale plant is 3D-scanned via Polycam for later use inside the CG sphere. Face/prop tracking is captioned as done with the third-party `KeenTools` tracker. The video previews the pipeline's VFX stage at a high level — asset building in Adobe Medium (sculpting) and Gaia (terrain generation), a purchased ship asset animated flying through a CG ice canyon with a following animated camera, procedural texture/shader dressing, effects passes, and critically "invisible visual effects" — removing the practical prop from the plate (clean-plate/paint-out) before the CG replacement can be added on top — followed by lighting/compositing described only in general terms (hundreds of color corrections, blended elements bridging practical and CGI, added smoke elements reused for e.g. vehicle headlight beams, lens dirt as a ship passes camera, and faked eye reflections) without demonstrating specific Nuke nodes on screen.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Build a minimal on-location green-screen rig sized only to the subject (here, cut into real ice) with tracking markers around its edges/larger markers on the sides, and roto off any subject areas that extend beyond the screen's coverage.
+2. Capture on-set reference data before the main shoot: texture references, a pre-shoot lighting test, and physical set measurements (camera-to-subject distance, scale) to support later virtual/CG scene reconstruction.
+3. Design practical stand-in props around what the VFX pipeline actually needs, not just visual similarity: choose a lightweight, trackable, self-lit substitute (a light-up beach ball with hand-drawn tracking markers) over a more "realistic" option (real glass) specifically because the realistic option would introduce unwanted real-environment reflections and physical risk (breaking) on set.
+4. 3D-scan small practical elements needed inside a later CG composite (e.g. a plant) with an accessible tool (Polycam) rather than building them from scratch in CG.
+5. Track practical elements/faces using dedicated tracking software (`KeenTools`, a third-party Nuke/host-integrated tracker) rather than relying solely on Nuke's built-in Tracker/PlanarTracker for this shot.
+6. Build the CG environment from a mix of sculpted (Adobe Medium), procedurally-generated terrain (Gaia), and purchased assets (a ship model), animated together with a following camera.
+7. Apply "invisible visual effects": before compositing in the final CG replacement (e.g. the CG sphere/orb), first remove the practical stand-in prop from the plate via clean-plate/object-removal techniques, since CG can't simply be layered on top of the physical prop still present in frame.
+8. Reuse practically-filmed elements (e.g. smoke) across multiple in-shot purposes (such as vehicle headlight beams) rather than sourcing/creating a unique element per use case.
+9. Finish with a compositing pass described only in general terms — extensive per-region color correction, blending CG and practical elements, lens dirt for foreground-object passes (e.g. a ship flying past camera), and faked specular eye reflections — not demonstrated node-by-node on screen in this video.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- No Nuke nodes are shown on screen in this video — the compositing stage is summarized verbally only.
+- `KeenTools` (third-party tracker) — captioned as the tool used to track a practical element/face onto the CG pipeline.
+- Practical prop design substitution — light-up beach ball + hand-drawn tracking markers used in place of a real glass/fish-tank prop, to avoid unwanted real-environment reflections and on-set breakage risk while still providing a trackable, self-lit physical anchor.
+- Polycam — mobile photogrammetry scan of a small real object (a plant) for later CG use.
+- "Invisible visual effects" / clean-plate object removal — removing a practical stand-in prop from the plate before compositing in its CG replacement.
+- Adobe Medium (sculpting) + Gaia (terrain generation) — CG environment asset creation tools referenced.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Not applicable at the node level — this is a production-planning/BTS case study (part 1 of a series); no Nuke compositing technique is demonstrated on screen. The practical-prop-substitution and clean-plate-before-CG concepts are Beginner/Intermediate to apply.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke is referenced only as the eventual compositing tool ("hundreds of color corrections," blending CG/practical elements) but no Nuke UI, node graph, or version indicator appears on screen — version not specified, and this entry should not be relied on for any concrete Nuke node technique.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, roto, tracking, digital-matte-painting, procedural-texture, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares the BTS/pipeline-case-study format (Nuke mentioned but not demonstrated) with Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`) and How I Faked a $200M Movie Scene (In my DRIVEWAY!) (`how-i-faked-a-200m-movie-scene-in-my-driveway.md`) — all document on-location planning/prop-building workflows rather than node-level Nuke technique.

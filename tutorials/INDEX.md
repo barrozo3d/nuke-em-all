@@ -511,11 +511,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=EDPoJuffubU
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (mentioned only — compositing node work not shown on screen)
+- **Version:** not specified
+- **Tags:** compositing, roto, tracking, digital-matte-painting, procedural-texture, intermediate
+- **Summary:** BTS pipeline case study (part 1/3): arctic on-location green-screen rig built into real ice, practical prop design favoring a lit, marker-tracked beach ball over real glass (avoids unwanted reflections/breakage risk), Polycam scanning, `KeenTools` prop tracking, and an "invisible visual effects" clean-plate step (remove the practical prop before compositing in its CG replacement). Actual Nuke compositing described only verbally, not shown on screen.
 - **File:** tutorials/i-brought-a-greenscreen-in-arctic-conditions-for-this-film.md
+- **Related:** Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`), How I Faked a $200M Movie Scene (In my DRIVEWAY!) (`how-i-faked-a-200m-movie-scene-in-my-driveway.md`) — share the BTS/pipeline-case-study format.
 
 ---
 
