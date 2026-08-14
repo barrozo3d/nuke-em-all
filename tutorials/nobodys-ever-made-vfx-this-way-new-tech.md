@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=3d9ycMKf65U
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (mentioned only — final compositing pass not shown on screen)"
+version: "not specified"
+tags: [virtual-production, compositing, camera-tracking, gaussian-splats, digital-matte-painting, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/nobodys-ever-made-vfx-this-way-new-tech/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Nobody’s Ever Made VFX This Way (New Tech)
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py nobodys-ever-made-vfx-this-way-new-tech <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -195,30 +191,53 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:03] tutorials/frames/nobodys-ever-made-vfx-this-way-new-tech/frame_000.jpg
+- [4:03] tutorials/frames/nobodys-ever-made-vfx-this-way-new-tech/frame_001.jpg
+- [7:03] tutorials/frames/nobodys-ever-made-vfx-this-way-new-tech/frame_002.jpg
+- [7:48] tutorials/frames/nobodys-ever-made-vfx-this-way-new-tech/frame_003.jpg
+- [8:37] tutorials/frames/nobodys-ever-made-vfx-this-way-new-tech/frame_004.jpg
+- [9:00] tutorials/frames/nobodys-ever-made-vfx-this-way-new-tech/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+This is a behind-the-scenes pipeline case study, not a node-by-node Nuke tutorial: it documents an on-location virtual-production workflow (Lightcraft Jet Set real-time AR camera tracking + XGrids handheld LiDAR/Gaussian-splat scanning + photogrammetry) used to shoot a CG dragon composited into a real Icelandic cave, with Nuke named only as the final finishing/compositing step (not demonstrated on screen).
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy documents an end-to-end virtual-production shoot: a hero CG dragon asset (from iCandy XYZ, fully rigged) is paired with a photogrammetry reconstruction of a hard-to-access cave (built from tourist photos/videos found online, since the location couldn't be scanned in advance) so an animator could block the creature's interaction with terrain before ever visiting the site. A lightweight ~24,771-poly proxy mesh of the dragon runs in real time inside Lightcraft Jet Set (a portable, phone-based virtual-production/AR app — the free tier used here, paid "cine" tier available for cinema-camera rigs) so the crew can literally see and frame the CG character live through an iPhone while filming on a Sony FX3, with Jet Set recording each camera position so the virtual scene matches the real camera later in post. On location, an XGrids handheld LiDAR scanner is used to capture a dense point cloud / Gaussian splat of the actual cave interior for camera-track refinement and lighting reference. The video frames virtual production as broader than LED-volume stages (tracing the concept back to James Cameron's Simulcam on the original Avatar) and states, without demonstrating, that Nuke is where the final shots get compositing/finishing to reach feature-level quality.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Source a high-quality rigged hero CG asset (here: a dragon from iCandy XYZ) before committing to a location-dependent shoot.
+2. When the shoot location can't be scanned in advance, reconstruct a rough proxy model via photogrammetry from publicly available tourist photos/videos of the site, sufficient to let an animator block character-to-terrain interaction ahead of time.
+3. Reverse the normal VFX shoot order for virtual production: animate the CG character first (in the reconstructed environment) so the crew has something concrete to frame and react to on set, rather than filming an empty plate and adding CG later.
+4. Build a lightweight real-time proxy mesh (order of ~25K polys) from the high-resolution hero asset so it can run smoothly on a phone-based AR tracking app.
+5. On location, use a portable phone-based virtual-production app (Lightcraft Jet Set) with a calibrated lens to track the primary camera (here, a Sony FX3) and overlay the CG character live in the viewfinder/monitor, letting the crew frame and direct against the actual CG performance in real time.
+6. Jet Set records each camera position per take, so the corresponding virtual camera matches the real camera's position for post-production alignment.
+7. Capture on-set reference data before/during filming: HDRI captures and a handheld LiDAR scan (XGrids scanner) producing a dense point cloud, refinable into either a mesh or a Gaussian splat, used both to refine on-set tracking data and as a detailed lighting reference for later CG integration.
+8. Review Jet Set's saved preview clips per camera setup to choose which takes to actually light and composite.
+9. Finish each selected shot in Nuke to bring it to feature-level quality (this step is stated but not shown on screen in this video).
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- No Nuke nodes are shown on screen in this video — it is a pipeline/BTS documentary, not a node-graph tutorial.
+- Lightcraft Jet Set — phone-based real-time AR virtual-production app; free tier (iPhone) and paid "cine" tier (connects to a cinema camera); records per-take camera position data for post alignment.
+- XGrids handheld LiDAR scanner — captures dense point clouds on set; exportable as a mesh or a Gaussian splat; used for track refinement and lighting reference.
+- Photogrammetry software (unnamed) — reconstructs a rough environment model from crowd-sourced tourist photos/video when the location can't be pre-scanned.
+- Proxy mesh decimation — hero CG asset reduced to a lightweight (~25K poly) real-time stand-in for on-set AR tracking.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Not applicable — this is a behind-the-scenes pipeline case study; no node-level Nuke compositing instruction is shown on screen (the video states Nuke is used to finish the shots but does not demonstrate it).
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke is named as the tool used to finalize/composite the shots to feature-level quality, but no Nuke UI, node graph, or version indicator appears on screen anywhere in this video — version not specified, and this entry should not be relied on for any concrete Nuke technique.
 
 ### Tags
-[PENDING EXTRACTION]
+virtual-production, compositing, camera-tracking, gaussian-splats, digital-matte-painting, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+First entry tagged `virtual-production`/`gaussian-splats` in the knowledge base — cross-reference against Nuke 17.0/17.1's native Gaussian Splat toolset (`references/release-notes-nuke-17.0.md`, `release-notes-nuke-17.1.md`) since the XGrids scanner shown here produces splat data that could plausibly feed a native Nuke splat pipeline on current versions, though that connection is not made in this video itself.

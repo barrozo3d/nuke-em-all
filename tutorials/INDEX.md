@@ -172,15 +172,16 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Related:** Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`), Physics of Light for VFX Artists [Updated] (`physics-of-light-for-vfx-artists-updated.md`) — shares `relighting`; Create 3D Noise | Nuke Compositing (`create-3d-noise-nuke-compositing.md`) — shares `channels`, `aovs`.
 
 
-### Nobody’s Ever Made VFX This Way (New Tech)
+### Nobody's Ever Made VFX This Way (New Tech)
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=3d9ycMKf65U
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (mentioned only — final compositing pass not shown on screen)
+- **Version:** not specified
+- **Tags:** virtual-production, compositing, camera-tracking, gaussian-splats, digital-matte-painting, intermediate
+- **Summary:** Behind-the-scenes pipeline case study (not a node tutorial): a CG dragon (iCandy XYZ) is shot on location in an Icelandic cave using Lightcraft Jet Set's real-time phone-based AR camera tracking, a photogrammetry cave reconstruction built from crowd-sourced tourist photos (since the site couldn't be pre-scanned), and an XGrids handheld LiDAR scanner producing a dense point cloud/Gaussian splat for track refinement and lighting reference. Nuke is named as the finishing/compositing tool but not demonstrated on screen.
 - **File:** tutorials/nobodys-ever-made-vfx-this-way-new-tech.md
+- **Related:** First entry tagged `virtual-production`/`gaussian-splats` — cross-reference against Nuke 17.0/17.1's native Gaussian Splat toolset (`references/release-notes-nuke-17.0.md`, `release-notes-nuke-17.1.md`).
 
 
 ### Preserve Quality | Projections in Nuke
