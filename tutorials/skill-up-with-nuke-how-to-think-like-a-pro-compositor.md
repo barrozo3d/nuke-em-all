@@ -792,3 +792,4 @@ compositing, nuke-studio, color-management, ocio, tracking, keying, roto, gradin
 
 ## Related Tutorials
 - Nuke Compositing Artistic Basics (8/8): Camera Artifacts (`nuke-compositing-artistic-basics-88-camera-artifacts.md`) — shares `defocus`; that video's chromatic-aberration/bokeh/defocus observation lesson pairs with this one's practical inverted-defocus-mask focus-matching technique.
+- Planning out a Visual Effects Shot | Blender and Nuke (`planning-out-a-visual-effects-shot-blender-and-nuke.md`) — both are general compositing-methodology/mindset videos rather than node recipes; that one covers pre-production shot planning, this one covers hands-on problem-solving once a shot exists.

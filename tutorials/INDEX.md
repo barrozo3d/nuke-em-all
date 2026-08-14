@@ -463,11 +463,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=mToElxsVvZY
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Not applicable — pre-production planning in Blender's EEVEE viewport; no Nuke nodes shown
+- **Version:** not applicable
+- **Tags:** digital-matte-painting, compositing, beginner
+- **Summary:** Free "Nuke 606" course preview on shot-planning methodology, not a node walkthrough: sourcing/iterating a composition in Blender's fast EEVEE viewport, rule-of-thirds and subject-facing composition logic, and the key compositor insight that a wide shot deliberately maximizes mid-ground/background real estate compositors can cheat as 2D (matte painting, depth hazing, layering) since parallax is minimal that far back. Closes with a converging-leading-lines technique for directing viewer attention, plus a "learn in a T-shape" career-advice aside (go deep in compositing, broad in adjacent skills like lighting/3D/photography).
 - **File:** tutorials/planning-out-a-visual-effects-shot-blender-and-nuke.md
+- **Related:** Skill Up with Nuke (`skill-up-with-nuke-how-to-think-like-a-pro-compositor.md`), Physics of Light for VFX Artists [Updated] (`physics-of-light-for-vfx-artists-updated.md`) — all three are theory/methodology videos rather than node recipes.
 
 
 ### Tracking Concepts in Nuke for Beginners

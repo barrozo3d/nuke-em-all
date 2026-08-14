@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=mToElxsVvZY
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Not applicable — pre-production/planning theory using Blender's EEVEE viewport for lighting previews; no Nuke nodes shown (this is a compositor's shot-planning mindset, not a comp technique)"
+version: "not applicable"
+tags: [digital-matte-painting, compositing, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/planning-out-a-visual-effects-shot-blender-and-nuke/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 5
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Planning out a Visual Effects Shot | Blender and Nuke
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py planning-out-a-visual-effects-shot-blender-and-nuke <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -208,30 +204,48 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [3:04] tutorials/frames/planning-out-a-visual-effects-shot-blender-and-nuke/frame_000.jpg
+- [4:02] tutorials/frames/planning-out-a-visual-effects-shot-blender-and-nuke/frame_001.jpg
+- [6:17] tutorials/frames/planning-out-a-visual-effects-shot-blender-and-nuke/frame_002.jpg
+- [8:59] tutorials/frames/planning-out-a-visual-effects-shot-blender-and-nuke/frame_003.jpg
+- [10:33] tutorials/frames/planning-out-a-visual-effects-shot-blender-and-nuke/frame_004.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Pre-production shot-planning methodology (a lecture snippet from the author's paid "Nuke 606" course, included as a free preview): how to go from a vague creative premise to a fully composed, technically efficient CG shot, using Blender's EEVEE viewport for fast lighting/composition iteration and classic photography/composition principles to justify layout decisions.
 
 ### Summary
-[PENDING EXTRACTION]
+A theory/mindset video, not a node walkthrough — no Nuke nodes are shown at all; the entire demo happens in Blender's viewport. The author explains the origin of his "missile shooting down a laser" shot (which became the basis for a full "Nuke 606" course): starting from a rough concept inspired by Star Wars-style meteor/explosion sequences and referencing ArtStation environment art, he found a pre-made canyon landscape model (frame_000, a high-res canyon with a black foreground silhouette) and used Blender's real-time EEVEE renderer (frame_001) specifically because it previews lighting far faster than an offline renderer like Maya/Arnold — citing this as a major reason independent/solo filmmakers favor Blender for pre-vis. He flies the viewport camera around the 360° model hunting for a composition that satisfies rule-of-thirds framing and directional/facing logic (an off-frame-facing subject near the frame edge reads as visually awkward — demonstrated with a draw-over diagram) before settling on the final composition (frame_002/003/004, a wide canyon shot with a small ship/missile silhouette). A key structural insight for compositors specifically: anything beyond the foreground parallax plane can be "cheated" as 2D — projected matte-painted/depth-hazed 2D elements read as fully 3D at a distance because there's minimal parallax shift between overlapping objects that far back, so a wide shot deliberately maximizes the amount of mid-ground/background real estate compositors can work in cheaply (matte painting, depth haze, layering, level-of-detail), which is exactly why this shot was designed wide rather than tight. The video closes on a composition-directing technique: converging "leading lines" (the ship's facing direction, the landscape's dominant diagonal, a foreground pipe) are all aimed at the same focal point so the viewer's eye is pulled first to the brightest element then travels along the lines to the secondary point of interest (the missile) — an intentional viewer-attention path, not a fixed rule. A recurring career-advice aside: "learn in a T-shape" — go deep in your specialty (compositing) but acquire baseline skills in adjacent domains (lighting, 3D, photography/art fundamentals), since those adjacent skills directly improve judgment in the deep specialty.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Start from a rough creative premise (here: "a missile shooting down a laser," inspired by referenced media like Star Wars meteor sequences) — keep the underlying concept but push for an original composition rather than recreating the reference directly.
+2. Source or build a base environment (here: a purchased/found ArtStation landscape model, cut down to a low-res proxy for fast iteration, high-res swapped in for final checks).
+3. Use a real-time viewport renderer (Blender EEVEE) to rapidly preview lighting while exploring camera angles — orders of magnitude faster than an offline path-tracer for this exploratory phase.
+4. Fly the camera around a full 360° environment hunting for a composition that satisfies rule-of-thirds placement and subject-facing logic — a subject placed near a frame edge but facing further off-frame reads as visually awkward; facing inward toward the frame reads correctly.
+5. Once a base composition is chosen, deliberately favor a **wide shot** specifically because compositors have the most creative/technical flexibility in the mid-ground and background: minimal parallax that far back means those layers can be handled as 2D (matte painting, depth hazing, layering, level-of-detail projected onto simplified geometry) instead of fully modeled 3D — this is a conscious trade planned at the composition stage, not an afterthought.
+6. Iterate lighting separately with cost/quality tradeoffs in mind for limited-asset/indie productions (author notes a dedicated lecture on this exists in the full course).
+7. Use directional "leading lines" from multiple elements in the frame (subject facing direction, landscape's dominant diagonal, a foreground prop) converging toward the same focal point, so the viewer's eye lands on the brightest/most prominent element first, then travels the line toward a secondary point of interest — an intentional way to direct attention rather than leaving composition to chance.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- No Nuke nodes used in this video — 100% Blender viewport (EEVEE real-time preview) and hand-drawn composition diagrams (rule-of-thirds grid, facing-direction arrows, leading-line diagrams)
+- Concepts referenced for later lectures (not covered here): map painting, depth hazing, layering, level-of-detail — the standard CG-compositing toolkit this shot was deliberately designed to exercise
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — no software-specific skill required; this is applied art/composition theory and production planning mindset, explicitly aimed at people who may have limited or no 3D experience.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Not applicable — no Nuke usage in this video. Blender (EEVEE) is used only for camera/lighting pre-vis of the shot being planned; the actual compositing work this shot planning feeds into is covered in the author's separate paid "Nuke 606" course, not in this free preview clip.
 
 ### Tags
-[PENDING EXTRACTION]
+digital-matte-painting, compositing, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Skill Up with Nuke | How To Think Like A Pro Compositor (`skill-up-with-nuke-how-to-think-like-a-pro-compositor.md`) — both are general compositing-methodology/mindset videos rather than node recipes, though that one is hands-on in Nuke while this one is pure pre-production planning.
+- Physics of Light for VFX Artists [Updated] (`physics-of-light-for-vfx-artists-updated.md`) — both are theory/foundations videos with no software-specific node work, aimed at building the art-fundamentals judgment this video explicitly argues compositors need ("learn in a T-shape").
