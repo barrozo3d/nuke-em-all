@@ -577,6 +577,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-compositing-tutorial-integration-sketching.md
 
+
+### I Made VFX Relighting WAY Better in Nuke
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=H7dBKDLXwPo
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/i-made-vfx-relighting-way-better-in-nuke.md
+
 ---
 
 ## Tag Reference
