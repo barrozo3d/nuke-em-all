@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=8yOyb0Uyq6s
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [3d-system, compositing, tracking, roto, cryptomatte, digital-matte-painting, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/this-forgotten-vfx-trick-is-still-shockingly-effective/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # This Forgotten VFX Trick Is Still Shockingly Effective
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py this-forgotten-vfx-trick-is-still-shockingly-effective <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -186,30 +182,60 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:10] tutorials/frames/this-forgotten-vfx-trick-is-still-shockingly-effective/frame_000.jpg
+- [3:19] tutorials/frames/this-forgotten-vfx-trick-is-still-shockingly-effective/frame_001.jpg
+- [6:10] tutorials/frames/this-forgotten-vfx-trick-is-still-shockingly-effective/frame_002.jpg
+- [7:18] tutorials/frames/this-forgotten-vfx-trick-is-still-shockingly-effective/frame_003.jpg
+- [8:16] tutorials/frames/this-forgotten-vfx-trick-is-still-shockingly-effective/frame_004.jpg
+- [10:41] tutorials/frames/this-forgotten-vfx-trick-is-still-shockingly-effective/frame_005.jpg
+- [15:12] tutorials/frames/this-forgotten-vfx-trick-is-still-shockingly-effective/frame_006.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+The "sprite card" trick from 1980s/90s video games (2D texture on a single flat polygon that reads as 3D up to roughly a 70° viewing angle before it visibly flattens out) applied to compositing: track a practical saliva element onto a 3D card parented to a CG creature's mouth, instead of building a full CG/simulated saliva effect.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy merges a licensed practical saliva-strand element (shot by iCandy XYZ, the studio behind the CG dragon) onto a CG dragon's mouth using the classic game-engine "billboard sprite" concept: a 2D video texture mapped onto a single 3D card, tracked in 3D space to the mouth's motion via Card3D/ScanlineRender, which reads convincingly as volumetric saliva as long as the viewing angle stays under roughly 70-90°. Covers matching card aspect ratio to source footage, correcting UV orientation with flip/flop/turn in Reformat, masking off unwanted areas with animated RotoPaint (grabbed to format, "replace" then "stencil" merge operation), extending a too-short element by reversing playback with the Retime node in "motion" mode with input timing set to frame (creates a believable back-and-forth jiggle rather than an obvious reverse), and — critically — solving the card's breaking point near 90° by abandoning the 3D system entirely for those few frames and hand 2D-tracking a jiggling piece of the source footage directly over the mouth instead.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Source a practical filmed element (here: a licensed saliva-strand clip) sized/timed appropriately to the target CG action.
+2. Understand the sprite-card limit before starting: a flat 2D-textured 3D card convincingly reads as volumetric up to about a 70° viewing angle; beyond ~90° it visibly flattens and breaks.
+3. Track the 3D card to the target CG geometry's motion (here, already pre-tracked to the dragon's mouth on both left and right sides) so the card's translation/rotation follows the creature.
+4. Match the card's aspect ratio to the source footage's aspect ratio first (e.g. reformat a square card to a rectangle) to avoid unnecessary later fitting problems.
+5. Correct UV orientation on the card with `Reformat`'s flip/flop/turn (or a manual `Transform` rotation) until the texture faces the right direction in 3D space.
+6. Align the card position/scale (X/Y `Transform`) so the element's edges match the CG mouth's edges.
+7. Mask off unwanted parts of the texture (e.g. visible base of the element, teeth showing through) with an animated `RotoPaint`: grab the roto to the card's format, use "replace" to clear upstream alpha data, then switch the merge operation to "stencil" to cut the shape out.
+8. Clean up remaining noise/grain in the masked matte with a black-point lift and zero saturation via `Grade`/`Saturation`.
+9. Enable motion blur on the CG render (e.g. 15 samples) to match the practical element's natural blur once fine-tuning is complete.
+10. Fix an element that's too short for the shot's needed duration: use a `Retime` node in "motion" mode with input timing set to "frame" — key the current frame at itself, then key a later frame to an earlier source frame, so time appears to reverse subtly and extend the action (e.g. mouth continuing to jiggle) without reading as an obvious backwards-playing clip.
+11. For the few frames where the card's angle exceeds the sprite trick's working range (near 90°, e.g. around frame 316-320): abandon the 3D card/ScanlineRender system entirely for just those frames, manually 2D-track (X/Y only) a jiggling section of the source footage directly over the mouth in screen space, and blend it in with a touch of motion blur.
+12. Repeat the whole process for the second (mirrored) card, reusing existing mattes (e.g. lip edges) as stencils to save re-rotoing.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `Card3D` / `ScanlineRender` + `Camera` — 3D sprite-card setup, texture mapped onto a single flat polygon tracked in 3D space
+- `Reformat` — aspect-ratio matching and flip/flop/turn UV orientation correction
+- `Transform` — 2D X/Y alignment of the card texture; also used for manual per-frame 2D tracking on the broken-angle frames
+- `RotoPaint` — animated masking; "replace" to clear upstream alpha, "stencil" merge operation to cut the shape
+- `Grade` / `Saturation` — matte cleanup (black-point lift, desaturate to remove color noise)
+- `Retime` (motion mode, input timing = frame) — extends a too-short element via a believable subtle reverse-jiggle rather than an obvious backwards clip
+- Cryptomatte — mentioned as a general aid for isolating/masking CG regions ("use the cryptomats to your advantage")
+- CG render motion blur (15 samples referenced) — matched to the practical element's natural blur
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX (3D card/ScanlineRender system). No on-screen version banner or OCIO metadata visible in the captured frames — version not specified. Part of the author's "CG Integration Masterclass" course.
 
 ### Tags
-[PENDING EXTRACTION]
+3d-system, compositing, tracking, roto, cryptomatte, digital-matte-painting, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares `3d-system` and `tracking` with Nuke Compositing Technique | Card3D + PixelsToPos [Beginners] (2021, not yet ingested) — both use the Card3D/ScanlineRender sprite-card technique.

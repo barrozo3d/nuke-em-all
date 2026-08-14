@@ -57,11 +57,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=ifsOs84Ps2g
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated on screen; Classic 3D system only, predates the 14.0-beta USD 3D overhaul)
+- **Tags:** compositing, 3d-system, digital-matte-painting, roto, rotopaint, intermediate
+- **Summary:** Converts a flat photo (or CG 360° render) into a seamless lat-long/equirectangular sky texture two ways — a Nukepedia `PolarDistort` gizmo patched with Roto/Crop reorganization, and a cleaner built-in `SphericalTransform` fisheye round-trip (rotate 90° to center the pole, patch, convert back) — plus a seam fix via `Offset` + `RotoPaint`, previewed live with a lat-long→rectilinear `SphericalTransform` (no Sphere/ScanlineRender needed). Closes with a production VR/game example: checking a nebula sky matte-painted onto a 360°-rendered CG dome.
 - **File:** tutorials/360-spherical-latlong-textures-nuke-tutorial.md
+- **Related:** Grading Highlights and Pools of Light | Nuke Compositing (`grading-highlights-and-pools-of-light-nuke-compositing.md`) — shares `compositing`, `digital-matte-painting`, `intermediate`.
 
 
 ### Transform your FLAT Green Screen into Cinematic Lighting
@@ -151,11 +152,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=8yOyb0Uyq6s
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX
+- **Version:** not specified
+- **Tags:** 3d-system, compositing, tracking, roto, cryptomatte, digital-matte-painting, intermediate
+- **Summary:** Applies the classic video-game "sprite card" trick (2D texture on a single 3D polygon, convincing up to ~70-90° viewing angle) to merge a practical saliva element onto a CG dragon's mouth via a tracked `Card3D`/`ScanlineRender` card, instead of simulating saliva in CG. Covers aspect-ratio matching, UV flip/flop/turn correction, RotoPaint stencil masking, extending a too-short element with `Retime` in motion/frame mode (subtle reverse-jiggle), and — the key problem-solving beat — abandoning the 3D card system for the handful of frames where the angle breaks the illusion, hand 2D-tracking the source footage directly instead.
 - **File:** tutorials/this-forgotten-vfx-trick-is-still-shockingly-effective.md
+- **Related:** Nuke Compositing Technique | Card3D + PixelsToPos [Beginners] (2021, not yet ingested) — shares `3d-system`, `tracking`, the Card3D/ScanlineRender sprite-card technique.
 
 
 ### Re-lighting Real Footage | Nuke Compositing [Advanced]
