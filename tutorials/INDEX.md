@@ -875,11 +875,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=SKwymheLksc
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (design methodology, discussed over a finished shot; no live node work)
+- **Version:** Nuke 14.x (2023 upload; no version-specific features referenced)
+- **Tags:** digital-matte-painting, procedural-texture, compositing, grading, beginner
+- **Summary:** "Impression vs. reality" design principle — distant/small/brief elements only need to read correctly, not be physically simulated, mirroring a painter simplifying a distant forest to one dot per tree. Demonstrated over a sci-fi shot: a background city built from noise or a reference photo (but still designed around an implied purpose, not pure randomness); an asteroid field mixing real CG with noise-dot distant rocks and deliberately varied highlight brightness; a dust cloud implying ship mass via a darkened "hole" instead of simulation; a fake-parallax trick (key just a cloud's highlights, animate them faster than the rest) justified by the shot's short duration; an unsimulated missile fire trail (just grades + noise, sized too small on-screen to bother); and windows implying a fully modeled ship interior from nothing but a city photo.
 - **File:** tutorials/vfx-techniques-impressions-vs-reality-nuke-tutorial.md
+- **Related:** Planning out a Visual Effects Shot | Blender and Nuke (`planning-out-a-visual-effects-shot-blender-and-nuke.md`) — both pure design-methodology videos; Nuke Compositing an Advanced CG Shockwave (`nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md`) — shared "combine simple elements instead of fully simulating" philosophy.
 
 ---
 

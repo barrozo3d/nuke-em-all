@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=SKwymheLksc
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (theory/design methodology; discussed over a finished sci-fi shot, no live node work shown — a companion 'how it's made' video is referenced but not this one)"
+version: "Nuke 14.x (2023 upload; no version-specific features referenced)"
+tags: [digital-matte-painting, procedural-texture, compositing, grading, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/vfx-techniques-impressions-vs-reality-nuke-tutorial/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 5
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # VFX Techniques: Impressions V.S Reality | Nuke Tutorial
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py vfx-techniques-impressions-vs-reality-nuke-tutorial <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -168,30 +164,49 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:16] tutorials/frames/vfx-techniques-impressions-vs-reality-nuke-tutorial/frame_000.jpg
+- [3:04] tutorials/frames/vfx-techniques-impressions-vs-reality-nuke-tutorial/frame_001.jpg
+- [4:23] tutorials/frames/vfx-techniques-impressions-vs-reality-nuke-tutorial/frame_002.jpg
+- [6:11] tutorials/frames/vfx-techniques-impressions-vs-reality-nuke-tutorial/frame_003.jpg
+- [6:51] tutorials/frames/vfx-techniques-impressions-vs-reality-nuke-tutorial/frame_004.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+"Impression versus reality": the design principle that distant or peripheral detail in a shot doesn't need to be physically simulated or accurately modeled — it only needs to *read* correctly to the eye at the scale/distance it's actually seen, the same way a painter renders a distant forest as one dot of color per tree rather than individual leaves. Applied throughout a finished sci-fi shot as a checklist of where full simulation/modeling effort was deliberately skipped in favor of a cheaper "impression."
 
 ### Summary
-[PENDING EXTRACTION]
+A design-methodology lecture (illustrated over one finished shot: a spacecraft pushing through dust/asteroids near a lit alien city) rather than a node walkthrough — cross-references a separate "how it's made" tutorial for the actual construction steps. The core argument: as an element recedes from camera or drops in visual priority, a compositor should compress/simplify it rather than fully simulate it, mirroring how painters generalize distant detail. Concrete examples from the shot: the background **city** could have been built from a plain noise pattern (brighter/darker regions, broken-up color) and would still read as a city — the author instead used a real photo he took over Los Angeles for the matte painting, but stresses a noise pattern gets a similar result with a bit more manual work shaping density clusters; either way, the city's layout should still be *designed* around a notional purpose/story (his: an underground mining facility transporting material) rather than left as pure random noise, since real cities cluster around connective infrastructure (roads) that a random pattern won't naturally produce. The **asteroid field** mixes real CG rocks up close with noise-pattern dots further away to imply the field continues past what's actually modeled — highlight brightness is deliberately varied per rock (not uniform white dots) to imply differing surface reflectivity (flat rocks catch more specular highlight than broken/rough ones), since uniform highlights would read as fake. The **dust cloud the ship pushes through** implies mass/scale via a deliberately darker "hole" behind the ship (light dust pushed forward, leaving shadow behind) rather than simulating actual fluid displacement. A **fake-parallax trick for a static dust-cloud photo**: key just the brightest highlight regions of the cloud and animate that keyed patch slightly faster than the surrounding cloud — this creates an impression of depth/parallax without true 3D, and is explicitly justified as acceptable because the shot is only ~2 seconds long (frames 1-230), too short for an attentive viewer to notice the fake parallax would break down over a longer duration — a explicit "match the cheat's lifespan to the shot's actual length" judgment call. The **missile's fire trail** is "just a couple of grades, some basic noise, and some clouds it's passing through" — explicitly not simulated, justified purely by on-screen size (not worth the render/setup cost for something this small in frame); its faint smoke trail is noise patterns + roto wrapped onto 3D geometry. The **ship's windows** imply a fully modeled/lit interior using nothing but a city photo with simple window shapes cut into it — no interior geometry exists. **Lightning bolts** elsewhere in the shot are a pattern, not a simulation. The throughline: constantly ask "does this need to be real, or does it only need to look real at the size/distance/duration it's actually seen?" — and budget effort accordingly.
 
 ### Key Steps
-[PENDING EXTRACTION]
+This is a design-principles video, not a step-by-step build — the "steps" are really a checklist to apply per-element in a shot:
+1. For any background/distant element, ask whether full simulation or modeling is actually necessary, or whether a simplified stand-in (noise pattern, real reference photo, a few grades) will read correctly at its on-screen size and viewing duration.
+2. When faking a pattern-based element (a city, an asteroid field, a lightning bolt), still design it with an underlying logic/story rather than pure randomness — real-world versions of these things have structure (cities cluster around connective infrastructure; rocks vary in reflectivity by surface roughness) that a naive noise pattern won't reproduce unless you shape it deliberately.
+3. Vary intensity/highlight strength across repeated small elements (asteroid highlights, city lights) rather than uniform brightness, to imply natural variation in material/surface properties.
+4. Use negative space (a darkened "hole" in a dust cloud behind a large moving object) to imply mass/displacement instead of simulating actual fluid interaction.
+5. Fake parallax/depth on a static photographic element by keying just its brightest highlights and animating that isolated patch at a different speed than the rest of the image — valid as long as the shot is short enough that the illusion doesn't have time to visibly break down.
+6. Skip modeling/lighting an interior (or any hidden/implied structure) entirely — a photo with simple cutout shapes (windows) placed over it can imply full interior detail with zero actual 3D work.
+7. Budget effort against on-screen size and shot duration, not against "what would be technically correct" — a fire trail three pixels wide on screen doesn't need a real simulation.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- No specific Nuke nodes demonstrated in this video (deferred to a separate "how it's made" companion video not covered here) — techniques referenced only in passing: noise patterns for city/asteroid-field/lightning impressions, real reference photography as matte-painting source material, keying (isolating cloud highlights for the fake-parallax trick), roto + noise wrapped onto 3D geometry (missile smoke trail), basic grades (missile fire trail)
+- **Core design concepts:** "impression vs. reality" compression (painter's-eye simplification of distant/small detail), designing procedural patterns around an implied real-world logic rather than pure randomness, matching a visual cheat's effective lifespan to the shot's actual duration
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner — pure design philosophy/judgment, no technical prerequisite; the ideas apply regardless of Nuke experience level, though the author frames it as a professional cost/benefit habit worth internalizing early.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (discussed conceptually over a finished shot; no live node work in this specific video). No version-specific features referenced. Per this skill's version-tracker, a 2023 upload falls in the Nuke 14.x window.
 
 ### Tags
-[PENDING EXTRACTION]
+digital-matte-painting, procedural-texture, compositing, grading, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Planning out a Visual Effects Shot | Blender and Nuke (`planning-out-a-visual-effects-shot-blender-and-nuke.md`) — both are pure design-methodology videos (pre-production planning vs. mid-shot effort-budgeting), not node-level technique.
+- Nuke Compositing an Advanced CG Shockwave | VFX (LookDev) (`nuke-compositing-an-advanced-cg-shockwave-vfx-lookdev.md`) — shares the underlying "combine simple procedural/stock elements rather than fully simulating" philosophy, applied there to a shockwave/lens-flare kitbash instead of a distant-background impression.
