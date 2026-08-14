@@ -811,6 +811,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/cleanplate-projections-nuke-compositing-guide.md
 - **Related:** Creating a 3D Hole using Nuke + Photoshop A.I (Firefly) Tutorial (`creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial.md`) — direct sequel, builds on these techniques with Firefly-generated projection textures.
 
+
+### Shuffle and Channel Management | Nuke Compositing [Beginner / Intermediate]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=giI8elFp4QQ
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/shuffle-and-channel-management-nuke-compositing-beginner-intermediate.md
+
 ---
 
 ## Tag Reference
