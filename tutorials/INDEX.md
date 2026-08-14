@@ -63,6 +63,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/360-spherical-latlong-textures-nuke-tutorial.md
 
+
+### Transform your FLAT Green Screen into Cinematic Lighting
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=7cYK2CKjp2k
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/transform-your-flat-green-screen-into-cinematic-lighting.md
+
 ---
 
 ## Tag Reference
