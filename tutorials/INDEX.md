@@ -122,6 +122,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/nuke-tutorial-compositing-a-rainbow-intermediate.md
 - **Related:** Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `compositing`, `channels`, `procedural-texture`, `intermediate`.
 
+
+### Create a Movie Quality Sci-Fi Laser Effect in Nuke
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=OJJ9hu6smqk
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/create-a-movie-quality-sci-fi-laser-effect-in-nuke.md
+
 ---
 
 ## Tag Reference
