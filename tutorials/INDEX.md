@@ -425,6 +425,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/how-to-denoise-your-cg-in-post-blender-nuke-tutorial.md
 
+
+### Goodbye After Effects!  2D Motion Graphics in Nuke!
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=QRAsWDehxhA
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/goodbye-after-effects-2d-motion-graphics-in-nuke.md
+
 ---
 
 ## Tag Reference
