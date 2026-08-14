@@ -698,11 +698,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=fNxqXKuAr4A
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (Indy / Commercial)
+- **Version:** not specified — free 3rd-party gizmo (CA_HueQualifier2) by Compositing Academy
+- **Tags:** grading, color-management, gizmo, keying, compositing, intermediate
+- **Summary:** Introduces CA_HueQualifier2, a free gizmo porting DaVinci Resolve's visual Hue Qualifier into Nuke: sample a color, get a linked hue/saturation/luminance range graph, drag to expand/narrow, Add Range to merge a second sample, lock ranges for a cleaner key, Analyze Input for HDR footage. Solves cases (e.g. mountain vs. sky) where hue alone can't separate two regions, unlike the stock HSV tool's disconnected range knobs.
 - **File:** tutorials/a-better-way-to-color-grade-in-nuke.md
+- **Related:** EASY TRICK: Improve your Color Grading skills (`easy-trick-improve-your-color-grading-skills.md`), I Made VFX Relighting WAY Better in Nuke (`i-made-vfx-relighting-way-better-in-nuke.md`) — share `grading`/`gizmo`, `compositing`.
 
 ---
 
