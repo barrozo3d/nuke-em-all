@@ -601,6 +601,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/how-smart-is-state-of-the-art-ai-rotoscoping.md
 
+
+### Compositing Complex Shadows in Nuke [Advanced]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=Yb3Cn3JnkUI
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/compositing-complex-shadows-in-nuke-advanced.md
+
 ---
 
 ## Tag Reference
