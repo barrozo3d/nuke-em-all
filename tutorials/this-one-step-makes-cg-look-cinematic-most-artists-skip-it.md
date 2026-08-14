@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=twEVqozvpMk
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [aovs, grading, compositing, roto, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/this-one-step-makes-cg-look-cinematic-most-artists-skip-it/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # This ONE Step Makes CG Look Cinematic (Most Artists Skip It)
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py this-one-step-makes-cg-look-cinematic-most-artists-skip-it <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -87,30 +83,54 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:25] tutorials/frames/this-one-step-makes-cg-look-cinematic-most-artists-skip-it/frame_000.jpg
+- [2:39] tutorials/frames/this-one-step-makes-cg-look-cinematic-most-artists-skip-it/frame_001.jpg
+- [3:11] tutorials/frames/this-one-step-makes-cg-look-cinematic-most-artists-skip-it/frame_002.jpg
+- [4:15] tutorials/frames/this-one-step-makes-cg-look-cinematic-most-artists-skip-it/frame_003.jpg
+- [5:28] tutorials/frames/this-one-step-makes-cg-look-cinematic-most-artists-skip-it/frame_004.jpg
+- [5:48] tutorials/frames/this-one-step-makes-cg-look-cinematic-most-artists-skip-it/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+The skipped step between a CG lighting render and final color grading is dedicated CG compositing focused on "first read/second read" — deliberately engineering where the viewer's eye goes first by selectively boosting contrast on light groups (not AOVs) at specific story-critical points (face, gun edge, eye-light reflection), rather than treating the render as already-final.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy explains that beginners often skip straight from CG lighting render to color grading, missing the dedicated CG-compositing pass that refines "first read/second read" — what the viewer's eye is drawn to first and second when they see the shot, a concept feature/animated-film supervisors explicitly evaluate. Analyzing a backlit character-with-gun shot, the video identifies that the eye currently goes to background contrast first, and that the gun and face are visually blending together because there isn't enough separating contrast — the opposite of the intended read (character's face should read first). The fix uses light groups (LG) — combinations of AOVs representing a specific light source's contribution, e.g. one light group for orange light, another for blue-green light, distinct from individual AOVs and sometimes numerically conflicting with them if mixed carelessly — selectively boosted only in specific regions (not globally) using 3D position-matte tracking to isolate areas like just behind the gun to brighten the face silhouette away from it, the gun's tip/specular highlights as a secondary contrast point to lead the eye further into frame, and a deliberately placed eye-light reflection in the sunglasses (a technique borrowed from animated-film practice of always trying to get a specular catch-light in character eyes) so it reads as an eye rather than a flat black shape. The adjustments are described as small, targeted brightness/contrast tweaks, not global grade changes, working together with practical composition (a converging gun-barrel perspective line, camera push-in, and a focus falloff from sharp-to-soft) that were already part of the shot's directed eye path.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Recognize CG compositing as a distinct step between the raw lighting render and final color grading — its job is to refine what the shot already has, especially the "first read/second read" (where the eye lands first and second on seeing the image).
+2. Evaluate the shot's current first read critically: identify what draws the eye first (often the highest-contrast or sharpest region) and whether that matches the intended story focus.
+3. Diagnose silhouette/contrast problems: check whether story-critical elements (e.g. a character's face vs. a foreground gun) are visually blending together due to insufficient separating contrast.
+4. Decide the intended read deliberately — e.g. choosing to read the character's face clearly rather than directing a pure rim-lit silhouette shot, as a directorial choice.
+5. To draw the eye somewhere, add contrast/brightness there; to reduce attention elsewhere, reduce contrast there — the two levers work as a pair.
+6. Use light groups (LG) rather than full AOV breakdowns when the base lighting is already largely correct and only needs targeted boosts — a light group is a full recombination of a specific light source's contribution (e.g. "the orange light" or "the blue-green light"), simpler to work with than pulling apart every individual AOV pass, though light groups and AOVs can numerically conflict if used together carelessly.
+7. Isolate the boost region with a tracked 3D position matte (rather than boosting the light group everywhere) — e.g. mask just the area behind the gun to brighten the face silhouette specifically, separating it visually from the darker gun.
+8. Add secondary contrast points along the intended eye path (e.g. the gun's tip/specular highlights) so the eye is guided further into the frame in sequence — using the gun's own converging perspective line and the camera's push-in as supporting compositional cues.
+9. Preserve sharp-to-soft focus falloff intentionally, since the eye naturally moves from an out-of-focus region toward a sharper one.
+10. Add a deliberately placed eye-light reflection (a small specular highlight in the sunglasses, achieved by placing an actual light in the CG scene so its reflection lands correctly) — a technique from animated-film practice for making eyes read even when obscured (e.g. by sunglasses), rather than reading as a flat black shape.
+11. Keep individual adjustments small and targeted rather than large global grade moves — the video explicitly notes these are small tweaks, not dramatic ones.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- Light Groups (LG) — full recombinations of a specific light source's contribution to the render, distinct from and sometimes numerically conflicting with individual AOVs; graded selectively rather than the whole image
+- AOVs — individual render passes (reflection, specular, diffuse, etc.); mentioned as the finer-grained alternative to light groups, not used exclusively in this comp since the base lighting was already close
+- 3D position matte (tracked) — isolates specific screen regions (e.g. just behind the gun) so a light-group boost only affects that area, not the whole shot
+- Practical eye-light placement in the CG scene — a light positioned specifically so its specular reflection lands in the character's sunglasses, giving a readable "eye light" catch-light
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. No on-screen version banner or OCIO metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+aovs, grading, compositing, roto, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares light-group/AOV-driven selective grading with How to use NUKE to Composite Blender Renders (`how-to-use-nuke-to-composite-blender-renders.md`) — both isolate and grade individual light/render components rather than the full beauty image. Shares the position-matte-driven targeted highlight technique with 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`).

@@ -407,11 +407,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=twEVqozvpMk
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** aovs, grading, compositing, roto, intermediate
+- **Summary:** Explains the CG-compositing step most beginners skip between lighting render and color grading: engineering "first read/second read" (where the eye lands first/second) by selectively boosting contrast on Light Groups (full per-light-source recombinations, distinct from individual AOVs) isolated with tracked 3D position mattes — brightening a character's face away from a blending gun silhouette, adding secondary contrast points along the intended eye path, and placing a deliberate eye-light reflection in sunglasses so they read as eyes.
 - **File:** tutorials/this-one-step-makes-cg-look-cinematic-most-artists-skip-it.md
+- **Related:** How to use NUKE to Composite Blender Renders (`how-to-use-nuke-to-composite-blender-renders.md`) — shares AOV/light-component selective grading. 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — shares position-matte-driven targeted highlight technique.
 
 ---
 
