@@ -529,6 +529,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/break-up-your-perfect-cg-renders-with-this-free-plugin.md
 
+
+### Compositing in UV space with Projections | Nuke [Advanced]
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=F-q8tgk8QCc
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/compositing-in-uv-space-with-projections-nuke-advanced.md
+
 ---
 
 ## Tag Reference
