@@ -486,11 +486,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=y3tFCa0U9Yo
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** gizmo, roto, procedural-texture, motion-graphics, compositing, intermediate
+- **Summary:** Free custom `FlowWarp` gizmo samples a hand-drawn open `RotoShape` spline to build a UV "tunnel" around the path, letting a flat left-to-right image stretch-to-fit or continuously flow along any curved path (distance/samples/UV-blur/erode-edge/taper controls) — solving multi-directional bends other Nuke warp tools can't handle, without building 3D geometry strips. Creative examples: warping energy-trail stock elements around the Nuke logo, redirecting particle streams around an impact point, and building a looping comet trail from a tapered quadratic-luma-keyed roto shape.
 - **File:** tutorials/this-free-tool-warps-images-in-a-way-youve-never-seen.md
+- **Related:** Goodbye After Effects! 2D Motion Graphics in Nuke! (`goodbye-after-effects-2d-motion-graphics-in-nuke.md`), Create a Movie Quality Sci-Fi Laser Effect in Nuke (`create-a-movie-quality-sci-fi-laser-effect-in-nuke.md`) — share roto/procedural stock-element redirection themes.
 
 ---
 

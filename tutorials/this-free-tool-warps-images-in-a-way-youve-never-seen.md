@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=y3tFCa0U9Yo
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [gizmo, roto, procedural-texture, motion-graphics, compositing, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/this-free-tool-warps-images-in-a-way-youve-never-seen/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 6
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # This FREE Tool Warps Images in a Way You’ve Never Seen
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py this-free-tool-warps-images-in-a-way-youve-never-seen <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -131,30 +127,56 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:35] tutorials/frames/this-free-tool-warps-images-in-a-way-youve-never-seen/frame_000.jpg
+- [1:53] tutorials/frames/this-free-tool-warps-images-in-a-way-youve-never-seen/frame_001.jpg
+- [2:20] tutorials/frames/this-free-tool-warps-images-in-a-way-youve-never-seen/frame_002.jpg
+- [2:46] tutorials/frames/this-free-tool-warps-images-in-a-way-youve-never-seen/frame_003.jpg
+- [2:57] tutorials/frames/this-free-tool-warps-images-in-a-way-youve-never-seen/frame_004.jpg
+- [3:32] tutorials/frames/this-free-tool-warps-images-in-a-way-youve-never-seen/frame_005.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A free custom `FlowWarp` gizmo samples a hand-drawn open `RotoShape` spline to build a "tunnel" of UV coordinates around the path, letting a flat image either stretch to fit an arbitrarily curved path or continuously slide/flow along it — solving significant, multi-directional bends that standard Nuke warp tools aren't built for, without needing to build 3D geometry strips (the author's earlier VR-headset-based workaround).
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy releases a free gizmo, `FlowWarp`, that warps a straight left-to-right image onto any hand-drawn roto path. The workflow: draw an open `RotoShape` spline along the desired path, feed it into FlowWarp's "sample roto" input, and the source image (which must start on the left, matching the path's start) automatically bends to follow the spline. Two usage modes are covered — stretching an image across the full path width, and continuously flowing/sliding an image along the path (for looping or animated elements like energy trails or particle streams). Key controls: distance (tunnel width around the spline), samples (increase to fix blurring from too few path samples), UV blur (smooths flow artifacts but can cause edge artifacts, countered by an erode-edge control), taper (controls start/end width, useful for pointed comet-like shapes), and an optional downstream `Crop` with softness for edge fade-off. Creative applications shown include warping a straight energy-effect stock element (from the author's 200-piece Look Dev Pack) around a curved shape like the Nuke logo, redirecting straight particle-stream stock footage around a character or impact point, and building a "comet" effect from a tapered, quadratic-luma-keyed roto shape with a wraparound offset animation, fed through FlowWarp to appear to shoot around the frame. For advanced use, the gizmo's internal points can be manually linked instead of driven by a roto shape for further customization.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Prepare the source image so it reads left-to-right — the left edge maps to the path's start, the right edge to its end.
+2. Draw an open `RotoShape` spline along the desired warp path (Open Spline option), matching the curvature/direction you want the image to follow.
+3. Feed the roto shape into `FlowWarp`'s "sample roto" input — the image automatically warps to follow the path.
+4. Adjust `distance` to widen or narrow the tunnel/band of UV coordinates generated around the spline.
+5. Increase `samples` if the warped result shows blurring from insufficient path sampling.
+6. Add a small amount of UV blur to smooth remaining stretching/blur artifacts along the path — this can introduce edge artifacts.
+7. Use the `erode edge` control to clean up edge artifacts introduced by UV blur.
+8. Optionally add a downstream `Crop` node with softness to fade off the warped image's edges cleanly.
+9. Use the taper controls to adjust start/end width independently — reducing both to zero produces a pointed, comet-like tapered shape.
+10. For a flowing/looping effect (as opposed to a one-time stretch-to-fit), continuously slide the source image through the warp rather than mapping it statically, so elements like energy trails or particle streams appear to travel along the path.
+11. For advanced customization, open the gizmo internals and manually link its control points instead of relying on the roto-shape sampling, for effects not achievable via the standard roto-driven workflow.
+12. Creative-direction step: treat this as a tool for redirecting/repurposing straight stock elements (energy trails, particle streams) around specific in-shot geometry or action points, rather than only using it on custom-built assets.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `FlowWarp` (free custom gizmo) — samples a roto spline to build a UV tunnel for stretching or flowing an image along an arbitrary path; controls: sample roto (input), distance (tunnel width), samples (path resolution), UV blur, erode edge, taper (start/end width)
+- `RotoShape` (open spline) — defines the path FlowWarp samples
+- `Crop` (with softness) — optional downstream edge fade-off
+- Quadratic Luma Key (referenced from another of the author's videos) — used in the comet-shape example for light falloff shaping
+- `Offset` — used to make a shape wrap off one edge of frame and back onto the other, for a looping comet-trail animation
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. No on-screen version banner or OCIO metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+gizmo, roto, procedural-texture, motion-graphics, compositing, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares the roto/procedural stock-element redirection theme with Goodbye After Effects! 2D Motion Graphics in Nuke! (`goodbye-after-effects-2d-motion-graphics-in-nuke.md`) and Create a Movie Quality Sci-Fi Laser Effect in Nuke (`create-a-movie-quality-sci-fi-laser-effect-in-nuke.md`).
