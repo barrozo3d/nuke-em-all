@@ -17,19 +17,11 @@ frame_status: pending-selection
 
 **Source:** [YouTube](https://www.youtube.com/watch?v=ifsOs84Ps2g)
 **Author:** Compositing Academy
-**Duration:** 15m59s | 1 section(s)
+**Duration:** 15m59s | 5 section(s)
 
 ---
 
 ## Raw Data (for Claude Code extraction)
-
-## Ingest Safeguard Report
-
-_Auto-generated at ingest/frame-capture time — explains why `extraction_status` may be `needs-review`. Safe to delete once reviewed._
-
-- WARNING: Transcript came from the yt-dlp captions fallback - NO per-sentence timestamps. Content-anchored frame selection (select_frames.py) will have to estimate moments; consider re-running ingest.py to retry Whisper before extracting.
-
----
 
 Frames are not captured yet. Read the timestamped transcript below, pick moments
 that actually show a technique/result worth a still (not blind percentages —
@@ -39,8 +31,215 @@ even within a named chapter, verify the real moment against its timestamps), the
 frontmatter before you write the Structured Notes below.
 
 
-### Full Content [0:00]
-**Transcript:** Kind: captions Language: en [Music] hello guys welcome to this tutorial uh this time we are going to talk about how to uh texture a sphere and basically how to take a normal photograph and kind of convert it into a lat long texture that we can basically wrap around and it works for any camera angle so this is really good for you know if you have scenes that have like a large sky box around in the distant area and you want to fly a camera through the sphere so if you're doing like a jet flying or maybe a ship flying in space or something like that this technique is going to work for those kind of scenes and basically any scene that has like a sky and you want to see different angles in the same shot and this technique can also be used for you know getting textures out into different software so if you're doing like a vr game or something like that like i have an example here i'll show at the end of the video which is basically just taking uh some nebulas that were kind of just released as a pack so there's a bunch of the nebula textures that you can find on compositing academy and basically how i'm using these for a vr environment and how this technique actually applies into that sort of realm as well so basically what we're going to look at first is just a picture from unsplash here and we have this sky and if we wanted to apply this onto a sphere directly um you know this is the problem that you're going to immediately see so if we have the picture we plug it in we give it an alpha here so we shuffle in an alpha we plug it into a sphere we go in 3d immediately you're going to see a few problems and that is we have a seam and that's very easy to fix but we also have this pole and so basically if you guys are familiar with like if you've ever seen a texture of like earth like an earth texture or earth cloud map texture these are called lat long textures and these textures basically have some kind of warping near the top which allows it to be wrapped around the sphere properly and if you don't have that kind of warping that intentional warping that's kind of around the top of the picture it doesn't wrap around a sphere properly and so 360 cameras will automatically give you this um but if you're working with like a picture that's 180 degrees or even just you know not even 180 degrees but just facing one direction we need to actually add that so this is useful for like matte painting and stuff like that so if we look at an example i'm going to show you two different methods here of how you can do this i prefer this second method but i'm going to show this one first because it'll just kind of make things familiar with the approach that we're taking on these um so essentially what we have is a picture and we have this custom node we have a few notes here i'll probably drop the script in you can download it and play around to see if you can figure it out but we have two custom notes which is polar distort and offset and these are really nice especially offset for this we also have spherical transform which is you know has a few more controls than polar distort but sometimes you know i don't like to use this node because uh just a little bit longer of a process and whereas this gives kind of the same result but it's there in case you're working in studio and maybe you don't have the access to custom tools off nukapedia so we'll talk about that in just a second but we have the picture uh what we're doing is we're taking the polar sort and we're converting it uh from rectangular to polar uh and essentially is what this is doing is just kind of wrapping this on like a pseudo sphere and you can see we have the same problem that we saw on our 3d sphere and we have this kind of pole on on the top here and what we can do is pretty simple we just take the normal picture like the original starting picture we have here and i'll just disable the transform and what we're doing is we're just taking a roto shape in the center and we're just mixing the original image with the polar distorted image so we get something like this where we're just patching in the center and then what i'm doing is i'm taking a transform and scaling up the clouds moving the original picture find maybe a good position to kind of blend the two images and then what we do is we just basically pull distorted back if we pull or distort it back you'll see that this sort of top area if we go here you'll see that it's actually stretching and kind of wrapping around the top and that's actually what you do want um the problem with polar distort this kind of custom node it doesn't work great with formats that are not square so that means you're going to have to do a lot of like reformat to square and then do this and that's not the greatest for like filtering and stuff like that so for example uh this is kind of a better way to do it so usually what i'll do is i'll just do a polar distort i'll mix the texture convert it back and make sure it works but then what you want to do is basically reorganize these nodes so that you're not uh warping the entire original picture uh you know so we can actually reorganize those nodes in a more efficient way here and that will basically avoid that problem so essentially what we do is we just copy these nodes so i copy i'll just kind of recreate it here just copy these two we copy the roto that we use in the kind of the key mix here we pre-multiply it so that it'll multiply and then we just have the patch basically uh and then we can crop it you need to put a crop before the puller to store it for it to kind of work properly and after that we can just put the pool to sort back on and you'll see that it's kind of wrapping around the top there and all we do is we just merge that picture over the original picture and you'll see that we have that warped top and we're not really affecting the rest of the image we didn't have to reformat the square or anything like that and we kind of avoid blurring our picture too much because if you do it all those steps it kind of blurs your picture so that's the easier way to do it preview it doing this method and then just your final method you just kind of reorganize your nodes in this sort of way another way to preview this to make sure it's working is to use a spherical transform node um so if you put a spherical transform node at the end here and we plug it in i'll just do a new one and we want to say uh lat long to uh rectilinear so we can say so we can see the input is a lat long which is what we're trying to create but we want to output this rectilinear so we switch that and what this basically gives you is like you're kind of sitting inside your sphere and you don't have to do a sphere a scanline render and a camera and a bunch of nodes and see if it looks good we can just use this node right here and basically this focal length is kind of like your camera so imagine there's a camera sitting inside of the sphere so if we reduce the focal length make it a bit wider we can kind of see what's happening here so if you read here it says control alt left mouse drag in the viewer so if we have our overlay on by hitting q and pointing over and we do that so ctrl alt left click and then i start to drag around in the viewer we can actually rotate the camera and look around to see if that sky is looking how we want it and so if there's not enough texture resolution there you know we can play around with our original texture we can scale it and stuff like that but it's a really easy way to just get a sense of the 3d effect that we have here and so that's basically the the quick concept around how to get that now the seam is pretty simple to fix we can see a seam here and that's a very simple fix to do so we can go basically to this sort of uh image here and all we want to do is an offset and then we can just add a number here so we say 200 or something like that we just increase that number and then we can basically just roto-paint that that seam out so we would just go here to roto-paint and then we would just kind of make that a seamless image so we just go here set the opacity low set the hardness low and then we can just kind of quickly uh blend those two images together and and i'll just kind of do a rough job here uh since this is just kind of a quick demonstration so you see we can hide that seam and if we go back to the spherical transform uh and disable and enable we should be able to see that that seam has kind of uh been been erased so that's kind of the quick idea not to spend too long on the the seam there and we'll just kind of move on here so this is the same technique down here it's just using a spherical transform uh this is why i kind of put it down here as an alternative it's not my favorite way of doing it because there's just a lot of things you have to memorize and um probably the best thing to do would just be like save the settings in these two and save these as like as a you know like a tool set so you can save your tool set you don't have to remember but there are a few ways to do it here so i'll just explain it real quick before we go on to this method which i think is the fastest and easiest so we have spherical transform and essentially what you want to do in a spherical transform is you switch it from light long to projection fisheye and you can kind of play with the focal length here as well which will kind of change the way that this scales so if i do it from scratch here plug it in we'll switch it to fish eye like this and you can play with these settings here so if you play with the sensor size if you increase this number here it'll basically kind of shrink it down uh and you'll see it's still not giving us a circle that we need so you can increase or sorry decrease the focal length to a wider focal length and you'll see that we now have like our entire sphere in here so the sensor size will kind of play with the format and usually you just want to keep it kind of square and getting it getting it all seen there so something like this is probably fine you know we can try to maybe maximize a resolution just keep the circle going just directly to the edge and so now the trick here is we see that our pole is not facing us so it's not easy to paint it out with an image that looks like this so really what you want to do is you want to take the pan tilt roll we want to rotate this by 90 degrees so you see we're getting a very basically similar result to the polar distort except it's kind of in a square format and it's basically the same idea after that just patching a picture take this picture key mix it in and essentially after that um we want to go to the spherical transform at the end and we just want to invert those two so instead of saying the projection uh as lat long uh we're saying the projection is fisheye and we're cutting converting it back into lat long which gives us this result back and we're good to go we have uh basically an image that kind of works now of course we didn't do it for the bottom half of the image and you can do it if you want because we're going to have the seam and those kind of problems i'm just doing a quick demonstration on how you can get that proper kind of stretching near the top of the frame so i prefer this way it's very very simple we also have uh this so it's a similar concept we have the original image we i think i painted out the bird here i think there's like a bird in this picture but uh all we can do here is we uh we poor distorted and now all we do is just mix the top of this picture with the original so here's the original picture mixed in so i use the rota shape just to mix those two together and essentially what that does is all the same work that we had to do with these notes but we can do it just in a different way and we have that proper stretching and if we wrap this onto a sphere it already works so much easier most less nodes you don't have to think about too much and keeping it simple which i like so after that we can paint out our seam so we offset it we wrote a paint out the seam we're good to go uh and then i think what i did here is i kind of uh flipped the image i did the same thing so i kind of mirrored it offset it again to make sure there's no seams just paint out the seams and then kind of keymix that back on so now we have this like cloud image that you know maybe if we're flying really high in the sky maybe you could put some ocean down here instead it would make more sense but it's just a demonstration so make sure there's no seams in there and we can preview it again using our spherical transform so again make sure we go lat long to rectilinear and now we have our controls if we turn our overlay on with cue we can do control alt left mouse click and we can kind of spin around here and just make sure our texture is good doesn't work from all the angles and stuff like that so i'm kind of spinning around randomly here and if you see some some textures that maybe are a little bit too stretched that's where you'll want to go in and you want to play with your resolution so um if if it is the case that things are a little bit too big or too stretched that's where you're going to have to start shrinking your images down and kind of maybe adding more images so the resolution and the size of things is still something you're going to have to play with visually at the end result you know so i'll explain that a little bit more in another example coming up here with a kind of space example but again if we preview this in 3d uh it is kind of working the technique is kind of working here we have a sphere with no seams uh no poles and stuff like that so that's closer to the result that we would probably need so we have another example down here this is something i was doing for like a vr environment i have this render here this is a render just a very basic cg environment for for some kind of vr stuff that i'm doing and basically this is rendered out from a 360 degree camera in cg so you can get these renders out very easily if you're familiar with any uh 3d package you just google how do i get a 360 camera in whatever software and so i render this out and basically i'm using the same technique to kind of do this sort of space nebula and kind of put it behind these kind of windows this is going to be kind of like a glass dome in space kind of thing and so it's really good way to kind of design things for 360 degree environment because we can easily see the layout of the cg scene as well as our sky that we're kind of map painting and so again if we have our 3d render with 360 degrees as well as our our proper lat long with the stretching of course if it's not stretching at the top you know something's wrong you want the stretching near the poles that that's kind of telling you that it's correct and if we have something like that we can do a spherical transform at the end and this is a low resolution cg render so you can see it's kind of blurry there it's not the highest quality just for the example but again we have our spherical transform we can do our little trick here and rotate around and give it a second here give it a second the cache and we should be able to rotate around kind of in real time and we can get a sense for how that 360 degree environment is going to look so it's kind of a finicky the controls in terms of yeah kind of spinning around here not exactly the best so you can play with these numbers on the side so i could say uh just an x i could just increase that number i could just use my arrow keys up uh spin around and just see if the lighting is working all these kind of things so we have like a light source from a galaxy we have a light direction in cg and these are the kind of things i'm going to be paying attention to for doing some kind of 360 degree environment you know is that matte painting lining up uh and those kind of things so that's about it um basically how to you know get images looking like this um very very useful especially you know if you have a whole bunch of pictures that your map painting with like these these are the nebulas you can find these in the description if you guys need any textures like this but it's pretty awesome uh pretty awesome technique and you know you can stack different uh pictures as well like shrink them down and you know if you need more detail in certain spots you know something i've seen a lot specifically in like vr environments is they don't have a good sense of scale meaning like sometimes the stars look too big and that's kind of a matte painting thing that's more an artistic uh thing you need to pay attention to rather than like this is a technical tutorial but just keep that in mind if you're doing any kind of matte painting you know pay attention to stuff like this where it doesn't look good where you have stars that are too big the sense of scale doesn't make sense those are things that you kind of want to improve there and pay attention to um but yeah that's about it and uh thanks so much for watching hit like if you guys found it useful and that's about it
+### <Untitled Chapter 1> [0:00]
+**Transcript (timestamped):**
+[0:00] Hello guys, welcome to this tutorial. This time we are going to talk about how to texture
+[0:13] a sphere and basically how to take a normal photograph and kind of convert it into a lat
+[0:19] long texture that we can basically wrap around and it works for any camera angle. So this
+[0:24] is really good for if you have scenes that have a large skybox around in the distant area
+[0:31] and you want to fly a camera through the sphere. So if you are doing a jet flying or maybe
+[0:36] a ship flying in space or something like that, this technique is going to work for those
+[0:41] kind of scenes and basically any scene that has a sky and you want to see different angles
+[0:45] in the same shot. And this technique can also be used for getting textures out into different
+[0:51] software. So if you are doing like a VR game or something like that, like I have an example
+[0:56] here I will show at the end of the video which is basically just taking some nebulas that
+[1:01] were kind of just released as a pack. So there is a bunch of the nebula textures that you
+[1:05] can find on Compositing Academy and basically how I am using these for a VR environment
+[1:12] and how this technique actually applies into that sort of realm as well. So basically what
+[1:18] we are going to look at first is just a picture from Unsplash here and we have this sky and
+[1:24] if we wanted to apply this onto a sphere directly, this is the problem that you are going to
+[1:29] immediately see. So if we have the picture, we plug it in, we give it an alpha here so
+[1:33] we shuffle in an alpha, we plug it into a sphere and we go in 3D. Immediately you are
+[1:38] going to see a few problems and that is we have a scene and that is very easy to fix
+[1:43] but we also have this pole. So basically if you guys are familiar with like if you have
+[1:49] ever seen a texture of like earth, like an earth texture or earth cloud map texture,
+[1:54] these are called lat long textures and these textures basically have some kind of warping
+[2:01] near the top which allows it to be wrapped around the sphere properly and if you don't
+[2:05] have that kind of warping, that intentional warping that is kind of around the top of
+[2:09] the picture, it doesn't wrap around a sphere properly and so 360 cameras will automatically
+[2:15] give you this but if you are working with like a picture that is 180 degrees or even
+[2:20] just you know not even 180 degrees but just facing one direction, we need to actually
+[2:25] add that so this is useful for like matte painting and stuff like that. So if we look
+[2:30] at an example, I am going to show you two different methods here of how you can do this.
+[2:34] I prefer this second method but I am going to show this one first because it will just
+[2:38] kind of make things familiar with the approach that we are taking on these. So essentially
+[2:43] what we have is a picture and we have this custom node. We have a few nodes here, I will
+[2:47] probably drop the script in, you can download it and play around to see if you can figure
+[2:51] it out but we have two custom nodes which is polar distort and offset and these are
+
+
+### Polar Distort [2:52]
+**Transcript (timestamped):**
+[2:55] really nice especially offset for this. We also have spherical transform which is you
+[3:00] know has a few more controls than polar distort but sometimes you know I don't like to use
+[3:05] this node because just a little bit longer of a process whereas this gives kind of the
+[3:09] same result but it is there in case you are working in a studio and maybe you don't have
+[3:14] the access to custom tools off Nucapedia. So we will talk about that in just a second
+[3:19] but we have the picture, what we are doing is we are taking a polar distort and we are
+[3:23] converting it from rectangular to polar and essentially what this is doing is just kind
+
+
+### Rectangular to Polar [3:24]
+**Transcript (timestamped):**
+[3:29] of wrapping this on like a pseudo sphere and you can see we have the same problem that
+[3:33] we saw on our 3D sphere and we have this kind of pole on the top here and what we can do
+[3:39] is pretty simple, we just take the normal picture like the original starting picture
+[3:44] we have here and I will just disable the transform and what we are doing is we are just taking
+[3:48] a roto shape in the center and we are just mixing the original image with the polar distorted
+[3:55] image so we get something like this where we are just patching in the center and then
+[3:59] what I am doing is I am taking a transform and scaling up the clouds, moving the original
+[4:03] picture, fine maybe a good position to kind of blend the two images and then what we do
+[4:08] is we just basically polar distort it back and if we polar distort it back you will see
+[4:12] that this sort of top area if we go here you will see that it is actually stretching and
+[4:17] kind of wrapping around the top and that is actually what you do want. The problem with
+[4:22] polar distort is kind of custom node it doesn't work great with formats that are not square
+[4:27] so that means you are going to have to do a lot of like reformat to square and then
+[4:31] do this and that is not the greatest for like filtering and stuff like that so for example
+[4:38] this is kind of a better way to do it so usually what I will do is I will just do a polar
+[4:41] distort, I will mix the texture, convert it back and make sure it works but then what
+[4:46] you want to do is basically reorganize these nodes so that you are not warping the entire
+[4:51] original picture so we can actually reorganize those nodes in a more efficient way here and
+[4:57] that will basically avoid that problem so essentially what we do is we just copy these
+[5:01] nodes so I copy I will just kind of recreate it here, just copy these two, we copy the
+[5:06] roto that we used in the kind of the key mix here, we pre multiply it so that it will
+[5:12] multiply and then we just have the patch basically and then we can crop it you need to put a
+[5:18] crop before the polar distort to kind of work properly and after that we can just put the
+[5:23] polar distort back on and you will see that it is kind of wrapping around the top there
+[5:28] and all we do is we just merge that picture over the original picture and you will see
+[5:33] that we have that warped top and we are not really affecting the rest of the image, we
+[5:37] didn't have to reformat to square or anything like that and we kind of avoid blurring our
+[5:41] picture too much because if you do all those steps it kind of blurs your picture so that
+[5:45] is the easier way to do it, preview it doing this method and then just your final method
+[5:50] you just kind of reorganize your nodes in this sort of way. Another way to preview this
+[5:54] to make sure it is working is to use a spherical transform node so if you put a spherical transform
+
+
+### Spherical Transform Node [5:56]
+**Transcript (timestamped):**
+[6:01] node at the end here and we plug it in, I will just do a new one and we want to say lat
+[6:06] long to rectilinear so we can say so we can see the input is a lat long which is what
+[6:12] we are trying to create but we want to output this rectilinear so we switch that and what
+[6:17] this basically gives you is you are kind of sitting inside your sphere and you don't have
+[6:21] to do a sphere, a scan line render and a camera and a bunch of nodes and see if it looks good
+[6:27] we can just use this node right here and basically this focal length is kind of like your camera
+[6:32] so imagine there is a camera sitting inside the sphere so if you reduce the focal length
+[6:35] make it a bit wider we can kind of see what is happening here so if you read here it says
+[6:40] control alt left mouse drag in the viewer so if we have our overlay on by hitting Q
+[6:44] and pointing over and we do that so control alt left click and then I start to drag around
+[6:49] in the viewer we can actually rotate the camera and look around to see if that sky is looking
+[6:54] how we want it and so if there is not enough texture resolution there we can play around
+[6:59] with our original texture we can scale it and stuff like that but it is a really easy
+[7:02] way to just get a sense of the 3D effect that we have here and so that is basically the
+[7:09] quick concept around how to get that now the seam is pretty simple to fix we can see a
+[7:13] seam here and that is a very simple fix to do so we can go basically to this sort of
+[7:22] image here and all we want to do is an offset and then we can just add a number here so
+[7:29] we say 200 or something like that we just increase that number and then we can basically
+[7:33] just roto paint that seam out so we would just go here to roto paint and then we would
+[7:38] just kind of make that a seamless image so we just go here set the opacity low set the
+[7:43] hardness low and then we can just kind of quickly blend those two images together and I will
+[7:48] just kind of do a rough job here since this is just kind of a quick demonstration so you
+[7:52] see we can hide that seam and if we go back to the spherical transform and disable and
+[7:59] enable we should be able to see that that seam has kind of been erased so that is kind
+[8:04] of the quick idea not to spend too long on the seam there and we will just kind of move
+[8:09] on here so this is the same technique down here just using a spherical transform this
+[8:15] is why I kind of put it down here as an alternative it is not my favorite way of doing it because
+[8:20] there is just a lot of settings you have to memorize and probably the best thing to do
+[8:23] would just be to like save the settings in these two and save these as like a tool set
+[8:29] so you can save your tool set if you don't have to remember but there are a few ways
+[8:33] to do it here so I will just explain it real quick before we go on to this method which
+[8:37] I think is the fastest and easiest so we have spherical transform and essentially what you
+
+
+### Spherical Transform [8:39]
+**Transcript (timestamped):**
+[8:42] want to do in spherical transform is you switch it from lat long to projection fisheye and
+[8:48] you can kind of play with the focal length here as well which will kind of change the
+[8:53] way that this scales so if I do it from scratch here plug it in we will switch it to fisheye
+[9:03] and you can play with these settings here so if you play with the sensor size if you
+[9:07] increase this number here it will basically kind of shrink it down and you will see it
+[9:12] is still not giving us a circle that we need so you can decrease the focal length to a
+[9:17] wider focal length and you will see that we now have our entire sphere in here so the
+[9:22] sensor size will kind of play with the format and usually you just want to keep it kind
+[9:26] of square and getting it all seen there so something like this is probably fine we can
+[9:32] try to maybe maximize the resolution just keep the circle going just directly to the
+[9:36] edge and so now the trick here is we see that our pole is not facing us so it is not easy
+[9:41] to paint it out with an image that looks like this so really what you want to do is you
+[9:46] want to take the pan tilt roll you want to rotate this by 90 degrees so you see we are
+[9:51] getting a very basically similar result to the polar distort except it is kind of in
+[9:56] a square format and it is basically the same idea after that just patching a picture take
+[10:01] this picture key mix it in and essentially after that we want to go to the spherical
+[10:07] transform at the end and we just want to invert those two so instead of saying the projection
+[10:13] as lat long we are saying the projection is fisheye and we are converting it back into
+[10:18] lat long which gives us this result back and we are good to go we have basically an image
+[10:23] that kind of works now of course we didn't do it for the bottom half of the image and
+[10:27] you can do it if you want because we are going to have the seam and those kind of problems
+[10:30] I am just doing a quick demonstration how you can get that proper kind of stretching near
+[10:34] the top of the frame so I prefer this way it is very very simple we also have this so
+[10:40] it is a similar concept we have the original image we I think I painted out the bird here
+[10:46] I think there is like a bird in this picture but all we can do here is we pull it and
+[10:51] distort it and now all we do is just mix the top of this picture with the original so here
+[10:58] is the original picture mixed in so I used the roto shape just to mix those two together
+[11:03] and essentially what that does is all the same work that we had to do with these nodes
+[11:07] but we can do it just in a different way and we have that proper stretching and if we wrap
+[11:11] this on the sphere it already works so much easier much less nodes you don't have to think
+[11:16] about too much and keeping it simple which I like so after that we can paint out our
+[11:21] seam so we offset it we roto paint out the seam we are good to go and then I think what
+[11:26] I did here is I kind of flipped the image I did the same thing so I kind of mirrored
+[11:30] it offset it again to make sure there is no seams just paint out the seams and then kind
+[11:35] of key mix that back on so now we have this like cloud image that you know maybe if we
+[11:38] are flying really high in the sky maybe you could put some ocean down here instead it
+[11:42] would make more sense but it is just demonstration so make sure there is no seams in there and
+[11:48] we can preview it again using our spherical transform so again make sure we go lat long
+[11:54] directed linear and now we have our controls if we turn our overlay on with Q we can do
+[11:58] control alt left mouse click and we can kind of spin around here and just make sure our
+[12:02] texture is good it doesn't work from all the angles and stuff like that so kind of just
+[12:06] spinning around randomly here and if you see some textures that maybe are a little bit
+[12:10] too stretched that is where you want to go in and you want to play with your resolution
+[12:13] so if it is the case that things are a little bit too big or too stretched that is where
+[12:19] you are going to have to start shrinking your images down and kind of maybe adding more
+[12:23] images so the resolution and the size of things is still something you are going to have to
+[12:28] play with visually at the end result you know so I will explain that a little bit more in
+[12:33] another example coming up here with a kind of space example but again if we preview this
+[12:38] in 3D it is kind of working the technique is kind of working here we have a sphere with
+[12:43] no seams no poles and stuff like that so that is closer to the result that we would probably
+[12:48] need so we have another example down here this is something I was doing for like a VR environment
+[12:54] I have this render here this is a render just a very basic CG environment for some kind
+[13:00] of VR stuff that I am doing and basically this is rendered out from a 360 degree camera
+[13:07] in CG so you can get these renders out very easily if you are familiar with any 3D package
+[13:14] you just google how do I get a 360 camera in whatever software and so I render this out
+[13:19] and basically I am using the same technique to kind of do this sort of space nebula and
+[13:24] kind of put it behind these kind of windows this is going to be kind of like a glass dome
+[13:29] in space kind of thing and so it is a really good way to kind of design things for a 360
+[13:35] degree environment because we can easily see the layout of the CG scene as well as our
+[13:42] sky that we are kind of map painting and so again if we have our 3D render with 360 degrees
+[13:49] as well as our proper lat long with the stretching of course if it is not stretching at the
+[13:53] top you know something is wrong you want the stretching near the poles that is kind of
+[13:57] telling you that it is correct and if we have something like that we can do a spherical
+[14:01] transform at the end and this is a low resolution CG render so you can see it is kind of blurry
+[14:05] there it is not the highest quality just for the example but again we have our spherical
+[14:10] transform we can do our little trick here rotate around and give it a second here give
+[14:16] it a second to cash and we should be able to rotate around kind of in real time and we
+[14:20] can get a sense for how that 360 degree environment is going to look so it is kind of a finicky
+[14:26] that controls in terms of kind of spinning around here not exactly the best so you can
+[14:31] play with these numbers on the side so I can say just an x I can just increase that number
+[14:36] I can just use my arrow keys up spin around and just see if the lighting is working all
+[14:41] these kind of things so we have like a light source from a galaxy we have a light direction
+[14:44] in CG and these are the kind of things I am going to be paying attention to for doing
+[14:48] some kind of 360 degree environment you know is that map painting lining up and those kind
+[14:54] of things so that is about it basically how to you know get images looking like this very
+[15:01] very useful especially you know if you have a whole bunch of pictures that you are map
+[15:04] painting with like these these are the nebulas you can find these in the description if you
+[15:08] guys need any textures like this but it is pretty awesome pretty awesome technique and
+[15:14] you know you can stack different pictures as well like shrink them down and you know
+[15:18] if you need more detail in certain spots you know something I have seen a lot specifically
+[15:23] in like VR environments is they don't have a good sense of scale meaning like sometimes
+[15:27] the stars look too big and that is kind of a map painting thing that is more an artistic
+[15:33] thing you need to pay attention to rather than like this is a technical tutorial but just
+[15:37] keep that in mind if you are doing any kind of map painting you know pay attention to
+[15:41] stuff like this where it doesn't look good where you have stars that are too big the
+[15:44] sense of scale doesn't make sense those are the things that you kind of want to improve
+[15:48] there and pay attention to but yeah that is about it and thanks so much for watching hit
+[15:53] like if you guys found it useful and that is about it.
 
 
 
