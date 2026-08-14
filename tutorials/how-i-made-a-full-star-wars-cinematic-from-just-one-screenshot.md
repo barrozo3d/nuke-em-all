@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=6hArU1CgJUA
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "not specified"
+tags: [3d-system, compositing, gizmo, motion-graphics, digital-matte-painting, roto, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # How I Made a FULL Star Wars Cinematic from JUST One Screenshot
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -138,30 +134,64 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [3:17] tutorials/frames/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot/frame_000.jpg
+- [3:38] tutorials/frames/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot/frame_001.jpg
+- [4:09] tutorials/frames/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot/frame_002.jpg
+- [4:51] tutorials/frames/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot/frame_003.jpg
+- [5:11] tutorials/frames/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot/frame_004.jpg
+- [5:24] tutorials/frames/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot/frame_005.jpg
+- [6:08] tutorials/frames/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot/frame_006.jpg
+- [6:45] tutorials/frames/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Build a convincing holographic activation/materialization effect on a 3D character (a Sith Trooper, Blender asset re-exported as Alembic + camera into Nuke) by layering multiple animated procedural glitch/scan patterns (via the paid `ScreenFX` plugin) projected onto the model's UVs and normals, then compositing many of those pattern passes together with edge detection, glow, and interactive-light multiplies so the effect reads as flowing across the actual 3D surface rather than a flat 2D overlay.
 
 ### Summary
-[PENDING EXTRACTION]
+Compositing Academy turns a static Battlefront 2 Sith Trooper loading-screen image into a short cinematic teaser: the character is rigged and posed in Blender (Mixamo mocap + hand-animated head rotation), shot with long lenses/shallow DOF and animated background area lights for subtle reflective sweep-highlights, then finished entirely in Nuke for the signature "hologram activating" transformation. The gun materializes via an Alembic-exported model + camera brought into Nuke, layered with multiple `ScreenFX` plugin patterns (grid drips, "Polyflow" evolving geometric shapes traveling down a path) composited onto the 3D geometry; a separate Boolean-clipped "growing" gun geometry gets its own pattern layer. The helmet's red-to-black activation transition starts from a rough hand-roto blend, then a `Polyflow`-generated pattern is projected onto the face via `UVProject` (driven by an `Axis`) so the transition follows the actual 3D surface instead of looking like a flat 2D wipe; that's multiplied against a second ScreenFX pattern for extra detail. Interactive light/glow is faked by blurring and glowing the effect pattern and multiplying it against a normals render of the face; further passes add edge-highlighted detail from an `EdgeDetect` on the normals masked by the pattern, glitchy "blocky transform" edge breakup, dot-pattern edge decoration, and camera defocus + lens dirt to sell the final integrated look.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Export the CG asset pieces needed for the Nuke finish out of Blender: the gun as Alembic geometry, plus the 3D camera for each shot, so they line up correctly once imported into Nuke.
+2. Build a base procedural pattern layer using the `ScreenFX` plugin (Compositing Academy's own plugin) — e.g. animated "grid drips" with adjustable speed/width/count — and project/apply it onto the 3D model to get an effects pass baked to the geometry's surface.
+3. For a "growing" reveal (e.g. the gun materializing), Boolean-clip the geometry within a sphere in Blender, export that as separate animated geometry, and layer a second ScreenFX pattern onto it so the edges appear to be actively constructing/growing.
+4. Stack multiple independent ScreenFX pattern passes (several different looks) and combine them to build up a convincing, non-repetitive hologram texture rather than relying on just one or two patterns.
+5. Build the helmet's red/black activation transition: start with a rough hand-drawn `RotoPaint` blend between the red and black material states.
+6. Use the `ScreenFX` "Polyflow" node to generate geometric shapes that evolve/travel down a defined path (a wipe-like animated pattern), plus a wider falloff variant of the same pattern.
+7. Project that Polyflow pattern onto the 3D face using `UVProject` driven by an `Axis` node for correct planar alignment on the model's surface (not a flat screen-space overlay).
+8. Multiply a second independently-built pattern against the first projected pattern to enrich the transition's detail.
+9. Fake interactive light/glow: blur and `Glow` the transition pattern, then multiply it against a normals render of the face to get soft light bleeding under the activation edge.
+10. Add a second interactive-light pass that boosts edge highlights specifically, again driven by the face normals, layered under/around the main transition for extra graphic detail.
+11. Add trailing detail with another ScreenFX grid-style pattern that reads as "being constructed" as it flows along the transition edge.
+12. Use `EdgeDetect` on the face normals to extract edges everywhere on the model, then mask that by the transition pattern so highlighted edges only appear along the moving activation line; multiply against a dot pattern for a broken-up, concept-art-matching edge texture.
+13. Add a glitchy variant via a blocky/pixelated `Transform`-driven edge-detect break-up, scattering fragments off the transition edge.
+14. Finish with a final animated outward `EdgeDetect` pass masked by another dot pattern for the trailing hologram-dissipation look, plus camera defocus and lens-dirt (Compositing Academy's own Lens Dirt tool) for integration.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- `ScanlineRender` + `Camera`/`Axis` — renders the Blender-exported Alembic geometry (gun, character) inside Nuke's 3D system using the matching exported camera
+- `ScreenFX` (paid plugin, Compositing Academy Asset Store) — generates animated procedural patterns (grid drips, dot patterns) with adjustable speed/width/density; includes a "Polyflow" sub-tool for shapes traveling down an animated path
+- `UVProject` + `Axis` — planar-projects a 2D pattern onto the 3D face surface so it follows the model's geometry rather than sitting flat in screen space
+- `RotoPaint` — rough initial red/black material-state blend on the helmet
+- `EdgeDetect` — run on a normals render to extract model-surface edges, masked by the transition pattern for edge-highlight/dot-breakup detail
+- `Glow` + blur — builds faked interactive light bleeding from the transition edge, multiplied against face normals
+- Normals render — used repeatedly as a lighting/edge reference multiplied against pattern layers for a "real light" feel
+- Blocky/pixelated `Transform` break-up — glitch-style edge fragmentation effect
+- Defocus + Lens Dirt (Compositing Academy's own tool) — final integration/camera realism pass
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (3D system for Alembic/camera import, UVProject, ScreenFX plugin). No on-screen version banner or OCIO metadata visible in the captured frames — version not specified.
 
 ### Tags
-[PENDING EXTRACTION]
+3d-system, compositing, gizmo, motion-graphics, digital-matte-painting, roto, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares `3d-system` and UV/position-driven projection technique with Create a Movie Quality Sci-Fi Laser Effect in Nuke (`create-a-movie-quality-sci-fi-laser-effect-in-nuke.md`) — both project animated 2D patterns onto 3D geometry via UVProject/P-channel data to build a "spreading" or "materializing" reveal effect entirely in comp.

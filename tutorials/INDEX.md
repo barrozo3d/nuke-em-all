@@ -211,11 +211,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=6hArU1CgJUA
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** not specified
+- **Tags:** 3d-system, compositing, gizmo, motion-graphics, digital-matte-painting, roto, advanced
+- **Summary:** Builds a holographic "activation" transformation on a Blender-rigged Sith Trooper (Alembic + camera exported into Nuke) by layering multiple animated procedural patterns from the paid `ScreenFX` plugin (grid drips, "Polyflow" path-traveling shapes, dot patterns), projected onto the 3D model via `UVProject`/`Axis` so the effect follows the actual geometry, combined with `EdgeDetect`-on-normals edge highlights, faked interactive glow, and glitchy edge break-up for a concept-art-matching red/black hologram wipe.
 - **File:** tutorials/how-i-made-a-full-star-wars-cinematic-from-just-one-screenshot.md
+- **Related:** Create a Movie Quality Sci-Fi Laser Effect in Nuke (`create-a-movie-quality-sci-fi-laser-effect-in-nuke.md`) — shares `3d-system`, UV/position-projected reveal-pattern technique.
 
 
 ### Ray Render in Nuke Tutorial | Compositing 3d Reflections
