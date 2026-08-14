@@ -204,7 +204,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** compositing, 3d-system, procedural-texture, gizmo, ai-tools, digital-matte-painting, advanced
 - **Summary:** Experimental "2D→3D→2D→3D" pipeline: reverse-engineers an AI concept image into Nuke procedural textures (`CellNoise`, `Glass` gizmos), displaces them onto Blender geometry and renders in Cycles, then re-imports that render into Nuke to abstract further via tiling + `PolarDistort` into radial "eye" patterns, re-projects onto a 3D Cylinder for an animated fractal element, and finishes with targeted-highlight grading plus a Topaz Gigapixel AI-upscale pass to recover detail lost from repeated resampling. Part 1 of a two-part "Stormy Crystal Skull" project.
 - **File:** tutorials/mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md
-- **Related:** Stormy Crystal Skull Part 2 (once ingested) — direct continuation; 360 Spherical LatLong Textures | Nuke Tutorial (`360-spherical-latlong-textures-nuke-tutorial.md`) — shares the `PolarDistort` gizmo used for a different purpose.
+- **Related:** Stormy Crystal Skull Part 2 (`stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2.md`) — direct continuation; 360 Spherical LatLong Textures | Nuke Tutorial (`360-spherical-latlong-textures-nuke-tutorial.md`) — shares the `PolarDistort` gizmo used for a different purpose.
 
 
 ### How I Made a FULL Star Wars Cinematic from JUST One Screenshot
@@ -247,11 +247,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=prhQhQ5AnNM
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (cross-platform: EmberGen storm sim + Blender/Adobe Medium CG asset; compositing techniques are pure Nuke)
+- **Version:** Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated; Classic 3D system only)
+- **Tags:** compositing, merge, channels, st-map, gizmo, grading, fx-simulation, lighting, advanced
+- **Summary:** Part 2 of the Stormy Crystal Skull project — the CG side is fast (EmberGen storm sim into an FBX skull collider, Blender VDB import, Adobe-Medium-sculpted interior cracks), but the real technique is doing all art direction in Nuke comp instead of 3D: two un-animated storm-light renders `Plus`-combined and independently flickered via Grade + the Nukepedia Expression Generator gizmo, lightning-pattern footage `STMap`-projected onto the skull's UV pass then masked to only the storm's bright regions (+ hand-painted RotoPaint for randomness) so it reads as happening *inside* the volume, a Glass-node edge distortion using the render's own alpha as displacement, PMatte-driven eye brightening, log-space sharpening, and a `VolumeRays` "Copy to Group" trick to preserve overscan.
 - **File:** tutorials/stormy-crystal-skull-nuke-blender-ai-embergen-mixed-vfx-medium-part-2.md
+- **Related:** Mixed Medium VFX P1 (`mixed-medium-vfx-p1-blender-nuke-ai-embergen-vr-tutorial.md`) — direct prequel; Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — shares `compositing`, `merge`, `channels` and the position-pass-masking philosophy.
 
 
 ### Nuke Compositing Artistic Basics (1/8): Roles of Production
@@ -285,6 +286,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Tags:** [PENDING]
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/nuke-compositing-artistic-basics-28-3-point-lighting.md
+
+
+### Nuke Compositing Artistic Basics (3/8): Exposure
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=xFUOuK3lFro
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/nuke-compositing-artistic-basics-38-exposure.md
 
 ---
 
