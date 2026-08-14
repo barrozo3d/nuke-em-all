@@ -785,6 +785,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/gradient-re-mapping-and-quadratic-luma-keys-nuke-compositing-advanced.md
 
+
+### Normally it costs $50,000+ For This Camera Move
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=GG7c29nWD68
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/normally-it-costs-50000-for-this-camera-move.md
+
 ---
 
 ## Tag Reference
