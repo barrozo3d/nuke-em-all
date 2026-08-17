@@ -928,6 +928,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/the-blueprint-for-cinematic-light-vfx.md
 - **Related:** The BEST Way to Use Normals to Relight in Nuke (`the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md`), 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — shared relighting/RotateNormals techniques; Compositing EPIC VFX Godrays (`compositing-epic-vfx-godrays-nuke-tutorial.md`) — shared position-pass noise technique.
 
+
+### How I Made Pro VFX in a BARN! (New Tech REVEAL)
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=TUPGJj4TjMk
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/how-i-made-pro-vfx-in-a-barn-new-tech-reveal.md
+
 ---
 
 ## Tag Reference
