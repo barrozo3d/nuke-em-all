@@ -983,6 +983,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** Full beginner onboarding course for AE compositors switching to Nuke, built around one practical shot: layers-vs-nodes and Roto/Merge(mask) fundamentals, Grade node vs. AE curves, node cloning (Alt+K) as the pick-whip equivalent, alpha generation for mismatched footage sizes, luminance-Keyer-derived alpha for occlusion-correct smoke/fire compositing (vs. physically-wrong plus-merging), masked exponential Glow on metal highlights, a procedural Noise-node ember/particle generator, and a finishing stack (Chromatic Aberration via channel-split Transform, Lens Distortion, Grain, Write).
 - **File:** tutorials/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke.md
 
+
+### Intro to Nuke for 3D Artists - Full VFX Course
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=id1HCc2xkIU
+- **Author:** Voxyde VFX
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/intro-to-nuke-for-3d-artists---full-vfx-course.md
+
 ---
 
 ## Tag Reference
