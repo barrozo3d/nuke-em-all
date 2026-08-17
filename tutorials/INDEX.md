@@ -921,11 +921,12 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=zGfcWyqDzgE
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Nuke 15.x (2024 upload)
+- **Tags:** relighting, grading, gizmo, cryptomatte, digital-matte-painting, compositing, intermediate
+- **Summary:** Diffuse vs. reflective lighting theory (a reflective surface can be lit by an infinitely distant source, producing camera-relative highlight parallax and letting dark scenes stay dark while still reading as lit — the "wet the road at night" trick) applied comp-side: pulling small highlight detail from an Albedo pass instead of adding a mismatched diffuse light; hand-painting highlights with noise-broken RotoPaint where no render data exists; Cryptomatte-isolating and boosting a CG object's indirect bounce light to create "connection points" tying multiple highlights to one implied light source; layered `P_NoiseAdvanced` position-pass noise masked by existing highlight regions for surface breakup; and `RotateNormals` channel-hunting on a shuffled normal pass to isolate and selectively boost highlights on faces oriented toward an arbitrary implied light direction.
 - **File:** tutorials/the-blueprint-for-cinematic-light-vfx.md
+- **Related:** The BEST Way to Use Normals to Relight in Nuke (`the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md`), 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — shared relighting/RotateNormals techniques; Compositing EPIC VFX Godrays (`compositing-epic-vfx-godrays-nuke-tutorial.md`) — shared position-pass noise technique.
 
 ---
 

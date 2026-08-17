@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=LBAXQC5maVY
 author: Voxyde VFX
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (canonical here — cross-platform course, see note below) + Houdini/Solaris (source sim/render side, summarized)"
+version: "not specified"
+tags: [compositing, aovs, cryptomatte, channels, digital-matte-painting, projection, st-map, gizmo, camera-tracking, fx-simulation, 3d-system, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 12
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Houdini FX, Solaris & Nuke -  Full VFX Course
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py houdini-fx-solaris-nuke---full-vfx-course <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Overview & Setup [0:00]
@@ -1969,30 +1965,89 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:20] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_000.jpg
+- [20:00] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_001.jpg
+- [45:00] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_002.jpg
+- [70:00] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_003.jpg
+- [95:00] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_004.jpg
+- [125:00] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_005.jpg
+- [131:00] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_006.jpg
+- [145:00] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_007.jpg
+- [154:00] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_008.jpg
+- [163:00] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_009.jpg
+- [168:30] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_010.jpg
+- [195:00] tutorials/frames/houdini-fx-solaris-nuke---full-vfx-course/frame_011.jpg
+
+---
+
 ## Structured Notes
 
+## Cross-platform canonical-location note
+
+This is a full VFX course by Voxyde VFX: a walking-character-in-a-sandstorm shot built end-to-end (198m39s, 9 chapters). By runtime, Houdini/Solaris content (chapters 1-6, ~124 min / ~62%) is the majority; Nuke content (chapters 7-9, ~74 min / ~38%) is the minority by time but is a **substantial, self-contained final act** — not a token wrap-up. Per this ecosystem's cross-platform convention (canonical extraction lives with the skill matching the majority content, with an index-only cross-reference stub elsewhere), the default expectation would be **houdini-wand canonical**. This agent deviated from that default and made **nuke-em-all canonical** instead, for these reasons:
+1. The Nuke portion (3 full chapters) teaches a complete, reusable methodology — AOV-driven "rebuild the beauty from split light passes" compositing, a from-scratch Fresnel/camera-facing-ratio shader built from raw AOV data (ray-origin · normal dot product), UV-pass-driven texture projection with wraparound-UV fixing, Cryptomatte-driven material isolation, and — uniquely instructive — a full non-destructive "reskin" of the exact same AOV structure from a desert sandstorm into a snow blizzard purely through re-grading, demonstrating why AOV-split comping is valuable in a production/iteration context. This is arguably the single most complete AOV-rebuild masterclass in this skill's whole library.
+2. This agent was first to touch the video (no existing entry in houdini-wand's INDEX.md as of 2026-08-14) and had already collected the raw transcript here before this evaluation, so building the canonical file in the skill that will get the most reuse out of it (nuke-em-all) avoids a second multi-hour download+transcribe cycle for no benefit.
+3. A cross-reference stub has been added to `houdini-wand/tutorials/INDEX.md` pointing back here, per the established convention, so the Houdini/Solaris side (cloth vellum sim, ripple-solver "cheat" wind effect, pyro smoke/dust, USD/Solaris layering, look-dev, AOV render-layer setup) remains discoverable from that skill even though the full write-up lives here. If Houdini-side technical depth is needed later, extract it fully into houdini-wand instead of expanding this file.
+
 ### Core Technique
-[PENDING EXTRACTION]
+End-to-end VFX pipeline for a cinematic character shot: Houdini SOPs for effects sourcing (vellum cloth, ripple-solver "wind" cheat, pyro smoke, particle dust), Solaris/USD for scene assembly, look-dev, and AOV-split rendering, and — the section extracted in full depth here — Nuke for reconstructing the beauty image from split-light AOVs, building a Fresnel shader from raw position/normal data, projecting UV-mapped detail textures, and non-destructively re-grading the entire comp into a completely different environment (desert sandstorm → snow blizzard) without touching the 3D render.
 
 ### Summary
-[PENDING EXTRACTION]
+
+**Houdini/Solaris side (chapters 1-6, summarized — full technical depth belongs in houdini-wand if extracted there):**
+- **Setup:** USD-based character/camera/animation pipeline (separate USD layers for base look-dev, animation, camera — swap animation without losing material assignments). Nuke/Houdini color-management parity achieved by exporting Houdini's own OCIO config and pointing Nuke's project settings at the same file (instead of default ACES), with EXRs exported in ACES CG — critical so what's previewed in Karma matches what's loaded in Nuke.
+- **Cloth simulation:** Vellum cloth sim on a cape/hood. Key trick: **cancel the character's forward translation before simulating** (extract the character's centroid position via `Extract Centroid`, subtract it from both collision geometry and cloth via Attribute VOPs, simulate on the now-static mesh, then re-apply the translation afterward) — this stops the character's forward motion from fighting the wind direction and fully "eating" the wind's visual effect, at the cost of physical accuracy (acceptable for art-directed VFX work). Additional production tips: low bend-constraint value for more wrinkles, higher bend-damping-ratio for stability, `Vellum Attach to Geometry` with rest-scale 0 to hard-pin specific points (hood/shoulder/waist) to the body, soft-transform nudges on individual points post-sim to fix small intersections (works reliably because cloth-sim topology is consistent frame to frame), and `Rest Position` capture pre-cache for later shading use.
+- **Shirt ripples:** A cheap alternative to full cloth sim — the **Ripple Solver** run on a *static, world-centered* copy of the shirt mesh (same translation-cancel trick as the cloth), driven by a POP-network-spawned particle stream (not a per-frame scatter) used as ad-hoc "collision" geometry that triggers ripples only from the wind-facing side (isolated via a `Clip` node). Result: convincing "wind pushing fabric" motion with zero real collision detection — explicitly framed as a fast, non-physical "cheat" appropriate for slower/calmer shots, contrasted against the full Vellum-based shirt sim used in the author's other (paid) course for faster/more dynamic action.
+- **Smoke & dust:** Pyro smoke sourced from a `VDB from Polygons` fog volume with an animated, remapped `Volume Noise Fog` density source (patchy, not uniform). Inside the Pyro Solver: layered `Gas Turbulence` (large-scale "big" + small-scale "small" noise merged together) plus a `Gas Disturb` with **Rotational Force** enabled (concentrates the disturbance on faster-moving parts of the smoke only, avoiding over-diffusing calm regions) for a chaotic "sandstorm" look. Dust is a POP-network particle sim advected by the smoke's own velocity field (`POP Advect by Volumes`, Final Velocity update), with per-particle velocity-scale randomization to break up uniform "stepping," dead/stuck-particle removal via a speed-threshold VOP, then instanced with small noise-displaced spheres (`Copy to Points`, packed instancing) with randomized scale and orientation for rock-like dust motes rendered with velocity-blur.
+- **Solaris/USD assembly:** Sub-layering shirt/cloth meshes onto the existing character USD by matching scene-graph paths exactly (preserves material assignments without re-authoring them) — a core USD-workflow lesson. Cloth material built from scratch in a Karma Material Builder using MaterialX fractal-noise nodes mapped via a `rest` primvar (not raw world position, so the noise sticks to the moving cloth) plus Megascans fabric roughness/normal maps. Lighting: a Physical Sky (softened via increased angular size) plus a supplementary Distant light, each tagged with per-light LPE names for later AOV splitting. **Render-layer strategy:** four separate USD render layers (BG smoke, FG smoke, dust, character) each built via `Prune` node scene selection, with `invisible to primary rays` used on the FG smoke when compositing it onto the *character* render layer (so the smoke casts correct shadows/occlusion onto the character without actually rendering as visible geometry in that pass) and `shading holdout mode = matte` used to render the character as a pure holdout matte under the smoke layers. AOVs exported: split diffuse/glossy-reflection per light (sun/sky/distant), indirect volume bounces, Cryptomatte (material ID), UV pass, and — critically for the Nuke Fresnel trick below — raw **ray-origin** and **smooth-normal** AOVs.
+
+**Nuke side (chapters 7-9, full depth — this is the canonical content for this skill):**
+- **AOV-driven beauty reconstruction:** Rather than using the rendered beauty pass directly, the whole comp is built by `Shuffle`-ing out each split-light AOV (per-light diffuse, per-light glossy reflection, sky/sun/distant indirect volume, etc.), individually grading each one, then `Merge`-ing them back together with `plus` operations to reconstruct — and then deliberately deviate from — the original beauty. This is the load-bearing technique of the whole section: because the final look is built from independently-gradable light components rather than a baked beauty, the entire environment can later be changed (see the blizzard reskin) without a single Houdini re-render.
+- **Alias-safe AOV compositing:** Splitting/regrading AOVs independently breaks anti-aliased edges (aliased edge pixels are semi-transparent blends that don't survive independent per-layer grading correctly). Fix: **unpremult** all AOV layers immediately after shuffling (before any grading), do all color work on unpremultiplied data, recombine, then as the very last step **copy the alpha from the original beauty render** and **premult** once at the end — this restores clean anti-aliased edges that would otherwise be destroyed by the intermediate per-AOV math.
+- **Fresnel/camera-facing-ratio shader built from raw AOVs:** Because the render exported a raw **ray-origin** AOV and a raw **smooth-normal** AOV, a from-scratch Fresnel effect is built entirely in comp: a `DotProduct` node (vector3 signature) between the two (each `Clamp`ed first, since raw values are far outside 0-1), refined with a `Grade` (gamma/white-black point) — this reproduces exactly the "camera facing ratio" concept from renderers like Redshift, and is used as an edge-darkening mask so a projected scratches/dust texture doesn't wrap unrealistically hot around silhouette edges.
+- **UV-pass texture projection:** A tileable detail texture (metal scratches, later reused as a snow-frost texture) is projected onto the character using the exported **UV AOV** fed into an `STMap` node. Gotcha: Solaris/Karma's exported UVs can exceed the 0-1 range (e.g. 1.32), which `STMap` requires to be wrapped — fixed with an `Expression` node computing `R - floor(R)` (and the same for G) to strip the integer part and get proper tiling, a general-purpose UV-wraparound fix worth remembering for any USD/Solaris-to-Nuke UV pipeline. A `Grade` on the shuffled UV channels (reducing white point) controls texture tile density, matching "increase tiling" in a 3D app.
+- **Cryptomatte-driven masking:** `Cryptomatte` isolates specific mesh/material IDs (e.g. just the metal armor, or just the eyes) from the beauty render by Ctrl-clicking directly in the viewer, used to constrain the projected scratch texture (or, for the eyes, to build a green emissive glow layer) to only the intended surface.
+- **Procedural eye glow:** Isolate the eyes via Cryptomatte → convert to a flat RGBA color layer → multiply with a blurred/dilated copy of itself for a soft radial gradient (avoids a flat, artificial-looking glow) → grade to the target color (green, with a touch of red for warmth) → re-merge the *original* alpha (the gradient trick corrupts alpha, so it must be copied back from the source Cryptomatte pass before final compositing) → layer a slow-scrolling `Noise` node in `multiply` to fake obscuration-flicker from the foreground smoke passing in front of the eyes (since the eyes are composited as a flat top layer with no real interaction with the smoke geometry) → `ap_Glow` (free Nukepedia exponential glow gizmo) → a squeezed `Radial` mask convolved (`Convolve` node) with the glow itself for a subtle directional flare.
+- **Fake volumetric obscuration via alpha-driven Grade:** To darken the character convincingly under a smoke layer added with a `plus` merge (which otherwise loses all light-obscuration information the original beauty render had baked in), a `Grade` node is fed the smoke render's own **alpha channel** as a black/RGB source and merged multiplicatively under the character — effectively re-deriving "how much smoke is covering this pixel" purely from alpha and using it to darken the character before the smoke color is added on top. The same alpha-Grade is also keyframed (mix 1→0 over the first 50 frames) to fade the character in through the smoke at the start of the shot.
+- **Diffusion/fake-GI trick:** A very large (~200px), low-mix `Blur` merged back on top of the sharp result is used repeatedly across nearly every layer in this comp — it blends layers together, lifts/softens pure blacks (avoiding an unnaturally crushed look), and reads as a cheap fake global-illumination bounce. Used on the smoke layers, the full comp, and (with a different blur radius) the dust/snow particle layer.
+- **Motion-driven defocus flicker:** A `Defocus` node's amount is driven by a hand-built expression (`random(frame/7)`, offset/clamped to produce occasional spikes from a 0 baseline rather than constant jitter, then scaled) to simulate a handheld camera occasionally racking soft — a reusable pattern for any "make this metric spike occasionally, not constantly" expression need.
+- **Finishing stack:** Lens-dirt texture merged in `plus` and masked by a feathered `Roto` so it only affects frame edges; `ap_Vignette` (Nukepedia) for edge darkening (or, in the blizzard variant, edge *brightening* for a different focus-pulling effect); `ap_ChromaticSpin` (Nukepedia) for subtle chromatic aberration; final `Crop` to a 2.35:1 anamorphic aspect for the cinematic finish.
+- **Non-destructive full reskin (desert → blizzard):** The single most instructive idea in the whole comp: the *exact same* AOV/Shuffle/Merge node structure, rebuilt with completely different Grade values (desaturate everything first via `Saturation`=0, then re-introduce color — blue/white instead of orange/brown — plus a from-scratch snow-frost UV-projected texture reusing the same STMap+wraparound-fix technique as the scratches, masked to the wind-facing side using the normal AOV's red channel as a directional gradient mask, plus a contrast-pushed shadow-recovery pass using the same normal-derived mask) turns a desert sandstorm shot into a snow blizzard shot using **zero new Houdini renders** — purely a comp-side re-grade of the same split-AOV source data. This is presented explicitly as a demonstration of why AOV-split, non-destructive comping is valuable for fast production iteration/variation work.
 
 ### Key Steps
-[PENDING EXTRACTION]
+*(Nuke-focused — see Houdini/Solaris summary above for the sourcing side)*
+1. Match Nuke's OCIO project color config to Houdini's own exported OCIO config (not default ACES) and ensure EXRs were rendered in ACES CG, so previewed colors match between apps.
+2. For each render layer (BG smoke, FG smoke, character, dust): `Shuffle` out each individual split-light/volume AOV, label each Shuffle node's title with its `[value in1]` expression for clarity, grade each independently, then `Merge` them together (`plus`) to reconstruct the beauty.
+3. For layers with alpha/edges (the character): unpremult all shuffled AOVs before grading, do the per-AOV color work, recombine, then copy the original render's alpha back in and premult once as the final step to preserve clean anti-aliasing.
+4. Build a from-AOV Fresnel mask: `Shuffle` out the ray-origin and smooth-normal AOVs, `Clamp` both, `DotProduct` (vector3) them, refine with `Grade`; use as an edge-attenuation mask for projected textures.
+5. Build UV-projected detail textures: `Shuffle` the UV AOV into RGB, fix any values ≥1 with an `Expression` (`R - floor(R)`, same for G), feed into `STMap` with a tileable texture as source, adjust tiling via a `Grade` on the UV channels' white point, mask to specific surfaces via `Cryptomatte`.
+6. Build the eye-glow layer: Cryptomatte-isolate the eyes → flatten to RGBA → self-multiply with a blurred copy for gradient → grade to target color → restore original alpha via `Copy` → multiply with a slow-scrolling `Noise` for fake smoke-obscuration flicker → `ap_Glow` → convolved `Radial` for flare.
+7. Fake volumetric obscuration: Grade the smoke render's alpha to black/RGB, merge multiplicatively under the character before adding smoke color on top; keyframe the Grade's mix to fade the character in through smoke over the shot's first ~50 frames.
+8. Apply the large-radius/low-mix Blur-and-merge "diffusion" trick on volume layers and the final comp for cheap fake-GI blending and black-level lift.
+9. Drive a `Defocus` node with a clamped/offset `random(frame/N)` expression for occasional handheld-feeling soft-focus spikes rather than constant jitter.
+10. Finish with lens-dirt (roto-masked to frame edges), vignette, chromatic aberration, and an anamorphic `Crop`.
+11. To re-skin the entire environment without re-rendering: duplicate the whole Shuffle/Grade/Merge chain, zero out saturation on every AOV layer first, re-introduce a completely different color palette via new Grades, and rebuild any UV-projected surface-detail texture (swap the source texture, reuse the same STMap/wraparound-fix/Cryptomatte-mask pipeline) with a normal-AOV-derived directional mask controlling where the new detail appears.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+**Nuke:** `Shuffle` (AOV extraction, with `[value in1]` label expressions), `Unpremult`/`Premult` (alias-safe AOV grading), `Merge` (plus/over/in operations for AOV recombination and masking), `Grade` (per-AOV/per-channel color work, alpha-channel-as-mask obscuration trick), `Copy` (restoring original alpha post-AOV-math), `DotProduct` (vector3, Fresnel from ray-origin × normal AOVs), `Clamp`, `STMap` (UV-driven texture projection), `Expression` (`R - floor(R)` UV wraparound fix; `clamp((random(frame/7)-5)*20-10, 0, ...)`-style defocus-flicker driver), `Cryptomatte` (material/object ID isolation via Ctrl-click), `Blur` (diffusion/fake-GI trick, feathered roto masks), `Defocus` (expression-driven flicker), `Noise` (scrolling obscuration-flicker source, snow-texture alternative), `ap_Glow`, `ap_Vignette`, `ap_ChromaticSpin` (free Nukepedia gizmos), `Convolve` (directional flare from a squeezed Radial), `Roto` (edge/region masking), `MotionBlur` (built-in, applied to volume layers), `Crop` (2.35:1 anamorphic finish), OCIO project color management pointed at an exported Houdini config.
+
+**Houdini/Solaris (source side, summarized):** Vellum cloth solver + `Vellum Attach to Geometry` + `Vellum Post Process`, `Extract Centroid` + Attribute VOPs (translation-cancel trick), Ripple Solver + POP Network (cheap wind-cheat shirt effect) + `Clip` (directional collision isolation), Pyro Solver + `Gas Turbulence` (layered) + `Gas Disturb` (rotational force) + `Volume Noise Fog`, POP Network + `POP Advect by Volumes` (dust sourced from smoke velocity), `Copy to Points` (packed instancing), Solaris USD sub-layering (path-matched material preservation), Karma Material Builder + MaterialX (`mtlx_fractal3d`, primvar-mapped noise via `rest` attribute), `Prune` (render-layer scene selection), shading holdout mode (`mat`), render visibility (`invisible to primary rays`), per-light LPE tags, split AOV export (diffuse/glossy per light, indirect volume, Cryptomatte, UV, ray-origin, normal).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced/Expert — assumes comfort with AOV/light-pass theory, USD/Solaris fundamentals, and Houdini simulation basics; the Nuke section specifically teaches production-grade AOV-reconstruction methodology that goes well beyond typical single-technique tutorials.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke; exact version not stated on-screen (UI consistent with the modern node-graph/3D-system era seen elsewhere in this batch). Houdini/Solaris version also not stated.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, aovs, cryptomatte, channels, digital-matte-painting, projection, st-map, gizmo, camera-tracking, fx-simulation, 3d-system, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Can I Create a Speeder Chase on a TINY Greenscreen? (`can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md`) — shares `projection`, `compositing`; another Nuke map-painting/projection-onto-CG-terrain pipeline.
+- This ONE Step Makes CG Look Cinematic (Most Artists Skip It) (`this-one-step-makes-cg-look-cinematic-most-artists-skip-it.md`) — shares `aovs`, `compositing`; both about Light-Group/AOV-driven selective grading for attention direction.
+- How to use NUKE to Composite Blender Renders (`how-to-use-nuke-to-composite-blender-renders.md`) — shares `aovs`, `cryptomatte`, `channels`; overlapping AOV-recombination and Cryptomatte-masking fundamentals from a different cross-app pipeline.
+- [CROSS-REFERENCE] Full Houdini/Solaris-side sourcing detail (cloth, ripple-solver shirt, pyro smoke/dust, USD assembly) is only summarized above — see `houdini-wand` skill's INDEX.md stub for this same video if deeper FX-simulation extraction is added there later.

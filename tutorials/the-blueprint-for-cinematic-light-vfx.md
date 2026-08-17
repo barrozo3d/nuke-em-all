@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=zGfcWyqDzgE
 author: Compositing Academy
 ingested: 2026-08-14
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "Nuke 15.x (2024 upload; Classic 3D system / position-normal passes, no version-specific features)"
+tags: [relighting, grading, gizmo, cryptomatte, digital-matte-painting, compositing, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/the-blueprint-for-cinematic-light-vfx/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # The BLUEPRINT for Cinematic Light (VFX)
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py the-blueprint-for-cinematic-light-vfx <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -214,30 +210,57 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:42] tutorials/frames/the-blueprint-for-cinematic-light-vfx/frame_000.jpg
+- [1:23] tutorials/frames/the-blueprint-for-cinematic-light-vfx/frame_001.jpg
+- [2:18] tutorials/frames/the-blueprint-for-cinematic-light-vfx/frame_002.jpg
+- [4:52] tutorials/frames/the-blueprint-for-cinematic-light-vfx/frame_003.jpg
+- [6:38] tutorials/frames/the-blueprint-for-cinematic-light-vfx/frame_004.jpg
+- [7:34] tutorials/frames/the-blueprint-for-cinematic-light-vfx/frame_005.jpg
+- [9:26] tutorials/frames/the-blueprint-for-cinematic-light-vfx/frame_006.jpg
+- [11:02] tutorials/frames/the-blueprint-for-cinematic-light-vfx/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Understanding the visual difference between diffuse and reflective/specular lighting — a reflective surface can be lit convincingly by a light source that's infinitely far away (moonlight-on-water logic), producing camera-relative highlight parallax and letting dark scenes stay dark while still reading as lit — then applying that principle *in comp*, not just in the 3D render: pulling/boosting small directional highlights via position-pass noise, Cryptomatte-isolated bounce-light boosting, and Normal-pass channel rotation, purely to sell light direction and connect elements that don't yet feel lit together.
 
 ### Summary
-[PENDING EXTRACTION]
+Opens with a side-by-side CG sphere comparison (frame_000/001) illustrating the core physical distinction: a **diffuse/rough material** needs its light source physically near the object to read as lit on a given side (rotating around it, the far side of the sphere goes dark once the light is left behind), while a **reflective/specular material** can be lit by a source placed extremely far away and still show a highlight anywhere the reflection angle allows — because reflection angle, not proximity, determines visibility. This has two practical payoffs: (1) rotating the camera around a reflective object makes its highlight visibly slide across the surface (camera-relative highlight parallax) — a way to introduce a feeling of motion into a shot with zero moving objects; (2) in dark scenes, distant "moonlight-style" reflected light lets you keep the environment moody/underlit overall while still placing small, strategically-positioned highlights exactly where needed — frame_002 shows this applied to a near-black scene where puddle/reflection highlights alone imply the light source and terrain shape, the same principle film sets use when they wet down a night exterior road with water instead of adding more physical lights. The video then walks through where this shows up **in the comp itself**, not just in the 3D render, using an evolving version of a real shot (a character with a metallic pole/railing prop, frame_003 shows an early pass where the pole reads flat/CG). Diagnosis: a nearby practical highlight on another prop (a barrel) hints at a real light position behind camera; rather than adding a diffuse light to the CG pole (which would mismatch the actor, who has little diffuse light on him), the fix is comp-side — pull small reflective highlight detail from an Albedo (or similar) render pass and boost/re-place it onto the pole and railing (frame_004 before/after), which reads as "more metallic/rusted" from a handful of small highlight tweaks rather than a full relight. Sometimes highlights are **hand-painted where no render data exists at all**: `RotoPaint` broken up with noise on background out-of-focus pipes/railings (frame_005) purely so the eye can parse depth/shape in an area that's otherwise a soft blob — justified because viewers subconsciously read direction/shape from these cues even when defocused. A second real example: an actor's coat had a bright practical orange highlight in-plate, but a nearby CG barrel rendered almost pitch black — to sell "these are lit by the same source," the author isolated that barrel's **indirect bounce-light contribution via Cryptomatte** and boosted it until it, the coat highlight, and a third metallic highlight all visibly aligned to one implied light direction (frame_006) — described as needing "connection points in multiple areas" or the composite won't feel lit together; production compositing is framed as hundreds of small changes like this, not one big fix. A parallel real-footage example: shooting a green-screen plate with a small bluish-white practical light placed a few feet from the actor, angled to do almost nothing for front illumination but everything for a helmet highlight/motion cue — without it, the shot doesn't integrate, because the eye needs to read a light direction somewhere on the subject. **Nuke-side execution of the noise-highlight technique** (frame_007): `P_NoiseAdvanced` (Nukepedia) driven by the render's position pass generates surface-space noise; that raw noise is then masked by a key pulled from the *existing* highlight region of the same render (so new noise only appears where highlight detail already exists, not randomly anywhere), producing extra mid-to-highlight-range breakup — the author notes he'll often stack several of these (a darker "dirt" layer, a mid-tone layer, a highlight layer, plus tiny secondary "pings" inside the highlights) for a layered look rather than one flat noise pass. **Relighting via Normal-pass channel rotation:** `Shuffle` out the render's normal pass, feed it through **`RotateNormals`** (Nukepedia), and interactively rotate until one of the R/G/B channels isolates faces oriented toward the desired implied light direction (here: top-facing surfaces) — that channel is then shuffled into the alpha and used as a mask to boost highlights specifically on those top-facing faces, without touching anything else, which reads especially strongly on an out-of-focus/background element where only the highlight silhouette is legible.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Understand the underlying physics before touching any node: diffuse/rough materials need their light source physically nearby to read as lit; reflective/specular materials can be lit convincingly by a source placed arbitrarily far away, since visibility depends on reflection angle relative to the camera, not proximity.
+2. Use reflective-highlight behavior deliberately: rotating the camera around a reflective object makes its highlight slide across the surface (camera-relative parallax) — a way to imply motion/life in a shot without animating any geometry.
+3. In dark/moody scenes, keep the environment underlit overall but place small, strategically positioned reflective highlights (real-world equivalent: wetting a road for a night exterior) to imply light direction and terrain/shape without flattening the mood with more diffuse light.
+4. When a CG element reads flat/fake next to real footage, check the plate itself for lighting clues (a practical highlight on a nearby prop hints at a real light position) before deciding how to fix it.
+5. Prefer comp-side highlight enhancement over adding a mismatched diffuse light: pull small reflective-highlight detail from an Albedo (or similar) render pass and reposition/boost it onto the problem surface — small, targeted highlight tweaks read as "more metallic/detailed" far more convincingly than a broad relight that risks mismatching the rest of the plate.
+6. Where no useful render data exists for a background/out-of-focus detail, hand-paint highlights: `RotoPaint`, broken up with noise, placed purely so the eye can parse shape/depth in an otherwise soft/flat region.
+7. To connect a CG element that reads disconnected from its real-footage light source: isolate that element's indirect bounce-light contribution with `Cryptomatte` and boost it until it visibly aligns in direction/intensity with other real and CG highlights in the frame — build multiple such "connection points" across the shot, not just one.
+8. When shooting real plates meant to receive CG, place a small practical light purely for edge/highlight/motion cues on the subject (e.g. helmet rim light) even if it contributes little to overall exposure — this single cue is often what makes later CG integration read as lit from the same direction.
+9. Generate comp-side surface-detail noise: `P_NoiseAdvanced` (Nukepedia) driven by the render's position pass; mask the resulting noise by a key of the render's *existing* highlight region so new detail only appears where highlight information is already present, not arbitrarily; layer multiple passes (dark/dirt, mid-tone, highlight, small highlight "pings") for a richer, less flat result.
+10. For directional relighting purely in comp: `Shuffle` out the render's normal pass, run it through `RotateNormals` (Nukepedia), interactively rotate until one RGB channel isolates faces oriented toward the desired light direction, shuffle that channel into the alpha, and use it as a mask to selectively boost highlights only on those faces.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Core Nuke:** `Shuffle` (normal-pass channel isolation, key→alpha routing), `Cryptomatte` (isolating a specific object's indirect bounce-light contribution for targeted boosting), `RotoPaint` (hand-painted highlight cues, broken up with noise), `Grade`/keying (isolating existing highlight regions as masks)
+- **Nukepedia gizmos:** `P_NoiseAdvanced` (position-pass-driven procedural surface noise — same family of technique used in several other tutorials on this channel), `RotateNormals` (interactive per-channel rotation of a normal pass to isolate faces oriented toward an arbitrary implied light direction)
+- **Render passes leveraged:** Albedo (or similar) pass for pulling clean reflective-highlight color/detail, position pass (surface-space noise driver), normal pass (directional relighting mask source), indirect/bounce-light AOV (Cryptomatte-isolated boosting)
+- **Cross-referenced courses:** the author's paid "Nuke 4.4" beginner series (highlight/material-painting methodology) and general channel tutorials on Shuffle fundamentals
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate — the lighting theory itself is accessible to beginners, but the comp-side execution (Cryptomatte bounce-light isolation, RotateNormals channel-hunting, layered position-pass noise) assumes existing comfort with AOVs, Shuffle, and Cryptomatte.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. Uses only render-pass-driven 2D techniques (Shuffle, Cryptomatte, position/normal passes) — no explicit Nuke 3D-system geometry work. Version not stated on screen; per this skill's version-tracker, a 2024 upload falls in the Nuke 15.x window.
 
 ### Tags
-[PENDING EXTRACTION]
+relighting, grading, gizmo, cryptomatte, digital-matte-painting, compositing, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- The BEST Way to Use Normals to Relight in Nuke (NEW Toolset) (`the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md`) — shares `relighting`, `gizmo`; that video's dedicated Normal Mixer toolset partially automates the manual `RotateNormals`-channel-hunting technique demonstrated here.
+- 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — shares `relighting`, `compositing`, `digital-matte-painting`; that video's "paint with light" RotateNormals-driven highlight mattes and connection-points methodology closely parallel this video's bounce-light-boost and highlight-painting techniques, applied to a different shot.
+- Compositing EPIC VFX Godrays | Nuke Tutorial (`compositing-epic-vfx-godrays-nuke-tutorial.md`) — shares the position-pass-driven procedural-noise technique (there: `noise()` expression; here: `P_NoiseAdvanced` gizmo), both used to add surface-space detail/breakup from a CG render's position pass.
