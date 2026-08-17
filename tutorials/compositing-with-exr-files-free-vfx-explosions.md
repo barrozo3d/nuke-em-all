@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=Ps7LQcKNPWc
 author: Compositing Academy
 ingested: 2026-08-17
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke"
+version: "Not specified numerically; UI consistent with the modern node-graph era seen elsewhere in this batch"
+tags: [compositing, channels, grading, aovs, gizmo, fx-simulation, color-management, beginner, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/compositing-with-exr-files-free-vfx-explosions/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 9
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Compositing with EXR Files | FREE VFX Explosions
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py compositing-with-exr-files-free-vfx-explosions <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -389,30 +385,62 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:16] tutorials/frames/compositing-with-exr-files-free-vfx-explosions/frame_000.jpg
+- [3:01] tutorials/frames/compositing-with-exr-files-free-vfx-explosions/frame_001.jpg
+- [4:56] tutorials/frames/compositing-with-exr-files-free-vfx-explosions/frame_002.jpg
+- [6:04] tutorials/frames/compositing-with-exr-files-free-vfx-explosions/frame_003.jpg
+- [9:00] tutorials/frames/compositing-with-exr-files-free-vfx-explosions/frame_004.jpg
+- [10:00] tutorials/frames/compositing-with-exr-files-free-vfx-explosions/frame_005.jpg
+- [13:22] tutorials/frames/compositing-with-exr-files-free-vfx-explosions/frame_006.jpg
+- [16:00] tutorials/frames/compositing-with-exr-files-free-vfx-explosions/frame_007.jpg
+- [20:45] tutorials/frames/compositing-with-exr-files-free-vfx-explosions/frame_008.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Beginner/intermediate multi-pass EXR compositing: an ACES color workflow, `Shuffle`-splitting a multi-layer CG explosion render into its individual light passes (spotlights, ambient/no-map, emission, pyro volume light), regrading each pass independently, recombining with `plus` merges, then building a hand-tuned, keyframed glow (via `Keyer` → `Premult` → an exponential glow gizmo) plus exposure-driven shadow/highlight grading to sell the explosion's timing and camera-exposure feel.
 
 ### Summary
-[PENDING EXTRACTION]
+A free downloadable multi-layer EXR explosion render (four such explosions are provided as a lead magnet, alongside a linked "After Effects to Nuke" beginner masterclass) is used to teach multi-pass CG compositing from scratch. **ACES setup:** before anything else, the project's color management is switched from Nuke's default OCIO config to ACES (S key over the node graph → color settings → OCIO → ACES 1.2 or 1.3; the top-left readout should then show "sRGB (ACES)"). A live comparison of the same 8-bit, non-HDR phone footage loaded as both ACES and non-ACES demonstrates the practical payoff: pulling the gain down on non-ACES footage looks flat with no recoverable highlight detail, while the same operation under ACES reveals real detail in the highlights — attributed to ACES's built-in highlight tone-mapping math, which matters especially for something as highlight-heavy as an explosion. **Reading the multi-layer EXR:** a `Read` node loads the EXR sequence; its Channels tab reveals the render is not a simple RGBA image but a multi-pass CG output containing many separately-stored light layers (visible file size is large because of all this extra high-dynamic-range data packed into single frames) — named layers observed include Spotlight (Side A / Side B), a "NoMap"-style ambient/overall light layer, an Emission layer (the fire/burning-fuel light itself), and a Pyro Volume Light layer. **Breaking out and recombining layers:** a `Shuffle` node is used per layer to pull that layer's data into the main RGBA stream Nuke actually composites in (layers themselves aren't directly editable in place — Shuffle routes a chosen layer's channels into RGBA where grading tools operate); one Shuffle is set up per light layer needed (Spotlight A, Spotlight B, ambient/ombient NoMap, Emission, and later Pyro Volume Light once it's noticed the recombined result doesn't exactly match the original beauty without it). These shuffled streams are recombined with `Merge` nodes set to **plus** (light passes are additive, never any other merge operation) with each Merge's inputs swapped (Shift+X) so the convention is consistently "A over B," visually organized with corner-pinned/staggered node placement so the stack reads like layered Photoshop layers. The recombined result is checked against the original beauty render by wiring both into a Viewer and toggling input 1 vs. input 2 — confirming a pixel-accurate match validates that the layer breakdown is complete and correct before any creative grading begins. **Per-layer grading:** with the recombination validated, a `Grade` node inserted into any individual Shuffle stream (e.g. brightening just the right-side spotlight, or the Emission layer specifically) lets that one light/element be pushed independently of the rest — demonstrated by toggling a Grade on/off while viewing the final composited output, and by pushing the Emission grade to zero to isolate what the (here, unused/disabled) Pyro Volume Light layer alone contributes. This same per-layer isolation is used for basic hue correction — pulling red out of just the Emission layer's color wheel to shift an overly-red explosion toward a more natural orange. **Exposure/realism framing:** the video explicitly ties glow/detail-visibility decisions to photographic exposure theory — an explosion this bright, shot at an exposure where a nearby person's skin detail is still visible, would in reality read as near-pure white with almost no internal detail; the comp is deliberately built "slightly exposed into" the explosion so some internal cloud/fire detail remains visible while still reading as extremely bright, rather than either full white-out or an unrealistically detailed/dim result. **Building the glow:** a `Keyer` node isolates the brightest highlight regions (its A/B range sliders define the selected brightness band); because the ACES/HDR data goes well above the normal 0-1 range (sampled highlight values around 2-8), the B threshold has to be raised well past 1 using the up-arrow key to actually target only the true highlights rather than the whole normalized 0-1 range. The keyed alpha is applied to the color via `Premult`, then fed into a custom **exponential glow** gizmo (bundled with the provided project file) for the actual bloom, merged back onto the base image with `plus`. A single glow pass looks unnatural on its own (described as collapsing into a flat "circle" on some frames) — the recommended fix is stacking at least two or three glow passes with different characteristics (e.g. one broader/softer + blurred + dimmer, one tighter/hotter), each independently `plus`-merged in, rather than relying on one generic glow setup. Because explosion brightness varies wildly frame to frame, glow strength is manually keyframed throughout the shot: a `Grade` node placed just before a glow pass, with its gain animated down on over-bright frames (right-click → Set Key) and back up elsewhere, prevents any single frame from "blowing out" into a broken-looking glow — with an explicit recommendation to study real reference footage (e.g. behind-the-scenes footage of the practical gasoline explosions used in Oppenheimer) when trying to match a specific real-world light condition, then lock in the look from that reference rather than relying on memory. **Shadow-region highlight fading:** a more intermediate technique layers a second `Keyer`, this time **inverted** to target shadow/darker regions instead of highlights, slightly brightening (lifting blacks in) those areas early in the explosion's life so cloud/smoke detail isn't fully lost in the initial near-white flash — this shadow-lift Grade is blurred slightly (to avoid a hard-edged mask) and animated to fade out over time via keyframed RGBA values, so the shot reads brighter/more detailed at the very start and gradually settles into the deeper, more contrasted "burning" look as the explosion progresses — explicitly framed as being as much about grading-over-time/timing as any single-frame look. **Finishing polish — the "always sharpen explosions" trick:** a `Sharpen` node is wrapped between a `LogToLin` (switched to log space) going in and a second `LogToLin` switched back to linear coming out — sharpening explicitly needs to happen in log space between these two conversion nodes for a better-quality result — described as a small, near-universally-applicable trick that reliably improves the look of CG explosion renders.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Switch the Nuke project's color management to ACES: press S over empty node-graph space (or open project Color Settings), set OCIO config to ACES 1.2 or 1.3; confirm the viewer readout shows "sRGB (ACES)."
+2. Load the multi-layer EXR sequence with a `Read` node; open its Channels/layers tab to inventory every stored pass (e.g. Spotlight Side A/B, ambient "NoMap" light, Emission, Pyro Volume Light) beyond the default RGBA.
+3. For each light layer needed in the comp, add a `Shuffle` node routing that layer's data into RGBA so it can be graded with normal 2D tools.
+4. Recombine all shuffled layers with `Merge` nodes set to **plus** (additive — the correct operation for light passes), consistently swapping inputs (Shift+X) so the convention is A-over-B throughout; organize nodes visually (e.g. corner-pin staggering) to read as a clear layer stack.
+5. Validate the recombination by wiring both the original beauty Read and the recombined Merge stack into a Viewer, toggling between input 1/2 (keyboard 1 and 2) to confirm a pixel-accurate match before any grading — if a mismatch is found, identify and add the missing layer (e.g. Pyro Volume Light) via another Shuffle.
+6. Insert a `Grade` node into any individual shuffled layer's stream to adjust that light/element independently (brightness, color) without affecting the others — toggle the Grade on/off while viewing the final merged output to judge the isolated contribution.
+7. Correct base color (e.g. de-red an overly-warm explosion toward natural orange) by grading directly on the Emission layer's stream rather than the combined image.
+8. Decide the comp's exposure philosophy up front: aim for the explosion to read "slightly exposed into" — extremely bright but retaining some internal detail — rather than either a flat white blowout or an unrealistically fully-detailed result, informed by how real cameras handle exposure against very bright light sources.
+9. Build a glow pass: `Keyer` to isolate highlights (raise the B threshold well above 1 for ACES/HDR data, since true highlight values can reach 2-8+), `Premult` to combine the keyed alpha with color, feed into an exponential-glow gizmo, `plus`-merge back onto the base image.
+10. Stack at least 2-3 differently-tuned glow passes (varying spread/blur/brightness) rather than relying on a single glow setup, since one flat glow pass tends to look unnatural (a plain "circle") on many frames.
+11. Tame frame-to-frame glow blowouts by placing a `Grade` before each glow pass and keyframing its gain down on overly bright frames (right-click → Set Key) and back up elsewhere, checking against real reference footage of similar practical explosions when trying to match a specific look.
+12. For intermediate shadow-detail control: add a second, inverted `Keyer` targeting shadow regions, lightly brighten/lift them with a blurred, keyframed `Grade` (RGBA animated to fade out over time) so early frames show more retained detail that gradually gives way to a deeper, more contrasted look as the explosion progresses.
+13. Finish with the log-space sharpen trick: `LogToLin` (to log) → `Sharpen` → `LogToLin` (back to linear) — apply this to CG explosion renders as a near-default final polish step.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Color management:** OCIO project Color Settings → ACES 1.2/1.3 config
+- **Core Nuke:** `Read` (multi-layer EXR, Channels tab to inspect stored passes), `Shuffle` (layer-to-RGBA routing, one per light pass), `Merge` (plus/additive for light-pass recombination, A-over-B input convention via Shift+X), `Grade` (per-layer independent color/brightness correction, glow-gain keyframing, shadow-region lift), `Keyer` (highlight isolation via A/B range, inverted for shadow-region isolation; B threshold pushed above 1 for HDR/ACES data), `Premult` (combining a keyed alpha with color before glow), `Sharpen` (wrapped between `LogToLin` in/out nodes for log-space sharpening)
+- **Gizmo:** a custom exponential glow node (bundled with the provided project file, not a stock Nuke node)
+- **Render passes leveraged:** Spotlight Side A / Side B, ambient/"NoMap" overall light, Emission (fire/fuel light), Pyro Volume Light
+- **Cross-referenced resource:** the channel's free "After Effects to Nuke" beginner masterclass (companion course for viewers new to Nuke)
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner to Intermediate — the core multi-pass Shuffle/Merge/Grade workflow and ACES setup are pitched at true beginners; the inverted-shadow-Keyer fade-over-time technique is explicitly flagged mid-video as "a little bit more intermediate" and optional for newer viewers.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke. Version not stated numerically on screen; UI is consistent with the modern node-graph/3D-system era seen elsewhere in this batch.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, channels, grading, aovs, gizmo, fx-simulation, color-management, beginner, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Shuffle and Channel Management | Nuke Compositing [Beginner/Intermediate] (`shuffle-and-channel-management-nuke-compositing-beginner-intermediate.md`) — directly relevant: covers the Shuffle/layer/AOV fundamentals this tutorial builds on for splitting and recombining a multi-pass render.
+- The BLUEPRINT for Cinematic Light (VFX) (`the-blueprint-for-cinematic-light-vfx.md`) — shares the position-pass-driven procedural noise and Cryptomatte-based light-pass isolation/boosting techniques, applied to selling directional light rather than assembling a full multi-pass beauty.
+- How to use NUKE to Composite Blender Renders (`how-to-use-nuke-to-composite-blender-renders.md`) — shares multi-pass AOV recombination and Cryptomatte-masking fundamentals from a different cross-app CG-compositing pipeline.

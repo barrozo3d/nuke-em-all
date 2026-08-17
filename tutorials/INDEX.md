@@ -944,10 +944,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=Ps7LQcKNPWc
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Not specified numerically
+- **Tags:** compositing, channels, grading, aovs, gizmo, fx-simulation, color-management, beginner, intermediate
+- **Summary:** Beginner/intermediate multi-pass EXR compositing on a free downloadable explosion render: ACES OCIO setup, Shuffle-splitting light layers (spotlights, ambient, emission, pyro volume), plus-merge recombination validated against the original beauty, per-layer grading, a stacked/keyframed Keyer+Premult+exponential-glow build, exposure-driven shadow lift, and a LogToLin-wrapped sharpen finishing trick.
 - **File:** tutorials/compositing-with-exr-files-free-vfx-explosions.md
 
 ---
