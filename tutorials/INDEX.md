@@ -933,10 +933,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=TUPGJj4TjMk
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (mentioned, not shown — BTS/pipeline case study)
+- **Version:** Not specified
+- **Tags:** virtual-production, compositing, digital-matte-painting, fx-simulation, beginner
+- **Summary:** Sponsored BTS case study: a low-budget green-screen barn shoot using rubber-mat catwalks, reusable kitbashed CG environment pieces, practical smoke/glow-stick-and-soap liquid FX key-mixed in Nuke, and Lightcraft Jet Set Cine (iPhone LiDAR + calibrated cine camera) for on-set CG previz, lighting control, and camera tracking as a budget LED-volume alternative.
 - **File:** tutorials/how-i-made-pro-vfx-in-a-barn-new-tech-reveal.md
 
 ---

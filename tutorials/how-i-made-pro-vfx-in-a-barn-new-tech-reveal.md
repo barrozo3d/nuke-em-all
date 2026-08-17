@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=TUPGJj4TjMk
 author: Compositing Academy
 ingested: 2026-08-17
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (mentioned, not shown — this is a BTS/pipeline case study, no on-screen node work)"
+version: "Not specified"
+tags: [virtual-production, compositing, digital-matte-painting, fx-simulation, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/how-i-made-pro-vfx-in-a-barn-new-tech-reveal/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 5
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # How I Made Pro VFX in a BARN! (New Tech REVEAL)
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py how-i-made-pro-vfx-in-a-barn-new-tech-reveal <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -184,30 +180,60 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [0:32] tutorials/frames/how-i-made-pro-vfx-in-a-barn-new-tech-reveal/frame_000.jpg
+- [1:56] tutorials/frames/how-i-made-pro-vfx-in-a-barn-new-tech-reveal/frame_001.jpg
+- [4:37] tutorials/frames/how-i-made-pro-vfx-in-a-barn-new-tech-reveal/frame_002.jpg
+- [6:03] tutorials/frames/how-i-made-pro-vfx-in-a-barn-new-tech-reveal/frame_003.jpg
+- [6:41] tutorials/frames/how-i-made-pro-vfx-in-a-barn-new-tech-reveal/frame_004.jpg
+
+---
+
+> **Sponsored BTS case study, not a node-by-node tutorial:** This video (sponsored by Lightcraft) is a behind-the-scenes pipeline breakdown of a low-budget virtual-production shoot. Nuke is explicitly mentioned as part of the pipeline ("we're using Nuke, Blender... and Jet Set") but no Nuke UI or node work is shown on screen — the video promises a follow-up compositing tutorial on the same shots "coming soon" on the channel (not yet released/ingested as of this writing). Extracted here for its low-budget set-build and virtual-production-pipeline methodology, consistent with this channel's other BTS case-study videos already in this library.
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A budget-conscious virtual-production pipeline: physical set pieces built from cheap/repurposed materials (rubber mats as a catwalk, kitbashed CG environment pieces reused across multiple "locations"), practical smoke/liquid VFX elements shot in-camera rather than simulated, and Lightcraft's **Jet Set Cine** app (iPhone LiDAR + a calibrated cine camera) used as a low-cost alternative to an LED volume for on-set camera tracking, CG-set previsualization, and CG-object occlusion of the actor.
 
 ### Summary
-[PENDING EXTRACTION]
+A three-part BTS breakdown of a green-screen shoot filmed in a barn. **Part 1 (set building):** rather than sourcing an expensive real metal catwalk, the team found rubber floor mats with a catwalk-like grate pattern, then built a raised support structure from cheap eco-center wood painted black and laid across parallel ladders to create a gap between the walkway and the green floor (needed since lighting was planned from below). The surrounding environment was kitbashed from big/medium/small CG asset pieces — deliberately designed as small, reusable floor/wall segments so the same physical/virtual set pieces could be redressed and reused to represent multiple different "locations" within the same factory environment, saving build and shoot time. Factory catwalks specifically were chosen to create layered 3D parallax and to give the character's feet something to visually connect to (avoiding the common green-screen problem of floating/ungrounded feet). **Part 2 (practical FX):** to avoid the "dull," static look of pure CG environments, the team shot practical smoke elements on ProRes RAW (Sony FX3) using various smoke machines and dry ice against black backgrounds, building a reusable personal VFX element library in the process (some of these are sold as a "Composite Academy smoke bundle"). For thicker, self-shadowing smoke needing controllable rim light and density, they used **EmberGen** instead (fast enough for medium-distance sims), noting that mixing practical smoke elements around CG asset edges enhances perceived detail/randomness more than either technique alone. For "acid barrel" liquid surface effects, glow sticks broken open with glow-in-the-dark paint were mixed with liquid soap of varying thickness, agitated with an air compressor from above, and lit with black light — multiple takes of this were then **key-mixed together in Nuke** into a continuous rippling loop, later UV-wrapped as a 2D video texture onto cylindrical proxy geometry pulled from Blender. **Part 3 (Jet Set virtual production):** filmed in a disused hay-loft barn space specifically because its size/darkness allowed the green screen to be lit brightly while keeping the actor in relative shadow (a technique requiring real physical distance between actor and screen) — app-controlled Aputure lights let the whole on-set lighting rig be relit from a phone to match the virtual set's intended lighting direction. Jet Set's core workflow: set a scene "origin" point (here, a corner of the physical catwalk) to snap the CG scene to a real-world anchor, allowing the whole virtual set to be rotated/repositioned for shooting different angles from the same physical space; live green-screen key or an AI-generated matte previsualizes the composite on-set. A standout feature demonstrated: using the iPhone's LiDAR scanner, CG objects can occlude the actor's real hand/body in the previz view in real time — not a final-quality result, but useful for blocking/discovering shots like a director would on a real set. The free version of Jet Set tracks only the iPhone; the paid Cine version additionally tracks a real cinema camera (here a Sony FX3) via a lens-calibration step using an "Aksun SEMA" adapter temporarily rigged between the iPhone and cine lens, comparing tracked features between the two cameras to compute their offset before filming. A LiDAR scan of the physical set can also be captured for later alignment with tracking data. After the shoot, all 3D tracking/scene data is packaged and exportable to Blender, Nuke, or any other 3D/VFX software; Jet Set's backend "AutoShot" system automates much of this handoff, functioning as a full mini virtual-production pipeline rather than just a single-angle camera-tracking tool.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Source or fabricate expensive-looking set pieces cheaply: e.g. rubber mats with a matching surface pattern instead of real metal grating, supported on painted wood laid across ladders to create clearance above the green floor for underlighting.
+2. Kitbash the virtual/CG environment from small, modular big/medium/small asset pieces designed to be redressed and reused across multiple "locations" in the same shoot, rather than building unique large sets per location.
+3. Choose environment elements (e.g. catwalks) that both create 3D layered parallax AND give actors something physical/visual to ground their feet on, avoiding a floating-feet green-screen tell.
+4. Shoot practical smoke elements in-camera (high-bitrate format, e.g. ProRes RAW) using smoke machines/dry ice against black, building a reusable personal element library; reserve a simulation tool like EmberGen specifically for thick, self-shadowing smoke where density/rim-light control matters and practical smoke can't deliver it fast enough.
+5. Blend practical smoke elements around the edges of CG smoke/assets to add perceived randomness/detail that pure CG or pure practical alone doesn't achieve as convincingly.
+6. For unusual liquid/organic surface textures (e.g. glowing "acid"): combine practical elements creatively — glow-in-the-dark paint + liquid soap of varying viscosity + an air compressor for agitation + black light for the glow — shoot multiple takes, then key-mix them together in Nuke into a continuous seamless loop.
+7. Apply the resulting 2D looping texture as a UV-wrapped video texture on simple proxy geometry (e.g. cylinders) pulled from the 3D package (Blender here) rather than attempting a full liquid simulation.
+8. For a bright-green/dark-actor lighting setup, choose a shoot location large and dark enough to physically separate the actor from the lit green screen by a real distance.
+9. Use app-controllable on-set lights (e.g. Aputure via phone) to quickly relight the actor to match the virtual set's intended lighting direction without manual rerigging.
+10. In Jet Set: set a real-world origin point anchored to a physical set feature so the virtual CG scene can be repositioned/rotated around that anchor to represent different shot angles from the same physical space.
+11. Use the app's live green-screen key or AI matte for on-set previsualization, and its LiDAR-based real-time occlusion feature to preview CG objects passing in front of the actor for blocking purposes (not final-quality output).
+12. For camera-tracked (not just phone-tracked) footage, use the paid Cine tier: temporarily attach the lens-calibration hardware (Aksun SEMA) to compare tracked features between the iPhone and the cine camera, compute their offset, then remove it before the actual take.
+13. Optionally capture a LiDAR scan of the physical set for later use aligning/verifying tracking data in the 3D/comp software.
+14. Export the packaged tracking/scene data from Jet Set into Blender, Nuke, or any other pipeline software for final compositing and CG integration.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Nuke:** mentioned only — a key-mix technique combining multiple liquid/glow-effect takes into a continuous loop is described verbally, no nodes shown on screen
+- **Third-party tools:** Lightcraft **Jet Set Cine** (iPhone LiDAR virtual-production app: scene origin snapping, live green-screen key/AI matte previz, LiDAR-based real-time CG occlusion, AutoShot backend pipeline export), Aksun SEMA (lens-calibration hardware for cine-camera tracking), EmberGen (fast smoke/fire simulation for thick self-shadowing smoke), Aputure app-controlled on-set lights
+- **Cameras/formats:** Sony FX3, ProRes RAW (practical smoke capture)
+- **Practical FX materials:** rubber floor mats (catwalk substitute), painted wood + ladders (raised support structure), glow sticks + glow-in-the-dark paint + liquid soap + air compressor + black light (acid-barrel liquid effect)
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner (no software technique depth shown — this is a production-planning/set-building/BTS case study, valuable for pipeline and practical-FX-shooting ideas rather than Nuke skill-building)
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke — referenced as part of the post pipeline (used for key-mixing the liquid-effect takes and, implicitly, final compositing) but not demonstrated on screen in this video. Version not stated.
 
 ### Tags
-[PENDING EXTRACTION]
+virtual-production, compositing, digital-matte-painting, fx-simulation, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Can I Create a Speeder Chase on a TINY Greenscreen? (`can-i-create-a-speeder-chase-on-a-tiny-greenscreen.md`) — shares the low-budget/small-space virtual-production BTS case-study format, also mixing practical builds with CG for a constrained-budget shoot.
+- Normally it costs $50,000+ For This Camera Move (`normally-it-costs-50000-for-this-camera-move.md`) — shares the "expensive technique made affordable with clever practical tricks" theme and the same channel's BTS case-study style, referencing the ImagePlane/Card3D projection concept this video's practical-to-virtual pipeline eventually feeds into.
+- Did Corridor Crew SOLVE Greenscreen? (`did-corridor-crew-solve-greenscreen.md`) — shares `virtual-production`-adjacent greenscreen/keying methodology and the same channel's format of evaluating new/emerging VFX tech critically.

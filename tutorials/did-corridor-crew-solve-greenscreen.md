@@ -88,3 +88,4 @@ keying, compositing, ai-tools, gizmo, edge-extending, intermediate
 ## Related Tutorials
 - Rotoscoping in Nuke Tutorial | 5 Beginner Tips (tutorials/rotoscoping-in-nuke-tutorial-5-beginner-tips.md) — shares compositing; roto fundamentals used in this video's manual edge-fixup fallback.
 - How SMART is State of the Art A.I Rotoscoping? (tutorials/how-smart-is-state-of-the-art-ai-rotoscoping.md) — shares ai-tools, compositing; same channel's pattern of rigorously benchmarking a new AI tool against hard test cases before recommending it.
+- How I Made Pro VFX in a BARN! (New Tech REVEAL) (tutorials/how-i-made-pro-vfx-in-a-barn-new-tech-reveal.md) — shares virtual-production-adjacent greenscreen/keying methodology and the same channel's format of evaluating new/emerging VFX tech critically.

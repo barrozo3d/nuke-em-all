@@ -225,3 +225,4 @@ compositing, relighting, gizmo, digital-matte-painting, projection, fx-simulatio
 - I Made VFX Relighting WAY Better in Nuke (`i-made-vfx-relighting-way-better-in-nuke.md`) — shares `relighting`, `gizmo`, `compositing`; this is the dedicated tutorial for the exact CA_Relight gizmo glimpsed here.
 - Nobody's Ever Made VFX This Way (New Tech) (`nobodys-ever-made-vfx-this-way-new-tech.md`) — shares BTS pipeline case-study format (LiDAR/photogrammetry-driven asset capture, Nuke mentioned more than shown).
 - I Brought a Greenscreen in Arctic Conditions for this Film (`i-brought-a-greenscreen-in-arctic-conditions-for-this-film.md`) — shares practical-rig-on-location BTS format and greenscreen-in-extreme-environment theme.
+- How I Made Pro VFX in a BARN! (New Tech REVEAL) (`how-i-made-pro-vfx-in-a-barn-new-tech-reveal.md`) — shares the low-budget/small-space virtual-production BTS case-study format, also mixing practical builds with CG for a constrained-budget shoot.
