@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=pyiyfadan6c
 author: Compositing Academy
 ingested: 2026-08-17
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: Nuke
+version: unspecified
+tags: [nodes-vs-layers, roto, masking, merge-operations, grading, node-cloning, keyer, glow, particles-generator, chromatic-aberration, lens-distortion, grain, write-node, compositing, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 12
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # After Effects to Nuke:  1 Hour FREE Course | Compositing in Nuke
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py after-effects-to-nuke-1-hour-free-course-compositing-in-nuke <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction [0:00]
@@ -1226,30 +1222,57 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [6:20] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_000.jpg
+- [13:09] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_001.jpg
+- [17:50] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_002.jpg
+- [20:30] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_003.jpg
+- [24:30] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_004.jpg
+- [27:30] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_005.jpg
+- [32:00] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_006.jpg
+- [43:30] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_007.jpg
+- [48:30] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_008.jpg
+- [56:00] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_009.jpg
+- [61:00] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_010.jpg
+- [67:30] tutorials/frames/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke/frame_011.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A full beginner onboarding course for After Effects compositors switching to Nuke, built as a single practical shot (a helmeted character composited into a misty forest, with added smoke, fire, metal-highlight glow, foreground embers, and a film-look finishing pass). Structured entirely around "here's the AE concept, here's the Nuke equivalent" comparisons — layers vs. nodes, pick-whip vs. node cloning, adjustment-layer curves vs. Grade nodes — rather than teaching Nuke in isolation, so every technique is anchored to a specific AE mental model being translated.
 
 ### Summary
-[PENDING EXTRACTION]
+Frame 000 [6:20] shows the base composite (character over a misty mountain plate) mid-interface-tour. Frame 001 [13:09] captures the core mental-model shift of the course: a Roto shape is created disconnected from anything (viewable via the "1"/"A" viewer-input hotkeys even while unplugged), then wired into a Merge node set to **mask** (not over) to cut the character's alpha with the roto shape — contrasted directly against After Effects' single-layer masking. The chapter also covers building a Roto node's RGB+A output to fake a solid, stencil vs. mask inversion, and inserting a Blur node mid-tree so it only affects nodes upstream of it — the core "order in the node tree determines what's affected" lesson. Frame 004 [24:30] covers grading: Grade node's gain/gamma sliders are framed as the fast equivalent of an After Effects adjustment-layer S-curve, with per-channel color wheels used instead of per-channel curve tabs for isolating red/green/blue. Frame 005 [27:30] covers **node cloning** (Alt+K / Option+K to drag a clone-relationship line between two Transform nodes so they share transform values) as the direct Nuke equivalent of After Effects' pick-whip parenting, without pre-comping the layers together. Frame 006 [32:00] covers merging differently-sized, alpha-less footage: hitting T on a Transform node auto-generates an alpha sized to the source format so a smaller/rotated clip (e.g. vertical phone footage) merges correctly instead of showing the default semi-transparent result. Frame 007 [43:30] is the smoke-compositing chapter's key technical point: rather than merging a black-background smoke element with **plus** (which brightens what's behind it — physically wrong), a Keyer node derives an alpha from the smoke's luminance so it can be merged with **over**, which correctly occludes what's behind it, matching how real smoke behaves; color/defocus/opacity are then grade-matched to the plate via a pre-Keyer Grade, a copied Defocus, and the Merge node's Mix slider. Frame 008 [48:30] is the fire-compositing chapter, which reuses the same alpha-via-luminance approach before contrast-matching the plate first (gain up / gamma down on the sky) so the fire has something punchy to sit against. Frame 010 [61:00] is the 2D-embers chapter: a Noise generator node (gamma crushed, gain pushed) is used to fabricate a sparse field of small bright particles for extreme foreground depth, entirely procedural — no stock element. Frame 011 [67:30] is the finishing-pass result after Chromatic Aberration (a masked Transform's per-channel split, translating just the red channel ~1.5px), Lens Distortion (re-distort mode, small push for edge curvature), and film Grain (per-channel intensity, "apply only through alpha" unchecked so grain covers the whole frame including comped edges) have all been layered on top. The Metal Glow chapter (not directly framed but transcribed in full) is a notable technique: a Keyer isolates only the brightest metal highlights, Pre-multiplied, masked to the fire-facing side of the character, run through an exponential Glow node set to **plus** at very low brightness/spread for a tight subtle highlight bloom, then desaturated slightly in that same highlight range via a Saturation node fed by the same keyed mask (with a subtractive Roto shape carved out of blown-out white areas that shouldn't get the effect) — a stack of very small, additive refinements rather than one strong pass.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Understand the fundamental AE→Nuke shift: nodes are separate/branching operations wired explicitly, not stacked layers — order in the tree, not stacking order, determines what an effect touches.
+2. Build alpha-driven cutouts with Roto → Merge(mask), not Roto → Merge(over), to punch a hole using one layer's alpha against another.
+3. Use Grade (gain/gamma, or per-channel color wheels) as the fast day-to-day color-correction node instead of ColorLookup/curves.
+4. Use node cloning (Alt/Option+K, drag the clone line between two identical nodes on different branches) to replace After Effects' pick-whip parenting without pre-comping layers.
+5. For alpha-less or differently-sized footage, generate a Transform-node alpha (hotkey T) so merges size correctly against the project format.
+6. For elements without a real alpha (smoke, fire), derive one from luminance via a Keyer node and merge with **over** (occlude) rather than **plus** (brighten) — plus is only correct for pure-additive light elements like glow or embers.
+7. Grade-match added elements (color wheel nudges, Defocus depth-matching, Merge Mix opacity) before worrying about anything more advanced.
+8. Layer highlight-only effects (glow, desaturation) through a Keyer-derived, Roto-refined mask rather than applying them globally, and keep each pass subtle — several small stacked adjustments read better than one strong one.
+9. Fabricate procedural foreground depth cues (embers/particles) with a Noise generator node instead of sourcing stock footage.
+10. Finish with a standard film-look stack: masked per-channel Transform for chromatic aberration, Lens Distortion (re-distort mode) for edge curvature, and Grain (per-channel, "apply only through alpha" off) last.
+11. Output via a Write node — single file (`name.jpg`) for a still, or `name_###.jpg`/`.exr` for an image sequence, which loads/plays back faster in Nuke than a video file.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+Roto (mask/stencil operations, RGB+A shape-color output), Merge (over / mask / stencil / plus / minus operations, Mix slider), Premult, Transform (alpha generation via T, Alt/Option+K node cloning), ColorLookup vs. Grade (gain/gamma/per-channel color wheels), Keyer (luminance-derived alpha for occlusion-correct compositing), Defocus, Glow (exponential, plus-mode, brightness/spread), Saturation (masked, for selective highlight desaturation), Noise (generator, used as a fake-particle/embers source), Transform used with channel-split + per-channel translate for Chromatic Aberration, LensDistortion (undistorted vs. re-distorted modes), Grain (per-channel size/intensity presets, e.g. "GT5274"), Write (still vs. `###` image-sequence output, JPEG/EXR/MOV).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner (explicitly framed as an AE-to-Nuke onboarding course) — assumes existing After Effects compositing fluency and translates each concept 1:1, but does cover some genuinely intermediate ground (luminance-keyed occlusion vs. additive merging, node cloning, masked selective grading) by the back half.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (non-commercial/free download referenced early in the video). No specific version number stated.
 
 ### Tags
-[PENDING EXTRACTION]
+nodes-vs-layers, roto, masking, merge-operations, grading, node-cloning, keyer, glow, particles-generator, chromatic-aberration, lens-distortion, grain, write-node, compositing, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares the Shuffle/channel-fundamentals and multi-pass compositing groundwork with Shuffle and Channel Management | Nuke Compositing [Beginner/Intermediate] (`shuffle-and-channel-management-nuke-compositing-beginner-intermediate.md`) — both are structured as foundational onboarding for compositors new to Nuke's node-based workflow. Shares the luminance-Keyer-driven, occlusion-correct smoke/fire compositing technique with Compositing with EXR Files | FREE VFX Explosions (`compositing-with-exr-files-free-vfx-explosions.md`) — that video applies the same Keyer+Premult+exponential-glow build to a full multi-pass EXR explosion render, a more advanced version of this course's single-plate fire/smoke/glow chapters. Shares the masked, additive exponential-Glow-on-highlights technique with A Senior Compositor's Creative CG Workflow REVEALED (`a-senior-compositors-creative-cg-workflow-revealed.md`) — that video's "2-3 stacked glow layers, never one exponential glow" guidance is the advanced-shot version of this course's single subtle metal-highlight glow pass.

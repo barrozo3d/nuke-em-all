@@ -977,10 +977,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=pyiyfadan6c
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Not specified
+- **Tags:** nodes-vs-layers, roto, masking, merge-operations, grading, node-cloning, keyer, glow, particles-generator, chromatic-aberration, lens-distortion, grain, write-node, compositing, beginner
+- **Summary:** Full beginner onboarding course for AE compositors switching to Nuke, built around one practical shot: layers-vs-nodes and Roto/Merge(mask) fundamentals, Grade node vs. AE curves, node cloning (Alt+K) as the pick-whip equivalent, alpha generation for mismatched footage sizes, luminance-Keyer-derived alpha for occlusion-correct smoke/fire compositing (vs. physically-wrong plus-merging), masked exponential Glow on metal highlights, a procedural Noise-node ember/particle generator, and a finishing stack (Chromatic Aberration via channel-split Transform, Lens Distortion, Grain, Write).
 - **File:** tutorials/after-effects-to-nuke-1-hour-free-course-compositing-in-nuke.md
 
 ---
