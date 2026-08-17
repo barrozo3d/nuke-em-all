@@ -41,6 +41,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **⚠ Do not re-ingest this URL in nuke-em-all** — this stub exists only so this index surfaces the tutorial by search; ingesting it here would fork the content. If new Nuke-specific detail is found, add it to the canonical file in houdini-wand instead.
 
 
+### [CROSS-REFERENCE ONLY] Vast Environments in Gaea | Houdini
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=WnO-z8TbT_o
+- **Author:** Arvid Schneider
+- **App:** Nuke (comp/finishing pass) + Houdini (Solaris, TOPs, Karma XPU) + Gaea — cross-platform
+- **Tags:** compositing, aovs, cross-platform-reference
+- **Summary:** 5km Gaea desert terrain with a massive Houdini/Labs-Biomes scatter (2.4M+5M points), finished with a substantial Nuke pass (~6.5 of 40 minutes): depth-AOV-driven haze grading (gamma-lifted distant shadows + distance desaturation), a cheap before/after Motion Blur node used instead of rendered motion vectors, a diffusion pass key-mixed specifically into shadow areas to fake bounced light, and a full anamorphic lens-artifact stack (astigmatism blur, chromatic aberration strongest at frame edges, vignette, a separately-authored reusable Optical Flare pass, film grain). The bulk of the technical content (Gaea tiled terrain export, legacy-COP tile reassembly, VEX-driven frustum culling, TOPs asset automation) is Houdini/Gaea-side, so the full extraction lives in the **houdini-wand** skill.
+- **Full extraction:** `houdini-wand/tutorials/vast-environments-in-gaea-houdini.md` (https://github.com/barrozo3d/houdini-wand/blob/master/tutorials/vast-environments-in-gaea-houdini.md)
+- **⚠ Do not re-ingest this URL in nuke-em-all** — this stub exists only so this index surfaces the tutorial by search; ingesting it here would fork the content. If new Nuke-specific detail is found, add it to the canonical file in houdini-wand instead.
+
+
 ### [CROSS-REFERENCE ONLY] How I Created This Star Wars Environment | Houdini Biomes & Nuke
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=sQ6y_en5nnY
