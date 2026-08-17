@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=AcpwyNun0oo
 author: FlippedNormals
 ingested: 2026-08-17
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: Mari
+version: Mari 7 (referenced Bakery feature)
+tags: [interface, hotkeys, paint-buffer, node-graph, merge-node, teleport-nodes, symmetry, triplanar, tile-nodes, paint-through, hand-painting, export-manager, bakery, geo-channels, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 14
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Introduction to Mari for Complete Beginners - 1 Hour Quick Start Guide
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### <Untitled Chapter 1> [0:00]
@@ -830,30 +826,81 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [2:02] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_000.jpg
+- [10:55] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_001.jpg
+- [11:40] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_002.jpg
+- [16:16] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_003.jpg
+- [16:55] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_004.jpg
+- [20:50] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_005.jpg
+- [26:50] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_006.jpg
+- [29:30] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_007.jpg
+- [30:30] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_008.jpg
+- [41:12] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_009.jpg
+- [44:20] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_010.jpg
+- [47:50] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_011.jpg
+- [51:10] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_012.jpg
+- [57:30] tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/frame_013.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A ground-up "zero to functional" Mari onboarding (FlippedNormals, Henning) covering every mechanical fundamental needed before attempting real character texturing: project creation, interface/navigation, the paint-buffer concept unique to Mari, the node graph and its core nodes, symmetry/mirroring, organization tools, and the export/baking pipeline. Explicitly positioned as a fast on-ramp to the same node-based, reusable-mask philosophy taught in the companion advanced FlippedNormals video in this collection.
 
 ### Summary
-[PENDING EXTRACTION]
+**Project Setup [0:41]:** New Project dialog — pick a model, then a Channels tab where built-in shader presets (V-Ray, V-Ray 6, Unreal Metallic/Non-Metallic, Arnold Standard Surface, or a generic engine-agnostic one) auto-create the matching channel set (e.g. Diffuse Color + Specular Color + Specular Roughness) at a chosen resolution/color-space/bit-depth.
+
+**Interface & Navigation [2:02-6:16, frame 003]:** fully dockable/rearrangeable panel layout (View → Default Layout to reset); orbit = Alt+LMB, pan = Alt+Shift+LMB, zoom = Alt+RMB-drag; **Preferences → Navigation → "Lock to World Up" must be enabled** or the camera drifts off-axis (Ctrl+R re-rolls the camera if it happens anyway); number keys 1-6 snap to orthographic side views, preferred over perspective because ortho projection is predictable/undistorted. Selection tool (S) has Object/Patch(UDIM)/Face modes plus a "Smart" mode that selects whole connected mesh- or UV-islands; H hides selection, Shift+H hides everything unselected, Ctrl+Shift+H reveals all.
+
+**Objects & Versions [8:35]:** rather than adding new Objects for model iterations, add **Versions** of the same object (right-click → Add Version) — since Mari stores all painted data in textures (not on verts/curves like ZBrush/Painter), a version swap just re-points to a different mesh with the same UVs, letting you flip between high/low-poly or updated sculpts without losing any painting.
+
+**Lights [10:44, frame 003]:** default lighting is uneven and must be fixed before painting — disable all lights except one, set its Fix-To to **Camera** (not Scene) so it always follows the view and never leaves permanently dark areas, position it frontal-and-slightly-above for soft shadow read, and match its intensity across F1 (flat)/F2 (shaded, no spec)/F3 (full spec) preview modes. An HDRI environment can be enabled for realistic reflections, important when developing a specular/roughness map "in the blind" otherwise.
+
+**Paint Buffer [15:24-21:37, frame 004]:** Mari's defining, non-obvious concept — you never paint directly on the model; you paint onto a rectangular 2D "glass pane" (the paint buffer, shown with a resolution/bit-depth/paintable-state label) hovering in view space, which only gets projected onto the surface on **Bake (B)**. Key settings (Painting → Paint Buffer): disable "auto-reset on bake" (default is on and extremely disruptive — it silently resets buffer scale after every bake); set Bake Behavior to **Manual** so the buffer persists after baking (lets you reuse one projected image/pattern across multiple bakes) instead of auto-clearing; the period key toggles paint-buffer visibility without a full Ctrl+Shift+C clear; **Project → "Project On" must be set to All**, not "Selection Only," or painting silently stops working whenever an old selection lingers (a classic beginner "why can't I paint" trap). "Projection on front of object" (paint-through) lets a brush stroke pass through to the back/far side of geometry instead of just the visible front, essential for soft gradients on rounded forms like a nose — must be manually disabled afterward or normal painting starts leaking through unintended geometry.
+
+**Node Graph fundamentals [21:37-29:44, frames 005-006]:** Tab to search/place nodes (same pattern as Nuke); node-properties panel count should be set to 1 to avoid a confusing long scroll of stacked properties; RMB pans, Alt+RMB zooms in the graph. Reading right-to-left: the shader node (e.g. Arnold Standard Surface) sits at the end and previews texture channels directly in its own settings; each exported **Channel** (color, specular roughness, bump, etc.) is what feeds the shader and what Export Manager pulls from. **Merge** (N) is the single most-used node — Base (bottom)/Over (top)/Mask three-port model, procedural masks (e.g. a Clouds generator node) or painted masks both work identically. View a node in the viewport by selecting it and pressing a number key (1-9, mirroring Nuke's input-preview system); Shift+S expands a collapsed node's ports for connecting alternate inputs. Flat/Shaded/Full preview modes (also usable on the graph output, not just the light rig) show a node's raw value vs. lit vs. fully shaded result. Ctrl+X is the preferred "delete" (cuts, doesn't just delete) since it's more ergonomic than reaching for Delete; Ctrl+Shift+X extracts a node from its connections without deleting it; hovering a wire while placing a new node auto-inserts it inline.
+
+**Paint Nodes & Symmetry [29:44-34:12, frame 006]:** a Paint node has both a color input and a separate alpha/transparency input — for masking work, fill the whole model black first (Select-all → right-click Fill → Black) before painting so strokes read as a clean falloff instead of harsh alpha edges. Mirror painting: enable **Mirror Projection → Mirror X** in the paint-buffer settings for live symmetrical painting (only works well with truly symmetrical UVs), or paint one side and use right-click **Patches → Mirror → Left-to-Right/Right-to-Left** on a selected paint node to mirror after the fact purely within the UDIM tile (unrelated to character left/right — it mirrors within the tile's own space).
+
+**Node organization [34:12-38:47, frames 007-008]:** **Teleport Broadcaster/Receiver** node pairs move data across the graph without a literal wire — name a broadcaster (e.g. "mask_teeth"), then any number of receivers elsewhere in the graph can pull that exact data, avoiding "spaghetti" in complex graphs; the recommended production pattern is painting a full mask library up front (ears/teeth/nose/eyes) via broadcasts, then working with receivers wherever needed. D disables a node for quick before/after comparison; N renames a node; J searches/selects nodes by name; Backdrops (Tab → "backdrop") group and color-code regions of the graph; L (or right-click Auto Place) auto-arranges a messy selection of nodes.
+
+**Grading nodes [38:47-40:23]:** Grade (black/white point, lift/offset, gamma, gain/multiply) has no built-in mask port — to mask a Grade, extract it (Ctrl+Shift+X), rebuild the chain through an explicit Merge node instead, and mask that Merge. HSV adjusts hue/saturation/value directly; Invert is described as essential specifically for mask work (rarely useful on color directly).
+
+**Image Manager, Triplanar & Tile nodes [40:23-44:49, frames 009-010]:** drag-and-drop images into the Image Manager (tick "scalar" for grayscale/mask-type images); **Triplanar** projects and blends a texture from three perpendicular world-space planes — seam-free regardless of UVs since it's driven by world scale, not UV space, adjustable per-plane (repeat, angle, blend falloff) with a shortcut of Shift-dragging an image from the Image Manager straight into the graph to auto-build a full Triplanar setup (vs. manually assigning all three plane images). **Tile** nodes repeat a single texture across UV space (Ctrl-drag from Image Manager for a quick setup) — faster to reason about than Triplanar but produces visible UV seams, generally acceptable for tight, high-frequency detail (skin pores) rather than large-scale patterns.
+
+**Paint Through tool [44:49-48:35, frame 011]:** projects a reference image directly onto the paint buffer for spot-fixing/detailing after a Triplanar/Tile base pass — hotkey U (from the Paint tool P), navigation is Ctrl+Shift-drag to scale, Shift+LMB to pan, Ctrl+LMB to rotate the projected image; combined with the **Warp** tool (drag control points, Ctrl+LMB for quick free-move, add vertices for finer control) to distort the projected image to fit specific geometry, and the **Slurp** tool (a liquify/smudge) for subtler pushes — described as the standard production loop: broad Triplanar/Tile base, then Paint-Through + Warp + Slurp for hand-targeted fixes, all still ultimately committed via Bake (B) since everything in Mari routes through the paint buffer.
+
+**Hand painting [48:35-50:43, frame 012]:** R-hold for brush radius, J for the color picker window, C for the eyedropper/color-picker tool — critically, **Preferences → Misc → Toggle Hold → "Tool on Key Held" must be enabled** or the color-picker hotkey (C) doesn't behave as a sticky momentary tool, making fluid color-blending painting (constantly re-sampling nearby colors) painfully slow. K opens the brush shelf; Mari ships many production-ready organic/character brushes (e.g. "Dino Skin" under Organic Brushes) that can be pinned into a **custom shelf** for one-click access.
+
+**Export Manager & Bakery [52:59-57:00, frame 013]:** Export Manager (or File → Export Manager) lists every channel with resolution/color-space/bit-depth override controls (edited fields turn yellow to flag a deviation from source) and per-object export paths using `$channel`/`$udim` tokens; **Export Current** exports just the active object, the other option exports all objects. The **Bakery** (separate from Export Manager) bakes procedural mesh-based maps — Ambient Occlusion and Curvature are the two demoed, each independently configurable (e.g. a tight AO plus a separate broad AO, or Curvature switched between Convexity/Concavity modes with a strength multiplier), baking from/to a chosen mesh version, with edge-bleed control. Bake target options: **Paint node** (a standalone paintable node), **Geo Channel** (data attached to the object itself, survives re-baking into the same slot, analogous to Painter/ZBrush mesh maps), or **Channel** (a directly exportable channel) — Geo Channel is the recommended default since repeated re-bakes update in place rather than creating new nodes. Geo Channels are browsable per-object (Object palette → Geo Channels) and pulled into the graph via a `geo channels` node, typically Merged in Overlay blend mode or used as a mask.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Create a project by picking a model and a shader-appropriate channel preset (Arnold/V-Ray/Unreal/generic) rather than building channels manually from scratch.
+2. Fix the default lighting immediately (single light, Fix-To Camera, matched intensity across Flat/Shaded/Full preview) before doing any color/value judgment.
+3. Internalize the paint-buffer model — painting always happens on a floating 2D buffer, committed to the mesh only on Bake — and disable the "auto-reset on bake" trap while setting Bake Behavior to Manual and Project-On to All.
+4. Build every paint-driven mask through the same Color → Paint(mask) → Merge node pattern, keeping node-properties display count at 1 and organizing early with Backdrops/Teleport nodes rather than letting the graph sprawl.
+5. Use Teleport Broadcaster/Receiver pairs for any mask or map reused in more than one place, instead of long literal wires across the graph.
+6. Establish base texture variety fast with Triplanar (seamless, world-scale-driven) or Tile (UV-seam-prone but fine for tight detail) nodes sourced straight from the Image Manager, then refine specific areas with Paint-Through + Warp + Slurp.
+7. Enable "Tool on Key Held" in Preferences before attempting real hand-painting, or the color-picker hotkey workflow is unworkably slow.
+8. Use Versions (not new Objects) to swap in updated/higher-poly meshes without losing painted texture data, as long as UVs stay consistent.
+9. Export finished channels via Export Manager (per-channel resolution/format overrides) and bake mesh-derived data (AO, Curvature) via the Bakery into Geo Channels for reusable, re-bakeable procedural masks inside the node graph.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+Color, Paint (color+alpha inputs, "raw data"/transparent mode), Merge (Base/Over/Mask), Clouds (procedural mask generator), Grade (black/white point, lift, gamma, gain — no native mask port), HSV, Invert, Triplanar, Tile, Teleport Broadcaster / Teleport Receiver, Backdrop, Geo Channels node, Arnold Standard Surface (shader/material node with bump weight/mode), Selection tool (Object/Patch/Face/Smart modes), Warp tool, Slurp tool, Paint-Through tool, Image Manager, Export Manager, Bakery (Ambient Occlusion, Curvature/Convexity/Concavity bake items), Mirror Projection (Mirror X) and Patches → Mirror (Left-to-Right/Right-to-Left).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner (explicit "complete beginners" onboarding) — assumes zero prior Mari knowledge, covers only mechanical/interface fundamentals, and repeatedly defers deeper technique (character texturing, skin shading) to the creator's paid full course. Pairs directly with the companion Advanced Character Texturing in Mari video in this collection for the follow-on production workflow.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Mari (Bakery feature referenced as part of "Mari 7" in closing remarks). Non-commercial/learning use implied throughout.
 
 ### Tags
-[PENDING EXTRACTION]
+interface, hotkeys, paint-buffer, node-graph, merge-node, teleport-nodes, symmetry, triplanar, tile-nodes, paint-through, hand-painting, export-manager, bakery, geo-channels, beginner
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares the node-based Color+Paint+Merge mask pattern, Teleport Broadcaster/Receiver workflow, and Triplanar/Tile texture-variety techniques with Advanced Character Texturing in Mari: Studio Techniques (`advanced-character-texturing-in-mari-studio-techniques.md`) — that video applies these exact fundamentals (taught here from scratch) to a full production character, adding roughness-map theory, ZBrush integration, and high-frequency bump-channel projection on top.

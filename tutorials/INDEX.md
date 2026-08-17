@@ -1010,10 +1010,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=AcpwyNun0oo
 - **Author:** FlippedNormals
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Mari
+- **Version:** Mari 7 (Bakery feature referenced)
+- **Tags:** interface, hotkeys, paint-buffer, node-graph, merge-node, teleport-nodes, symmetry, triplanar, tile-nodes, paint-through, hand-painting, export-manager, bakery, geo-channels, beginner
+- **Summary:** Zero-to-functional Mari onboarding: project/channel setup, interface & ortho navigation, camera-locked lighting fixes, the paint-buffer concept (paint on a floating 2D "glass pane," committed only on Bake, with critical Manual-bake and Project-On-All settings), node-graph fundamentals (Merge's Base/Over/Mask model, Grade needs an explicit Merge to be maskable), Teleport Broadcaster/Receiver for spaghetti-free mask reuse, symmetry/mirroring, Triplanar (seamless, world-scale) vs. Tile (UV-seam-prone) texture variety, Paint-Through+Warp+Slurp for targeted detail projection, hand-painting hotkeys (critical "Tool on Key Held" preference), and the Export Manager / Bakery (AO, Curvature) → Geo Channels pipeline.
 - **File:** tutorials/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide.md
 
 ---

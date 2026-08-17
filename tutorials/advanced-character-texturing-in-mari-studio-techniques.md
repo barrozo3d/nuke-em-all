@@ -439,4 +439,4 @@ node-based-workflow, texture-projection, teleport-nodes, roughness, high-frequen
 ---
 
 ## Related Tutorials
-No other Mari or texturing tutorials exist yet in this collection — this is the first Mari entry. Future Mari or Substance Painter-adjacent texturing tutorials should cross-link here for the node-based reusable-mask workflow and the roughness-map theory (roughness ≠ desaturated color map).
+Shares the node-based Color+Paint+Merge mask pattern, Teleport Broadcaster/Receiver workflow, and Triplanar-projection technique with Introduction to Mari for Complete Beginners - 1 Hour Quick Start Guide (`introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide.md`) — that video teaches these same fundamentals from scratch (interface, paint buffer, node graph basics) as the on-ramp to this video's production character-texturing workflow.
