@@ -961,6 +961,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** A rough VR-sculpted (Substance Modeler stamp brushes) + lit-and-placeholder-textured (Blender) base mesh gives an image-to-image AI upscaler (Krea AI/Magnific AI) real lighting/shadow info to hallucinate convincing rock detail; the AI-enhanced 2D result is key-mixed and re-projected in Nuke via Project3D onto the same geometry for real parallax, rather than a flat DMP card.
 - **File:** tutorials/blender-nuke-ai-enhanced-digital-matte-painting-workflow.md
 
+
+### A Senior Compositor's Creative CG Workflow REVEALED
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=X-x_pLqjYxk
+- **Author:** Compositing Academy
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/a-senior-compositors-creative-cg-workflow-revealed.md
+
 ---
 
 ## Tag Reference
