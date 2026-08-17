@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=X-x_pLqjYxk
 author: Compositing Academy
 ingested: 2026-08-17
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: Nuke
+version: unspecified
+tags: [compositing, relighting, grading, deep-compositing, fx-simulation, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/a-senior-compositors-creative-cg-workflow-revealed/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 9
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # A Senior Compositor's Creative CG Workflow REVEALED
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py a-senior-compositors-creative-cg-workflow-revealed <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -286,30 +282,53 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:08] tutorials/frames/a-senior-compositors-creative-cg-workflow-revealed/frame_000.jpg
+- [2:29] tutorials/frames/a-senior-compositors-creative-cg-workflow-revealed/frame_001.jpg
+- [2:43] tutorials/frames/a-senior-compositors-creative-cg-workflow-revealed/frame_002.jpg
+- [5:01] tutorials/frames/a-senior-compositors-creative-cg-workflow-revealed/frame_003.jpg
+- [7:12] tutorials/frames/a-senior-compositors-creative-cg-workflow-revealed/frame_004.jpg
+- [12:46] tutorials/frames/a-senior-compositors-creative-cg-workflow-revealed/frame_005.jpg
+- [13:03] tutorials/frames/a-senior-compositors-creative-cg-workflow-revealed/frame_006.jpg
+- [17:00] tutorials/frames/a-senior-compositors-creative-cg-workflow-revealed/frame_007.jpg
+- [18:18] tutorials/frames/a-senior-compositors-creative-cg-workflow-revealed/frame_008.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A senior compositor's creative thought-process walkthrough (promotional clip for a "Deep Compositing in Nuke" course) on turning a chaotic raw CG render — a building being torn apart by a giant metal "snake"/dragon creature with a huge explosion — into a high-contrast final composite. No node graph is shown; the value is entirely in the *reasoning*: how to read a shot, diagnose what's not working, and decide what layered adjustments/elements fix it. Central thread is deliberate contrast stacking — dozens of small, targeted grades rather than one global correction — used to sell scale, heat, and silhouette readability.
 
 ### Summary
-[PENDING EXTRACTION]
+Frame 000 [1:08] shows the starting point: an aerial CG render of a skyscraper with debris, pre-grade. Frame 001 [2:29] is the raw deep-merged smoke pass alone — flat, "video gamey," low contrast, no 2D elements. Frame 002 [2:43] is the same beat after adding the 2D explosion, falling sparks/embers, fire, spark trails, lit lens dirt, and a glass reflection of the explosion (built via a 3D/projection setup and matted back in) — the jump from 001 to 002 is the clearest before/after in the video. The compositor's diagnostic method: look at where the eye should go and ask what's stopping it from reading. Recurring fixes: (1) pin/crush highlights in the sky and darken underneath to add directionality and match contrast to the building; (2) push metal render passes on the creature so its form reads even where the smoke would otherwise erase it; (3) relight flat/unlit CG glass panels using their normal passes so shards catch highlight and separate from black shadow (frame 003 [5:01] — glass reflecting spark/explosion color to avoid reading as flat white dots); (4) place key light *behind* elements like the creature rather than in front, so backlighting reads as "sitting on top of" the building instead of blending into its edge; (5) choose a color story (hot melting metal vs. cool metallic) purely for shot readability, then commit — frame 004 [7:12] shows the resulting glowing/melting red-hot edges built by combining deep mattes with a Nuke internal P_Noise-driven noise pass. Frames 005–006 [12:46, 13:03] cover explosion glow layering specifically: never use one exponential glow (edges look cut out) — build 2–3 stacked glow layers (base glow, broad glow) then reintroduce sharp detail on top (glass shards, smoke catching highlight) so the broad glow doesn't smooth the whole image into mush; the later pass is pushed further into overexposure/diffusion to sell "massive hot explosion." Frame 007 [17:00] and frame 008 [18:18] show late-stage flips: darkening the building slightly while brightening the creature's specular so the 3D metal form pops forward instead of feeling embedded in the building, plus asymmetric smoke density pulled toward one side purely for compositional interest. Deep data is also keyframed/transformed frame-by-frame to reuse a single smoke simulation across the shot's timeline (pushing it forward as the building collapses) rather than resimulating.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Establish the raw CG deep-merge as a baseline and identify where it reads as flat/game-like before touching anything else.
+2. Layer in 2D elements (explosion, embers, spark trails, falling sparks, glowing lens dirt) on top of the CG smoke/fire passes — treat CG and 2D elements as one combined toolkit, not separate passes.
+3. Build a matted 3D/projection-based reflection of the explosion into reflective surfaces (glass) so practical elements interact with the environment.
+4. Diagnose contrast/directionality shot-wide: crush blacks under bright highlights, ping specular sky/window highlights, and match the CG element's contrast curve to the live building plate.
+5. Use render pass isolation (metal/spec passes) to keep a silhouette readable through obscuring smoke/fire, frame by frame if needed.
+6. Relight unlit CG surfaces (glass, metal shards) using their normal passes rather than re-rendering, to add directional highlight/shadow separation against black.
+7. Choose light placement (in front vs. behind a hero element) specifically to control whether it reads as sitting on top of or blending into what's behind it.
+8. Build glow as 2–3 stacked layers (not one exponential glow) and reintroduce sharp detail (shards, smoke) on top of the broadest glow layer to prevent over-softening.
+9. Reuse expensive sim elements (e.g. smoke) across a shot's duration by transforming/keyframing the deep data forward instead of resimulating.
+10. Do a final pass of "flip the contrast" adjustments — darken the background element, brighten the specular hero element — to fix foreground/background depth read once the shot otherwise looks finished.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+Deep merge / deep transform (deep data keyframed and transformed to reuse a sim across time); normal-pass-driven relighting on CG glass/metal (same category of technique as `RotateNormals`-style gizmos used elsewhere in this skill); render pass isolation on metal/spec AOVs; a Nuke-internal noise tool combined with deep mattes for melting-metal edge glow (referred to in-video as "P noise," i.e. Nuke's built-in P_Noise); layered Glow (2–3 stacked instances: base + broad, with a sharp-detail layer composited back on top); Cryptomatte-style/3D projection setup for the glass reflection pass; manual per-region color correction/grading nodes for the highlight-pinning and directionality passes described throughout. No node graph or UI is actually shown on-screen — this is a paid-course teaser focused entirely on before/after result reasoning.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate–Advanced (conceptual). No hands-on node setup is demonstrated, but the diagnostic reasoning (why a shot doesn't read, what layered fix addresses it) assumes existing comfort with deep compositing, AOV-based relighting, and multi-layer glow — this is "senior compositor thinking out loud," not a beginner walkthrough.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (Deep compositing workflow — companion promotional clip for the creator's paid "Nuke 707: Deep Compositing in Nuke" course). No specific Nuke version stated.
 
 ### Tags
-[PENDING EXTRACTION]
+compositing, relighting, grading, deep-compositing, fx-simulation, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares the normals-driven relighting technique (lighting flat/unlit CG surfaces via their normal pass rather than re-rendering) with The BEST Way to Use Normals to Relight in Nuke (NEW Toolset) (`the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md`) and 2 Expert VFX Tips to PERFECTLY Blend CG (`2-expert-vfx-tips-to-perfectly-blend-cg.md`) — both apply the same "use what render passes you already have, don't rerender" philosophy this video's glass-shard relighting demonstrates. Shares layered-glow and explosion-building technique with Compositing with EXR Files | FREE VFX Explosions (`compositing-with-exr-files-free-vfx-explosions.md`) — that video shows the actual node setup (Shuffle/Grade/Keyer stack) for building an explosion composite, which pairs directly with this video's conceptual "2-3 stacked glow layers, never one exponential glow" guidance. Shares the contrast-stacking/directional-highlight grading philosophy with The BLUEPRINT for Cinematic Light (VFX) (`the-blueprint-for-cinematic-light-vfx.md`) — both treat "many small targeted grades" as the core technique for selling a CG element as sitting inside a plate rather than one global correction.

@@ -966,10 +966,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=X-x_pLqjYxk
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Not specified
+- **Tags:** compositing, relighting, grading, deep-compositing, fx-simulation, intermediate
+- **Summary:** No node graph shown — a senior compositor's before/after reasoning on turning a chaotic raw CG render (skyscraper destroyed by a giant metal creature + explosion) into a readable final composite: contrast-stacking dozens of targeted grades instead of one global correction, relighting flat CG glass via normal passes, backlighting a hero element so it reads as sitting on top rather than blending in, and building glow as 2-3 stacked layers (never one exponential glow) with sharp detail reintroduced on top.
 - **File:** tutorials/a-senior-compositors-creative-cg-workflow-revealed.md
 
 ---
