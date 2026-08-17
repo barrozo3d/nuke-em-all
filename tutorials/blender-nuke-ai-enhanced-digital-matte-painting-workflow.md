@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=XG-5tchFBQM
 author: Compositing Academy
 ingested: 2026-08-17
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke (final projection/comp stage) + Blender (lighting/UV projection) + Adobe Substance Modeler (VR sculpt) — cross-platform, Nuke canonical since that's this skill's scope and the video's final/deliverable stage"
+version: "Not specified for any of the three apps"
+tags: [digital-matte-painting, ai-tools, projection, 3d-system, texture-projection, compositing, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/blender-nuke-ai-enhanced-digital-matte-painting-workflow/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 7
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Blender + Nuke | A.I Enhanced Digital Matte Painting Workflow
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py blender-nuke-ai-enhanced-digital-matte-painting-workflow <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro and Explanation [0:00]
@@ -334,30 +330,59 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [1:35] tutorials/frames/blender-nuke-ai-enhanced-digital-matte-painting-workflow/frame_000.jpg
+- [4:24] tutorials/frames/blender-nuke-ai-enhanced-digital-matte-painting-workflow/frame_001.jpg
+- [5:56] tutorials/frames/blender-nuke-ai-enhanced-digital-matte-painting-workflow/frame_002.jpg
+- [8:04] tutorials/frames/blender-nuke-ai-enhanced-digital-matte-painting-workflow/frame_003.jpg
+- [9:37] tutorials/frames/blender-nuke-ai-enhanced-digital-matte-painting-workflow/frame_004.jpg
+- [11:20] tutorials/frames/blender-nuke-ai-enhanced-digital-matte-painting-workflow/frame_005.jpg
+- [12:00] tutorials/frames/blender-nuke-ai-enhanced-digital-matte-painting-workflow/frame_006.jpg
+
+---
+
+> **Cross-platform pipeline note:** This video spans three applications — Adobe Substance Modeler (VR sculpting), Blender (lighting/material/UV projection setup), and Nuke (final 2D-to-3D re-projection and compositing). It's ingested here in nuke-em-all since Nuke hosts the final deliverable stage and this is where the technique's payoff (parallax-correct projection onto CG geometry) actually lands; the Blender and Substance Modeler steps are summarized in enough depth to follow the pipeline logic, not full standalone tutorials for those apps.
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A "middle ground between photo-bashing and full custom-asset creation" digital matte painting workflow: a deliberately rough, fast VR-sculpted base mesh (built mostly from pre-made "stamp" brushes, not hand-carved detail) is lit and given a throwaway tiling material in Blender purely to give an image-to-image AI upscaler (Krea AI or Magnific AI) enough real lighting/shadow/texture information to hallucinate convincing high-frequency rock detail — the AI-enhanced 2D result is then re-projected in Nuke's 3D system onto the same (optionally remeshed) geometry via a projection camera, preserving real parallax so the painted detail reads as genuinely dimensional rather than a flat sticker.
 
 ### Summary
-[PENDING EXTRACTION]
+**Why this approach:** framed as an efficiency play — building every background rock/cliff asset to full CG quality is cost-prohibitive, Quixel/asset-kitbashing solves some of this but limits compositional control, and this workflow splits the difference by doing just enough real 3D work (rough geometry + lighting + a placeholder texture) to give an AI upscaler real structural information to work from, rather than either full manual sculpting or pure 2D AI generation with no 3D grounding. **Step 1 — VR blockout (Adobe Substance Modeler):** working in centimeters rather than meters for VR performance (meters caused slowdown), the artist builds a rough cliff/rock form largely by placing pre-made "stamp" brushes (a library that includes default rock stamps) rather than sculpting every crack by hand — explicitly not aiming for finished-CG-asset quality, since the goal is only to give the eventual AI pass real facing-angle variation and shadow-catching geometry to read from (roughly 10-20 minutes of work for the example scene). The reasoning for using actual 3D geometry instead of a flat DMP card (a legitimate, still-used older technique when little parallax is needed): real geometric variation lets the Blender lighting pass cast genuine directional shadows across the form, which the AI can then interpret and enhance — even after the mesh is remeshed later (reducing fine parallax), the result is still higher quality than starting flat. **Step 2 — Lighting and placeholder texture (Blender):** the sculpted OBJ is imported (with a Remesh modifier applied if poly count is too high, since this geometry will later be projected onto in Nuke and doesn't need to survive with huge face counts) and lit — EEVEE is used live for speed while iterating (visibly flickering during rotation) with Cycles preferred for final bounce-lighting quality in cracks/crevices. A rock texture (sourced here from BlenderKit, a paid/free-tier asset-search plugin similar to Quixel) is projected onto the unwrapped-less mesh from the current view (Edit Mode → select all → U → Project from View) purely to signal "this is rock, under this color of lighting" to the AI — tiling seams, repetition, and unrealistic scale are explicitly not a concern at this stage, since properly painting/scaling a production texture (e.g. in Substance Painter) is exactly the expensive manual step this workflow is designed to skip. The core image-to-image principle stated explicitly: the closer the input render already is to the desired lighting and surface information, the better the AI's output — a flat, textureless, shadowless input produces poor/generic results. **Step 3 — AI enhancement (Krea AI and/or Magnific AI):** a square Cycles render of the lit, textured mesh is brought into an image-to-image AI tool. **Krea AI** (real-time Stable-Diffusion-based image-to-image) is demonstrated first: a text prompt (e.g. "a rocky cliff side, detailed cracks") combined with an AI-strength slider controls how far the output departs from the input — pushed too high, the result loses connection to the input geometry entirely; kept low, it stays blurry/soft but structurally faithful, since the plan is to run a further dedicated upscale pass afterward anyway (the "Generate" step changes/reinterprets details more, while the "Upscale" step mainly adds fine detail without changing forms — the artist picks whichever behavior a given shot needs, or skips straight to upscaling). Re-rolling the seed a few times at low strength surfaces several candidate variations; anything where the overall shape/silhouette hasn't shifted dramatically is usable for projection. The Krea upscale pass was noted to introduce visible streaking artifacts in this test. **Magnific AI** is presented as the preferred upscaler for this artist: dropping the render straight in (skipping any generate/reinterpret step) and adjusting Creativity and HDR sliders (pushing HDR far adds a lot of fine detail, potentially too much) — described as respecting the underlying geometry's lighting/shadow information notably well, reproducing convincing crack detail in exactly the regions the Blender lighting pass was already highlighting, without any of it being hand-sculpted. Recommended practice: generate ~10 variations at a few different randomized slider combinations, then keep the best 2-3 for use in the final matte painting (rather than committing to a single AI pass). **Step 4 — Re-projection and compositing (Nuke):** multiple AI-upscaled candidate images (here: a "normal" pass and a second pass with cranked-up Magnific HDR for a wetter/more reflective damp look, intentionally chosen to fit the target shot's mood) are **key-mixed together** and graded to combine their best qualities, rather than relying on one single AI output. The resulting 2D image is fed into a `Project3D` node driven by a projection camera imported from Blender (via Alembic export) and projected onto the same Alembic-exported sculpted geometry — this is the step that gives the painted 2D result real parallax and makes it feel native to the 3D scene rather than a flat sticker; a separate, independently animated camera (also brought in via the Blender Alembic export) is used for the actual final shot rendering, distinct from the static projection camera used only to align the paint. The projected DMP layer is treated as an enhancement pass slapped over the existing CG scene (rather than a full scene replacement) — extraneous projected detail not needed in frame (e.g. floor, door) is stencilled/masked out to isolate just the CG elements actually needed, followed by further grading and haze/atmosphere work to blend everything together (mentioned as belonging to a longer, separate grading workflow beyond this video's scope).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. In a VR sculpting tool (Adobe Substance Modeler used here): import a base mesh in a VR-appropriate scale (centimeters, not meters, for performance), then rough out the target rock/cliff form largely using pre-made "stamp" brushes rather than hand-sculpting every detail — aim for real facing-angle/shadow-catching variation, not finished-asset quality (~10-20 min is enough).
+2. Export the sculpt as an OBJ into Blender; apply a Remesh modifier if the poly count is too high (this geometry will later be projected onto in Nuke, so it doesn't need to survive with a huge face count).
+3. Light the mesh in Blender to get real directional shadows/highlights across its form — iterate in EEVEE for speed, switch to Cycles for the final lighting pass to capture better bounce light in cracks/crevices.
+4. Apply a throwaway, roughly-matching material (any tiling rock texture, e.g. from BlenderKit or a similar asset library) via a quick Project-from-View UV unwrap (Edit Mode → Select All → U → Project from View) — tiling seams and unrealistic scale don't matter at this stage, the goal is only to signal the right material category and base color to the AI.
+5. Render a square still of the lit, textured mesh (Cycles) as the AI's input image — the closer this input already looks to the target lighting/surface info, the better the AI's output will be.
+6. In an image-to-image AI tool (Krea AI and/or Magnific AI): bring in the rendered still, optionally run a low-strength "Generate" pass with a descriptive text prompt to explore a few structurally-faithful variations (re-roll the seed, keep AI strength low enough that the underlying shape doesn't change), then run a dedicated Upscale/enhance pass to add fine surface detail without altering the overall form.
+7. Compare/pick between available upscalers based on the shot's needs (in this case: Krea's upscale introduced streaking artifacts; Magnific's respected the input's lighting/shadow information more faithfully and was the preferred choice) — generate several variations (~10) at randomized Creativity/HDR (or equivalent) slider values and keep the best few.
+8. Bring 2-3 favorite AI-enhanced candidates into Nuke; key-mix and grade them together to combine each one's best qualities (e.g. blending a "normal" pass with a higher-HDR "wetter/more reflective" pass) into a single final 2D matte painting image.
+9. Export the projection camera and the sculpted geometry from Blender via Alembic; feed the combined 2D matte painting into a `Project3D` node driven by that imported (static) projection camera, projected onto the imported geometry — this restores real parallax so the AI-enhanced 2D result reads as genuinely 3D in the scene.
+10. Use a separate, independently animated camera (also from the Blender Alembic export) for the actual final shot render, distinct from the static camera used only for projection alignment.
+11. Stencil/mask out any projected detail not needed in the final frame (e.g. floor, doorway) to isolate just the CG elements the shot actually needs, then grade and add atmosphere/haze to blend the DMP layer with the rest of the CG scene.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Nuke:** `Project3D` (2D-to-3D re-projection using an imported camera), key-mix/grade node chain for combining multiple AI-upscaled candidates, stencil/mask nodes for isolating needed CG detail, Alembic import (camera + geometry from Blender)
+- **Blender:** Remesh modifier (poly-count control before Nuke projection), EEVEE (fast iterative lighting) vs. Cycles (final bounce-lighting quality), Project from View UV unwrap (Edit Mode, Select All, U), BlenderKit plugin (texture asset source), Alembic export (camera + geometry)
+- **Adobe Substance Modeler:** VR sculpting with "stamp" brushes (pre-made rock forms), centimeter-scale import for performance
+- **AI tools:** Krea AI (real-time Stable Diffusion image-to-image: prompt + AI-strength slider, separate Generate vs. Upscale/Enhance behavior), Magnific AI (image-to-image upscaler: Creativity and HDR sliders, no generate/reinterpret step, preferred here for geometry/lighting fidelity)
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate (the individual per-app steps are approachable, but the overall workflow requires judgment about how much real 3D information is "enough" for the AI pass, and comfort moving assets/cameras across three different applications)
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke, for the final projection/compositing stage (version not stated); cross-platform pipeline also uses Blender and Adobe Substance Modeler (neither version-pinned on screen).
 
 ### Tags
-[PENDING EXTRACTION]
+digital-matte-painting, ai-tools, projection, 3d-system, texture-projection, compositing, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- Creating a 3D Hole using Nuke + Photoshop A.I (Firefly) Tutorial (`creating-a-3d-hole-using-nuke-photoshop-ai-firefly-tutorial.md`) — directly relevant: same "generate/enhance 2D detail with AI, then re-project onto real geometry in Nuke via Project3D" core technique, using Firefly instead of Krea/Magnific.
+- Cleanplate Projections | Nuke Compositing Guide (`cleanplate-projections-nuke-compositing-guide.md`) — shares the camera-projection-onto-geometry methodology this video's final Nuke stage depends on.
+- Render World Position in Blender for Nuke (`render-world-position-in-blender-for-nuke.md`) — shares the Blender-to-Nuke cross-app pipeline pattern (camera/geometry export via Alembic) used here to bring the projection setup into Nuke.

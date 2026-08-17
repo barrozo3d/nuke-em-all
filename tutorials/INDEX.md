@@ -955,10 +955,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=XG-5tchFBQM
 - **Author:** Compositing Academy
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (final projection/comp stage) + Blender + Adobe Substance Modeler — cross-platform
+- **Version:** Not specified
+- **Tags:** digital-matte-painting, ai-tools, projection, 3d-system, texture-projection, compositing, intermediate
+- **Summary:** A rough VR-sculpted (Substance Modeler stamp brushes) + lit-and-placeholder-textured (Blender) base mesh gives an image-to-image AI upscaler (Krea AI/Magnific AI) real lighting/shadow info to hallucinate convincing rock detail; the AI-enhanced 2D result is key-mixed and re-projected in Nuke via Project3D onto the same geometry for real parallax, rather than a flat DMP card.
 - **File:** tutorials/blender-nuke-ai-enhanced-digital-matte-painting-workflow.md
 
 ---
