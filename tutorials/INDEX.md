@@ -41,6 +41,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **⚠ Do not re-ingest this URL in nuke-em-all** — this stub exists only so this index surfaces the tutorial by search; ingesting it here would fork the content. If new Nuke-specific detail is found, add it to the canonical file in houdini-wand instead.
 
 
+### [CROSS-REFERENCE ONLY] How I Created This Star Wars Environment | Houdini Biomes & Nuke
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=sQ6y_en5nnY
+- **Author:** Arvid Schneider
+- **App:** Nuke (comp/finishing pass) + Houdini (Labs Biomes, Solaris, Karma XPU) — cross-platform
+- **Tags:** compositing, aovs, cross-platform-reference
+- **Summary:** Scarif/Rogue-One-inspired island environment breakdown. The Nuke-side technique (roughly 5 of 14 minutes) is a substantial finishing pass: motion-vector-driven heat distortion (Vector Blur + Distort), an engine-"kickup"-driven water-ripple Distort pass, depth-AOV atmospheric hazing/desaturation, stormtroopers composited as 2D cards placed in true 3D camera space (no projection setup needed), and a Death-Star/sky backdrop built by key-mixing two textures onto a huge Sphere rendered via Scanline Render through the shot camera. The bulk of the technical content (SpeedTree palm generation, Labs Biomes scatter with camera-frustum culling, kit-bashed set dressing, Axiom smoke) is Houdini-side, so the full extraction lives in the **houdini-wand** skill.
+- **Full extraction:** `houdini-wand/tutorials/how-i-created-this-star-wars-environment-houdini-biomes-nuke.md` (https://github.com/barrozo3d/houdini-wand/blob/master/tutorials/how-i-created-this-star-wars-environment-houdini-biomes-nuke.md)
+- **⚠ Do not re-ingest this URL in nuke-em-all** — this stub exists only so this index surfaces the tutorial by search; ingesting it here would fork the content. If new Nuke-specific detail is found, add it to the canonical file in houdini-wand instead.
+
+
 ### Grading Highlights and Pools of Light | Nuke Compositing
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=F6Ru0K0PwZM
