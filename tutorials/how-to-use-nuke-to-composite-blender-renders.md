@@ -239,3 +239,4 @@ aovs, cryptomatte, channels, color-management, grading, compositing, intermediat
 ## Related Tutorials
 Shares `cryptomatte` and `aovs` with Build Entire FX with ONE Pass - Nuke Tutorial (`build-entire-fx-with-one-pass---nuke-tutorial.md`) — both use Cryptomatte/AOV region masking to art-direct CG renders in comp without re-rendering.
 Shares `aovs`, `channels`, `compositing` with Compositing with EXR Files | FREE VFX Explosions (`compositing-with-exr-files-free-vfx-explosions.md`) — overlapping multi-pass AOV recombination fundamentals, applied to a different cross-app CG-compositing pipeline.
+Shares Cryptomatte-driven object isolation and multi-pass beauty-recreation fundamentals with Intro to Nuke for 3D Artists - Full VFX Course (`intro-to-nuke-for-3d-artists---full-vfx-course.md`) — that full course teaches the same Shuffle/AOV-summing and Cryptomatte-masking foundations from first principles on a Houdini/Karma pipeline instead of Blender.

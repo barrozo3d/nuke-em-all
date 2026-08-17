@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=id1HCc2xkIU
 author: Voxyde VFX
 ingested: 2026-08-17
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: Nuke
+version: unspecified
+tags: [interface, render-passes, aovs, unpremult-premult, beauty-recreation, utility-layers, normal-pass, depth-pass, world-position-pass, fog, 3d-system, cryptomatte, stmap, uv-mapping, glow, relighting, gizmo, grading, compositing, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 17
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Intro to Nuke for 3D Artists - Full VFX Course
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py intro-to-nuke-for-3d-artists---full-vfx-course <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Intro [0:00]
@@ -2530,30 +2526,95 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [5:30] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_000.jpg
+- [18:45] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_001.jpg
+- [34:05] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_002.jpg
+- [53:13] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_003.jpg
+- [68:00] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_004.jpg
+- [78:27] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_005.jpg
+- [89:16] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_006.jpg
+- [107:33] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_007.jpg
+- [128:24] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_008.jpg
+- [151:27] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_009.jpg
+- [169:43] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_010.jpg
+- [182:48] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_011.jpg
+- [191:42] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_012.jpg
+- [206:53] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_013.jpg
+- [222:58] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_014.jpg
+- [239:06] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_015.jpg
+- [249:57] tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/frame_016.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A complete, project-based "Nuke for 3D artists" course (4h13m, by Rez/Voxside.com) that builds one full CG shot from scratch — a helmeted swordsman standing in a ruined, foggy city environment, lit by an emissive sword/eyes — using Houdini/Karma-rendered multi-pass EXRs as the source material. The course's spine is **AOV/beauty recreation**: every render is split into its individual light/pass contributions via Shuffle, each contribution is graded independently, then everything is added back together, and utility passes (normal, depth, world-position, UV, Cryptomatte) are used to build entirely new layers (fog, smoke, glow, relight, detail breakup) that never existed in the original render. This is the single most comprehensive fundamentals-to-advanced CG-compositing tutorial in this collection.
 
 ### Summary
-[PENDING EXTRACTION]
+**Interface & basics [frame 000, 5:30]:** workspace layout (node graph / viewer / properties panes, rearrangeable), Tab to drop nodes, number keys 1-0 to preview any node in the viewer (a major workflow advantage over After Effects' visibility-toggle model), the "max panels" property count for stacking multiple nodes' properties at once, Project Settings (S with nothing selected) for frame range/fps/format — format must be set correctly *before* placing format-relative nodes (Radial, etc.) or they'll be miscentered when the format later changes — and OCIO color management set to ACES 1.2 for ACES-rendered EXRs.
+
+**Read, Merge & Simple Comp [frame 001, 18:45]:** Read node (R) for EXR sequences (`###` frame-number tokens); "full frame processing" to make the viewer cache stay valid at any zoom level; Merge (M) A-over-B compositing where B is remembered as "background"; the Merge node's per-node Mix slider; Grade (G) as the primary color-correction node, including per-channel color wheels for isolated R/G/B correction. Establishes the layering principle: build back-to-front (sky → environment → character).
+
+**Render passes & EXRs / beauty recreation [frame 002, 34:05]:** EXRs store values above 1.0 (unlike JPEG, which clamps at 1.0) preserving highlight detail recoverable by gaining down — demonstrated by comparing a Clamp-node-forced image against the real EXR. The core technique: **Shuffle** each individual AOV/render pass (diffuse/reflection per-light: distant/sky/sun, etc.) out of the beauty EXR, grade each in isolation, then **Merge with "plus"** to recombine — since AOVs are designed by the render engine to sum losslessly (documented per-engine, e.g. Redshift's AOV docs show beauty = diffuse + GI + specular, etc., all additive) back into an exact match of the original beauty. Labeling shuffles via the Node tab + an `[value in1]` expression keeps a complex graph legible. Comparing the recombined result against the original render (toggling with number-key views, disabling merges with D to isolate each contribution) validates the setup.
+
+**Unpremult & Premult [frame 003, 53:13]:** anti-aliased edge pixels are RGB values already multiplied by their alpha; grading a premultiplied image directly darkens/corrupts that edge gradient (visible as a dark fringe). Fix: **Unpremult before grading, Premult after** — done once for the whole recombined beauty (not per-individual-pass, since intermediate premults would double-count edge values when passes are added together), then the original alpha is restored via a **Copy node** (K, alpha-to-alpha) from the un-shuffled render before the final Premult, since summing per-pass alphas produces a wrong alpha. Utility/data passes (normal, position) must bypass this Unpremult chain entirely — they aren't color data.
+
+**Simple Comp [frame 004, 68:00]:** applying the above beauty-recreation + unpremult/premult setup identically to a second render (the character) merged over the environment; explains the "get a rough estimate quickly in comp, then match it back in the 3D render" R&D workflow, while being explicit that this extreme comp-driven relighting isn't standard production practice — it's chosen here specifically to demonstrate compositing's range.
+
+**Utility Layers — Normal pass [frame 005, 78:27]:** the normal AOV encodes surface-direction XYZ as RGB (visualized as blue/magenta/green regions in this course — Z-facing = blue, Y-facing/up = green); isolating one axis (e.g. Y) into the alpha channel creates an instant "facing-upward" mask usable as any node's mask input (the mask arrow that appears on color nodes), refinable with a further Grade limited to the alpha channel.
+
+**Fog layer via Depth pass [frame 006, 89:16]:** the Depth AOV stores camera-distance-in-world-units per pixel (not 0-1) — sampling confirms real unit values (e.g. 422 units to the farthest building). A Grade's black/white points remap this to a usable 0-1 gradient; Merge "screen" (a clamped/soft "plus") layers it over a flat Constant to fake atmospheric fog. Crucially, the Depth pass must be read **without anti-aliasing** (a separate "no-AA" export) or fog edges show a harsh unpremult-like fringe, since depth/AOV filtering behaves differently from color-pass filtering.
+
+**3D System & Sky layer [frame 016, 249:57 shown as final]:** Nuke's 3D system (Tab in the viewer to enter 3D nav: Alt+drag to orbit/zoom/pan) is used to place a texture-mapped Sphere (for a full sky) or Card (for planar elements) that's rendered back to 2D via ScanlineRender with an imported production Camera (Read from File, USD camera). **PositionToPoints** (fed the world-position AOV) turns the beauty render into a literal 3D point cloud in the viewer — an invaluable way to visually verify that a placed sphere/card is actually big enough/positioned correctly relative to the real geometry, rather than guessing. Reformat is used to size/downres large HDRI textures to only the resolution actually needed once mapped onto a screen-filling sphere.
+
+**3D Cards & Smoke [frame 007/008, 107:33/128:24]:** Houdini-rendered smoke elements (deliberately lit flat/neutral for maximum comp flexibility) are mapped onto 3D Cards placed and scaled using the same PositionToPoints-verification workflow, rendered via ScanlineRender, then merged "plus" over the comp. Because a flat "plus" over a 2D render doesn't respect 3D occlusion, the **Depth pass is reused as an interaction mask**: Grade's white-point/offset controls narrow the depth gradient to a thin band and slide it through Z-space until it isolates exactly the foreground geometry (rubble) that should occlude the smoke, inverted and applied across RGBA (not just RGB) so alpha is masked too. TimeOffset nodes desync duplicated smoke-card copies for free variation; a Radial multiplied onto the smoke fades it at the card edges for smoother ground-intersection blending.
+
+**Ground whispy smoke — procedural, no stock footage [frame 009, 151:27]:** a from-scratch smoke substitute built from a Turbulence-mode Noise generator (Invert to get white wisps on black, size/lacunarity/octaves/gain/gamma tuned for thin streak shapes, a second multiplied Noise layer added for extra detail), reformatted square and mapped on a ground-flat Card, animated via **Expression-linked translate/Z-evolve params** (`frame`, scaled by a multiplier for speed) rather than manual keyframes. Integrated into the ground using the **world-position Y channel** as a height-based mask (Grade on alpha, white-point/offset tuned to isolate a Y-height band) — the same masking pattern as the depth-based fog/occlusion technique, applied to a different axis.
+
+**Foreground smoke & PostageStamp [frame 010, 169:43]:** **PostageStamp** nodes act as lightweight "pointers" to another node so multiple downstream chains can reference one Read/element without a messy long wire, and swapping the single upstream node updates every PostageStamp instantly (Alt+H hides wire clutter). A close foreground smoke layer merged flat over the character needs its interaction mask built specially: shuffling the character's Depth-no-AA pass into **RGB (not alpha)**, backed by a white Constant merged as the background (so empty space around the cutout character reads as "far/visible" instead of black/occluding), because a character render's alpha-only depth mask would incorrectly crop the smoke to the character's silhouette.
+
+**Cryptomatte [frame 011, 182:48]:** the CryptoMatte node (fed the render pre-Unpremult) generates per-material ID masks by Ctrl+clicking directly on the viewer — Picker "add"/"remove" builds arbitrary multi-object selections, and the resulting alpha becomes an instant, fully anti-aliased mask (still needs the same Unpremult treatment as any alpha) for isolating a single object/material (e.g. the sword blade vs. hilt vs. body) for independent per-object grading, glow-breakup targeting, or texture-detail work — described as used "in literally every comp."
+
+**STmap & Adding surface detail [frames 012-013, 191:42/206:53]:** **STmap** remaps a source texture using any 0-1 two-channel coordinate image plugged into its "UV channels" — demonstrated first from scratch with two Ramp nodes shuffled into R/G to build fake UVs, then for real using the render's actual **UV AOV** (unpremulted, RGB into the STmap's UV channels). This maps a tileable Noise texture onto a low-detail CG surface (a smooth sword blade) to fake dust/scratch surface detail with no real texture painting; bad/stretched source UVs are compensated for with per-channel Grade adjustments on the UV map or by non-uniformly scaling the source noise's transform. The result is masked to just the target object via Cryptomatte, merged with "screen," then **multiplied** against the beauty to pick up the render's own color/highlight information rather than pasting flat noise on top.
+
+**Nuke Survival Toolkit [199:18]:** a free community-made gizmo bundle (curated from Nukepedia's 1000+ free tools) that's treated as a required install for professional Nuke work — several later chapters' key nodes (AP_Glow, P_NoiseAdvanced, AP_Vignette) come from it.
+
+**Glow — direct emission [frame 014, 222:58]:** Nuke's stock Glow node is explicitly called out as low-quality (a plain blur+plus with linear falloff) and not recommended; instead the toolkit's **AP_Glow** (or ExpoGlow) is used because it reproduces light's real **exponential** falloff (demonstrated by comparing a linear-ramp ranging Grade against a gamma-curved one). Emissive elements (eyes, sword edge) are isolated per-object via Cryptomatte + Merge "in", graded independently, pre-desaturated toward white before glowing (sells a "superheated" look), and the glow itself is broken up with an animated multiplied Noise layer (frame-driven expressions again) to avoid a flat, obviously-CG glow blob — the same "always break up large flat areas with noise" principle used for the sword scratches.
+
+**Glow bounce & Relight:** the **ReLight** node (fed Color/Normal/Position AOVs, a Light, a Camera, and a Material) fakes indirect/bounce lighting from the emissive source onto the rest of the character in comp — a full mini re-lighting system inside the 2D comp, previewable in the 3D viewer via the same PositionToPoints technique, with a Scene node merging light+camera+points for 3D preview. Notably the light is deliberately positioned for a *better-looking* result rather than physical accuracy, reinforcing the course's repeated "comp gives you creative license 3D render doesn't" theme. A subtle **flicker** is added to both the glow and its bounce by driving a Grade's Mix value with `random(frame)` (divided down to control frequency) — and the two Grade nodes are **node-cloned (Alt+K)** so one flicker expression drives both layers' intensity in sync.
+
+**Final touches [frame 015, 239:06]:** **P_NoiseAdvanced** (toolkit gizmo) maps a noise breakup texture using the world-position AOV (RGB, analogous to STmap's UV-based remap but position-driven) directly onto the environment for extra surface detail — must be applied *before* the alpha-Copy/Premult step or it corrupts the alpha. Final pass stack: a low-Mix full-frame Blur for overall diffusion/blending, a second animated-Radial-masked Blur isolating extra softness on the farthest background geometry for added depth separation, a subtle color-temperature push (blue in the far background via a masked Grade) for chromatic contrast against the orange glow, Grain, a second low-Mix diffusion Blur specifically to spread the glow layers, **AP_Vignette** to fade the corners, and a final Crop to a 2.35:1 cinematic aspect ratio.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Set Project Settings (frame range, fps, format, OCIO/ACES color management) correctly before placing any format-relative node.
+2. Read in multi-pass EXRs; for each render, Shuffle out every individual AOV/light contribution, grade each independently, then recombine with Merge "plus" (per the render engine's documented AOV-summing formula) to rebuild an exact-match beauty with full per-layer control.
+3. Unpremult once before grading the recombined beauty, Premult once after, restoring the correct summed alpha via a Copy(alpha) node from the original un-shuffled render — never premult after each individual pass.
+4. Use utility AOVs (normal, depth/no-AA, world-position, UV, Cryptomatte) as sources for brand-new masks and layers that don't exist in the original render — height-based masks from position-Y, occlusion masks from depth bands, facing masks from normals, one-click object isolation from Cryptomatte.
+5. Build atmospheric/procedural layers (fog from depth, wispy ground smoke from animated Turbulence noise) when stock/rendered elements aren't available, using frame-driven expressions instead of manual keyframes for continuous animation.
+6. Place elements in true 3D (Card/Sphere + ScanlineRender + production Camera) when camera-relative parallax matters (sky, foreground/midground smoke cards), verifying scale/position against a PositionToPoints point-cloud preview of the actual render geometry rather than eyeballing it.
+7. Use PostageStamp to fan a single source out to multiple downstream chains without wire clutter, and to make swapping that source update every dependent chain at once.
+8. Fix low-detail CG surfaces with STmap-remapped noise/texture detail driven by the real UV AOV, masked to the target object via Cryptomatte and multiplied (not just merged) back onto the beauty to inherit its existing lighting.
+9. Build glow with an exponential-falloff gizmo (never the stock linear Glow), isolate emissive sources per-object via Cryptomatte, desaturate them toward white pre-glow, and break up both the emissive source and the glow itself with animated noise.
+10. Fake indirect/bounce light from emissive elements with the ReLight node (Color+Normal+Position+Light+Camera+Material), previewed in 3D via PositionToPoints/Scene, positioned for best visual result over physical accuracy.
+11. Drive subtle organic variation (flicker, animated noise) with frame-based expressions (`frame`, `random(frame)`, scaled/divided for speed/frequency) rather than keyframes, and node-clone (Alt+K) linked Grade nodes so one expression can drive multiple in-sync layers.
+12. Finish with a standard post stack: selective/masked diffusion blur for depth separation, subtle color-temperature grading for contrast, Grain, a second blend-diffusion pass, vignette, and a cinematic aspect-ratio crop.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+Read (EXR sequences, `###` tokens), Merge (over/plus/screen/in/multiply/divide operations, Mix, Shift+X to swap A/B), Grade (gain/gamma, per-channel color wheels, channel-restricted operation, mask input), Shuffle (AOV extraction, `[value in1]` label expressions, forward-connection dots via Ctrl-click or Shift+Y), Unpremult/Premult, Copy (K, alpha-to-alpha), Clamp, Reformat, Crop, Constant, Ramp, Noise (draw-category generator: size/lacunarity/octaves/gain/gamma/Z-evolve, Turbulence type, Invert), Transform, PostageStamp, Dot (organizational, Ctrl-click or period key), CryptoMatte (Ctrl-click picker, add/remove modes), STmap (UV-channel remapping), Card / Sphere / ScanlineRender / Camera (Read from File USD) / Scene — Nuke's 3D Classic system, PositionToPoints (P/N-driven 3D point-cloud preview), Saturation, Blur, Radial (with animated keyframed handles), Expression fields (`frame`, `random(frame)`, arithmetic scaling), Alt+K node cloning, AP_Glow / ExpoGlow (Nukepedia/Survival Toolkit exponential glow), ReLight + basic Material node, P_NoiseAdvanced (position-driven noise breakup, Survival Toolkit), AP_Vignette (Survival Toolkit), Grain.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner-to-Advanced (progressive, full-course arc) — starts from absolute Nuke basics (hotkeys, node graph navigation) and by the back third covers genuinely advanced CG-compositing techniques (Cryptomatte-driven per-object workflows, STmap/UV-based detail projection, in-comp relighting via ReLight, procedural element generation) that assume comfort with AOV-based pipelines. The single densest, most complete Nuke fundamentals-through-advanced resource in this collection.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke (project uses ACES 1.2 OCIO color management; source renders from Houdini/Karma). No specific Nuke version number stated. Requires the free Nuke Survival Toolkit (Nukepedia gizmo bundle) for several later-chapter nodes (AP_Glow, P_NoiseAdvanced, AP_Vignette).
 
 ### Tags
-[PENDING EXTRACTION]
+interface, render-passes, aovs, unpremult-premult, beauty-recreation, utility-layers, normal-pass, depth-pass, world-position-pass, fog, 3d-system, cryptomatte, stmap, uv-mapping, glow, relighting, gizmo, grading, compositing, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+Shares the Shuffle/AOV beauty-recreation fundamentals with Shuffle and Channel Management | Nuke Compositing [Beginner/Intermediate] (`shuffle-and-channel-management-nuke-compositing-beginner-intermediate.md`) and Compositing with EXR Files | FREE VFX Explosions (`compositing-with-exr-files-free-vfx-explosions.md`) — both cover the same Shuffle-split/grade/plus-recombine pattern this course teaches from first principles, on a single explosion render rather than a full multi-element shot. Shares the exponential-glow-over-linear-glow principle and Cryptomatte-driven per-object glow isolation with A Senior Compositor's Creative CG Workflow REVEALED (`a-senior-compositors-creative-cg-workflow-revealed.md`) and After Effects to Nuke: 1 Hour FREE Course (`after-effects-to-nuke-1-hour-free-course-compositing-in-nuke.md`) — this course's AP_Glow/ReLight chapters are the advanced, AOV-driven version of both videos' simpler masked-Keyer-plus-glow techniques. Shares the normals-pass relighting philosophy with The BEST Way to Use Normals to Relight in Nuke (NEW Toolset) (`the-best-way-to-use-normals-to-relight-in-nuke-new-toolset.md`) and The BLUEPRINT for Cinematic Light (VFX) (`the-blueprint-for-cinematic-light-vfx.md`) — this course's ReLight-node bounce-lighting setup and normal-pass masking are a more systematic, ground-up version of both videos' manual RotateNormals-channel-hunting techniques. Shares Cryptomatte-driven object isolation and multi-pass CG-compositing fundamentals with How to use NUKE to Composite Blender Renders (`how-to-use-nuke-to-composite-blender-renders.md`) — a different cross-app (Blender-to-Nuke) pipeline built on the same AOV/Cryptomatte foundation.

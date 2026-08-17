@@ -988,10 +988,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=id1HCc2xkIU
 - **Author:** Voxyde VFX
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Not specified (ACES 1.2 OCIO)
+- **Tags:** interface, render-passes, aovs, unpremult-premult, beauty-recreation, utility-layers, normal-pass, depth-pass, world-position-pass, fog, 3d-system, cryptomatte, stmap, uv-mapping, glow, relighting, gizmo, grading, compositing, advanced
+- **Summary:** 4h13m project-based full course (Houdini/Karma-rendered character+environment shot): interface/hotkey basics, Shuffle/AOV beauty recreation (split every render pass, grade independently, plus-recombine), Unpremult/Premult discipline, utility-pass masking (normal/depth/world-position) to build fog and ground smoke that don't exist in the render, Nuke's 3D system (Card/Sphere/ScanlineRender/PositionToPoints) for camera-relative sky and smoke placement, PostageStamp organization, Cryptomatte per-object isolation, STmap UV-driven detail projection, exponential AP_Glow + Cryptomatte-masked emissive breakup, ReLight-node in-comp bounce lighting, frame/random()-expression-driven animation and flicker, and a full finishing stack (diffusion, grade, grain, vignette, 2.35:1 crop). The single most complete CG-compositing fundamentals-to-advanced resource in this collection.
 - **File:** tutorials/intro-to-nuke-for-3d-artists---full-vfx-course.md
 
 ---
