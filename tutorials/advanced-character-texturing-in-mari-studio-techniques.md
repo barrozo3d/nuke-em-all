@@ -4,13 +4,14 @@ source: YouTube
 url: https://www.youtube.com/watch?v=ZWH2RY0eRv8
 author: FlippedNormals
 ingested: 2026-08-17
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: Mari
+version: unspecified
+tags: [node-based-workflow, texture-projection, teleport-nodes, roughness, high-frequency-detail, character-texturing, look-dev, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 10
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # Advanced Character Texturing in Mari: Studio Techniques
@@ -23,12 +24,7 @@ frame_status: pending-selection
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py advanced-character-texturing-in-mari-studio-techniques <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Full Content [0:00]
@@ -380,30 +376,67 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [3:04] tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/frame_000.jpg
+- [7:01] tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/frame_001.jpg
+- [8:38] tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/frame_002.jpg
+- [9:52] tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/frame_003.jpg
+- [13:08] tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/frame_004.jpg
+- [17:12] tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/frame_005.jpg
+- [19:01] tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/frame_006.jpg
+- [20:49] tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/frame_007.jpg
+- [22:47] tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/frame_008.jpg
+- [23:24] tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/frame_009.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A studio-production character-texturing workflow in Mari (a conference talk repurposed as a tutorial, by Henning/FlippedNormals), built entirely around Mari's **node-based** paint system rather than a layer stack: a repeated "background color → paint-node mask → merge" pattern is used for every single map (base color, roughness, spec, SSS, bump masks) so that colors/values/masks stay independently editable after the fact instead of requiring re-painting or re-grading. The talk explicitly frames this as the professional VFX-studio approach — optimized for iterating on LookDev/Arnold feedback rather than for a "finished" flat color map.
 
 ### Summary
-[PENDING EXTRACTION]
+**Core node pattern [frame 000, 3:04]:** a Color node (background) is duplicated, the copy becomes the "paint target," a transparent raw-data Paint node is masked in, and the two are combined with a Merge node. Painting only ever happens in the mask; the underlying color/value nodes stay live and editable at any time, so a color-note change or a completely different background color instantly propagates everywhere that mask is reused — avoiding the "re-grade everything" problem of a flat painted layer. Baking (B key) flattens a paint node once needed, but the setup underneath stays modular.
+
+**Texture projection & Warp tool [frames 001-002, 7:01/8:38]:** reference photos (even rough, self-shot ones) are dragged into the Image Manager, projected onto the mesh from a side/front camera view via Paint + Stamp, then aggressively reshaped with the **Warp tool** — because Mari paints onto a "paint buffer" (a glass pane in front of the surface, not literally on the UV'd surface), the Warp tool can distort a projected photo to fit a character's geometry far more than projection-only workflows in other software allow. This is called out as especially valuable for creature/non-human characters where no reference photo will ever fit perfectly.
+
+**Teleport nodes [frame 003, 9:52]:** a Broadcaster node (named e.g. "mask_nose") + matching Receiver node let any mask/map be reused anywhere in the node graph without wiring a literal connection across the whole graph — avoiding node-graph "spaghetti." The described production habit: paint a full library of reusable masks up front (ears, T-zone, eyes-sharp, eyes-broad, lips, nose, ZBrush-imported displacement) before doing any color work, since the same regions get reused across base color, roughness, spec, and SSS maps.
+
+**Base color build order [frame 004, 13:08]:** (1) quick projected-photo base for overall placement, (2) hue-shift + grade pass to match the target character's color story, (3) hand-painted color-variation layers (yellows, blues, etc.) via the merge/mask pattern above, broken up further with a second mask if a color read as too uniform, (4) a **Tri-Planar** node projecting a texture from three perpendicular axes to add cheap large-scale variety without UV-seam artifacts (seams instead appear only where the three planes blend, usually invisible) — demonstrated with a plain marble texture, noted as surprisingly effective as a skin-variation base at the right tile scale, (5) **tile overlays** (Soft Light/Overlay/Screen blend modes) for further breakup, again masked out of unwanted areas, (6) a hand-painted ZBrush polypaint mask (pore/blemish placement) imported and blended in so the color map and the sculpt read as one integrated asset rather than two disconnected passes.
+
+**LookDev-driven iteration [frame 005/006, 17:12/19:01]:** repeatedly stressed that map values are tuned by round-tripping into Arnold/LookDev and reacting to how the shot actually reads (motion blur, lighting, etc.) — never by eyeballing the flat 2D map in isolation.
+
+**Roughness map — why "color map desaturated" is wrong [frame 007, 20:49]:** the common shortcut of desaturating the color map into a roughness map is called out as a fundamental error: roughness is a physical property of *microsurface scattering* (a mirror-flat surface reflects rays coherently = shiny/low-roughness; a broken-up surface scatters rays = rough/dull), not a function of albedo brightness — dark areas of a color map (eyes, nostrils, mouth corners) aren't inherently smoother just because they're dark. Correct roughness maps should instead be built from the same teleport-node mask library (independently painted per-region, e.g. rougher lips, smoother nose) tuned against real LookDev feedback; the video does still show a low-opacity desaturated-color layer added *on top* as a cheap extra-variety pass, but only as a minor supplement to real painted roughness values, with an explicit caveat that this is a "cheat," not the base technique.
+
+**Additional production maps:** bump/SSS-amount maps built the same teleport-node-masked way (e.g. more SSS on lips/nose/ears, less on the bony T-zone); a tiled "old-skin" bump texture masked away from eyes/lips using a reused mask; ambient-occlusion/cavity baked into color maps as a deliberate "cheat" that's debated in the industry but can help sell dirt/grime on appropriately dirty characters (called out as valid specifically for this ogre-type character).
+
+**High-frequency pore detail directly in Mari [frames 008-009, 22:47/23:24]:** a simple StandardSurface material with Bump Weight = 1 and Bump Mode = "accurate" (slower but higher quality) is fed a gray Paint node in its bump channel; a high-resolution pore/skin-detail reference image (from the FlippedNormals Face Kit) is projected and Warped into place per-region exactly like the earlier color-projection workflow, baked with B, and produces near-instant realistic pore detail. Framed as an alternative/supplement to sculpting pores in ZBrush — texture-resolution-based detail (Mari) scales with available texture resolution rather than polycount (ZBrush), so it transfers freely across topology/model changes and is generally cheaper to push further than a hyper-dense sculpt.
+
+**Mari Non-Commercial:** the free non-commercial license is called out as fully sufficient for learning and personal character work, with comparatively trivial restrictions versus other apps' free tiers.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Build every paintable map (not just color) from the same reusable pattern: a Color node → duplicate as paint target → transparent Paint node → Merge, so masks and base values stay independently tunable after painting.
+2. Project reference photos onto the mesh via the Image Manager + Paint/Stamp, then use the Warp tool to distort the projection to fit the character's actual geometry — critical for any non-human/creature character.
+3. Build a library of reusable region masks (ears, T-zone, eyes, lips, nose, sculpt-derived masks) early, using Broadcaster/Receiver teleport-node pairs to reuse each mask across color, roughness, spec, and SSS without literal node-graph wiring.
+4. Layer base color: quick photo projection → hue/grade match → hand-painted color variation → Tri-Planar projection for cheap large-scale variety → tiled overlays (blend modes) for fine breakup → sculpt-derived polypaint mask for integration with the ZBrush pass.
+5. Never derive a roughness map by desaturating the color map — build it from independently painted, per-region masks reflecting actual microsurface scattering, validated in LookDev/Arnold, not from albedo brightness.
+6. Round-trip every map into LookDev/a renderer (Arnold) repeatedly and tune values based on the rendered result in shot (lighting, motion blur), not the flat 2D texture in isolation.
+7. For high-frequency pore/skin detail, project and Warp a high-res reference photo into a StandardSurface's bump channel (Bump Weight 1, Bump Mode "accurate") rather than relying solely on a sculpted pass — texture-resolution-based detail transfers across model/topology changes more cheaply than polycount-based sculpted detail.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+Color (constant color node), Paint (with "raw data" toggle for a transparent paint layer), Merge (A-over-B style blend for the color/mask pattern), Grade, Teleport Broadcaster / Teleport Receiver (named cross-graph mask/map reuse), Tri-Planar (3-axis projection to avoid UV seams), tile/overlay blend modes (Soft Light, Overlay, Screen), Warp tool (paint-buffer-based projection distortion), Stamp tool, BRDF / StandardSurface (Arnold "AI StandardSurface") material preview node with Bump Weight and Bump Mode (accurate vs. fast), Image Manager (pinned panel for dragging in reference photos), Bake (B hotkey).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate (studio-production workflow) — assumes basic familiarity with node-based compositing/texturing concepts (masks, merges) but is explicitly pitched as not requiring prior Mari knowledge; the value is in the professional workflow philosophy (reusable masks, LookDev-driven iteration, correct roughness theory) more than in specific tool mechanics.
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Mari (non-commercial version usable for the same workflow). No specific version number stated. Renders/previews shown via Arnold's AI StandardSurface.
 
 ### Tags
-[PENDING EXTRACTION]
+node-based-workflow, texture-projection, teleport-nodes, roughness, high-frequency-detail, character-texturing, look-dev, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+No other Mari or texturing tutorials exist yet in this collection — this is the first Mari entry. Future Mari or Substance Painter-adjacent texturing tutorials should cross-link here for the node-based reusable-mask workflow and the roughness-map theory (roughness ≠ desaturated color map).

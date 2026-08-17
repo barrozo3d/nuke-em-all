@@ -999,10 +999,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=ZWH2RY0eRv8
 - **Author:** FlippedNormals
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Mari
+- **Version:** Not specified
+- **Tags:** node-based-workflow, texture-projection, teleport-nodes, roughness, high-frequency-detail, character-texturing, look-dev, intermediate
+- **Summary:** Studio character-texturing workflow built on Mari's node system: a reusable Color+Paint+Merge mask pattern for every map, photo projection refined with the Warp tool (paints onto a "glass pane" buffer rather than the surface directly), Teleport Broadcaster/Receiver nodes to reuse mask libraries across maps without graph spaghetti, layered base-color building (projection, grade, hand-paint, Tri-Planar, tile overlays, sculpt-integrated polypaint), why roughness maps should never be a desaturated color map (roughness = microsurface scattering, not albedo brightness), LookDev/Arnold-driven value iteration, and projecting high-frequency pore detail straight into a StandardSurface's bump channel as texture-resolution-based (not polycount-based) detail.
 - **File:** tutorials/advanced-character-texturing-in-mari-studio-techniques.md
 
 ---
