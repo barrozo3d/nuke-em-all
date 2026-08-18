@@ -63,6 +63,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **⚠ Do not re-ingest this URL in nuke-em-all** — this stub exists only so this index surfaces the tutorial by search; ingesting it here would fork the content. If new Nuke-specific detail is found, add it to the canonical file in houdini-wand instead.
 
 
+### [CROSS-REFERENCE ONLY] Frosty Frontier: Houdini & Arnold VFX Breakdown of a Tundra Spaceship Launch
+- **Source:** YouTube
+- **URL:** https://www.youtube.com/watch?v=vBmlvdZFxFU
+- **Author:** Arvid Schneider
+- **App:** Nuke (comp/finishing pass) + Houdini (Vellum grains, Axiom, RBD) + Substance Painter + Arnold — cross-platform
+- **Tags:** compositing, cross-platform-reference
+- **Summary:** Spacecraft-bursting-through-icy-tundra shot breakdown. The Nuke portion (~3.3 of 12.6 minutes) is a substantial finishing pass: a painted-sphere-backdrop environment behind the exported Houdini camera, crypto-matte-driven per-element grading, depth-pass haze, thruster/wind-gust VDB-pass merges with glow and heat-haze distortion, native PGBokeh defocus, Optical Flares on the engine, chromatic aberration plus low-opacity "glint" highlights on bright surfaces, and added grain. The bulk of the technical content (heightfield terrain, a Vellum-grains snow sim with dual coarse/fine constraint groups for controlled ice-chunk fracture, Axiom GPU volumes, RBD rock fracture) is Houdini-side, so the full extraction lives in the **houdini-wand** skill.
+- **Full extraction:** `houdini-wand/tutorials/frosty-frontier-houdini-arnold-vfx-breakdown-of-a-tundra-spaceship-launch.md` (https://github.com/barrozo3d/houdini-wand/blob/master/tutorials/frosty-frontier-houdini-arnold-vfx-breakdown-of-a-tundra-spaceship-launch.md)
+- **⚠ Do not re-ingest this URL in nuke-em-all** — this stub exists only so this index surfaces the tutorial by search; ingesting it here would fork the content. If new Nuke-specific detail is found, add it to the canonical file in houdini-wand instead.
+
+
 ### Grading Highlights and Pools of Light | Nuke Compositing
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=F6Ru0K0PwZM
