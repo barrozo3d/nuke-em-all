@@ -1,0 +1,86 @@
+
+?? === foundations-overview.md (class: topic-reference, verified: no) ===
+   ASSERTED (table/code): 0/0 uncorroborated (0%)   [multi-word/CamelCase only: 0/0 = 0%]
+   all terms: 2/13 (15%)   |   weak (1-2 files): 2
+     [prose] DeepToImage
+     [prose] ShuffleCopy
+
+!  === katana-lookdev-lighting.md (class: topic-reference, verified: no) ===
+   ASSERTED (table/code): 2/8 uncorroborated (25%)   [multi-word/CamelCase only: 2/5 = 40%]
+   all terms: 2/8 (25%)   |   weak (1-2 files): 5
+     [table] UsdMaterial
+     [table] UsdSuperLayer
+
+?? === mari-texturing.md (class: topic-reference, verified: no) ===
+   ASSERTED (table/code): 1/2 uncorroborated (50%)   [multi-word/CamelCase only: 1/1 = 100%]
+   all terms: 2/7 (29%)   |   weak (1-2 files): 0
+     [table] Layer types
+     [prose] UsdMaterial
+
+!  === nuke-compositing-nodes.md (class: topic-reference, verified: no) ===
+   ASSERTED (table/code): 34/103 uncorroborated (33%)   [multi-word/CamelCase only: 25/42 = 60%]
+   all terms: 34/106 (32%)   |   weak (1-2 files): 12
+     [table] AddChannels
+     [table] ColorBars
+     [table] ColorWheel
+     [table] CornerPin2D
+     [table] DeepCrop
+     [table] DeepExpression
+     [table] DeepFromImage
+     [table] DeepRead
+     [table] DeepRecolor
+     [table] DeepToImage
+     [table] DeepTransform
+     [table] DeepWrite
+     [table] DirBlur
+     [table] EdgeBlur
+     [table] FilterErode
+     [table] HueShift
+     [table] IBKColour
+     [table] IBKGizmo
+     [table] Kronos
+     [table] Layer Contact Sheet
+     [table] LightWrap
+     [table] Median
+     [table] Merge2
+     [table] nuke -x
+     [table] OCIOColorSpace
+     ... and 9 more (use --verbose)
+
+!! === nuke-python-scripting.md (class: topic-reference, verified: no) ===
+   ASSERTED (table/code): 9/10 uncorroborated (90%)   [multi-word/CamelCase only: 7/7 = 100%]
+   all terms: 15/20 (75%)   |   weak (1-2 files): 0
+     [table] addButton
+     [table] addSingleLineInput
+     [table] knobChanged
+     [table] nuke -x script.nk
+     [table] nuke.Node
+     [table] nuke.Panel
+     [table] onCreate
+     [table] onScriptLoad
+     [table] onScriptSave
+     [prose] nuke.addKnobChanged
+     [prose] nuke.addOnCreate
+     [prose] nuke.addOnDestroy
+     [prose] nuke.addOnScriptLoad
+     [prose] NUKE_PATH
+     [prose] nukescripts.panels.registerWidgetAsPanel
+
+?? === nuke-studio-hiero.md (class: topic-reference, verified: no) ===
+   ASSERTED (table/code): 1/1 uncorroborated (100%)   [multi-word/CamelCase only: 1/1 = 100%]
+   all terms: 2/4 (50%)   |   weak (1-2 files): 1
+     [table] Track Item
+     [prose] HieroPlayer
+
+======================================================================
+RANKED BY ZERO-CORROBORATION RATIO (most suspect first)
+  calibration: fabricated copernicus.md scores 45% asserted (33/74)
+======================================================================
+ !!  90.0%     9/10    nuke-python-scripting.md
+ !   33.0%    34/103   nuke-compositing-nodes.md
+ !   25.0%     2/8     katana-lookdev-lighting.md
+
+  too few asserted terms to score (<8) -- review by hand, the ratio would be noise:
+ ??           1/1     nuke-studio-hiero.md
+ ??           1/2     mari-texturing.md
+ ??           0/0     foundations-overview.md
