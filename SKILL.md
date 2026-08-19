@@ -102,9 +102,50 @@ Structure every consultation response as:
 ## Gotchas
 [Common mistakes, version quirks, performance traps — omit if none]
 
+## Sources
+[Attribute the claims above — one line each:]
+- `[tutorials/<file>.md]` — which steps / names came from it
+- `[docs: <url>]` — official documentation
+- `[unverified]` — anything from your own knowledge with no source in this skill
+
 ## Related Entries in Knowledge Base
 [Cite any matching tutorials from INDEX.md]
 ```
+
+> ### ⚠️ Attribute every claim — "never invent" is not enough on its own
+>
+> Key Rule #2 ("never invent ... names") has been in this file from the start and
+> did **not** prevent the 2026-08-19 incident. Fabrication entered at *authoring*
+> time: once wrong names were written into `references/copernicus.md`, citing them
+> *satisfied* the rule. **A rule that can be satisfied by a corrupted source
+> protects nothing.**
+>
+> It also cannot work by introspection. Generating a plausible name feels
+> identical to recalling a real one — there is no internal signal to check
+> against. So do not ask yourself *"am I sure?"*. Ask **"which file does this come
+> from?"** and write the answer down:
+>
+> | Tag | Meaning |
+> |---|---|
+> | `[tutorials/<file>.md]` | confirmed in an ingested tutorial — grep-able, so the reader can check you |
+> | `[docs: <url>]` | official vendor documentation |
+> | `[unverified]` | your own knowledge; no source in this skill |
+>
+> **`[unverified]` is a correct and expected tag, not a failure.** Use it rather
+> than dropping the claim. **Never invent a citation to avoid it** — a fabricated
+> filename is far worse than an honest `[unverified]`, because it destroys the
+> reader's ability to check anything. Cite only files you actually opened.
+>
+> ### "Not covered" is a correct answer
+>
+> If the library and references do not cover the question, **say so and stop.**
+> State what *is* covered, what is missing, and offer to ingest a source.
+>
+> **The answer format is a guide, not a quota.** It asks for exact names and
+> parameter values; when you do not have them, write
+> `[unverified — exact name not confirmed]` instead of a plausible guess. That
+> demand for exact names is itself a fabrication pressure: three sourced steps
+> with an honest gap beat six steps where two are invented.
 
 ---
 
@@ -273,7 +314,7 @@ Cannot: touch Nuke Studio's timeline/conform layer, Mari, or Katana — no MCP b
 ## Key Rules
 
 1. **Always check INDEX.md first** — cite the source if it's in the library
-2. **Never invent node/tool names** — use only confirmed names from `references/` or a cited tutorial
+2. **Never invent node/tool names** — use only confirmed names from `references/` or a cited tutorial. **And attribute them** — "confirmed" means you can name the file it came from (see *Attribute every claim*)
 3. **Version-check** — features differ across Nuke 16/17, Mari 7/8, Katana 8/9; check `references/version-tracker.md` to know what's current
 4. **App-first** — always state which of the five apps (Nuke/NukeX/Nuke Studio/Mari/Katana) an answer applies to; some techniques (e.g. UDIMs, deep comp) span multiple apps in one pipeline
 5. **Extraction is mandatory** — never leave placeholders after ingesting
