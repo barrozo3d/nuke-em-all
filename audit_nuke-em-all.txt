@@ -1,25 +1,21 @@
 
 ?? === foundations-overview.md (class: topic-reference, verified: no) ===
    ASSERTED (table/code): 0/0 uncorroborated (0%)   [multi-word/CamelCase only: 0/0 = 0%]
-   all terms: 2/13 (15%)   |   weak (1-2 files): 2   |   stem-only (suffix artifact? review): 0
+   all terms: 2/12 (17%)   |   weak (1-2 files): 2   |   stem-only: 0   |   release-notes-only: 0
      [prose] DeepToImage
      [prose] ShuffleCopy
 
-!  === katana-lookdev-lighting.md (class: topic-reference, verified: no) ===
-   ASSERTED (table/code): 2/8 uncorroborated (25%)   [multi-word/CamelCase only: 2/5 = 40%]
-   all terms: 2/8 (25%)   |   weak (1-2 files): 5   |   stem-only (suffix artifact? review): 0
-     [table] UsdMaterial
-     [table] UsdSuperLayer
+?? === katana-lookdev-lighting.md (class: topic-reference, verified: no) ===
+   ASSERTED (table/code): 0/7 uncorroborated (0%)   [multi-word/CamelCase only: 0/4 = 0%]
+   all terms: 0/7 (0%)   |   weak (1-2 files): 4   |   stem-only: 0   |   release-notes-only: 2
 
 ?? === mari-texturing.md (class: topic-reference, verified: no) ===
-   ASSERTED (table/code): 1/2 uncorroborated (50%)   [multi-word/CamelCase only: 1/1 = 100%]
-   all terms: 2/7 (29%)   |   weak (1-2 files): 0   |   stem-only (suffix artifact? review): 0
-     [table] Layer types
-     [prose] UsdMaterial
+   ASSERTED (table/code): 0/1 uncorroborated (0%)   [multi-word/CamelCase only: 0/0 = 0%]
+   all terms: 0/5 (0%)   |   weak (1-2 files): 0   |   stem-only: 0   |   release-notes-only: 1
 
 !  === nuke-compositing-nodes.md (class: topic-reference, verified: no) ===
-   ASSERTED (table/code): 34/103 uncorroborated (33%)   [multi-word/CamelCase only: 25/42 = 60%]
-   all terms: 34/106 (32%)   |   weak (1-2 files): 12   |   stem-only (suffix artifact? review): 0
+   ASSERTED (table/code): 33/101 uncorroborated (33%)   [multi-word/CamelCase only: 24/40 = 60%]
+   all terms: 33/103 (32%)   |   weak (1-2 files): 11   |   stem-only: 0   |   release-notes-only: 0
      [table] AddChannels
      [table] ColorBars
      [table] ColorWheel
@@ -43,17 +39,16 @@
      [table] LightWrap
      [table] Median
      [table] Merge2
-     [table] nuke -x
      [table] OCIOColorSpace
-     ... and 9 more (use --verbose)
+     [table] OFlow
+     ... and 8 more (use --verbose)
 
 !! === nuke-python-scripting.md (class: topic-reference, verified: no) ===
-   ASSERTED (table/code): 9/10 uncorroborated (90%)   [multi-word/CamelCase only: 7/7 = 100%]
-   all terms: 15/20 (75%)   |   weak (1-2 files): 0   |   stem-only (suffix artifact? review): 0
+   ASSERTED (table/code): 8/9 uncorroborated (89%)   [multi-word/CamelCase only: 6/6 = 100%]
+   all terms: 14/19 (74%)   |   weak (1-2 files): 0   |   stem-only: 0   |   release-notes-only: 0
      [table] addButton
      [table] addSingleLineInput
      [table] knobChanged
-     [table] nuke -x script.nk
      [table] nuke.Node
      [table] nuke.Panel
      [table] onCreate
@@ -68,19 +63,18 @@
 
 ?? === nuke-studio-hiero.md (class: topic-reference, verified: no) ===
    ASSERTED (table/code): 1/1 uncorroborated (100%)   [multi-word/CamelCase only: 1/1 = 100%]
-   all terms: 2/4 (50%)   |   weak (1-2 files): 1   |   stem-only (suffix artifact? review): 0
+   all terms: 1/4 (25%)   |   weak (1-2 files): 1   |   stem-only: 0   |   release-notes-only: 1
      [table] Track Item
-     [prose] HieroPlayer
 
 ======================================================================
 RANKED BY ZERO-CORROBORATION RATIO (most suspect first)
   calibration: fabricated copernicus.md scores 31% strict-zero (23/74)
 ======================================================================
- !!  90.0%     9/10    nuke-python-scripting.md
- !   33.0%    34/103   nuke-compositing-nodes.md
- !   25.0%     2/8     katana-lookdev-lighting.md
+ !!  88.9%     8/9     nuke-python-scripting.md
+ !   32.7%    33/101   nuke-compositing-nodes.md
 
   too few asserted terms to score (<8) -- review by hand, the ratio would be noise:
  ??           1/1     nuke-studio-hiero.md
- ??           1/2     mari-texturing.md
+ ??           0/7     katana-lookdev-lighting.md
+ ??           0/1     mari-texturing.md
  ??           0/0     foundations-overview.md
