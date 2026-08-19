@@ -1,20 +1,24 @@
 
 ?? === foundations-overview.md (class: topic-reference, verified: no) ===
    ASSERTED (table/code): 0/0 uncorroborated (0%)   [multi-word/CamelCase only: 0/0 = 0%]
+   topic coverage: 3 corpus files  <-- TOO THIN to judge by corroboration
    all terms: 2/12 (17%)   |   weak (1-2 files): 2   |   stem-only: 0   |   release-notes-only: 0
      [prose] DeepToImage
      [prose] ShuffleCopy
 
 ?? === katana-lookdev-lighting.md (class: topic-reference, verified: no) ===
    ASSERTED (table/code): 0/7 uncorroborated (0%)   [multi-word/CamelCase only: 0/4 = 0%]
+   topic coverage: 62 corpus files
    all terms: 0/7 (0%)   |   weak (1-2 files): 4   |   stem-only: 0   |   release-notes-only: 2
 
 ?? === mari-texturing.md (class: topic-reference, verified: no) ===
    ASSERTED (table/code): 0/1 uncorroborated (0%)   [multi-word/CamelCase only: 0/0 = 0%]
+   topic coverage: 12 corpus files  <-- TOO THIN to judge by corroboration
    all terms: 0/5 (0%)   |   weak (1-2 files): 0   |   stem-only: 0   |   release-notes-only: 1
 
 !  === nuke-compositing-nodes.md (class: topic-reference, verified: no) ===
    ASSERTED (table/code): 33/101 uncorroborated (33%)   [multi-word/CamelCase only: 24/40 = 60%]
+   topic coverage: 53 corpus files
    all terms: 33/103 (32%)   |   weak (1-2 files): 11   |   stem-only: 0   |   release-notes-only: 0
      [table] AddChannels
      [table] ColorBars
@@ -45,6 +49,7 @@
 
 !! === nuke-python-scripting.md (class: topic-reference, verified: no) ===
    ASSERTED (table/code): 8/9 uncorroborated (89%)   [multi-word/CamelCase only: 6/6 = 100%]
+   topic coverage: 5 corpus files  <-- TOO THIN to judge by corroboration
    all terms: 14/19 (74%)   |   weak (1-2 files): 0   |   stem-only: 0   |   release-notes-only: 0
      [table] addButton
      [table] addSingleLineInput
@@ -63,6 +68,7 @@
 
 ?? === nuke-studio-hiero.md (class: topic-reference, verified: no) ===
    ASSERTED (table/code): 1/1 uncorroborated (100%)   [multi-word/CamelCase only: 1/1 = 100%]
+   topic coverage: 22 corpus files
    all terms: 1/4 (25%)   |   weak (1-2 files): 1   |   stem-only: 0   |   release-notes-only: 1
      [table] Track Item
 
@@ -70,11 +76,5 @@
 RANKED BY ZERO-CORROBORATION RATIO (most suspect first)
   calibration: fabricated copernicus.md scores 31% strict-zero (23/74)
 ======================================================================
- !!  88.9%     8/9     nuke-python-scripting.md
- !   32.7%    33/101   nuke-compositing-nodes.md
-
-  too few asserted terms to score (<8) -- review by hand, the ratio would be noise:
- ??           1/1     nuke-studio-hiero.md
- ??           0/7     katana-lookdev-lighting.md
- ??           0/1     mari-texturing.md
- ??           0/0     foundations-overview.md
+ ??  88.9%     8/9     cov=5    nuke-python-scripting.md  (thin coverage -- unmeasurable, verify vs docs)
+ !   32.7%    33/101   cov=53   nuke-compositing-nodes.md
