@@ -1,3 +1,11 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/katana/content/release_notes/whats_new_8.5.html
+last_verified: never
+version_basis: "katana 8.5"
+---
 # Katana 8.5 — Release Notes
 
 **Released:** 2026-02-18 (announced alongside Katana 9.0)

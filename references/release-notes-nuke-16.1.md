@@ -1,3 +1,12 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_16.1.html
+  - https://www.cgchannel.com/2026/02/foundry-releases-nuke-17-0-nukex-17-0-nuke-studio-17-0/
+last_verified: never
+version_basis: "nuke 16.1"
+---
 # Nuke 16.1 — Release Notes
 
 **Released:** 2026-02-26 (announced alongside Nuke 17.0)

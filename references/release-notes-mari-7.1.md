@@ -1,3 +1,11 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://www.cgchannel.com/2024/12/foundry-releases-mari-7-1/
+last_verified: never
+version_basis: "mari 7.1"
+---
 # Mari 7.1 — Release Notes
 
 **Released:** 2024-12-09 (beta posted 2024-10-11)

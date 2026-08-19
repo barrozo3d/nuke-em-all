@@ -1,3 +1,12 @@
+---
+class: topic-reference
+verified: no
+sources: []
+last_verified: never
+version_basis: "unknown"
+# WARNING: written from model memory, not ingested from a source.
+# Do not cite as authority. If a tutorial disagrees, the tutorial wins.
+---
 # Nuke Studio / Hiero Reference
 
 Nuke Studio is Nuke's editorial/conform/review layer, built on the same underlying engine as **Hiero** (Foundry's standalone editorial-and-review tool) and **HieroPlayer** (the free review-only variant) — the three share a timeline/project model, and Nuke Studio additionally embeds the full Nuke compositing environment so shots can be opened directly from the timeline into a compositing script.

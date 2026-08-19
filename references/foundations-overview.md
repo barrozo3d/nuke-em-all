@@ -1,3 +1,12 @@
+---
+class: topic-reference
+verified: no
+sources: []
+last_verified: never
+version_basis: "unknown"
+# WARNING: written from model memory, not ingested from a source.
+# Do not cite as authority. If a tutorial disagrees, the tutorial wins.
+---
 # Compositing Foundations — Cross-App Core Concepts
 
 Concepts that apply across Nuke, Nuke Studio, and (for the rendering/lookdev half) Katana — the theory underneath the node names, useful when a question is really about *why* something works rather than *which node*.

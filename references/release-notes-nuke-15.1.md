@@ -1,3 +1,12 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_15.1.html
+  - https://www.cgchannel.com/2024/06/foundry-releases-nuke-15-1-nukex-15-1-and-nuke-studio-15-1/
+last_verified: never
+version_basis: "nuke 15.1"
+---
 # Nuke 15.1 — Release Notes
 
 **Released:** 2024-06-14

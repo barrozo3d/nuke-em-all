@@ -1,3 +1,13 @@
+---
+class: operational
+verified: n/a
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes.html
+  - https://www.foundry.com/products/mari/new-releases
+  - https://campaigns.foundry.com/products/mari/whats-new
+last_verified: never
+version_basis: "unknown"
+---
 # Version Tracker
 
 Tracks the current known versions of Foundry's compositing/look-dev suite and when this file was last checked against Foundry's release-notes pages. Mirrors the Auto-Changelog Rule in `SKILL.md` (Mode 0).

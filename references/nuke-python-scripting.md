@@ -1,3 +1,12 @@
+---
+class: topic-reference
+verified: no
+sources: []
+last_verified: never
+version_basis: "unknown"
+# WARNING: written from model memory, not ingested from a source.
+# Do not cite as authority. If a tutorial disagrees, the tutorial wins.
+---
 # Nuke Python Scripting Reference
 
 Grounded against Foundry Learn's Python Developer's Guide and Python API Reference (`learn.foundry.com/nuke/developers/`). Covers the `nuke` module basics needed for gizmos, callbacks, and pipeline tools; not exhaustive of the full API.

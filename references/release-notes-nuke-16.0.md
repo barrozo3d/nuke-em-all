@@ -1,3 +1,13 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_16.0.html
+  - https://www.cgchannel.com/2025/02/foundry-releases-nuke-16-0/
+  - https://www.animationmagazine.net/2025/02/foundry-releases-nuke-16-0-featuring-native-variable-enabled-workflows/
+last_verified: never
+version_basis: "nuke 16.0"
+---
 # Nuke 16.0 — Release Notes
 
 **Released:** 2025-02-28 (beta posted 2024-12-12)

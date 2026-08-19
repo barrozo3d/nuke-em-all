@@ -1,3 +1,11 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/katana/content/release_notes/whats_new_6.5.html
+last_verified: never
+version_basis: "katana 6.5"
+---
 # Katana 6.5 — Release Notes
 
 **Released:** 2023-11-01 (announced alongside Katana 7.0; v2 patch released 2023-12-19)

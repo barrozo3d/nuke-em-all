@@ -1,3 +1,12 @@
+---
+class: topic-reference
+verified: no
+sources: []
+last_verified: never
+version_basis: "unknown"
+# WARNING: written from model memory, not ingested from a source.
+# Do not cite as authority. If a tutorial disagrees, the tutorial wins.
+---
 # Nuke / NukeX Node Reference
 
 Core node catalog for Nuke's compositing toolbar, organized the way Nuke itself groups them. Use this for "what node do I need" questions; use `nuke-python-scripting.md` for automating any of this.

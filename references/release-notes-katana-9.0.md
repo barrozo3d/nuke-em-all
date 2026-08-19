@@ -1,3 +1,13 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://www.cgchannel.com/2026/02/foundry-releases-katana-9-0/
+  - https://learn.foundry.com/katana/content/release_notes/whats_new_9.0.html
+  - https://digitalproduction.com/2026/02/11/katana-9-deepens-usd-and-previews-hydra-2/
+last_verified: never
+version_basis: "katana 9.0"
+---
 # Katana 9.0 — Release Notes
 
 **Released:** 2026-02-18

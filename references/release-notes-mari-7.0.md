@@ -1,3 +1,12 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://www.foundry.com/news-and-awards/foundry-releases-mari-70
+  - https://www.cgchannel.com/2023/12/foundry-releases-mari-7-0/
+last_verified: never
+version_basis: "mari 7.0"
+---
 # Mari 7.0 — Release Notes
 
 **Released:** 2023-12-04

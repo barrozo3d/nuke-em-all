@@ -1,3 +1,13 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://www.foundry.com/news-and-awards/foundry-releases-katana-70
+  - https://www.cgchannel.com/2023/11/foundry-releases-katana-7-0/
+  - https://learn.foundry.com/katana/content/release_notes/whats_new_7.0.html
+last_verified: never
+version_basis: "katana 7.0"
+---
 # Katana 7.0 — Release Notes
 
 **Released:** 2023-11-01

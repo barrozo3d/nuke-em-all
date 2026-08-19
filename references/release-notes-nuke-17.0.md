@@ -1,3 +1,13 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_17.0.html
+  - https://www.cgchannel.com/2026/02/foundry-releases-nuke-17-0-nukex-17-0-nuke-studio-17-0/
+  - https://digitalproduction.com/2026/02/26/nuke-17-0-rewires-3d-and-adds-gaussian-splats/
+last_verified: never
+version_basis: "nuke 17.0"
+---
 # Nuke 17.0 — Release Notes
 
 **Released:** 2026-02-26 (beta posted 2025-11-18)

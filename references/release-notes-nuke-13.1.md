@@ -1,3 +1,13 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_13.1.html
+  - https://www.cgchannel.com/2021/11/foundry-ships-nuke-13-1/
+  - https://www.cgw.com/Press-Center/News/2021/Foundry-Releases-Nuke-13-1-with-Focus-on-Streaml.aspx
+last_verified: never
+version_basis: "nuke 13.1"
+---
 # Nuke 13.1 — Release Notes
 
 **Released:** 2021-11-23

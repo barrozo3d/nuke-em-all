@@ -1,3 +1,12 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_13.0.html
+  - https://www.cgchannel.com/2021/03/foundry-ships-nuke-nukex-nuke-studio-nuke-indie-13-0/
+last_verified: never
+version_basis: "nuke 13.0"
+---
 # Nuke 13.0 — Release Notes
 
 **Released:** 2021-03-17

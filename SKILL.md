@@ -57,6 +57,29 @@ Before answering, search `tutorials/INDEX.md` for entries matching the technique
 | `references/foundations-overview.md` | Cross-app theory — premult, OCIO color management, linear vs. log, AOVs, deep comp, Cryptomatte, ST maps |
 | `references/version-tracker.md` | Version state — last changelog check date, known versions per app, URL patterns for auto-update |
 
+> ### ⚠️ Reference files are not all trustworthy
+>
+> Every `references/*.md` carries a provenance header. **Check `class:` and
+> `verified:` before citing:**
+>
+> | `class:` | Means |
+> |---|---|
+> | `release-notes` | Condensed from the vendor's official release notes (URL in `sources:`). Comparatively trustworthy. |
+> | `topic-reference` | ⚠️ **Written from model memory, not ingested from any source** (`verified: no`). Do not cite as authority. |
+> | `operational` | Internal state file, not knowledge. |
+>
+> - **When a reference file and an ingested tutorial disagree, the tutorial
+>   wins** — tutorials are transcript- and frame-verified against real footage.
+> - Expect `topic-reference` files to be *least* reliable on the *newest*
+>   subsystems — that is where invented detail is most likely and hardest to spot.
+>
+> **Precedent:** on 2026-08-19 `houdini-wand`'s `references/copernicus.md` was
+> found to be fabricated — 26 of its 33 asserted node names had **zero**
+> corroboration across 545 ingested tutorials — after it caused four consecutive
+> wrong answers to a simple question. Audit status is tracked in
+> `houdini-wand/PROMO_ENTRY_CLEANUP_PLAN.md` (workstream B).
+
+
 ### Step 3 — Answer Format
 
 Structure every consultation response as:

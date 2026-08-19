@@ -1,3 +1,12 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_15.2.html
+  - https://www.cgchannel.com/2025/02/foundry-releases-nuke-16-0/
+last_verified: never
+version_basis: "nuke 15.2"
+---
 # Nuke 15.2 — Release Notes
 
 **Released:** 2025-02-28 (announced alongside Nuke 16.0; beta posted 2024-12-12)

@@ -1,3 +1,11 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://www.cgchannel.com/2022/12/foundry-releases-mari-6-0/
+last_verified: never
+version_basis: "mari 6.0"
+---
 # Mari 6.0 — Release Notes
 
 **Released:** 2022-12-14 (originally posted 2022-09-20 for public alpha, updated for final release)

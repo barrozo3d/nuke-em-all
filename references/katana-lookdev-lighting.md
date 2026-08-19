@@ -1,3 +1,12 @@
+---
+class: topic-reference
+verified: no
+sources: []
+last_verified: never
+version_basis: "unknown"
+# WARNING: written from model memory, not ingested from a source.
+# Do not cite as authority. If a tutorial disagrees, the tutorial wins.
+---
 # Katana Look Development & Lighting Reference
 
 Katana is Foundry's asset-based look-development and lighting application — the "assembly and lighting" layer that sits between asset creation (modeling/texturing/rigging done elsewhere) and final rendering, built to scale to full production-sized scenes (hundreds of assets, USD-driven asset resolution, per-shot lighting variation).

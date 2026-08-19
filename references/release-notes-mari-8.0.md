@@ -1,3 +1,11 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://www.cgchannel.com/2026/07/foundry-releases-mari-8-0-in-open-beta/
+last_verified: never
+version_basis: "mari 8.0"
+---
 # Mari 8.0 — Release Notes
 
 **Released:** 2026-07-02 (open beta; no stable release date announced yet as of 2026-08-12)

@@ -1,3 +1,11 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/katana/content/release_notes/whats_new_7.5.html
+last_verified: never
+version_basis: "katana 7.5"
+---
 # Katana 7.5 — Release Notes
 
 **Released:** 2024-12-09 (announced alongside Katana 8.0)

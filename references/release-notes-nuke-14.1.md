@@ -1,3 +1,12 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_14.1.html
+  - https://www.cgchannel.com/2023/10/foundry-releases-nuke-15-0/
+last_verified: never
+version_basis: "nuke 14.1"
+---
 # Nuke 14.1 — Release Notes
 
 **Released:** 2023-10-13 (announced alongside Nuke 15.0)

@@ -1,3 +1,13 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_13.2.html
+  - https://www.cgchannel.com/2022/04/foundry-ships-nuke-nukex-nuke-studio-nuke-indie-13-2/
+  - https://www.foundry.com/news-and-awards/nuke-13-2-released
+last_verified: never
+version_basis: "nuke 13.2"
+---
 # Nuke 13.2 — Release Notes
 
 **Released:** 2022-04-14

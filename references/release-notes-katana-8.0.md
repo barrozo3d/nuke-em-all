@@ -1,3 +1,12 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://www.cgchannel.com/2024/12/foundry-releases-katana-8-0/
+  - https://learn.foundry.com/katana/content/release_notes/whats_new_8.0.html
+last_verified: never
+version_basis: "katana 8.0"
+---
 # Katana 8.0 — Release Notes
 
 **Released:** 2024-12-10

@@ -1,3 +1,12 @@
+---
+class: topic-reference
+verified: no
+sources: []
+last_verified: never
+version_basis: "unknown"
+# WARNING: written from model memory, not ingested from a source.
+# Do not cite as authority. If a tutorial disagrees, the tutorial wins.
+---
 # Mari Texturing Reference
 
 Mari is Foundry's node-free-at-the-surface, layer-based 3D texture painting application, built for painting directly on very high-resolution meshes (its original selling point vs. Photoshop/Substance-era tools was handling film-resolution assets across many UDIM tiles without choking).

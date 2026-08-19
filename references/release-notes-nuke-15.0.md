@@ -1,3 +1,13 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_15.0.html
+  - https://www.cgchannel.com/2023/10/foundry-releases-nuke-15-0/
+  - https://www.digitalmediaworld.tv/vfx/foundry-nuke-15-0-goes-for-speed-with-apple-silicon-ml-and-usd-3d-updates
+last_verified: never
+version_basis: "nuke 15.0"
+---
 # Nuke 15.0 — Release Notes
 
 **Released:** 2023-10-13 (public beta posted 2023-09-02, updated for final release)

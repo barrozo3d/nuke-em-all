@@ -1,3 +1,12 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://www.cgchannel.com/2022/12/foundry-ships-katana-6-0/
+  - https://learn.foundry.com/katana/content/release_notes/whats_new_6.0.html
+last_verified: never
+version_basis: "katana 6.0"
+---
 # Katana 6.0 — Release Notes
 
 **Released:** 2022-12-16

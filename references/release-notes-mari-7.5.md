@@ -1,3 +1,13 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/mari/7.5/Content/release_notes/7.x/Mari_7.5v1_ReleaseNotes.html
+  - https://www.cgchannel.com/2025/12/foundry-releases-mari-7-5/
+  - https://www.cgchannel.com/2025/09/foundry-releases-mari-7-5-in-beta/
+last_verified: never
+version_basis: "mari 7.5"
+---
 # Mari 7.5 — Release Notes
 
 **Released:** 2025-12-03 (public beta posted 2025-09-15)

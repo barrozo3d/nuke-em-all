@@ -1,3 +1,13 @@
+---
+class: release-notes
+verified: partial
+sources:
+  - https://learn.foundry.com/nuke/content/release_notes/nuke_14.0.html
+  - https://www.cgchannel.com/2022/12/foundry-releases-nuke-14-0/
+  - https://www.cgchannel.com/2023/01/nuke-to-go-subscription-only/
+last_verified: never
+version_basis: "nuke 14.0"
+---
 # Nuke 14.0 — Release Notes
 
 **Released:** 2022-12-07
