@@ -1,12 +1,26 @@
 ---
 class: topic-reference
-verified: no
-sources: []
-last_verified: never
+verified: partial
+sources:
+  - tutorials/  (corroboration audit, batch B5 -- see note)
+last_verified: 2026-08-19
 version_basis: "unknown"
-# WARNING: written from model memory, not ingested from a source.
-# Do not cite as authority. If a tutorial disagrees, the tutorial wins.
+# Origin: model memory. Audited 2026-08-19 (batch B5) -- see note below.
+# Parameters/API symbols remain unverified. Tutorial beats reference.
 ---
+> ## Audit note — batch B5, 2026-08-19
+>
+> 33 of 101 node names uncorroborated. **NOT verified either way** — they appear in neither the 86-video corpus nor the 24 vendor release-notes refs, and a Foundry docs fetch returned 404. Two structural reasons absence is expected here: the corpus is one channel focused on creative compositing (it never demos the Deep pipeline, the IBK/Primatte/Ultimatte keyers or OFlow/Kronos retiming), and release notes only document *changes*, so long-standing nodes never appear. Weak supporting inference, explicitly not verification: the flagged set forms coherent product families (the whole Deep* suite together, the whole keyer family together), unlike copernicus.md whose tell was one invented pattern applied uniformly. **Verify against Foundry docs before relying on any specific name.**
+>
+> **Method and its ceiling.** Terms were checked against this skill's ingested
+> tutorials (and its vendor release-notes references) with `audit_references.py`.
+> That corpus is spoken narration, so it corroborates what presenters **say** —
+> node and tool names — and structurally cannot corroborate what they only
+> **show or type**: parameter names, defaults, console variables, API symbols.
+> **Corroboration finds fabricated names, not wrong values.**
+>
+> Full detail: `houdini-wand/PROMO_ENTRY_CLEANUP_PLAN.md` (workstream B).
+
 # Nuke / NukeX Node Reference
 
 Core node catalog for Nuke's compositing toolbar, organized the way Nuke itself groups them. Use this for "what node do I need" questions; use `nuke-python-scripting.md` for automating any of this.
