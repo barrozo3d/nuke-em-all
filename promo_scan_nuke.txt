@@ -18,8 +18,9 @@ NEAR-MISS BAND (score 40-49) -- below threshold, listed for A4/A5 context
 The threshold has a soft edge: in houdini-wand, week-01-01-intro scores 45
 while its sibling week-02-01-intro scores 70 -- same series, same kind of
 file, 25 points apart. The gap is extraction honesty, not content.
-TRIAGE RULE: once ONE member of a series is flagged, triage the WHOLE
-series. Do not triage by threshold alone.
+TRIAGE RULE: once ONE member of a series or product family is flagged,
+triage the WHOLE family. Do not triage by threshold alone -- that rule is
+what surfaced two paid-course announcements the scanner had scored 0.
 
   43  nuke-compositing-artistic-basics-28-3-point-lighting.md [series: 7 siblings] [structural-only]
   42  a-senior-compositors-creative-cg-workflow-revealed.md
