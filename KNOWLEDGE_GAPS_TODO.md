@@ -1,0 +1,102 @@
+# Knowledge Gap To-Do List
+
+Generated 2026-08-20 from a library-wide gap analysis (85 ingested tutorials
+checked against `SKILL.md` scope + all `references/*.md`). Every gap below was
+**measured** — each line records how many tutorial files actually mention the
+topic — not guessed. Ingest with `python ingest.py "[URL]"` from this directory,
+then run the mandatory extraction pass (see `SKILL.md` Mode 3).
+
+> **How the counts were taken.** Case-insensitive regex over all 85 tutorial
+> files (not `INDEX.md`, which counts tags rather than content). Two rounds: the
+> first pass over-reported and was corrected by hand, which is the standing rule
+> of this program — *suspect the instrument before the data*. Specifically,
+> `nuke\.python|nukescripts` matched **0** files and looked like a total gap,
+> but `\bnuke\.[a-z]` matches **26** — the Nuke Python API is well covered and
+> was nearly listed as missing. Likewise a substring search for `mari` matched
+> 15 files, almost all of them noise (`primaries`, `marine`); whole-word `\bmari\b`
+> matches **2**. **Re-measure before trusting any number here.**
+
+## Pending
+
+### 1. 🔴 Katana — **ZERO tutorials**
+
+`SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
+`scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
+release-notes files exist. But **not one ingested tutorial mentions Katana**
+(0 of 85 files; the 5 `INDEX.md` hits are tag text only).
+
+This is the single largest hole in the skill: a whole advertised application
+with reference files but no ingested source material. It is also the case the
+cleanup plan's D4 batch called out as the reason to start here.
+
+- [ ] **Katana fundamentals** — scene graph, Ops/OpScript, Live Groups
+      Source: Foundry official Katana docs / "Getting Started with Katana"
+- [ ] **Katana lookdev + lighting workflow** — Material/NetworkMaterial nodes,
+      GafferThree, light linking, render passes
+- [ ] **Katana + USD** — USD scene assembly in Katana, Hydra viewer
+
+### 2. Mari — **2 tutorials** (thin for an advertised application)
+
+Whole-word `\bmari\b` matches **2 of 85** files
+(`advanced-character-texturing-in-mari-studio-techniques.md`,
+`introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide.md`),
+and `\budim\b` also matches only **2**. `references/mari-texturing.md` and five
+Mari release-notes files exist against that.
+
+- [ ] **Mari UDIM workflow in depth** — patch management, resolution per UDIM,
+      exporting to a renderer
+- [ ] **Mari projection painting** — camera projection, image manager, paint
+      buffer, and the bake-down to channels
+
+### 3. CopyCat / Cattery — **1 tutorial** (Nuke's ML toolset)
+
+`copycat|cattery|inference` matches **1 of 85**. This is a flagship modern Nuke
+feature (train a network on a few hand-done frames, infer the rest) and the
+library has effectively nothing on it.
+
+- [ ] **CopyCat training workflow** — data prep, crop, epochs, reading the loss
+      curve, when it beats roto by hand
+- [ ] **Cattery models** — installing/using pretrained models (upscale, matte,
+      depth) via the Inference node
+
+### 4. `menu.py` / `init.py` pipeline customisation — **ZERO**
+
+`menu.py|init.py` matches **0 of 85**. `references/nuke-python-scripting.md`
+covers the API itself, and 26 tutorials use `nuke.*` calls — but nothing covers
+**where studio customisation actually lives**: plugin paths, menu building,
+toolbars, startup scripts.
+
+- [ ] **Nuke startup/customisation** — `init.py` vs `menu.py`, `NUKE_PATH`,
+      plugin discovery, adding menus and shortcuts
+
+### 5. Furnace / F_ plugin suite (NukeX) — **ZERO**
+
+`furnace|f_` matches **0 of 85**. Low priority — the Furnace tools are legacy
+and partly superseded — but it is a genuine zero in an advertised NukeX area.
+Ingest only if a good source appears; do not manufacture coverage.
+
+## Notes on what is NOT a gap
+
+Measured and healthy, recorded so nobody "fills" a gap that does not exist:
+
+| Topic | Files (of 85) |
+|---|---|
+| Grade / colour correction | 60 |
+| Gizmos / toolsets | 53 |
+| Roto / RotoPaint | 51 |
+| OCIO / ACES / colour management | 51 |
+| 3D system / ScanlineRender / raytrace | 29 |
+| `nuke.*` Python API | 26 |
+| Expressions / TCL | 23 |
+| Keying / Keylight / despill | 19 |
+| STMaps | 19 |
+| Lookdev | 17 |
+| Cryptomatte | 14 |
+| USD | 13 |
+| Nuke Studio / Hiero / timeline | 12 |
+| Camera tracking | 12 |
+| Deep compositing | 11 |
+
+## Completed
+
+(none yet — this list was created 2026-08-20 and nothing on it has been ingested)
