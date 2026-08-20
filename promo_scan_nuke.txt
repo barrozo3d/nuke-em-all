@@ -2,7 +2,7 @@
 scan_promo.py -- promotional / no-content candidates (READ-ONLY)
 ========================================================================
 scanned 85 tutorials in C:\Users\KABUM\.claude\skills\nuke-em-all\tutorials
-threshold 50 | 0 candidate(s) (0 allowlisted)
+threshold 50 | 0 candidate(s) (0 allowlisted) | 0 structural-only
 score distribution: max 43 | p95 25 | median 0 | zero-score 43
 
 no candidates at this threshold.
@@ -11,3 +11,15 @@ This tool WRITES NOTHING and DECIDES NOTHING. Every candidate above
 needs hand triage: REMOVE (pure promo) / DEMOTE (real content, oversold
 tags) / KEEP (false positive or deliberate gap-filler). Record the
 decisions in PROMO_ENTRY_CLEANUP_PLAN.md Findings -- batches A4/A5.
+
+========================================================================
+NEAR-MISS BAND (score 40-49) -- below threshold, listed for A4/A5 context
+========================================================================
+The threshold has a soft edge: in houdini-wand, week-01-01-intro scores 45
+while its sibling week-02-01-intro scores 70 -- same series, same kind of
+file, 25 points apart. The gap is extraction honesty, not content.
+TRIAGE RULE: once ONE member of a series is flagged, triage the WHOLE
+series. Do not triage by threshold alone.
+
+  43  nuke-compositing-artistic-basics-28-3-point-lighting.md [series: 7 siblings] [structural-only]
+  42  a-senior-compositors-creative-cg-workflow-revealed.md
