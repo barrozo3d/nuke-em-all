@@ -943,10 +943,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** YouTube
 - **URL:** https://www.youtube.com/watch?v=LBAXQC5maVY
 - **Author:** Voxyde VFX
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke (canonical here — cross-platform course, see note below) + Houdini/Solaris (source sim/render side, summarized)
+- **Version:** not specified
+- **Tags:** compositing, aovs, cryptomatte, channels, digital-matte-painting, projection, st-map, gizmo, camera-tracking, fx-simulation, 3d-system, advanced
+- **Summary:** End-to-end VFX pipeline for a cinematic character shot: Houdini SOPs for effects sourcing (vellum cloth, ripple-solver "wind" cheat, pyro smoke, particle dust), Solaris/USD for scene assembly, look-dev, and AOV-split rendering, and — the section extracted in full depth here — Nuke for reconstructing the beauty image from split-light AOVs, building a Fresnel shader from raw position/normal data, projecting UV-mapped...
 - **File:** tutorials/houdini-fx-solaris-nuke---full-vfx-course.md
 
 
