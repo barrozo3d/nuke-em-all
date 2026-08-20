@@ -1,0 +1,13 @@
+========================================================================
+scan_promo.py -- promotional / no-content candidates (READ-ONLY)
+========================================================================
+scanned 85 tutorials in C:\Users\KABUM\.claude\skills\nuke-em-all\tutorials
+threshold 50 | 0 candidate(s) (0 allowlisted)
+score distribution: max 43 | p95 25 | median 0 | zero-score 43
+
+no candidates at this threshold.
+------------------------------------------------------------------------
+This tool WRITES NOTHING and DECIDES NOTHING. Every candidate above
+needs hand triage: REMOVE (pure promo) / DEMOTE (real content, oversold
+tags) / KEEP (false positive or deliberate gap-filler). Record the
+decisions in PROMO_ENTRY_CLEANUP_PLAN.md Findings -- batches A4/A5.
