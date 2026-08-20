@@ -13,14 +13,11 @@ tags) / KEEP (false positive or deliberate gap-filler). Record the
 decisions in PROMO_ENTRY_CLEANUP_PLAN.md Findings -- batches A4/A5.
 
 ========================================================================
-NEAR-MISS BAND (score 40-49) -- below threshold, listed for A4/A5 context
+NEAR-MISS BAND (score 40-49) -- below threshold, context only
 ========================================================================
-The threshold has a soft edge: in houdini-wand, week-01-01-intro scores 45
-while its sibling week-02-01-intro scores 70 -- same series, same kind of
-file, 25 points apart. The gap is extraction honesty, not content.
-TRIAGE RULE: once ONE member of a series or product family is flagged,
-triage the WHOLE family. Do not triage by threshold alone -- that rule is
-what surfaced two paid-course announcements the scanner had scored 0.
+The threshold has a soft edge. TRIAGE RULE: once ONE member of a series or
+product family is flagged, triage the WHOLE family -- that rule found three
+mis-scored files in A4 that the ranked list alone never would have.
 
   43  nuke-compositing-artistic-basics-28-3-point-lighting.md [series: 7 siblings] [structural-only]
   42  a-senior-compositors-creative-cg-workflow-revealed.md
