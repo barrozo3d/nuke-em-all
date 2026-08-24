@@ -1071,6 +1071,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** OpScript's Lua Interface API for scene graph surgery: CreateChild and the infinite-recursion trap it sets, the three delete methods and their limits, and CopyLocationToChild for re-implementing HierarchyCopy, Merge or Switch — with the shipped example project.
 - **File:** tutorials/opscript-tutorials.md
 
+
+### Setting up UsdPreviewSurface&#160;Materials
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/using_hydra_viewer/usd_setting_up_materials.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/setting-up-usdpreviewsurface160materials.md
+
 ---
 
 ## Tag Reference
