@@ -1072,15 +1072,15 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/opscript-tutorials.md
 
 
-### Setting up UsdPreviewSurface&#160;Materials
+### Setting up UsdPreviewSurface Materials
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/ug/using_hydra_viewer/usd_setting_up_materials.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
-- **File:** tutorials/setting-up-usdpreviewsurface160materials.md
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, usd, lookdev, nodegraph, katana-9, intermediate
+- **Summary:** Authoring USD materials in Katana: UsdPreviewSurface inside a NetworkMaterialCreate wired to the usdSurface terminal, MaterialAssign, and live Hydra Viewer preview (Basic Material off, shadows from all or selected lights), plus UsdUVTexture fed by a UsdPrimvarReader_float2 on varname st.
+- **File:** tutorials/setting-up-usdpreviewsurface-materials.md
 
 ---
 

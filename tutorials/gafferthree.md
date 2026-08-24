@@ -89,5 +89,6 @@ katana, lighting, lookdev, scenegraph, cel, katana-9, intermediate
 
 ## Related Tutorials
 - [OpScript Tutorials](opscript-tutorials.md) — the same CEL statements that scope an OpScript are what GafferThree's light and shadow linking is written in; OpScript is also how a lighting rig can be built or edited procedurally rather than by hand in the object table.
+- [Setting up UsdPreviewSurface Materials](setting-up-usdpreviewsurface-materials.md) — shares `katana` + `lookdev`; its Hydra Viewer shadow previews are cast by the lights a GafferThree creates.
 
 *Note: these are the first two ingested Katana sources in this skill — the library held **zero** against an advertised Katana capability before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`), so the cross-link set will stay small until more Katana material is ingested.*
