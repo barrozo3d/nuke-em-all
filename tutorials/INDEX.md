@@ -1060,6 +1060,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** Katana's lighting node: create lights, rigs, light filters and sky domes in the Gaffer object table, then drive their shaders, transforms, aim/point/orient constraints and CEL-based light and shadow linking from one Parameters interface.
 - **File:** tutorials/gafferthree.md
 
+
+### OpScript Tutorials
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/working_with_attributes/opscript_tutorials.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/opscript-tutorials.md
+
 ---
 
 ## Tag Reference
