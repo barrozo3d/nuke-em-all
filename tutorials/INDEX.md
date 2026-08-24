@@ -1049,6 +1049,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** Zero-to-functional Mari onboarding: project/channel setup, interface & ortho navigation, camera-locked lighting fixes, the paint-buffer concept (paint on a floating 2D "glass pane," committed only on Bake, with critical Manual-bake and Project-On-All settings), node-graph fundamentals (Merge's Base/Over/Mask model, Grade needs an explicit Merge to be maskable), Teleport Broadcaster/Receiver for spaghetti-free mask reuse, symmetry/mirroring, Triplanar (seamless, world-scale) vs. Tile (UV-seam-prone) texture variety, Paint-Through+Warp+Slurp for targeted detail projection, hand-painting hotkeys (critical "Tool on Key Held" preference), and the Export Manager / Bakery (AO, Curvature) → Geo Channels pipeline.
 - **File:** tutorials/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide.md
 
+
+### GafferThree
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/rg/misc_nodes/gafferthree.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/gafferthree.md
+
 ---
 
 ## Tag Reference
