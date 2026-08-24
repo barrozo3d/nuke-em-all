@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/rg/misc_nodes/gafferthree.html
 author: learn.foundry.com
 ingested: 2026-08-24
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0v3"
+tags: [katana, lighting, lookdev, scenegraph, cel, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/gafferthree/
 frame_count: 0
 frame_status: skipped
@@ -36,27 +36,56 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Building and managing a scene's lighting rig inside a single Katana node — creating lights, rigs, light filters and sky domes in the GafferThree object table, then controlling their materials, transforms, constraints and per-object light/shadow linking from that one Parameters interface.
 
 ### Summary
-[PENDING EXTRACTION]
+GafferThree is Katana's lighting node: it creates lights under an arbitrary hierarchy of rigs and lets materials, transformations and constraints be applied to those lights from within its own Parameters tab. Its object table is the working surface — each row is a light, rig, Template Material, light filter or sky dome, with inline columns for mute, solo, shader, colour, intensity, exposure and linking state. Lights can also be adopted from an upstream Gaffer-type node for editing and later reverted to read-only, and light/shadow linking is expressed with CEL statements rather than manual per-object assignment.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Place a **GafferThree** node in the node graph; its `in` input is where the lighting rig is created relative to the incoming scene.
+2. Set **Select In Scenegraph** to the scene graph path the node should create its locations under.
+3. Populate the **Gaffer object table** with the right-click menu: **Add Light**, **Add Rig**, **Add Sky Dome**, **Add Light Filter**, **Add Light Filter Reference**, **Add Template Material**, or **Add Import Rig…** for a previously exported `.rig` file.
+4. Assign a look per row: right-click the **Shader** column to pick a renderer-specific shader, then set **Color**, **Int** (intensity) and **Exp** (exposure) inline; a colour swatch only appears once a colour exists in the Material tab.
+5. Use the **M** and **S** columns to mute and solo — muted objects are omitted from renders, and soloing omits everything not solo-ed from interactive renders.
+6. Shape each light in the **Object** tab: `geometry projection` (perspective/orthographic), `fov` (default 70), `radius`, `centerOfInterest`, `near`/`far` clipping, and `screenWindow` bounds.
+7. Aim lights by enabling the **aim constraint** and setting `targetPath`; `targetOrigin` chooses whether the target is the object's origin, bounding-box centre, face-centre average or face bounding box, and `baseAimAxis` / `baseUpAxis` / `targetUpAxis` control which side of the light faces the target and how it rolls.
+8. Share a look across lights with a **Template Material**, overriding per light where needed; enable `useLookFileMaterial` to take the material from an associated Look File instead, via `reference asset` + `reference materialPath`.
+9. Link lights to geometry in the **Linking** tab: write CEL statements in the `on` and `off` fields for both *light linking* and *shadow linking*, and choose whether `action` appends to or overrides the incoming scene's linking.
+10. Reuse and organise: **Group Selected Siblings Under Rig**, **Export Rig** to a `.rig` file, **Create Shared Light Filter** to reference an existing filter, and **Adopt for Editing** / **Delete Edit Package** to edit or revert lights coming from an upstream Gaffer-type node.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+**Node:** GafferThree (Katana lighting node). Input: `in`.
+
+**Top-level controls:** `Select In Scenegraph` (creation path); `Show Incoming Scene` (displays upstream lights, rigs and Template Materials); `sync selection` — `off` (default) / `out` (node → Scene Graph tab) / `in/out` (bidirectional).
+
+**Gaffer object table columns:** `Name` (double-click to rename), `M` (mute — omitted from renders), `S` (solo — everything not solo-ed omitted from interactive renders), `Shader`, `Color`, `Int` (intensity), `Exp` (exposure), `Linking` (a star marks exceptions).
+
+**Object-table menu:** Add Template Material · Add Light · Add Rig · Add Light Filter Reference · Add Light Filter · Add Sky Dome · Add Import Rig… · Delete · Duplicate · Adopt for Editing · Delete Edit Package · Toggle Lock State of Selected Items · Group Selected Siblings Under Rig · Export Rig · Create Shared Light Filter · Expand/Collapse All, Expand All To / Collapse All To (assembly, component, level-of-detail), Expand/Collapse Location. Menu labels change from "All" to "Branch" when the table holds more than one item.
+
+**Light — Object tab:** `geometry projection` = perspective (default) | orthographic; `radius` 1; `fov` 70; `orthographicWidth` 30; `centerOfInterest` 20; `near` 0.1; `far` 100000; `screenWindow` -1.0, 1.0, -1.0, 1.0 (left, right, bottom, top); `transform` (SRT or matrix) and `transform Tools`; `annotation text`; `previewColor` 1.0, 1.0, 1.0 (annotation colour only — does not affect light colour).
+
+**Aim constraint (light):** `targetPath`; `addToConstraintList` Yes (adds the base path to `globals.constraintList` at `/root/world`); `targetOrigin` Object | Bounding Box | Face Center Average | Face Bounding Box; `baseAimAxis` 0.0, 0.0, -1.0; `baseUpAxis` 0.0, 1.0, 0.0; `targetUpAxis` 0.0, 1.0, 0.0; `setRelativeTargets` No.
+
+**Rig — Object tab:** `transform` / `transform Tools`; `enable point constraint` (disabled) with `targetPath`, `addToConstraintList` Yes, `allowMissingTargets` No, `baseOrigin`, `targetOrigin`, `setRelativeTargets`; `enable orient constraint` (disabled) with `targetPath`, `targetOrientation` Object | Face, `xAxis`/`yAxis`/`zAxis` (all enabled), `allowMissingTargets`, `setRelativeTargets`.
+
+**Material tab (Template Material / light / light filter / sky dome):** `useLookFileMaterial` (disabled by default; **enabled** by default on sky dome) and `Add Shader` (renderer-specific, populated by installed renderers). With `useLookFileMaterial` enabled: `reference asset`, `reference materialPath` — sky dome defaults `/tmp/hdriSkyDomeLight.klf` and `/root/materials/hdriSkyDomeLight`.
+
+**Light filter:** `referencePath` (light filter reference); `inherits`; `viewer fill` = points | wireframe | solid (default solid); `translate` 0,0,0 · `rotate` 0,0,0 · `scale` 1,1,1, all updated by the viewer manipulators.
+
+**Sky dome:** `translate` 0,0,0; `rotate` 0,0,0; `scale` 1000.0, 1000.0, 1000.0.
+
+**Linking tab (light linking and shadow linking, both renderer-dependent):** `action` = append linking information | override; `initialState` = on | off | don't set value | use existing value (the last only for adopted lights; light-linking default `on`, shadow-linking default `don't set value`); `clearUnmatched` (disabled) — when linking is resolved, removes existing linking attributes from locations matching neither expression, visible in the Attributes tab only after a **LightLinkResolve** node or with Implicit Resolvers active, and reflected in the `enable` child of the `lightList` attribute (0 when disabled, 1 by default); `on` / `off` — **CEL** statements selecting the scene graph locations the light or its shadows apply to.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0v3 (page served from the current Katana 9.0v3 documentation set)
 
 ### Tags
-[PENDING EXTRACTION]
+katana, lighting, lookdev, scenegraph, cel, katana-9, intermediate
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+None yet — this is the first ingested Katana source in this skill (the library held **zero** Katana tutorials against an advertised Katana capability; see `KNOWLEDGE_GAPS_TODO.md`). Cross-links should be added here as further Katana material is ingested.
