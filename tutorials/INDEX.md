@@ -1065,10 +1065,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/ug/working_with_attributes/opscript_tutorials.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, scenegraph, nodegraph, cel, katana-9, advanced
+- **Summary:** OpScript's Lua Interface API for scene graph surgery: CreateChild and the infinite-recursion trap it sets, the three delete methods and their limits, and CopyLocationToChild for re-implementing HierarchyCopy, Merge or Switch — with the shipped example project.
 - **File:** tutorials/opscript-tutorials.md
 
 ---

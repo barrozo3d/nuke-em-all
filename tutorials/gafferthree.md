@@ -88,4 +88,6 @@ katana, lighting, lookdev, scenegraph, cel, katana-9, intermediate
 ---
 
 ## Related Tutorials
-None yet — this is the first ingested Katana source in this skill (the library held **zero** Katana tutorials against an advertised Katana capability; see `KNOWLEDGE_GAPS_TODO.md`). Cross-links should be added here as further Katana material is ingested.
+- [OpScript Tutorials](opscript-tutorials.md) — the same CEL statements that scope an OpScript are what GafferThree's light and shadow linking is written in; OpScript is also how a lighting rig can be built or edited procedurally rather than by hand in the object table.
+
+*Note: these are the first two ingested Katana sources in this skill — the library held **zero** against an advertised Katana capability before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`), so the cross-link set will stay small until more Katana material is ingested.*

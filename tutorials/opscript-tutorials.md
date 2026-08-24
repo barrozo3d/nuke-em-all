@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/working_with_attributes/opscript_tutorials.html
 author: learn.foundry.com
 ingested: 2026-08-24
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0v3"
+tags: [katana, scenegraph, nodegraph, cel, katana-9, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/opscript-tutorials/
 frame_count: 0
 frame_status: skipped
@@ -36,27 +36,94 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Creating, deleting and copying scene graph locations from an **OpScript** node using the Lua `Interface` API — and the recursion trap that makes `Interface.CreateChild()` generate infinite children unless the script is guarded by CEL matching, an `if`-`else` on the current location path, or a `StaticSceneCreate` Op.
 
 ### Summary
-[PENDING EXTRACTION]
+Katana's OpScript node runs Lua against each scene graph location it is cooked at, which makes it a general-purpose way to re-implement nodes like Prune, HierarchyCopy, Merge or Switch. The page works through three groups of operations — creating locations with `CreateChild()`, removing them with `DeleteChild()` / `DeleteChildren()` / `DeleteSelf()`, and copying locations *with their attributes* via `CopyLocationToChild()` — and is explicit about the failure mode that bites first: a bare `CreateChild()` inherits the parent's `opType` (`OpScriptLua`) and recurses forever. The matching example project ships with Katana at `$KATANA_HOME/demos/katana_files/opscript_tutorial.katana`.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Open the example scene — **Help → Example Projects** in Katana, or `$KATANA_HOME/demos/katana_files/opscript_tutorial.katana` — and work through it alongside the node's `applyWhere` setting.
+2. Understand the recursion trap first: `Interface.CreateChild('childName')` with no `opType` inherits the parent's `opType` (`OpScriptLua`), so the new child runs the same script and creates an infinite number of child locations.
+3. **Guard by CEL** — wrap creation in `if Interface.AtRoot() then ... end`, create `/root/world` upstream with a **LocationCreate** node, point the OpScript's CEL statement at `/root/world`, and set `applyWhere` to *at locations matching CEL*.
+4. **Or branch on the location path** — read `Interface.getOutputLocationPath()` and use `if`/`elseif` to build one level per cook, which terminates when the last condition stops matching; `applyWhere` can then be *at all locations*.
+5. **Or build the hierarchy in one Op** — assemble it with `OpArgsBuilders.StaticSceneCreate(true)`, calling `createEmptyLocation()` and `setAttrAtLocation()`, then `Interface.ExecOp("StaticSceneCreate", sscb:build())`.
+6. **Delete a named child** with `Interface.DeleteChild("child_a")` — it only reaches the *immediate* child of the matching CEL, so with a CEL of `/root/world/geo/parent` it cannot delete `.../child_a/grandchild_a`.
+7. **Delete everything below** the cooked location with `Interface.DeleteChildren()`, which removes both newly-created and incoming children.
+8. Avoid `Interface.DeleteSelf()` where possible — it deletes the current output location, but every call leaves the location in its parent's potential-children list; the page advises `DeleteChild()` instead.
+9. **Copy a hierarchy with its attributes** using `Interface.CopyLocationToChild("parent_b", "/root/world/geo/parent_a")` inside an `AtRoot()` guard — this re-implements HierarchyCopy, and the copied hierarchy keeps all attributes.
+10. **Copy across inputs** to build a custom Merge or Switch: OpScript accepts multiple inputs, and `CopyLocationToChild()` takes two further arguments — the input index and the ordering name — as in `Interface.CopyLocationToChild("target_child_a", "/root/world/another_parent/another_child_a", 1, "child_a")`, where index `1` reads the second input.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+**Nodes:** OpScript (Lua, `opType` `OpScriptLua`), LocationCreate, AttributeSet, StaticSceneCreate (as an Op), plus the nodes these examples re-implement — Prune, HierarchyCopy, Merge, Switch.
+
+**OpScript parameters:** `CEL` (the locations to match) and `applyWhere` — *at locations matching CEL* vs *at all locations*. The choice between them is what makes each example terminate or recurse.
+
+**`Interface` functions used:** `Interface.CreateChild(name [, opType])` · `Interface.AtRoot()` · `Interface.getOutputLocationPath()` · `Interface.SetAttr(name, attr)` · `Interface.DeleteChild(name)` · `Interface.DeleteChildren()` · `Interface.DeleteSelf()` · `Interface.CopyLocationToChild(childName, sourcePath [, inputIndex, orderName])` · `Interface.ExecOp(opType, args)`.
+
+**Builder:** `OpArgsBuilders.StaticSceneCreate(true)` with `:createEmptyLocation(path, "group")`, `:setAttrAtLocation(path, name, attr)` and `:build()`.
+
+**Attribute types:** `IntAttribute(123)` in both the `SetAttr` and `setAttrAtLocation` examples.
+
+**Verbatim examples from the page:**
+
+```lua
+-- guard against infinite recursion by matching the CEL
+if Interface.AtRoot() then
+    Interface.CreateChild("child_a")
+end
+```
+
+```lua
+-- build one level per cook, keyed off the current location
+path = Interface.getOutputLocationPath()
+if path == "/root" then
+    Interface.CreateChild("world")
+elseif path == "/root/world" then
+    Interface.CreateChild("parent")
+elseif path == "/root/world/parent" then
+    Interface.CreateChild("child_a")
+elseif path == "/root/world/parent/child_a" then
+    Interface.SetAttr("test", IntAttribute(123))
+end
+```
+
+```lua
+-- build a hierarchy in a single Op instead of if/else
+sscb = OpArgsBuilders.StaticSceneCreate(true)
+sscb:createEmptyLocation("/root/world/parent/child_a", "group")   -- location with a type
+sscb:setAttrAtLocation("/root/world/parent/child_a", "test_id", IntAttribute(123))
+Interface.ExecOp("StaticSceneCreate", sscb:build())
+```
+
+```lua
+-- copy a hierarchy, attributes included (re-implements HierarchyCopy)
+if Interface.AtRoot() then
+    Interface.CopyLocationToChild("parent_b", "/root/world/geo/parent_a")
+end
+```
+
+```lua
+-- copy from a chosen input: index 1 is the second input
+if Interface.AtRoot() then
+    Interface.CopyLocationToChild("target_child_a", "/root/world/another_parent/another_child_a", 1, "child_a")
+    -- Interface.CopyLocationToChild("target_child_a", "/root/world/parent/child_a", 0, "child_a")
+end
+```
+
+**Example project:** `$KATANA_HOME/demos/katana_files/opscript_tutorial.katana` (also under Help → Example Projects).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0v3 (current Katana documentation set; the OpScript `Interface` API shown is long-standing and not flagged as version-specific on the page)
 
 ### Tags
-[PENDING EXTRACTION]
+katana, scenegraph, nodegraph, cel, katana-9, advanced
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [GafferThree](gafferthree.md) — the other Katana source in this library; shares `katana`, `scenegraph`-adjacent and `cel` ground, since GafferThree's light and shadow linking is expressed with the same CEL statements used here to scope an OpScript.
+
+*Note: the library holds only these two Katana sources so far (it held zero before 2026-08-24 — see `KNOWLEDGE_GAPS_TODO.md`), so there is no wider Katana cross-link set to draw on yet.*
