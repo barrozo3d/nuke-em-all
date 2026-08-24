@@ -9,8 +9,8 @@ version: "not specified"
 tags: [grading, channels, color-management, compositing, beginner]
 extraction_status: complete
 frames_dir: tutorials/frames/easy-trick-improve-your-color-grading-skills/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 5
+frame_status: complete  # synced to disk 2026-08-24 (D2): frames were captured but select_frames.py never recorded them
 ---
 
 # EASY TRICK: Improve your Color Grading skills

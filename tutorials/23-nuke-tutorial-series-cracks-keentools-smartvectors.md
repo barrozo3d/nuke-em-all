@@ -9,8 +9,8 @@ version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)"
 tags: [tracking, camera-tracking, 3d-system, projection, channels, grading, digital-matte-painting, advanced]
 extraction_status: complete
 frames_dir: tutorials/frames/23-nuke-tutorial-series-cracks-keentools-smartvectors/
-frame_count: 0
-frame_status: pending-selection
+frame_count: 8
+frame_status: complete  # synced to disk 2026-08-24 (D2): frames were captured but select_frames.py never recorded them
 ---
 
 # [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors)
