@@ -18,7 +18,7 @@ then run the mandatory extraction pass (see `SKILL.md` Mode 3).
 
 ## Pending
 
-### 1. 🔴 Katana — **ZERO tutorials**
+### 1. 🟡 Katana — **3 tutorials** (was ZERO; D4b started 2026-08-24)
 
 `SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
 `scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
@@ -29,11 +29,35 @@ This is the single largest hole in the skill: a whole advertised application
 with reference files but no ingested source material. It is also the case the
 cleanup plan's D4 batch called out as the reason to start here.
 
-- [ ] **Katana fundamentals** — scene graph, Ops/OpScript, Live Groups
-      Source: Foundry official Katana docs / "Getting Started with Katana"
-- [ ] **Katana lookdev + lighting workflow** — Material/NetworkMaterial nodes,
+> **D4b progress, 2026-08-24 — 3 Foundry doc pages ingested and extracted.**
+> The "zero tutorials for an advertised application" hole is open no longer, but
+> each item below is only partly covered. What is ingested is listed per item;
+> what is still missing is left unticked and **not guessed at**.
+
+- [~] **Katana fundamentals** — scene graph, Ops/OpScript, Live Groups
+      ✅ `opscript-tutorials.md` — `Interface` API: CreateChild and its
+      infinite-recursion trap, the three guards (CEL match / location-path
+      if-else / `OpArgsBuilders.StaticSceneCreate`), DeleteChild vs
+      DeleteChildren vs DeleteSelf, CopyLocationToChild across inputs.
+      ❌ Still missing: a general scene-graph orientation ("Getting Started"),
+      and **Live Groups entirely**.
+- [~] **Katana lookdev + lighting workflow** — Material/NetworkMaterial nodes,
       GafferThree, light linking, render passes
-- [ ] **Katana + USD** — USD scene assembly in Katana, Hydra viewer
+      ✅ `gafferthree.md` — the Gaffer object table, lights/rigs/light
+      filters/sky domes, Template Materials and Look File materials,
+      aim/point/orient constraints, and CEL-based light **and** shadow linking
+      with `LightLinkResolve`.
+      ❌ Still missing: **NetworkMaterial / NetworkMaterialCreate as a topic in
+      its own right** (only touched via the USD page), material Look Files
+      end-to-end, and **render passes**.
+- [~] **Katana + USD** — USD scene assembly in Katana, Hydra viewer
+      ✅ `setting-up-usdpreviewsurface-materials.md` — UsdPreviewSurface inside
+      NetworkMaterialCreate, the `usdSurface` terminal, MaterialAssign, Hydra
+      Viewer preview (Basic Material off; shadows from all/selected lights),
+      and UsdUVTexture + `UsdPrimvarReader_float2` (`varname` = `st`).
+      ❌ Still missing: **USD scene assembly** (UsdIn and friends), the Hydra
+      Viewer as a topic, UsdPrimCreate / UsdSchemaSet, and loading the USD
+      plug-ins (referenced as a prerequisite, not ingested).
 
 ### 2. Mari — **2 tutorials** (thin for an advertised application)
 
