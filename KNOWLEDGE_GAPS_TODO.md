@@ -18,7 +18,7 @@ then run the mandatory extraction pass (see `SKILL.md` Mode 3).
 
 ## Pending
 
-### 1. 🟡 Katana — **11 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
+### 1. 🟡 Katana — **12 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
 
 `SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
 `scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
@@ -29,8 +29,8 @@ This is the single largest hole in the skill: a whole advertised application
 with reference files but no ingested source material. It is also the case the
 cleanup plan's D4 batch called out as the reason to start here.
 
-> **D4b progress — 11 Foundry doc pages ingested and extracted** (3 on
-> 2026-08-24, 8 on 2026-08-31). The "zero tutorials for an advertised
+> **D4b progress — 12 Foundry doc pages ingested and extracted** (3 on
+> 2026-08-24, 9 on 2026-08-31). The "zero tutorials for an advertised
 > application" hole is open no longer, but each item below is only partly
 > covered. What is ingested is listed per item; what is still missing is left
 > unticked and **not guessed at**.
@@ -125,9 +125,19 @@ cleanup plan's D4 batch called out as the reason to start here.
       `over` — deliberately, to avoid overwriting lower-layer PrimSpecs. The
       seven derived geometry nodes and `UsdLight`/`UsdCamera`/`UsdScope`/
       `UsdXform` are covered by that entry rather than listed as separate gaps.
+      ✅ `importing-usd-data.md` — **importing USD data**: native import leaves
+      the data as USD rather than converting to Katana locations/attributes
+      (`UsdToKatana` stays available), then a purpose-led guide to the five
+      composition arcs — `UsdSubLayerAdd` (whole stages, LayerStacks, root-level
+      with no prim path), `UsdPayloadSet` (heavy or animation-free assets, the
+      Payload working set, and the trap that **unloaded payloads still render**),
+      `UsdReferenceSet`, `UsdInheritSet` (update once, all instances follow) and
+      `UsdSpecializeSet` (overrides always beat further references).
       ❌ Still missing: the Hydra Viewer as a topic (**its page is a 1,025-char
-      stub — the content is elsewhere and not yet located**), importing USD
-      data, and loading the USD plug-ins.
+      stub**), loading the USD plug-ins (2,041), and — **the most-referenced
+      uningested Katana page in the library** — *Composition Arcs: Understanding
+      LIVRPS*, cited by both `using-native-usd-workflows.md` and
+      `importing-usd-data.md`.
 
 > **Verified doc URLs for the topics still open above** (all returned HTTP 200
 > on 2026-08-31; Foundry's docs are MadCap Flare and the paths are not guessable
@@ -137,7 +147,6 @@ cleanup plan's D4 batch called out as the reason to start here.
 >
 > | Open topic | URL (prefix `https://learn.foundry.com/katana/Content/`) |
 > |---|---|
-> | Importing USD data | `ug/usd/importing_usd_data.html` (3,282 chars) |
 > | Hydra Viewer as a topic | ⚠️ **not located** — `ug/using_hydra_viewer/using_hydra.html` is a 1,025-char stub |
 > | USD plug-in loading (prerequisite) | `ug/using_hydra_viewer/usd_load_plugins.html` (2,041) |
 > | Node Parameters and Interface Controls (parameter promotion) | not yet located — referenced by `rg/3d_nodes/networkmaterialcreate.html` |
@@ -195,6 +204,29 @@ cleanup plan's D4 batch called out as the reason to start here.
 >
 > The full USD node reference index is `rg/usd_nodes/usd_nodes.html` (40 nodes)
 > and the USD user-guide index is `ug/usd/usd-katana.html` (45 topics).
+
+> 🔎 **Discovery attempt, 2026-08-31 — what could and could not be found.**
+> **Found:** `ug/look_files/look_file_baking.html` (**2,466 chars**) — the
+> `LookFileBake` node and its two inputs; partially closes *material Look Files*.
+> Its parent `ug/look_files/look_files.html` is a **1,364-char stub**.
+>
+> **Confirmed NOT locatable**, after specific attempts rather than assumption:
+> * **Node Parameters and Interface Controls** (parameter promotion). The obvious
+>   candidate `ug/working_with_nodes/node_parameter_basics.html` is substantive at
+>   **6,474 chars** but was measured for the actual terms and contains
+>   **zero** occurrences of *promot\**, *Interface Control*, *user parameter* or
+>   *Edit User Parameters*. It is a different topic. `rg/3d_nodes/networkmaterial\
+>   interfacecontrols.html` 404s.
+> * **LiveShadingGroups** — four path guesses under `ug/livegroups/` and
+>   `rg/misc_nodes/` all 404.
+> * **Hydra Viewer as a topic** — `hydra_viewer.html` and
+>   `using_the_hydra_viewer.html` both 404; only the 1,025-char stub exists.
+>
+> ⚠️ `rg/3d_nodes/3d_nodes.html` **cannot be crawled** — it returns 26KB with
+> **zero** `.html` links, so its node list is built client-side. The
+> `Content/learn_katana.html` → `user_guide.html` / `reference_guide.html` route
+> does not reach it. Any future search for a 3D node reference page needs a
+> different entry point.
 
 ### 2. Mari — **2 tutorials** (thin for an advertised application)
 

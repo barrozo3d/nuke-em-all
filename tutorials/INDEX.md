@@ -1175,10 +1175,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/ug/usd/importing_usd_data.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, usd, scenegraph, nodegraph, katana-9, intermediate
+- **Summary:** Bringing USD into Katana natively — without converting to Katana locations and attributes, which is where the speed and interoperability come from (UsdToKatana stays available if conversion is needed). A decision guide across the composition arcs: UsdSubLayerAdd for whole stages and LayerStacks, loading at root level with no prim path; UsdPrimCreate to lay out a typed hierarchy before components arrive; UsdPayloadSet for heavy or animation-free assets (a t-pose character) with look and animation referenced on top, loadable or not via the Payload working set — though unloaded payloads are still visible in renders; UsdReferenceSet for property overrides; UsdInheritSet to update many instances from one source; and UsdSpecializeSet when overrides must always beat any further references.
 - **File:** tutorials/importing-usd-data.md
 
 ---
