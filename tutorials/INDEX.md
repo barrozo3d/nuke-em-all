@@ -1192,6 +1192,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/composition-arcs---understanding-livrps.md
 
+
+### Loading USD Plug-ins into Katana
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/using_hydra_viewer/usd_load_plugins.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/loading-usd-plug-ins-into-katana.md
+
 ---
 
 ## Tag Reference
