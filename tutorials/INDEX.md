@@ -1142,10 +1142,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/rg/usd_nodes/usdschemaset.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, usd, scenegraph, lighting, katana-9, intermediate
+- **Summary:** Applying an API schema to an existing USD prim with UsdSchemaSet — non-destructively, without changing the prim's type. Schemas ending in API (MaterialBindingAPI, VisibilityAPI, ShadowAPI, ShapingAPI) layer supplementary attributes onto a prim; the worked example turns a plain DiskLight into a cone-shaped light by applying ShapingAPI and driving angle/softness/focus. Controls: primPaths (schemas generated per path, in order), type (a list that refreshes in real time so it includes schemas newer than Katana's own set), dynamically generated properties, and listPosition — the USD list-editing semantics of append / prepend / delete / reset to explicit, where 'list' means the composed result after all layers and arcs.
 - **File:** tutorials/usdschemaset.md
 
 ---

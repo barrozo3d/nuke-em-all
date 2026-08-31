@@ -130,4 +130,4 @@ katana, scenegraph, nodegraph, cel, katana-9, advanced
 - [Creating Shading Networks](creating-shading-networks.md) — shares `katana` + `nodegraph`; NetworkMaterialCreate wires materials by hand in the node graph, where OpScript's `Interface` API creates and edits the same scene graph locations procedurally.
 - [Using Native USD Workflows](using-native-usd-workflows.md) — shares `katana` + `scenegraph` + `nodegraph`; it positions USD's Pattern-Based Collections as *"similar to Katana's CEL"* — the same selection problem solved once per scene representation.
 
-*Note: the library held zero Katana sources before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`) and now holds eight, so the Katana cross-link set is still narrow.*
+*Note: the library held zero Katana sources before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`) and now holds nine, so the Katana cross-link set is still narrow.*

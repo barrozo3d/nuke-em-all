@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/rg/usd_nodes/usdschemaset.html
 author: learn.foundry.com
 ingested: 2026-08-31
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: Katana
+version: 9.0v3
+tags: [katana, usd, scenegraph, lighting, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/usdschemaset/
 frame_count: 0
 frame_status: skipped
@@ -36,27 +36,79 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Applying an **API schema** to an existing USD prim with **`UsdSchemaSet`** — adding a supplementary set of attributes and behaviours *non-destructively*, without changing the prim's original type.
 
 ### Summary
-[PENDING EXTRACTION]
+A USD schema is the blueprint that determines a prim's role on the stage: creating a prim of a given type already assigns it a predefined schema. `UsdSchemaSet` associates an *additional* one — an **API schema**, the kind whose name ends in `API` (`MaterialBindingAPI`, `VisibilityAPI`, `ShadowAPI`, `ShapingAPI`) — layering extra attributes onto a prim without altering what it is. The page's worked example turns a plain `DiskLight` into a cone-shaped light by applying `ShapingAPI` on top of it, and the node's `listPosition` control exposes the USD **list-editing** semantics that decide whether a schema is evaluated before or after everything else.
 
 ### Key Steps
-[PENDING EXTRACTION]
+*The page's worked example — shaping a light with `ShapingAPI`:*
+1. In the viewer monitor, select **display** and **untick `default lighting`** so the scene's own light is what you see.
+2. Create a background with a **`UsdPrimCreate`**: set `primPath` (e.g. `/bg`) and `type` to **`Plane`**. ⚠️ **Without it the light would be invisible** — there is nothing for it to shine on.
+3. Under the plane's **properties**, set `axis` to **Y** and increase `length` and `width` to **10**.
+4. Create a second **`UsdPrimCreate`**: set `primPaths` to where the light should live (e.g. `/light`) and `type` to **`DiskLight`**.
+5. Raise the light's **`exposure`** under `properties → inputs` — the page uses **20** — to make it visible.
+6. Create a **`UsdSchemaSet`** node and **middle-mouse drag the diskLight's prim path from the Scene Explorer into `primPaths`**.
+7. Set `type` to **`ShapingAPI`**.
+8. Shape the cone with `properties → inputs → shaping → cone → angle`, and `focus` under `shaping`.
+9. The result: the diskLight keeps its own `diffuse`, `color`, `intensity` and `exposure` **and** inherits `angle`, `softness`, `focus` and the rest of ShapingAPI.
+10. Where several schemas are involved, set **`listPosition`** to control evaluation order — `prepend` (default) is evaluated first and can be overridden later; `append` is evaluated last and can override what came before.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+**Node:** `UsdSchemaSet` — associates an additional type or category of behaviour and data with a prim.
+
+**What a schema is (from the page):** "structured data that determines the role of a prim on the stage… essentially the blueprint for specific objects or behaviors." It specifies attributes such as size, height and display colour. **Creating a prim of a certain type directly assigns a predefined schema.**
+
+**API schemas — the non-destructive part.** Schemas **ending in `API`** are "designed to be applied to prims to add supplementary capabilities or attributes to an existing prim **non-destructively (without altering the original type of the prim)**." Named examples: `MaterialBindingAPI`, `VisibilityAPI`, `ShadowAPI`, `ShapingAPI`. Many exist — lights, shadows, render-specific attributes — and **custom schemas can be created**.
+
+**The page's other example:** a light that does not cast shadows by default gains shadow attributes by applying `ShadowAPI` — new capability, original light untouched.
+
+**Controls:**
+
+| Control | Default | Function |
+|---|---|---|
+| `primPaths` | none | Locations where API schemas are applied. **Schemas are generated at each specified path, in the order listed.** |
+| `type` | none | The API schema to create. **The list updates in real time**, so it includes schemas newer than Katana's original set. |
+| `listPosition` | `prepend` | How the schema enters the list — see below. |
+| `properties` | n/a | **Dynamically generated** from whichever API schema `type` is selected. |
+
+**`listPosition` — USD list editing:**
+- **`append`** — positions new schemas at the **end** of the list, so they are evaluated **after** existing values and can potentially **override preceding definitions**.
+- **`prepend`** (default) — adds to the **front**, so they are evaluated **before**, and can potentially be **overridden by values added later or in subsequent layers**.
+- **`delete`** — removes one or more schemas from the list, preventing their properties from influencing the composed prim.
+- **`reset to explicit`** — ignores all previously compiled schemas and sets the list strictly to the defined values, "providing a clear and explicit new starting point for schema evaluation."
+
+⚠️ **"List" has a specific meaning here**, quoted from the page: *the finalized list of all values and properties applicable to a prim, derived after evaluating all USD layers and compositional arcs* — i.e. the composed result, not the node's own parameter. See the USD Glossary under *List Editing*.
+
+**The real-time schema list is worth noting on its own:** because `type` refreshes itself, the node picks up schemas added after Katana was set up or introduced by a newer USD version — coverage is not frozen at install time.
+
+**Referenced but not ingested:** *The USD Glossary* (schemas, and *List Editing*), and a Foundry video, *Katana 8.0 | Access API parameters with USD schemas*.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0v3 (page served from the current Katana 9.0v3 documentation set). The page references a **Katana 8.0** video for the same feature; recorded as stated, not generalised.
 
 ### Tags
-[PENDING EXTRACTION]
+katana, usd, scenegraph, lighting, katana-9, intermediate
+
+---
+
+## Scope note
+
+This is one half of the `UsdPrimCreate` / `UsdSchemaSet` gap item. **`UsdPrimCreate`
+is not ingested** (`rg/usd_nodes/usdprimcreate.html`, 3,914 chars) — it appears
+here only as the node that creates the prims the example then applies a schema to,
+and it is recorded as still open in `KNOWLEDGE_GAPS_TODO.md`.
+
+The `listPosition` semantics are USD list editing, not a Katana invention; the page
+defers to the USD Glossary for the full model, and that glossary is not ingested
+either.
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Using Native USD Workflows](using-native-usd-workflows.md) — shares `katana` + `usd` + `scenegraph`; the map that lists `UsdSchemaSet` under **Prims** and describes exactly the behaviour documented here — parameters *"dynamically populated by the USD version used, with its parameters defined within the USD API itself"*, which is the real-time `type` list and the generated `properties` seen on this node.
+- [GafferThree](gafferthree.md) — shares `katana` + `lighting` + `scenegraph`; **the same job in the other scene representation.** GafferThree shapes lights from its object table with constraints and linking; here a plain `DiskLight` gains cone `angle`, `softness` and `focus` by applying `ShapingAPI` on top of it.
+- [Setting up UsdPreviewSurface Materials](setting-up-usdpreviewsurface-materials.md) — shares `katana` + `usd` + `katana-9`; `MaterialBindingAPI` is named here as an API schema, and that page is the material-assignment workflow such a binding expresses in the native USD path.
