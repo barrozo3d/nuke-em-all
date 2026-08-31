@@ -18,7 +18,7 @@ then run the mandatory extraction pass (see `SKILL.md` Mode 3).
 
 ## Pending
 
-### 1. 🟡 Katana — **6 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
+### 1. 🟡 Katana — **7 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
 
 `SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
 `scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
@@ -29,8 +29,8 @@ This is the single largest hole in the skill: a whole advertised application
 with reference files but no ingested source material. It is also the case the
 cleanup plan's D4 batch called out as the reason to start here.
 
-> **D4b progress — 6 Foundry doc pages ingested and extracted** (3 on
-> 2026-08-24, 3 on 2026-08-31). The "zero tutorials for an advertised
+> **D4b progress — 7 Foundry doc pages ingested and extracted** (3 on
+> 2026-08-24, 4 on 2026-08-31). The "zero tutorials for an advertised
 > application" hole is open no longer, but each item below is only partly
 > covered. What is ingested is listed per item; what is still missing is left
 > unticked and **not guessed at**.
@@ -74,8 +74,17 @@ cleanup plan's D4 batch called out as the reason to start here.
       AOVs, `exrCompression` (all lossless bar `Pixar 24`; `Wavelet` ~2:1 even
       on grainy data), `exrOptimize`/`exrType`, `clampOutput`, `colorConvert`,
       `computeStats`, `cameraName`, `locationType`/`renderLocation`.
-      ❌ Still missing: the **NetworkMaterialCreate parameter reference**
-      (the workflow page defers to it twice), **multiple NetworkMaterials in one
+      ✅ `networkmaterialcreate.md` — the **parameter reference** the workflow
+      page defers to twice: `rootLocation` (default `/root/materials`),
+      Add NetworkMaterial / Add Namespace and the Material Scenegraph
+      (Renderers / Terminals / Interactive / Color; middle-mouse drag;
+      Namespaces nest, nothing goes under a NetworkMaterial), and
+      **Interface Controls** — `state` visibility/lock, `targetType`,
+      `targetName`, `definitionStyle` operator-tree vs conditional state
+      expression, and the sixteen comparison ops.
+      ❌ Still missing: **Node Parameters and Interface Controls** (how a
+      parameter is promoted in the first place — the step *before* every
+      Interface Control), **multiple NetworkMaterials in one
       NetworkMaterialCreate**, and material Look Files end-to-end.
 - [~] **Katana + USD** — USD scene assembly in Katana, Hydra viewer
       ✅ `setting-up-usdpreviewsurface-materials.md` — UsdPreviewSurface inside
@@ -98,7 +107,7 @@ cleanup plan's D4 batch called out as the reason to start here.
 > | Hydra Viewer as a topic | `ug/using_hydra_viewer/using_hydra.html` |
 > | UsdPrimCreate / UsdSchemaSet | `rg/usd_nodes/usdprimcreate.html`, `rg/usd_nodes/usdschemaset.html` |
 > | USD plug-in loading (prerequisite) | `ug/using_hydra_viewer/usd_load_plugins.html` |
-> | NetworkMaterialCreate **parameter reference** | `rg/3d_nodes/networkmaterialcreate.html` |
+> | Node Parameters and Interface Controls (parameter promotion) | not yet located — referenced by `rg/3d_nodes/networkmaterialcreate.html` |
 > | Multiple NetworkMaterials in one node | `ug/adding_assigning_materials/networkmaterialcreate_multi_nm.html` |
 > | Assigning materials / MaterialStack | `ug/adding_assigning_materials/material_basics.html`, `ug/adding_assigning_materials/multiple_materials_materialstack_node.html`, `ug/adding_assigning_materials/using_networkmaterialcreate.html` |
 > | Launching / performing a render | `ug/rendering_scene/performing_render.html` (8,440 chars — the largest in that section) |
@@ -120,6 +129,30 @@ cleanup plan's D4 batch called out as the reason to start here.
 > measured, largest 8,440 chars. **For Katana, `rg/` node references are often the
 > substantive source and `ug/` pages the stub** — the opposite of the usual
 > guide-vs-reference assumption.
+>
+> ❗ **Three for three, and it now has numbers for the whole USD area.** Every
+> remaining candidate was measured on 2026-08-31 before choosing:
+>
+> | Page | Chars | |
+> |---|---|---|
+> | `rg/3d_nodes/networkmaterialcreate.html` | **8,074** | ingested |
+> | `rg/usd_nodes/usdschemaset.html` | 5,996 | |
+> | `ug/usd/native-usd-workflows.html` | 5,361 | |
+> | `ug/adding_assigning_materials/networkmaterialcreate_multi_nm.html` | 5,151 | |
+> | `ug/usd/what_is_usd.html` | 4,506 | |
+> | `rg/usd_nodes/usdprimcreate.html` | 3,914 | |
+> | `ug/usd/importing_usd_data.html` | 3,282 | |
+> | `ug/using_hydra_viewer/usd_load_plugins.html` | 2,041 | |
+> | `ug/usd/loading_usdin_assets.html` | **1,298** | ⚠️ stub |
+> | `ug/usd/building_usd_scenes.html` | **1,234** | ⚠️ stub |
+> | `ug/using_hydra_viewer/using_hydra.html` | **1,025** | ⚠️ stub |
+>
+> ⚠️ **Two URLs recorded earlier in this file as targets are stubs.**
+> "USD scene assembly" was pointed at `building_usd_scenes.html` (1,234) and
+> "Hydra Viewer as a topic" at `using_hydra.html` (1,025). Neither carries the
+> content. The substantive USD pages are **`native-usd-workflows.html` (5,361)**
+> and **`importing_usd_data.html` (3,282)**; the USD node references
+> (`usdschemaset` 5,996, `usdprimcreate` 3,914) are richer than either.
 >
 > ❗ **`material stylesheet` / `stylesheet` — one of C1's six zero-corroboration
 > terms — is still unlocated.** The materials section was the plausible home and

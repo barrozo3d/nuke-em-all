@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/rg/3d_nodes/networkmaterialcreate.html
 author: learn.foundry.com
 ingested: 2026-08-31
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: Katana
+version: 9.0v3
+tags: [katana, lookdev, nodegraph, katana-9, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/networkmaterialcreate/
 frame_count: 0
 frame_status: skipped
@@ -36,27 +36,84 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+The parameter reference for **NetworkMaterialCreate** — where the NetworkMaterial locations land in the scene graph, how several of them are organised under Namespaces, and how promoted parameters are exposed and conditionally shown or locked through **Interface Controls**.
 
 ### Summary
-[PENDING EXTRACTION]
+NetworkMaterialCreate contains a material network and absorbs the function of one or more **NetworkMaterial** nodes plus the **NetworkMaterialInterfaceControls** node. Its parameters divide into four areas: `rootLocation` and the Material Scenegraph, which decide where materials are created and how multiple NetworkMaterials are grouped under Namespaces; Node Parameters, listing whatever has been promoted; **Interface Controls**, a rule system that shows/hides or locks a promoted parameter or page based on a condition; and the Material Interface, which lists every promoted parameter against its source path. The Interface Controls half is the substantial part — conditions are built either as an operator tree or as conditional state expressions, with sixteen comparison ops.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Set **`rootLocation`** (default `/root/materials`) — the scene graph location where the material locations are created. Pick it from the scene graph widget or the drop-down beside the parameter.
+2. Use **Add NetworkMaterial** to add a new NetworkMaterial location accessible inside this node, or **Add Namespace** to create a Scene Graph group that NetworkMaterial locations can sit under.
+3. Organise them in the **Material Scenegraph**: rename by double-clicking (or select and press `Enter`), and **middle-mouse drag** to move items. NetworkMaterials and Namespaces can go under other Namespaces, **but never under another NetworkMaterial**.
+4. Read the Material Scenegraph columns — **Renderers** and **Terminals** show how many of each are connected per NetworkMaterial, **Interactive** keeps Viewer-drag information, and **Color** sets the colour that NetworkMaterial takes in the terminal sidebar inside the node.
+5. Promote the parameters you want exposed; they appear under **Node Parameters → `parameters`**, which stays empty until something is promoted.
+6. Add an **Interface Control** with the *Add Node* button, then set `state` (`visibility` or `lock`), `targetType` (`parameter` or `page`) and **`targetName` — which must match the name shown in the NetworkMaterial node's Material Interface exactly**.
+7. Build the condition: choose `definitionStyle` — `operator tree` or `conditional state expression`. For an operator tree, set the `operators op` (`and` = all children must be satisfied, `or` = at least one) and add ops.
+8. Add comparison ops from the **Add** menu, then fill in `path` (the parameter or page to evaluate) and `value` (what to compare against).
+9. Manage a long control list with **Filter** (by name or type, with *Select All Matching*), **Disable Parameter Display**, **Fit to Width** and **Fit to Height**.
+10. Verify against the **Material Interface** tab, which lists every promoted parameter by **Name** in its promoted grouping alongside the **Source** path it came from.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+**Node:** `NetworkMaterialCreate` — designed to contain a material network, with a left-to-right workflow and the newer shading-node design. **It holds the function of one or more `NetworkMaterial` nodes as well as the `NetworkMaterialInterfaceControls` node.**
+
+**Top level:**
+
+| Control | Default | Function |
+|---|---|---|
+| `rootLocation` | `/root/materials` | Scene graph location where the material locations are created (Scene Graph Location Widget Type). |
+| `Add NetworkMaterial` / `Add Namespace` | N/A | Add a NetworkMaterial location accessible from inside this node, or a Namespace to group them under in the Scene Graph. |
+| `Material Scenegraph` | N/A | Add, remove and organise NetworkMaterials and Namespaces. |
+
+**Material Scenegraph columns:** `Name` (double-click, or select + `Enter`, to rename) · `Renderers` (count connected to each NetworkMaterial) · `Terminals` (count connected) · `Interactive` (when checked, objects can be dragged in the Viewer and Katana retains the Viewer's information) · `Color` (sets the NetworkMaterial's colour in the terminal sidebar inside the node).
+⚠️ **Middle-mouse drag** reorganises them, and **NetworkMaterials and Namespaces may be placed under other Namespaces but never under another NetworkMaterial.**
+
+**Node Parameters:** `parameters` — promoted parameters appear here; the section stays **empty if nothing has been promoted**.
+
+**Interface Controls** — the rule system that drives a parameter's visibility or lock state:
+- `Add Node` button — add a new Interface Control and open its parameters.
+- `Filter` — filter the control list by name or type; **Select All Matching** displays the parameters for every match.
+- `Disable Parameter Display` (Disabled) · `Fit to Width` (Disabled) · `Fit to Height` (Disabled).
+- The following appear **only once a control exists and is selected**:
+  - `state` = **`visibility`** (show/hide the target) or **`lock`** (lock/unlock it, making edits impossible while locked).
+  - `targetType` = `parameter` (a single parameter) or `page` (a page containing one or more).
+  - `targetName` — ⚠️ **must be identical to the name shown in the NetworkMaterial node's Material Interface.**
+  - `definitionStyle` = `operator tree` or `conditional state expression`.
+- With `definitionStyle: operator tree`: `operators op` = `and` (satisfied only if **all** child expressions are) or `or` (satisfied if **at least one** is); then `ops Add` to choose a comparison.
+
+**The sixteen comparison ops:** `contains` · `doesNotContain` · `endsWith` · `equalTo` · `notEqualTo` · `greaterThan` · `greaterThanOrEqualTo` · `lessThan` · `lessThanOrEqualTo` · `in` and `notIn` (**values separated by a pipe with no spaces**) · `numChildrenEqualTo` and `numChildrenGreaterThanOrEqualTo` (test the child count of the target group parameter) · `regex` · plus `and` / `or` to compare against a further set of values, using all expressions or just one.
+Once an op is picked, three more parameters appear: `op` (the chosen op), `path` (the parameter or page to evaluate) and `value` (what to compare against).
+
+**Material Interface:** `Name` — every promoted parameter, organised as it was grouped when promoted; `Source` — the path to each parameter.
+
+**Referenced docs (not ingested):** *Node Parameters and Interface Controls* (how promotion works, and the wider uses of the Material Interface), *Multiple NetworkMaterials with NetworkMaterialCreate*, and the *Scene Graph Location Widget Type* in *Common Parameter Widgets*.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0v3 (page served from the current Katana 9.0v3 documentation set)
 
 ### Tags
-[PENDING EXTRACTION]
+katana, lookdev, nodegraph, katana-9, advanced
+
+---
+
+## Scope note — the forward reference this closes
+
+`creating-shading-networks.md` defers to this page **twice** — once for the node's
+parameters in general and once specifically for changing the NetworkMaterial's
+scene graph location. That location is **`rootLocation`, default `/root/materials`**,
+documented here. Before this ingest, both of those pointers led out of the library.
+
+Still not ingested and recorded in `KNOWLEDGE_GAPS_TODO.md`: *Node Parameters and
+Interface Controls* — this page defers to it for **how** a parameter is promoted in
+the first place, which is the step before every Interface Control described here —
+and *Multiple NetworkMaterials with NetworkMaterialCreate*.
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Creating Shading Networks](creating-shading-networks.md) — shares `katana` + `lookdev` + `nodegraph`; **the workflow half of the same node.** That page builds the network inside NetworkMaterialCreate and defers to this one twice for the parameters; read it first, then this for `rootLocation`, Namespaces and Interface Controls.
+- [Setting up UsdPreviewSurface Materials](setting-up-usdpreviewsurface-materials.md) — shares `katana` + `lookdev` + `nodegraph`; the UsdPreviewSurface network built there lives inside a NetworkMaterialCreate, so `rootLocation` is what decides where its `usdSurface`-terminated material lands in the scene graph.
+- [GafferThree](gafferthree.md) — shares `katana` + `lookdev` + `katana-9`; GafferThree's Template Materials expose a controlled set of light-material parameters from one interface, the same problem the Material Interface and Interface Controls solve for geometry materials.
+- [RenderOutputDefine](renderoutputdefine.md) — shares `katana` + `katana-9`; the `Ci` (final shader colour) pass it writes is the rendered output of the material this node defines.
