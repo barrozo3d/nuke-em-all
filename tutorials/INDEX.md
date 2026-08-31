@@ -1082,6 +1082,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** Authoring USD materials in Katana: UsdPreviewSurface inside a NetworkMaterialCreate wired to the usdSurface terminal, MaterialAssign, and live Hydra Viewer preview (Basic Material off, shadows from all or selected lights), plus UsdUVTexture fed by a UsdPrimvarReader_float2 on varname st.
 - **File:** tutorials/setting-up-usdpreviewsurface-materials.md
 
+
+### LiveGroups and LiveShadingGroups
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/livegroups/livegroups.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/livegroups-and-liveshadinggroups.md
+
 ---
 
 ## Tag Reference
