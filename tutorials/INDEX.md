@@ -1126,6 +1126,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** The NetworkMaterialCreate parameter reference — the half creating-shading-networks defers to twice. rootLocation (default /root/materials) sets where material locations are created; Add NetworkMaterial / Add Namespace and the Material Scenegraph organise several of them (Renderers, Terminals, Interactive and Color columns; middle-mouse drag; Namespaces may nest but nothing goes under a NetworkMaterial); and Interface Controls drive a promoted parameter's visibility or lock state from a condition built as an operator tree or a conditional state expression, with sixteen comparison ops including in/notIn (pipe-separated, no spaces), the numChildren tests and regex. The node holds the function of one or more NetworkMaterial nodes plus NetworkMaterialInterfaceControls.
 - **File:** tutorials/networkmaterialcreate.md
 
+
+### Using Native USD Workflows
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/usd/native-usd-workflows.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/using-native-usd-workflows.md
+
 ---
 
 ## Tag Reference
