@@ -129,4 +129,4 @@ katana, scenegraph, nodegraph, cel, katana-9, advanced
 - [LiveGroups and LiveShadingGroups](livegroups-and-liveshadinggroups.md) — shares `katana` + `nodegraph`; both are routes to reuse rather than rebuild — OpScript authors scene graph locations procedurally, while a LiveGroup packages a Group node's children for reuse across projects.
 - [Creating Shading Networks](creating-shading-networks.md) — shares `katana` + `nodegraph`; NetworkMaterialCreate wires materials by hand in the node graph, where OpScript's `Interface` API creates and edits the same scene graph locations procedurally.
 
-*Note: the library held zero Katana sources before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`) and now holds five, so the Katana cross-link set is still narrow.*
+*Note: the library held zero Katana sources before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`) and now holds six, so the Katana cross-link set is still narrow.*

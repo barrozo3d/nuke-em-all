@@ -18,7 +18,7 @@ then run the mandatory extraction pass (see `SKILL.md` Mode 3).
 
 ## Pending
 
-### 1. 🟡 Katana — **5 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
+### 1. 🟡 Katana — **6 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
 
 `SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
 `scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
@@ -29,8 +29,8 @@ This is the single largest hole in the skill: a whole advertised application
 with reference files but no ingested source material. It is also the case the
 cleanup plan's D4 batch called out as the reason to start here.
 
-> **D4b progress — 5 Foundry doc pages ingested and extracted** (3 on
-> 2026-08-24, 2 on 2026-08-31). The "zero tutorials for an advertised
+> **D4b progress — 6 Foundry doc pages ingested and extracted** (3 on
+> 2026-08-24, 3 on 2026-08-31). The "zero tutorials for an advertised
 > application" hole is open no longer, but each item below is only partly
 > covered. What is ingested is listed per item; what is still missing is left
 > unticked and **not guessed at**.
@@ -65,10 +65,18 @@ cleanup plan's D4 batch called out as the reason to start here.
       view states, Dot-node routing (one input, many outputs), `Alt`+`H` input
       hiding, the `connectionStyle` preference, and the result landing under
       `/root/materials`.
+      ✅ `renderoutputdefine.md` — **render passes**: `outputName`
+      (`primary` default, `shadow` by convention), the `type` values
+      (`color` for beauty/`z`/`P`/`N`/`Ci`, `raw` for a verbatim Display line
+      with no colorspace conversion and no tiling, `script`/`prescript` hooks,
+      `none` to clear a prior output), `includedByDefault`, and the per-format
+      settings — `exrBitDepth` 16 half for colour vs 32 full float for data
+      AOVs, `exrCompression` (all lossless bar `Pixar 24`; `Wavelet` ~2:1 even
+      on grainy data), `exrOptimize`/`exrType`, `clampOutput`, `colorConvert`,
+      `computeStats`, `cameraName`, `locationType`/`renderLocation`.
       ❌ Still missing: the **NetworkMaterialCreate parameter reference**
       (the workflow page defers to it twice), **multiple NetworkMaterials in one
-      NetworkMaterialCreate**, material Look Files end-to-end, and **render
-      passes**.
+      NetworkMaterialCreate**, and material Look Files end-to-end.
 - [~] **Katana + USD** — USD scene assembly in Katana, Hydra viewer
       ✅ `setting-up-usdpreviewsurface-materials.md` — UsdPreviewSurface inside
       NetworkMaterialCreate, the `usdSurface` terminal, MaterialAssign, Hydra
@@ -86,7 +94,6 @@ cleanup plan's D4 batch called out as the reason to start here.
 >
 > | Open topic | URL (prefix `https://learn.foundry.com/katana/Content/`) |
 > |---|---|
-> | Render passes | `ug/rendering_scene/setting_up_render_pass.html` |
 > | USD scene assembly | `ug/usd/building_usd_scenes.html`, `ug/usd/loading_usdin_assets.html`, `ug/usd/importing_usd_data.html` |
 > | Hydra Viewer as a topic | `ug/using_hydra_viewer/using_hydra.html` |
 > | UsdPrimCreate / UsdSchemaSet | `rg/usd_nodes/usdprimcreate.html`, `rg/usd_nodes/usdschemaset.html` |
@@ -94,12 +101,25 @@ cleanup plan's D4 batch called out as the reason to start here.
 > | NetworkMaterialCreate **parameter reference** | `rg/3d_nodes/networkmaterialcreate.html` |
 > | Multiple NetworkMaterials in one node | `ug/adding_assigning_materials/networkmaterialcreate_multi_nm.html` |
 > | Assigning materials / MaterialStack | `ug/adding_assigning_materials/material_basics.html`, `ug/adding_assigning_materials/multiple_materials_materialstack_node.html`, `ug/adding_assigning_materials/using_networkmaterialcreate.html` |
+> | Launching / performing a render | `ug/rendering_scene/performing_render.html` (8,440 chars — the largest in that section) |
+> | Render types | `ug/rendering_scene/render_types.html` |
+> | Live / interactive rendering | `ug/rendering_scene/controlling_live_rendering.html` |
+> | OpenEXR header metadata | `ug/rendering_scene/openexr_header_metadata.html` |
 >
 > ⚠️ **`ug/adding_assigning_materials/adding_assigning_materials.html` is a
 > 1,893-char section overview, not a topic page** — it was the obvious-looking
 > URL for NetworkMaterial and is nearly content-free. The substantive page is
 > `creating_shading_networks.html` (11,513 chars, `NetworkMaterial` × 26),
 > **ingested 2026-08-31**. Check article length before ingesting a section index.
+>
+> ⚠️ **Confirmed twice.** The same trap caught render passes: the user-guide
+> page `ug/rendering_scene/setting_up_render_pass.html` is **777 characters** and
+> only says that RenderOutputDefine is the node used. The real content is the node
+> reference `rg/3d_nodes/renderoutputdefine.html` (6,092 chars), **ingested
+> 2026-08-31**. The whole `ug/rendering_scene` section is thin — every page
+> measured, largest 8,440 chars. **For Katana, `rg/` node references are often the
+> substantive source and `ug/` pages the stub** — the opposite of the usual
+> guide-vs-reference assumption.
 >
 > ❗ **`material stylesheet` / `stylesheet` — one of C1's six zero-corroboration
 > terms — is still unlocated.** The materials section was the plausible home and

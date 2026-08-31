@@ -1109,10 +1109,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/rg/3d_nodes/renderoutputdefine.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, aovs, channels, katana-9, intermediate
+- **Summary:** Katana's RenderOutputDefine node — the render-pass definition: outputName (primary by default, shadow by convention), the type values (color for beauty/z/P/N/Ci passes, raw for a verbatim Display line with no colorspace conversion and no tiling, script/prescript hooks, none to clear a prior output), and the per-format settings that decide what the compositor receives — exrBitDepth 16 half for colour passes versus 32 full float for data AOVs, exrCompression (all lossless except Pixar 24; Wavelet ~2:1 even on grainy data), exrOptimize/exrType tiling, plus clampOutput and colorConvert.
 - **File:** tutorials/renderoutputdefine.md
 
 ---

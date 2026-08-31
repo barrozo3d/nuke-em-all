@@ -126,3 +126,4 @@ unlocated rather than assumed absent from the product.
 - [GafferThree](gafferthree.md) — shares `katana` + `lookdev` + `katana-9`; GafferThree assigns shaders to lights from its own object table, the counterpart to authoring geometry materials as a shading network here.
 - [LiveGroups and LiveShadingGroups](livegroups-and-liveshadinggroups.md) — shares `katana` + `nodegraph`; a completed shading network is exactly the kind of self-contained node group a LiveGroup publishes and reloads across projects.
 - [OpScript Tutorials](opscript-tutorials.md) — shares `katana` + `nodegraph`; where this page wires materials by hand in the node graph, OpScript's `Interface` API creates and edits the underlying scene graph locations procedurally.
+- [RenderOutputDefine](renderoutputdefine.md) — shares `katana` + `katana-9`; the `Ci` (final shader colour) pass it can output is the rendered result of the shading network authored here.
