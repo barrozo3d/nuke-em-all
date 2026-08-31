@@ -1170,6 +1170,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** Several NetworkMaterials inside one NetworkMaterialCreate node, so material variants share the shading nodes they have in common instead of duplicating them. The worked example takes two robot materials sharing a transmission mask, roughness and emissive textures and a glass shader, and cuts 27 nodes across two NetworkMaterialCreate nodes to 19 in one by sharing 8. Covers Add NetworkMaterial / Add Namespace from the plus button or right-click, renaming, middle-mouse drag arrangement mirrored into the Scene Graph tab and terminal sidebar, per-material renderer and terminal counts, interactive state, and colours carried onto the sidebar names to tell several apart.
 - **File:** tutorials/multiple-networkmaterials-with-networkmaterialcreate.md
 
+
+### Importing USD Data
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/usd/importing_usd_data.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/importing-usd-data.md
+
 ---
 
 ## Tag Reference
