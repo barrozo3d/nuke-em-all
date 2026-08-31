@@ -66,6 +66,8 @@ Overall verdict: doesn't solve every occlusion/drastic-change case, but saves su
 
 ## Structured Notes
 
+**Transcript note.** The full timestamped transcript was deliberately **condensed** out of this file after extraction; the complete version is retained in git at commit `c5a9687` (*collect: How SMART is State of the Art A.I Rotoscoping?*). Verified 2026-08-31 — that commit holds the file at 26,354 bytes against 9,099 here. Nothing was lost; `validate.py`'s chars-per-second heuristic simply does not apply to a condensed file.
+
 ### Core Technique
 Stress-testing Foundry's SmartRoto, a paid AI-assisted rotoscoping add-on for Nuke released ~July 2026, against five deliberately hard benchmark shots (straight profile, motion blur, occlusion, lost/rotating profile, undefined/flowing profile) to establish where it actually saves time versus where it breaks down.
 

@@ -50,6 +50,8 @@ Frames captured — see "Captured Frames" section below. Condensed transcript su
 
 ## Structured Notes
 
+**Transcript note.** The full timestamped transcript was deliberately **condensed** out of this file after extraction; the complete version is retained in git at commit `eae0e47` (*collect: Did Corridor Crew SOLVE Greenscreen?*). Verified 2026-08-31 — that commit holds the file at 24,762 bytes against 11,968 here. Nothing was lost; `validate.py`'s chars-per-second heuristic simply does not apply to a condensed file.
+
 ### Core Technique
 Head-to-head keying comparison across 4 deliberately hard greenscreen test plates (motion blur + transparency, heavily shaken small detail, flat green vs. a bright complementary color, defocused edge over a messy background) evaluating Nuke's stock Keylight, the IBK (Image Based Keyer) gizmo with a clean plate, and "Corridor Key" — a free neural-network keyer released by Corridor Digital that claims to fix edge color contamination by predicting/extending the correct edge color via a trained model.
 
