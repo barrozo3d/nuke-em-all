@@ -18,7 +18,7 @@ then run the mandatory extraction pass (see `SKILL.md` Mode 3).
 
 ## Pending
 
-### 1. 🟡 Katana — **4 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
+### 1. 🟡 Katana — **5 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
 
 `SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
 `scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
@@ -29,8 +29,8 @@ This is the single largest hole in the skill: a whole advertised application
 with reference files but no ingested source material. It is also the case the
 cleanup plan's D4 batch called out as the reason to start here.
 
-> **D4b progress — 4 Foundry doc pages ingested and extracted** (3 on
-> 2026-08-24, 1 on 2026-08-31). The "zero tutorials for an advertised
+> **D4b progress — 5 Foundry doc pages ingested and extracted** (3 on
+> 2026-08-24, 2 on 2026-08-31). The "zero tutorials for an advertised
 > application" hole is open no longer, but each item below is only partly
 > covered. What is ingested is listed per item; what is still missing is left
 > unticked and **not guessed at**.
@@ -57,9 +57,18 @@ cleanup plan's D4 batch called out as the reason to start here.
       filters/sky domes, Template Materials and Look File materials,
       aim/point/orient constraints, and CEL-based light **and** shadow linking
       with `LightLinkResolve`.
-      ❌ Still missing: **NetworkMaterial / NetworkMaterialCreate as a topic in
-      its own right** (only touched via the USD page), material Look Files
-      end-to-end, and **render passes**.
+      ✅ `creating-shading-networks.md` — **NetworkMaterialCreate as its own
+      topic**: the fixed terminal sidebar (terminals prepopulated per configured
+      renderer, versus the older Network Material node where they were added by
+      hand), the `Tab` / `Shift`+`Tab` / `S` node menus and their renderer colour
+      stripes, type-checked colour-coded port connections, the `Alt`+`1`/`2`/`3`
+      view states, Dot-node routing (one input, many outputs), `Alt`+`H` input
+      hiding, the `connectionStyle` preference, and the result landing under
+      `/root/materials`.
+      ❌ Still missing: the **NetworkMaterialCreate parameter reference**
+      (the workflow page defers to it twice), **multiple NetworkMaterials in one
+      NetworkMaterialCreate**, material Look Files end-to-end, and **render
+      passes**.
 - [~] **Katana + USD** — USD scene assembly in Katana, Hydra viewer
       ✅ `setting-up-usdpreviewsurface-materials.md` — UsdPreviewSurface inside
       NetworkMaterialCreate, the `usdSurface` terminal, MaterialAssign, Hydra
@@ -77,12 +86,27 @@ cleanup plan's D4 batch called out as the reason to start here.
 >
 > | Open topic | URL (prefix `https://learn.foundry.com/katana/Content/`) |
 > |---|---|
-> | NetworkMaterial as its own topic | `ug/adding_assigning_materials/adding_assigning_materials.html` |
 > | Render passes | `ug/rendering_scene/setting_up_render_pass.html` |
 > | USD scene assembly | `ug/usd/building_usd_scenes.html`, `ug/usd/loading_usdin_assets.html`, `ug/usd/importing_usd_data.html` |
 > | Hydra Viewer as a topic | `ug/using_hydra_viewer/using_hydra.html` |
 > | UsdPrimCreate / UsdSchemaSet | `rg/usd_nodes/usdprimcreate.html`, `rg/usd_nodes/usdschemaset.html` |
 > | USD plug-in loading (prerequisite) | `ug/using_hydra_viewer/usd_load_plugins.html` |
+> | NetworkMaterialCreate **parameter reference** | `rg/3d_nodes/networkmaterialcreate.html` |
+> | Multiple NetworkMaterials in one node | `ug/adding_assigning_materials/networkmaterialcreate_multi_nm.html` |
+> | Assigning materials / MaterialStack | `ug/adding_assigning_materials/material_basics.html`, `ug/adding_assigning_materials/multiple_materials_materialstack_node.html`, `ug/adding_assigning_materials/using_networkmaterialcreate.html` |
+>
+> ⚠️ **`ug/adding_assigning_materials/adding_assigning_materials.html` is a
+> 1,893-char section overview, not a topic page** — it was the obvious-looking
+> URL for NetworkMaterial and is nearly content-free. The substantive page is
+> `creating_shading_networks.html` (11,513 chars, `NetworkMaterial` × 26),
+> **ingested 2026-08-31**. Check article length before ingesting a section index.
+>
+> ❗ **`material stylesheet` / `stylesheet` — one of C1's six zero-corroboration
+> terms — is still unlocated.** The materials section was the plausible home and
+> does not contain it (zero occurrences on any page checked), and every obvious
+> path 404s (`ug/material_stylesheets/…`, `ug/stylesheets/…`,
+> `rg/3d_nodes/materialstylesheet.html`). Recorded as unlocated, **not** as absent
+> from the product.
 >
 > The full USD node reference index is `rg/usd_nodes/usd_nodes.html` (40 nodes)
 > and the USD user-guide index is `ug/usd/usd-katana.html` (45 topics).

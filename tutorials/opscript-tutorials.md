@@ -127,5 +127,6 @@ katana, scenegraph, nodegraph, cel, katana-9, advanced
 - [GafferThree](gafferthree.md) — shares `katana`, `scenegraph`-adjacent and `cel` ground, since GafferThree's light and shadow linking is expressed with the same CEL statements used here to scope an OpScript.
 - [Setting up UsdPreviewSurface Materials](setting-up-usdpreviewsurface-materials.md) — shares `katana` + `nodegraph`; its `UsdPrimvarReader_float2` reads the `st` primvar off the geometry, the attribute-to-shader transfer an OpScript can author at the scene graph level.
 - [LiveGroups and LiveShadingGroups](livegroups-and-liveshadinggroups.md) — shares `katana` + `nodegraph`; both are routes to reuse rather than rebuild — OpScript authors scene graph locations procedurally, while a LiveGroup packages a Group node's children for reuse across projects.
+- [Creating Shading Networks](creating-shading-networks.md) — shares `katana` + `nodegraph`; NetworkMaterialCreate wires materials by hand in the node graph, where OpScript's `Interface` API creates and edits the same scene graph locations procedurally.
 
-*Note: the library held zero Katana sources before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`) and now holds four, so the Katana cross-link set is still narrow.*
+*Note: the library held zero Katana sources before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`) and now holds five, so the Katana cross-link set is still narrow.*

@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/creating_shading_networks.html
 author: learn.foundry.com
 ingested: 2026-08-31
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: Katana
+version: 9.0v3
+tags: [katana, lookdev, nodegraph, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/creating-shading-networks/
 frame_count: 0
 frame_status: skipped
@@ -36,27 +36,93 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Building a renderer shading network inside Katana's **NetworkMaterialCreate** node — the current workflow that replaces the older Network Material node, where the NetworkMaterial terminals are prepopulated in a fixed sidebar instead of being added by hand.
 
 ### Summary
-[PENDING EXTRACTION]
+NetworkMaterialCreate is a group you jump *inside* to author a shading network left-to-right, wiring renderer shading nodes into terminals that Katana has already created for every renderer configured in the session. The page contrasts it directly with the previous NetworkMaterial workflow — both produce the same rendered result, but the terminals no longer have to be added manually — and once the network reaches the terminal sidebar the NetworkMaterial appears in the Scene Graph under `/root/materials` by default. Most of the page is the node-graph craft that makes large networks workable: type-checked, colour-coded ports, three expand/collapse states, Dot nodes for routing, hideable input connections, and a preference for how connections are drawn.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Create a **NetworkMaterialCreate** node like any other — `Tab`, type the name, place it in the node graph.
+2. Jump inside it: **Ctrl + Middle-mouse click**, the **enter node** button, or select it and press **Ctrl + Enter**.
+3. Read the **fixed terminal sidebar** on the right: one entry per NetworkMaterial, with terminals prepopulated for every renderer set up with Katana. Collapse/expand it with its tabs; filter it by typing (e.g. `displacement`) into the **Filter** field.
+4. Name the NetworkMaterial from the **Parameters → Node Parameters** tab, or double-click it, or select it and press **Enter**. Renaming the *node* does **not** change the name shown on the terminal sidebar.
+5. Create shading nodes with **Tab** from inside the node. The menu is restricted to your default renderer's nodes plus a few standard Katana nodes, and only nodes you can actually use are shown. To reach another renderer's nodes, hold **Shift + Tab**, pick the renderer, then **Tab** again.
+6. Wire nodes up: click once on a port to start the connection, click once on the target port to complete it. Invalid targets are greyed out, and only compatible data types connect (`int`→`int`, `float`→`float`).
+7. Connect the network into the terminal sidebar — at that point the NetworkMaterial exists in the Scene Graph under `/root/materials` by default.
+8. Manage density with the three view states — **Alt+1** collapse completely, **Alt+2** expand to connected ports, **Alt+3** fully expand pages and connections — and hold **X** over a collapsed node to peek at it.
+9. Route with **Dot** nodes: press **.** (period) to place one, or hover a connection to insert it inline. A Dot takes **one input** and as many outputs as needed, and is omnidirectional.
+10. Clean up visually: **Alt + H** (or *Edit → Toggle Input Connection Visibility*) hides input connections on selected nodes, and *Edit → Preferences → nodegraph → networkMaterialNodegraph → connectionStyle* sets how connections are drawn.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+**Node:** `NetworkMaterialCreate` — the current node for authoring shading networks. It supersedes the previous **Network Material** node workflow; the page shows both side by side and states they function the same way with the same end result, the difference being that NetworkMaterialCreate's terminals are prepopulated rather than added manually. By default it provides **one** NetworkMaterial location (multiple locations are a separate topic).
+
+**Entering the node:** `Ctrl` + Middle-mouse click · the enter-node button · select + `Ctrl` + `Enter`.
+
+**Terminal sidebar:** fixed, right-hand side; one block per NetworkMaterial with its terminals per configured renderer; collapse/expand tabs; **Filter** field for substring search across terminals.
+
+**Naming:** the NetworkMaterial name is set in **Parameters → Node Parameters**, by double-clicking it, or by selecting it and pressing `Enter`. ⚠️ Renaming the node itself does not rename the terminal-sidebar entry.
+
+**Node creation menu (inside NetworkMaterialCreate):**
+
+| Shortcut | Effect |
+|---|---|
+| `Tab` | Node menu for the selected renderer (filters as you type) |
+| `Shift` + `Tab` | Choose which renderer the node menu shows |
+| `S` | 3Delight-specific shortcut for the 3Delight shading-node menu |
+
+Nodes carry a **coloured left stripe** for their group: 3Delight shading nodes red, standard Katana nodes yellow. `nodeType` can be changed from within a shading node's parameters, and values of parameter names shared between the two types are remembered, so switching back and forth loses nothing.
+
+**Connecting:** click a port to start, click the target port to finish. Invalid targets are greyed out and disabled. Ports are colour-coded by data type and only compatible types connect. Data-type colour codes cover: `color`, `float` / `array_float`, `int`, `matrix`, `normal`, `point`, `string`, `vector`, `disabled`, `misc`. Hover a port for its data type; hover a connection for a tooltip naming the origin node, the downstream node and the data types; hover a connection and press `/` to follow it to its connected node.
+
+**Selection:** `Ctrl` + `Left Arrow` selects all upstream nodes, `Ctrl` + `Right Arrow` all downstream — in the Network Material context.
+
+**Auto-created pairs:** some nodes that are always used together are created together — placing a `file` node automatically creates a `place2DTexture` node.
+
+**Shading-node view states:** `Alt`+`1` collapse completely · `Alt`+`2` expand to show connected ports · `Alt`+`3` fully expand pages and connections. Also: the expand/collapse button at a node's top-left; page-title click to expand/collapse individual pages; a downward arrow means expanded, a right-facing arrow collapsed. Hold `X` while hovering a collapsed node to expand it temporarily. Dragging a connection over a collapsed node auto-exposes compatible connections and re-collapses after the connection is made or dropped outside.
+
+**Renaming / filtering shading nodes:** select + `Enter` to rename; `Alt` + `Enter` shows/hides the Filter function on selected nodes; the Filter field searches inputs/outputs even when the menu is not expanded.
+
+**Preferences (`Edit → Preferences → nodegraph`):**
+- `defaultShadingNodeViewState` — default expand/collapse state for new nodes.
+- `showPagesConnectedOnly` — expose only pages containing connected inputs/outputs.
+- `networkMaterialNodegraph → connectionStyle` — **Line** (straight) · **Short Curve** (curves at the port, like a Dot-node connection here) · **Bezier Curve** (**default** in the material context). These live in the layout preferences and are **not** saved as part of the materials created.
+
+**Dot node:** `.` (period) is the fastest way to place one; also `Tab` → `Dot`, inserting on a hovered connection, or dragging an output then adding a Dot to build a chain. Omnidirectional; **one input, any number of outputs**. Used to bend connections around notes and to split one output to several inputs.
+
+**Hiding connections:** *Edit → Toggle Input Connection Visibility* or `Alt` + `H` on selected nodes. Hidden inputs still render as *filled* ports so the hidden connection is discoverable; selecting a node temporarily shows its inputs; holding `Alt` + `H` with nothing selected temporarily reveals all hidden connections.
+
+**Scene graph result:** once wired to the terminal sidebar, the NetworkMaterial appears under `/root/materials` by default (the location is a NetworkMaterialCreate parameter).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0v3 (page served from the current Katana 9.0v3 documentation set)
 
 ### Tags
-[PENDING EXTRACTION]
+katana, lookdev, nodegraph, katana-9, intermediate
+
+---
+
+## Scope note — what this page does and does not cover
+
+This is the **workflow** page for NetworkMaterialCreate, not the parameter
+reference. It says so twice and points at the `NetworkMaterialCreate` reference
+page for parameters (including changing the NetworkMaterial's scene graph
+location), and at a separate page for **multiple NetworkMaterials in one
+NetworkMaterialCreate**. Neither is ingested; both are recorded in
+`KNOWLEDGE_GAPS_TODO.md` with verified URLs.
+
+**Material stylesheets are not here.** One of C1's six zero-corroboration terms
+was `material stylesheet` / `stylesheet`, and the materials section was the
+plausible home for it — it is not on this page (zero occurrences), and it is not
+at any of the obvious Katana doc paths, all of which 404. Recorded as still
+unlocated rather than assumed absent from the product.
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Setting up UsdPreviewSurface Materials](setting-up-usdpreviewsurface-materials.md) — shares `katana` + `lookdev` + `nodegraph`; that page builds a UsdPreviewSurface *inside* a NetworkMaterialCreate and wires it to the `usdSurface` terminal, so it is this page's workflow applied to a specific USD shader — read this one first for the node itself.
+- [GafferThree](gafferthree.md) — shares `katana` + `lookdev` + `katana-9`; GafferThree assigns shaders to lights from its own object table, the counterpart to authoring geometry materials as a shading network here.
+- [LiveGroups and LiveShadingGroups](livegroups-and-liveshadinggroups.md) — shares `katana` + `nodegraph`; a completed shading network is exactly the kind of self-contained node group a LiveGroup publishes and reloads across projects.
+- [OpScript Tutorials](opscript-tutorials.md) — shares `katana` + `nodegraph`; where this page wires materials by hand in the node graph, OpScript's `Interface` API creates and edits the underlying scene graph locations procedurally.

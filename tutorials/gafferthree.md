@@ -91,5 +91,6 @@ katana, lighting, lookdev, scenegraph, cel, katana-9, intermediate
 - [OpScript Tutorials](opscript-tutorials.md) — the same CEL statements that scope an OpScript are what GafferThree's light and shadow linking is written in; OpScript is also how a lighting rig can be built or edited procedurally rather than by hand in the object table.
 - [Setting up UsdPreviewSurface Materials](setting-up-usdpreviewsurface-materials.md) — shares `katana` + `lookdev`; its Hydra Viewer shadow previews are cast by the lights a GafferThree creates.
 - [LiveGroups and LiveShadingGroups](livegroups-and-liveshadinggroups.md) — shares `katana` + `katana-9`; **Export Rig** here writes a lighting rig to a `.rig` file for reuse, and a LiveGroup is the same share-and-reload idea applied to a whole Katana project rather than one rig.
+- [Creating Shading Networks](creating-shading-networks.md) — shares `katana` + `lookdev` + `katana-9`; GafferThree assigns shaders to *lights* from its object table, while NetworkMaterialCreate is where *geometry* materials are authored as a shading network.
 
-*Note: the library held **zero** Katana sources against an advertised Katana capability before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`). It now holds four, so the cross-link set is still small and will grow as more Katana material is ingested.*
+*Note: the library held **zero** Katana sources against an advertised Katana capability before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`). It now holds five, so the cross-link set is still small and will grow as more Katana material is ingested.*
