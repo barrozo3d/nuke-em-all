@@ -1153,10 +1153,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/rg/usd_nodes/usdprimcreate.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, usd, scenegraph, nodegraph, katana-9, intermediate
+- **Summary:** Katana's UsdPrimCreate — described by Foundry as the USD equivalent of PrimitiveCreate. Creates prims at each path in primPaths, in listed order, with a type dropdown Katana populates by interrogating the installed USD version, and properties generated from the chosen type. The primSpec specifier sets the prim's role: define (a new complete spec), class (a template others inherit or specialize) or over (a non-destructive override of lower-priority layers). primSpecHierarchy is the subtle one — off by default, only the final prim gets the specifier and ancestors are created as 'over', deliberately so that lower-layer PrimSpecs are not overwritten. Seven derived geometry nodes and UsdLight / UsdCamera / UsdScope / UsdXform skip the type-choosing step.
 - **File:** tutorials/usdprimcreate.md
 
 ---

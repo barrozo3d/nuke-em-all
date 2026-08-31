@@ -18,7 +18,7 @@ then run the mandatory extraction pass (see `SKILL.md` Mode 3).
 
 ## Pending
 
-### 1. 🟡 Katana — **9 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
+### 1. 🟡 Katana — **10 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
 
 `SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
 `scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
@@ -29,8 +29,8 @@ This is the single largest hole in the skill: a whole advertised application
 with reference files but no ingested source material. It is also the case the
 cleanup plan's D4 batch called out as the reason to start here.
 
-> **D4b progress — 9 Foundry doc pages ingested and extracted** (3 on
-> 2026-08-24, 6 on 2026-08-31). The "zero tutorials for an advertised
+> **D4b progress — 10 Foundry doc pages ingested and extracted** (3 on
+> 2026-08-24, 7 on 2026-08-31). The "zero tutorials for an advertised
 > application" hole is open no longer, but each item below is only partly
 > covered. What is ingested is listed per item; what is still missing is left
 > unticked and **not guessed at**.
@@ -111,10 +111,17 @@ cleanup plan's D4 batch called out as the reason to start here.
       `listPosition` — the USD list-editing semantics append / prepend / delete /
       reset to explicit, where list means the composed result after all layers
       and arcs.
+      ✅ `usdprimcreate.md` — **the other half of the pair**: prims at each
+      `primPaths` entry in listed order; a `type` dropdown Katana fills by
+      interrogating the installed USD version; the `primSpec` specifiers
+      `define` / `class` / `over`; and `primSpecHierarchy`, off by default so
+      only the final prim takes the specifier and ancestors are created as
+      `over` — deliberately, to avoid overwriting lower-layer PrimSpecs. The
+      seven derived geometry nodes and `UsdLight`/`UsdCamera`/`UsdScope`/
+      `UsdXform` are covered by that entry rather than listed as separate gaps.
       ❌ Still missing: the Hydra Viewer as a topic (**its page is a 1,025-char
-      stub — the content is elsewhere and not yet located**), **`UsdPrimCreate`**
-      (`rg/usd_nodes/usdprimcreate.html`, 3,914 chars — the other half of this
-      pair), importing USD data, and loading the USD plug-ins.
+      stub — the content is elsewhere and not yet located**), importing USD
+      data, and loading the USD plug-ins.
 
 > **Verified doc URLs for the topics still open above** (all returned HTTP 200
 > on 2026-08-31; Foundry's docs are MadCap Flare and the paths are not guessable
@@ -126,7 +133,6 @@ cleanup plan's D4 batch called out as the reason to start here.
 > |---|---|
 > | Importing USD data | `ug/usd/importing_usd_data.html` (3,282 chars) |
 > | Hydra Viewer as a topic | ⚠️ **not located** — `ug/using_hydra_viewer/using_hydra.html` is a 1,025-char stub |
-> | UsdPrimCreate (UsdSchemaSet done) | `rg/usd_nodes/usdprimcreate.html` (3,914) — *"the USD equivalent of Katana's PrimitiveCreate node"* |
 > | USD plug-in loading (prerequisite) | `ug/using_hydra_viewer/usd_load_plugins.html` (2,041) |
 > | Node Parameters and Interface Controls (parameter promotion) | not yet located — referenced by `rg/3d_nodes/networkmaterialcreate.html` |
 > | Multiple NetworkMaterials in one node | `ug/adding_assigning_materials/networkmaterialcreate_multi_nm.html` |
