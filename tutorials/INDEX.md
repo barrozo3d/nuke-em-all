@@ -1131,10 +1131,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/ug/usd/native-usd-workflows.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, usd, scenegraph, nodegraph, katana-9, intermediate
+- **Summary:** Katana's native USD node set and what each family is for: Composition ordered by LIVRPS (Local, Inherits, VariantSets, References, Payload, Specializes); Prims, where UsdPrimCreate and UsdSchemaSet build their own UI — parameters populated dynamically from the USD version in use, defined by the USD API itself; Properties, including Pattern-Based Collections as the USD analogue of CEL; Output layer baking; UsdLayerWrite/.usda and UsdPythonWrite as escape hatches; UsdToKatana/KatanaToUsd conversion; and the UsdGaffer/UsdSuperLayer SuperTools. Plus the Scene Explorer's unified USD+Katana scene graph and USD property inspection in the Attributes tab. An orientation page that defers detail to fourteen others.
 - **File:** tutorials/using-native-usd-workflows.md
 
 ---

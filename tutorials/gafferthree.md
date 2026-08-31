@@ -94,5 +94,6 @@ katana, lighting, lookdev, scenegraph, cel, katana-9, intermediate
 - [Creating Shading Networks](creating-shading-networks.md) — shares `katana` + `lookdev` + `katana-9`; GafferThree assigns shaders to *lights* from its object table, while NetworkMaterialCreate is where *geometry* materials are authored as a shading network.
 - [RenderOutputDefine](renderoutputdefine.md) — shares `katana` + `katana-9`; the lights and shadow linking built here are what an `outputName: shadow` render output writes to disk.
 - [NetworkMaterialCreate](networkmaterialcreate.md) — shares `katana` + `lookdev` + `katana-9`; Template Materials here expose a controlled set of light-material parameters from one interface, the same problem its Material Interface and Interface Controls solve for geometry materials.
+- [Using Native USD Workflows](using-native-usd-workflows.md) — shares `katana` + `scenegraph` + `katana-9`; **`UsdGaffer` is the USD-native counterpart of this node**, listed there under SuperTools — the same lighting job in Katana's other scene representation.
 
-*Note: the library held **zero** Katana sources against an advertised Katana capability before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`). It now holds seven, so the cross-link set is still small and will grow as more Katana material is ingested.*
+*Note: the library held **zero** Katana sources against an advertised Katana capability before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`). It now holds eight, so the cross-link set is still small and will grow as more Katana material is ingested.*

@@ -18,7 +18,7 @@ then run the mandatory extraction pass (see `SKILL.md` Mode 3).
 
 ## Pending
 
-### 1. 🟡 Katana — **7 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
+### 1. 🟡 Katana — **8 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
 
 `SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
 `scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
@@ -29,8 +29,8 @@ This is the single largest hole in the skill: a whole advertised application
 with reference files but no ingested source material. It is also the case the
 cleanup plan's D4 batch called out as the reason to start here.
 
-> **D4b progress — 7 Foundry doc pages ingested and extracted** (3 on
-> 2026-08-24, 4 on 2026-08-31). The "zero tutorials for an advertised
+> **D4b progress — 8 Foundry doc pages ingested and extracted** (3 on
+> 2026-08-24, 5 on 2026-08-31). The "zero tutorials for an advertised
 > application" hole is open no longer, but each item below is only partly
 > covered. What is ingested is listed per item; what is still missing is left
 > unticked and **not guessed at**.
@@ -91,9 +91,20 @@ cleanup plan's D4 batch called out as the reason to start here.
       NetworkMaterialCreate, the `usdSurface` terminal, MaterialAssign, Hydra
       Viewer preview (Basic Material off; shadows from all/selected lights),
       and UsdUVTexture + `UsdPrimvarReader_float2` (`varname` = `st`).
-      ❌ Still missing: **USD scene assembly** (UsdIn and friends), the Hydra
-      Viewer as a topic, UsdPrimCreate / UsdSchemaSet, and loading the USD
-      plug-ins (referenced as a prerequisite, not ingested).
+      ✅ `using-native-usd-workflows.md` — **USD scene assembly**: the whole
+      native USD node set by family (Composition / Prims / Properties / Output /
+      Other / SuperTools), **LIVRPS** composition ordering, `UsdPrimCreate` and
+      `UsdSchemaSet` building their UI dynamically from the USD version in use,
+      Pattern-Based Collections as the USD analogue of CEL, `UsdLayerWrite`
+      (`.usda`) and `UsdPythonWrite` as escape hatches, `UsdToKatana` /
+      `KatanaToUsd`, the `UsdGaffer` / `UsdSuperLayer` SuperTools, the Scene
+      Explorer's unified USD+Katana scene graph, and USD property inspection in
+      the Attributes tab. **This is the orientation map; it defers detail to
+      fourteen other pages**, which is what makes the USD node references worth
+      ingesting next.
+      ❌ Still missing: the Hydra Viewer as a topic (**its page is a 1,025-char
+      stub — the content is elsewhere and not yet located**), `UsdPrimCreate` and
+      `UsdSchemaSet` in depth, importing USD data, and loading the USD plug-ins.
 
 > **Verified doc URLs for the topics still open above** (all returned HTTP 200
 > on 2026-08-31; Foundry's docs are MadCap Flare and the paths are not guessable
@@ -103,10 +114,10 @@ cleanup plan's D4 batch called out as the reason to start here.
 >
 > | Open topic | URL (prefix `https://learn.foundry.com/katana/Content/`) |
 > |---|---|
-> | USD scene assembly | `ug/usd/building_usd_scenes.html`, `ug/usd/loading_usdin_assets.html`, `ug/usd/importing_usd_data.html` |
-> | Hydra Viewer as a topic | `ug/using_hydra_viewer/using_hydra.html` |
-> | UsdPrimCreate / UsdSchemaSet | `rg/usd_nodes/usdprimcreate.html`, `rg/usd_nodes/usdschemaset.html` |
-> | USD plug-in loading (prerequisite) | `ug/using_hydra_viewer/usd_load_plugins.html` |
+> | Importing USD data | `ug/usd/importing_usd_data.html` (3,282 chars) |
+> | Hydra Viewer as a topic | ⚠️ **not located** — `ug/using_hydra_viewer/using_hydra.html` is a 1,025-char stub |
+> | UsdPrimCreate / UsdSchemaSet | `rg/usd_nodes/usdschemaset.html` (5,996), `rg/usd_nodes/usdprimcreate.html` (3,914) |
+> | USD plug-in loading (prerequisite) | `ug/using_hydra_viewer/usd_load_plugins.html` (2,041) |
 > | Node Parameters and Interface Controls (parameter promotion) | not yet located — referenced by `rg/3d_nodes/networkmaterialcreate.html` |
 > | Multiple NetworkMaterials in one node | `ug/adding_assigning_materials/networkmaterialcreate_multi_nm.html` |
 > | Assigning materials / MaterialStack | `ug/adding_assigning_materials/material_basics.html`, `ug/adding_assigning_materials/multiple_materials_materialstack_node.html`, `ug/adding_assigning_materials/using_networkmaterialcreate.html` |
