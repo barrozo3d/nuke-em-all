@@ -1087,10 +1087,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/ug/livegroups/livegroups.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, nodegraph, group, katana-9, intermediate
+- **Summary:** Katana's LiveGroup node references an external Katana project as its contents and reloads it automatically (on scene load, before batch rendering) or manually, with the source's first root-level Group node defining its user parameters and children — the mechanism for sharing setups between departments and across show, sequence and shot levels, published through the Asset API. Covers the .livegroup extension and how it differs on disk from a gzip-compressed .tar .katana file. The page is titled for LiveShadingGroups but never defines them.
 - **File:** tutorials/livegroups-and-liveshadinggroups.md
 
 ---

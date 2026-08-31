@@ -18,7 +18,7 @@ then run the mandatory extraction pass (see `SKILL.md` Mode 3).
 
 ## Pending
 
-### 1. 🟡 Katana — **3 tutorials** (was ZERO; D4b started 2026-08-24)
+### 1. 🟡 Katana — **4 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
 
 `SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
 `scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
@@ -29,18 +29,28 @@ This is the single largest hole in the skill: a whole advertised application
 with reference files but no ingested source material. It is also the case the
 cleanup plan's D4 batch called out as the reason to start here.
 
-> **D4b progress, 2026-08-24 — 3 Foundry doc pages ingested and extracted.**
-> The "zero tutorials for an advertised application" hole is open no longer, but
-> each item below is only partly covered. What is ingested is listed per item;
-> what is still missing is left unticked and **not guessed at**.
+> **D4b progress — 4 Foundry doc pages ingested and extracted** (3 on
+> 2026-08-24, 1 on 2026-08-31). The "zero tutorials for an advertised
+> application" hole is open no longer, but each item below is only partly
+> covered. What is ingested is listed per item; what is still missing is left
+> unticked and **not guessed at**.
 
 - [~] **Katana fundamentals** — scene graph, Ops/OpScript, Live Groups
       ✅ `opscript-tutorials.md` — `Interface` API: CreateChild and its
       infinite-recursion trap, the three guards (CEL match / location-path
       if-else / `OpArgsBuilders.StaticSceneCreate`), DeleteChild vs
       DeleteChildren vs DeleteSelf, CopyLocationToChild across inputs.
+      ✅ `livegroups-and-liveshadinggroups.md` — the LiveGroup node: an external
+      Katana project as node contents, reloaded automatically (scene load, before
+      batch render) or manually; the source's first root-level Group node defines
+      its user parameters and children; `.livegroup` vs `.katana` on disk
+      (uncompressed ASCII XML vs a gzip-compressed `.tar`); Publish… /
+      Publish and Finish Editing Contents…; the Import Livegroup dialog's
+      **Types → macros** option; publishing sources through the Asset API.
       ❌ Still missing: a general scene-graph orientation ("Getting Started"),
-      and **Live Groups entirely**.
+      and **LiveShadingGroups** — named in that page's own title and breadcrumb
+      but never defined anywhere in its body, so it is recorded as a gap rather
+      than inferred.
 - [~] **Katana lookdev + lighting workflow** — Material/NetworkMaterial nodes,
       GafferThree, light linking, render passes
       ✅ `gafferthree.md` — the Gaffer object table, lights/rigs/light
@@ -58,6 +68,24 @@ cleanup plan's D4 batch called out as the reason to start here.
       ❌ Still missing: **USD scene assembly** (UsdIn and friends), the Hydra
       Viewer as a topic, UsdPrimCreate / UsdSchemaSet, and loading the USD
       plug-ins (referenced as a prerequisite, not ingested).
+
+> **Verified doc URLs for the topics still open above** (all returned HTTP 200
+> on 2026-08-31; Foundry's docs are MadCap Flare and the paths are not guessable
+> — these were crawled from `Content/learn_katana.html` → `user_guide.html` /
+> `reference_guide.html`, since `Data/Tocs/*` 404s and `Data/Search.js` is a
+> stemmed index with no usable path list):
+>
+> | Open topic | URL (prefix `https://learn.foundry.com/katana/Content/`) |
+> |---|---|
+> | NetworkMaterial as its own topic | `ug/adding_assigning_materials/adding_assigning_materials.html` |
+> | Render passes | `ug/rendering_scene/setting_up_render_pass.html` |
+> | USD scene assembly | `ug/usd/building_usd_scenes.html`, `ug/usd/loading_usdin_assets.html`, `ug/usd/importing_usd_data.html` |
+> | Hydra Viewer as a topic | `ug/using_hydra_viewer/using_hydra.html` |
+> | UsdPrimCreate / UsdSchemaSet | `rg/usd_nodes/usdprimcreate.html`, `rg/usd_nodes/usdschemaset.html` |
+> | USD plug-in loading (prerequisite) | `ug/using_hydra_viewer/usd_load_plugins.html` |
+>
+> The full USD node reference index is `rg/usd_nodes/usd_nodes.html` (40 nodes)
+> and the USD user-guide index is `ug/usd/usd-katana.html` (45 topics).
 
 ### 2. Mari — **2 tutorials** (thin for an advertised application)
 

@@ -82,3 +82,4 @@ katana, usd, lookdev, nodegraph, katana-9, intermediate
 ## Related Tutorials
 - [GafferThree](gafferthree.md) — shares `katana` + `lookdev`; GafferThree lights are what the Hydra Viewer's **Shadows from All Lights / Selected Lights** preview options here are casting from, and both assign materials through the same Katana mechanisms.
 - [OpScript Tutorials](opscript-tutorials.md) — shares `katana` + `nodegraph`; `UsdPrimvarReader_float2` reads a primvar (`st`) off the geometry, which is the attribute-to-shader transfer that OpScript can author or override at the scene graph level.
+- [LiveGroups and LiveShadingGroups](livegroups-and-liveshadinggroups.md) — shares `katana` + `nodegraph`; the NetworkMaterialCreate setup built here is exactly the kind of self-contained node group a LiveGroup is meant to publish and share between departments.
