@@ -18,7 +18,7 @@ then run the mandatory extraction pass (see `SKILL.md` Mode 3).
 
 ## Pending
 
-### 1. 🟡 Katana — **12 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
+### 1. 🟡 Katana — **14 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
 
 `SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
 `scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
@@ -29,8 +29,8 @@ This is the single largest hole in the skill: a whole advertised application
 with reference files but no ingested source material. It is also the case the
 cleanup plan's D4 batch called out as the reason to start here.
 
-> **D4b progress — 12 Foundry doc pages ingested and extracted** (3 on
-> 2026-08-24, 9 on 2026-08-31). The "zero tutorials for an advertised
+> **D4b progress — 14 Foundry doc pages ingested and extracted** (3 on
+> 2026-08-24, 11 on 2026-08-31). The "zero tutorials for an advertised
 > application" hole is open no longer, but each item below is only partly
 > covered. What is ingested is listed per item; what is still missing is left
 > unticked and **not guessed at**.
@@ -133,11 +133,20 @@ cleanup plan's D4 batch called out as the reason to start here.
       Payload working set, and the trap that **unloaded payloads still render**),
       `UsdReferenceSet`, `UsdInheritSet` (update once, all instances follow) and
       `UsdSpecializeSet` (overrides always beat further references).
+      ✅ `composition-arcs---understanding-livrps.md` — **LIVRPS**: the six layer
+      types in strength order (Local / Inherits / Variants / References /
+      Payloads / Specializes, strongest first), which is what
+      `using-native-usd-workflows.md` and `importing-usd-data.md` both deferred
+      to. Foundry's per-arc summary, **not** the OpenUSD specification —
+      *LIVRPS Strength Ordering* in the USD Glossary remains uningested.
+      ✅ `loading-usd-plug-ins-into-katana.md` — **USD plug-in loading**, and the
+      answer is that it is a **non-problem on any current Katana**: enabled by
+      default since **4.5v1**. The pre-4.5v1 launcher-script setup (three
+      variables into `KATANA_ROOT/plugins/Resources/Usd`) is recorded as
+      historical. The one non-version-gated fact: it adds a `usd` menu to the
+      **NetworkMaterialCreate terminal sidebar**.
       ❌ Still missing: the Hydra Viewer as a topic (**its page is a 1,025-char
-      stub**), loading the USD plug-ins (2,041), and — **the most-referenced
-      uningested Katana page in the library** — *Composition Arcs: Understanding
-      LIVRPS*, cited by both `using-native-usd-workflows.md` and
-      `importing-usd-data.md`.
+      stub and no alternative was locatable**).
 
 > **Verified doc URLs for the topics still open above** (all returned HTTP 200
 > on 2026-08-31; Foundry's docs are MadCap Flare and the paths are not guessable

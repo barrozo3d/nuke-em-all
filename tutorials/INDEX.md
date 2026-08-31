@@ -1186,10 +1186,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/ug/usd/composition_arcs_livrps.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, usd, scenegraph, katana-9, intermediate
+- **Summary:** LIVRPS -- the six USD layer types in strength order, and the rule deciding which opinion wins: Local, Inherits, Variants, References, Payloads, Specializes, where layers higher on the list have stronger opinions than those lower down. Local holds anything changed after composing the stage and overrides everything; Inherits stays live against its base unless a local override intervenes; Variants are switchable property groups; References assemble content, can be versioned and allow local changes without touching the original file; Payloads defer heavy layers for performance; Specializes is the baseline everything above can override. The page two other USD entries kept deferring to -- Foundry's per-arc summary, not the OpenUSD specification.
 - **File:** tutorials/composition-arcs---understanding-livrps.md
 
 
@@ -1197,10 +1197,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/ug/using_hydra_viewer/usd_load_plugins.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, usd, katana-9, beginner
+- **Summary:** Enabling Katana's USD plug-ins -- and the answer on any current Katana is that they are already enabled, by default since 4.5v1, with no environment variables needed. Earlier versions required a launcher script setting three variables into KATANA_ROOT/plugins/Resources/Usd: the library path (PATH on Windows, LD_LIBRARY_PATH on Linux) at lib, KATANA_RESOURCES at plugin, and PYTHONPATH at lib/python, each appended rather than replaced. Once loaded: additional USD node types in the node creation menu, additional USD shading nodes, and a usd menu on the terminal sidebar inside NetworkMaterialCreate nodes -- the one fact here that is not version-gated.
 - **File:** tutorials/loading-usd-plug-ins-into-katana.md
 
 ---

@@ -131,4 +131,4 @@ katana, scenegraph, nodegraph, cel, katana-9, advanced
 - [Using Native USD Workflows](using-native-usd-workflows.md) — shares `katana` + `scenegraph` + `nodegraph`; it positions USD's Pattern-Based Collections as *"similar to Katana's CEL"* — the same selection problem solved once per scene representation.
 - [UsdPrimCreate](usdprimcreate.md) — shares `katana` + `scenegraph` + `nodegraph`; OpScript's `Interface` API creates and deletes scene graph locations procedurally on the Katana side, the same authoring job this node does declaratively on the USD side.
 
-*Note: the library held zero Katana sources before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`) and now holds twelve, so the Katana cross-link set is still narrow.*
+*Note: the library held zero Katana sources before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`) and now holds fourteen, so the Katana cross-link set is still narrow.*

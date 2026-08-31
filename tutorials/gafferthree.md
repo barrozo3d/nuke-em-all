@@ -97,4 +97,4 @@ katana, lighting, lookdev, scenegraph, cel, katana-9, intermediate
 - [Using Native USD Workflows](using-native-usd-workflows.md) — shares `katana` + `scenegraph` + `katana-9`; **`UsdGaffer` is the USD-native counterpart of this node**, listed there under SuperTools — the same lighting job in Katana's other scene representation.
 - [UsdSchemaSet](usdschemaset.md) — shares `katana` + `lighting` + `scenegraph`; **the same job in the other scene representation** — GafferThree shapes lights from its object table, while there a plain `DiskLight` gains cone `angle`, `softness` and `focus` by applying `ShapingAPI` on top of it.
 
-*Note: the library held **zero** Katana sources against an advertised Katana capability before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`). It now holds twelve, so the cross-link set is still small and will grow as more Katana material is ingested.*
+*Note: the library held **zero** Katana sources against an advertised Katana capability before 2026-08-24 (see `KNOWLEDGE_GAPS_TODO.md`). It now holds fourteen, so the cross-link set is still small and will grow as more Katana material is ingested.*
