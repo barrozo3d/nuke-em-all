@@ -1104,6 +1104,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** Building a renderer shading network inside Katana's NetworkMaterialCreate node — the current workflow that supersedes the older Network Material node, with terminals prepopulated in a fixed sidebar per configured renderer instead of added by hand. Covers the Tab / Shift+Tab / S node menus and their renderer colour stripes, type-checked colour-coded port connections, the Alt+1/2/3 view states, Dot-node routing (one input, many outputs), Alt+H input-connection hiding, and the connectionStyle preference. The finished NetworkMaterial lands under /root/materials.
 - **File:** tutorials/creating-shading-networks.md
 
+
+### RenderOutputDefine
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/rg/3d_nodes/renderoutputdefine.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/renderoutputdefine.md
+
 ---
 
 ## Tag Reference
