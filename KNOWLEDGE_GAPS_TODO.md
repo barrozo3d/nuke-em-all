@@ -18,7 +18,7 @@ then run the mandatory extraction pass (see `SKILL.md` Mode 3).
 
 ## Pending
 
-### 1. 🟡 Katana — **10 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
+### 1. 🟡 Katana — **11 tutorials** (was ZERO; D4b started 2026-08-24, continued 2026-08-31)
 
 `SKILL.md` advertises Katana ("lookdev/lighting/USD", trigger words `katana`,
 `scenegraph`), and `references/katana-lookdev-lighting.md` plus **seven** Katana
@@ -29,8 +29,8 @@ This is the single largest hole in the skill: a whole advertised application
 with reference files but no ingested source material. It is also the case the
 cleanup plan's D4 batch called out as the reason to start here.
 
-> **D4b progress — 10 Foundry doc pages ingested and extracted** (3 on
-> 2026-08-24, 7 on 2026-08-31). The "zero tutorials for an advertised
+> **D4b progress — 11 Foundry doc pages ingested and extracted** (3 on
+> 2026-08-24, 8 on 2026-08-31). The "zero tutorials for an advertised
 > application" hole is open no longer, but each item below is only partly
 > covered. What is ingested is listed per item; what is still missing is left
 > unticked and **not guessed at**.
@@ -82,10 +82,16 @@ cleanup plan's D4 batch called out as the reason to start here.
       **Interface Controls** — `state` visibility/lock, `targetType`,
       `targetName`, `definitionStyle` operator-tree vs conditional state
       expression, and the sixteen comparison ops.
+      ✅ `multiple-networkmaterials-with-networkmaterialcreate.md` — **multiple
+      NetworkMaterials in one node**: Add NetworkMaterial / Add Namespace,
+      middle-mouse arrangement mirrored into the Scene Graph tab and terminal
+      sidebar, per-material renderer/terminal counts, interactive state and
+      colours — with the measured payoff, **27 nodes → 19 by sharing 8**.
+      **The three NetworkMaterial items are now one complete topic across three
+      entries** (workflow / parameter reference / multi-material).
       ❌ Still missing: **Node Parameters and Interface Controls** (how a
       parameter is promoted in the first place — the step *before* every
-      Interface Control), **multiple NetworkMaterials in one
-      NetworkMaterialCreate**, and material Look Files end-to-end.
+      Interface Control), and material Look Files end-to-end.
 - [~] **Katana + USD** — USD scene assembly in Katana, Hydra viewer
       ✅ `setting-up-usdpreviewsurface-materials.md` — UsdPreviewSurface inside
       NetworkMaterialCreate, the `usdSurface` terminal, MaterialAssign, Hydra
@@ -135,7 +141,6 @@ cleanup plan's D4 batch called out as the reason to start here.
 > | Hydra Viewer as a topic | ⚠️ **not located** — `ug/using_hydra_viewer/using_hydra.html` is a 1,025-char stub |
 > | USD plug-in loading (prerequisite) | `ug/using_hydra_viewer/usd_load_plugins.html` (2,041) |
 > | Node Parameters and Interface Controls (parameter promotion) | not yet located — referenced by `rg/3d_nodes/networkmaterialcreate.html` |
-> | Multiple NetworkMaterials in one node | `ug/adding_assigning_materials/networkmaterialcreate_multi_nm.html` |
 > | Assigning materials / MaterialStack | `ug/adding_assigning_materials/material_basics.html`, `ug/adding_assigning_materials/multiple_materials_materialstack_node.html`, `ug/adding_assigning_materials/using_networkmaterialcreate.html` |
 > | Launching / performing a render | `ug/rendering_scene/performing_render.html` (8,440 chars — the largest in that section) |
 > | Render types | `ug/rendering_scene/render_types.html` |
