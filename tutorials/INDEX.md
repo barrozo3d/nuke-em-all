@@ -1208,10 +1208,10 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/katana/Content/ug/look_files/look_file_baking.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Katana
+- **Version:** 9.0v3
+- **Tags:** katana, lookdev, nodegraph, katana-9, intermediate
+- **Summary:** Baking a Katana look into a Look File with the LookFileBake node, which diffs the scene graph in its original state against its modified state and writes out only the differences — attribute changes (new, modified, deleted) plus new locations such as face-sets or added lights. Extra inputs add extra output passes. The Node Graph is live recipe; a Look File is a baked cache of that recipe results, which is what makes it efficient across thousands of assets and what forces a re-bake when the asset is re-versioned. To hand off live recipe instead, use macros or LiveGroups.
 - **File:** tutorials/look-file-baking.md
 
 ---

@@ -215,9 +215,23 @@ cleanup plan's D4 batch called out as the reason to start here.
 > and the USD user-guide index is `ug/usd/usd-katana.html` (45 topics).
 
 > 🔎 **Discovery attempt, 2026-08-31 — what could and could not be found.**
-> **Found:** `ug/look_files/look_file_baking.html` (**2,466 chars**) — the
-> `LookFileBake` node and its two inputs; partially closes *material Look Files*.
+> ✅ **INGESTED 2026-09-01 — `look-file-baking.md`.**
+> `ug/look_files/look_file_baking.html` (**2,466 chars**) — the `LookFileBake`
+> node, its original/modified inputs, the extra input per output pass, and the
+> live-recipe-vs-baked-cache distinction. This was the **last located,
+> reachable, substantive Katana page** on this list; Katana **8 → 9** entries.
 > Its parent `ug/look_files/look_files.html` is a **1,364-char stub**.
+>
+> ⚠️ **The topic is only partly closed, and the entry says so in its own scope
+> note.** The page is concept-level: it does **not** document the `LookFileBake`
+> node's parameters, the on-disk Look File format, or the nodes that read a Look
+> File back in — `LookFileAssign`, `LookFileManager`, `LookFileMaterialsIn/Out`
+> are not named anywhere in the text. **No page has been located for any of
+> them**, and nothing was written from model knowledge to cover the gap.
+> - [ ] **Look File read-back nodes** — `LookFileAssign`, `LookFileManager`,
+>       `LookFileMaterialsIn` / `LookFileMaterialsOut`. Likely under
+>       `rg/3d_nodes/`, which **cannot be crawled** (see the warning below), so
+>       this needs a different entry point than the one that found the rest.
 >
 > **Confirmed NOT locatable**, after specific attempts rather than assumption:
 > * **Node Parameters and Interface Controls** (parameter promotion). The obvious
