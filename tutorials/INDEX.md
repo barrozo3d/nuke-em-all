@@ -1203,6 +1203,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** Enabling Katana's USD plug-ins -- and the answer on any current Katana is that they are already enabled, by default since 4.5v1, with no environment variables needed. Earlier versions required a launcher script setting three variables into KATANA_ROOT/plugins/Resources/Usd: the library path (PATH on Windows, LD_LIBRARY_PATH on Linux) at lib, KATANA_RESOURCES at plugin, and PYTHONPATH at lib/python, each appended rather than replaced. Once loaded: additional USD node types in the node creation menu, additional USD shading nodes, and a usd menu on the terminal sidebar inside NetworkMaterialCreate nodes -- the one fact here that is not version-gated.
 - **File:** tutorials/loading-usd-plug-ins-into-katana.md
 
+
+### Look File Baking
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/look_files/look_file_baking.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/look-file-baking.md
+
 ---
 
 ## Tag Reference
