@@ -5,12 +5,13 @@ url: https://www.youtube.com/watch?v=dLrJhqqNMrk
 author: Compositing Academy
 ingested: 2026-08-14
 app: "Nuke / NukeX (SmartVector requires NukeX)"
-version: "Nuke 13.x (13.1/13.2 — exact 2022 point-release not stated)"
+version: "Nuke 13.x (13.1/13.2) -- still not on screen; NukeX confirmed from the title bar"
 tags: [tracking, camera-tracking, 3d-system, projection, channels, grading, digital-matte-painting, advanced]
 extraction_status: complete
 frames_dir: tutorials/frames/23-nuke-tutorial-series-cracks-keentools-smartvectors/
 frame_count: 8
-frame_status: complete  # synced to disk 2026-08-24 (D2): frames were captured but select_frames.py never recorded them
+frame_status: complete
+frame_selection: content-anchored (manual timestamps chosen from transcript, not blind percentages)
 ---
 
 # [2/3] Nuke Tutorial Series (CRACKS, Keentools, Smartvectors)
@@ -23,12 +24,7 @@ frame_status: complete  # synced to disk 2026-08-24 (D2): frames were captured b
 
 ## Raw Data (for Claude Code extraction)
 
-Frames are not captured yet. Read the timestamped transcript below, pick moments
-that actually show a technique/result worth a still (not blind percentages —
-even within a named chapter, verify the real moment against its timestamps), then run:
-  python select_frames.py 23-nuke-tutorial-series-cracks-keentools-smartvectors <ts1> <ts2> ...
-(seconds or mm:ss). This appends a "Captured Frames" section and updates the
-frontmatter before you write the Structured Notes below.
+Frames captured — see "Captured Frames" section below.
 
 
 ### Introduction (Hit Like!) [0:00]
@@ -922,6 +918,19 @@ frontmatter before you write the Structured Notes below.
 
 ---
 
+## Captured Frames
+
+- [4:00] tutorials/frames/23-nuke-tutorial-series-cracks-keentools-smartvectors/frame_000.jpg
+- [13:30] tutorials/frames/23-nuke-tutorial-series-cracks-keentools-smartvectors/frame_001.jpg
+- [22:00] tutorials/frames/23-nuke-tutorial-series-cracks-keentools-smartvectors/frame_002.jpg
+- [30:00] tutorials/frames/23-nuke-tutorial-series-cracks-keentools-smartvectors/frame_003.jpg
+- [36:00] tutorials/frames/23-nuke-tutorial-series-cracks-keentools-smartvectors/frame_004.jpg
+- [42:00] tutorials/frames/23-nuke-tutorial-series-cracks-keentools-smartvectors/frame_005.jpg
+- [47:30] tutorials/frames/23-nuke-tutorial-series-cracks-keentools-smartvectors/frame_006.jpg
+- [52:00] tutorials/frames/23-nuke-tutorial-series-cracks-keentools-smartvectors/frame_007.jpg
+
+---
+
 ## Structured Notes
 
 ### Core Technique
@@ -932,20 +941,22 @@ Opens with a **shot-analysis methodology**: before touching any tracker, look at
 
 ### Key Steps
 1. Before tracking anything, walk the footage and classify each region: flat/no-parallax/no-overlap → SmartVector; deforming/no-trackable-features → blend two tracks via ST maps; overlap/parallax (face) → full 3D track (KeenTools).
-2. Extend unreliable SmartVector regions (overlap edges, clip edges) with either SmartVector's built-in "in-paint map region" + mask + mat-dilation, or — for finer control — `VectorDistort` → ST map → separate `RotoPaint` mask + `IPaint`(In-Paint) node with independent direction/amount/smoothness sliders.
-3. Build a 3D face track without extra reference photos: `AppendClip` two frame-holds of the same shot at different times (pinned to adjacent frame numbers) to satisfy FaceBuilder's multi-photo expectation; run FaceBuilder → align face → manually drag pins to fit per-frame; more frames = more accuracy. Feed the built model into FaceTracker and keyframe/refine pins across time like a standard track.
+2. Extend unreliable SmartVector regions (overlap edges, clip edges) with either SmartVector's built-in in-paint option + mask + matte dilation — **captured with its settings** on `SmartVector5` [frame_002]: `Vector Detail` **1**, `Strength` **3**, `Matte` **Matte-Alpha**, `Output` **Background**, **`Inpaint Matte Region` ✓**, **`Matte Dilation` 34**, and Tolerances `Weight Red` **0.59** / `Weight Green` **0.545** / `Weight Blue` **0.1**. The entry described this option but carried none of its numbers. — or — for finer control — `VectorDistort` → ST map → separate `RotoPaint` mask + `IPaint`(In-Paint) node with independent direction/amount/smoothness sliders.
+3. Build a 3D face track without extra reference photos: `AppendClip` two frame-holds of the same shot at different times to satisfy FaceBuilder's multi-photo expectation. ✅ **The trick is captured whole** [frame_001], and it is exactly as described: `Read3 P_340.jpg` → `FrameHold6 (frame 340)` → `FrameRange4`, and `Read1 P_333.jpg` → `FrameHold5 (frame 505)` → `FrameRange3`, both feeding **`AppendClip1`**. Note the two holds are **165 frames apart**, not adjacent — the entry's parenthetical said "pinned to adjacent frame numbers", which describes the FrameRange pinning rather than the source frames; run FaceBuilder → align face → manually drag pins to fit per-frame; more frames = more accuracy. Feed the built model into FaceTracker and keyframe/refine pins across time like a standard track.
 4. Once locked, use the 3D head for more than tracking: parent 3D lights to move with expanding effects for interactive lighting/pools-of-light on the geometry — far cheaper than hand-rotoing light shapes in 2D.
-5. Project the plate onto the tracked head and render to a flat square UV-space image — this stabilizes geometry but leaves lighting moving naturally, which is the property the next step exploits.
+5. Project the plate onto the tracked head and render to a flat square UV-space image — **confirmed at the node level**: `ScanlineRender7` runs `projection mode` **`uv`**, with `transparency` ✓, `Z-buffer` ✓, `filter` cubic, `antialiasing` none, `overscan` 0, `ambient` 0 [frame_004]. The result is a **4096×4096** buffer (the viewer reads `4kface 4096x4096`, channels `rgba, depth, forward.u, forward.v`) — this stabilizes geometry but leaves lighting moving naturally, which is the property the next step exploits.
 6. Merge new CG/photo textures onto the flat UV-space image; grab a **dynamic light-map** by heavily blurring a copy of the original UV-space plate (desaturate first if you only want luminance, not skin-tone color) and `Multiply` it onto the new texture — as the plate's real lighting animates, the new texture inherits that same lighting automatically without manual roto-grading.
 7. Isolate only the newly-added layers before the final render: disconnect/delete the original base picture from the chain right before the `ScanlineRender` so the rendered-out result is just the new CG cracks (with inherited lighting) as a clean additive layer to merge over the main comp.
 8. For 3D crack detail: grade/key a black-and-white height alpha from the UV-space crack texture (white = raised), frame-hold it, feed into `DisplaceGeo` on the tracked head — reserve this for high-parallax/glancing-angle regions only; flatter, more front-on regions don't need it.
 9. Swap in a subdivided (higher-poly) version of the same tracked head wherever displacement is applied, to avoid blocky/low-quality displaced edges.
 10. Add contact shadows: re-render the displaced geometry through `RayRender` with an Ambient Occlusion shader, merge the AO pass over a white `Constant`, `Multiply` over the final image.
-11. Build a 2D-only crack matte via frequency separation: blur the flat UV crack texture, divide the original by the blur to isolate high-frequency detail, Luma-key that to get a clean alpha — much faster than manually rotoscoping every crack.
-12. For crack mattes on **displaced** (3D) cracks specifically: Luma-key the alpha *before* the DisplaceGeo is applied, `Shuffle` it into a new custom channel (create via Shuffle's channel-name "New" option) on the pre-displacement image, ensure the `ScanlineRender`'s channel output is set to render all channels — this rides the alpha through the displacement pipeline correctly aligned; extract the custom channel afterward, premultiply, and combine with the 2D-region crack matte into one unified alpha.
+11. Build a 2D-only crack matte via frequency separation. ✅ **The three-node chain is captured exactly as written** [frame_006]: `Merge46 (over)` → **`Blur8 (all)`** → **`Merge32 (divide)`** → **`Keyer9 (luminance key)`** producing an alpha. Blur the flat UV crack texture, divide the original by the blur to isolate high-frequency detail, Luma-key that to get a clean alpha — much faster than manually rotoscoping every crack.
+12. For crack mattes on **displaced** (3D) cracks specifically: Luma-key the alpha *before* the DisplaceGeo is applied, `Shuffle` it into a new custom channel, ensure the render writes all channels. ✅ **Every part of this is visible, and the channel has a name**: `Shuffle22` maps `rgba` → a custom output layer called **`crackmatte`** (red→crackmatte.red, green→crackmatte.green, blue→crackmatte.blue, alpha→crackmatte.alpha) [frame_007]; the viewer's channel readout reads **`rgba,crackmatte`** in two frames [frame_005, frame_007]; and `Write10` is set to `channels` **all** with `interleave` **channels, layers and views**, 16-bit half, Zip (1 scanline) compression [frame_007] — this rides the alpha through the displacement pipeline correctly aligned; extract the custom channel afterward, premultiply, and combine with the 2D-region crack matte into one unified alpha.
 
 ### Nodes / Tools / Settings
-- **Core Nuke/NukeX:** `SmartVector` (in-paint map region + mat dilation option), `VectorDistort` (SmartVector → ST map), `RotoPaint`/`Roto`, `IPaint`/In-Paint (direction/amount/smoothness controls), `AppendClip` (fake multi-frame FaceBuilder input), `Project3D`/UV-space flatten-and-render workflow, `Blur` + `Multiply` (dynamic light-map from a blurred plate), `DisplaceGeo`, `RayRender` (Ambient Occlusion shader), `Constant` + `Multiply` (AO contact-shadow application), frequency separation (`Blur` + divide) for crack-alpha isolation, `Shuffle` (custom channel creation — critical for the displacement-crack-matte fix), `ScanlineRender` (channels output set to "all")
+- **Core Nuke/NukeX:** `SmartVector` — as configured: Vector Detail **1**, Strength **3**, Matte-Alpha, Output Background, **Inpaint Matte Region ✓**, **Matte Dilation 34**, tolerance weights 0.59 / 0.545 / 0.1 [frame_002]; `VectorDistort` (SmartVector → ST map), `RotoPaint`/`Roto`, `IPaint`/In-Paint, **`AppendClip1`** fed by `FrameHold6 (frame 340)` and `FrameHold5 (frame 505)` [frame_001], `Project3D`/UV-space workflow rendered by **`ScanlineRender7` at `projection mode uv`, 4096×4096** [frame_004], `Blur` + `Multiply` (dynamic light-map), **`DisplaceGeo4`/`DisplaceGeo5`** on a `ReadGeo13` .obj, **`RayRender1`** writing **`PC_DT_Trois_AO_326.exr`** for the AO pass [frame_005], `Constant` + `Multiply` (AO contact-shadow application), frequency separation as **`Blur8` → `Merge32 (divide)` → `Keyer9 (luminance key)`** [frame_006], **`Shuffle22`** creating the custom **`crackmatte`** layer [frame_007], `ScanlineRender` / `Write10` with channels **all** and `interleave` **channels, layers and views** [frame_007]
+- **Grades captured in passing:** `Grade76` at `gain` **4** / `gamma` **1.24** [frame_003, frame_004]; `Grade58` at `multiply` **1.38** [frame_005]
+- **The author's own structure**, from a sticky note in the script [frame_006]: *"1. Setup Before Creative (3D Track, SmartVector) — 2. Blending 3D Textures — 3. 3D Enhancement"*
 - **KeenTools (third-party plugin, not Foundry):** **FaceBuilder** (builds a 3D face model from multiple photos/frames — pin-fitting workflow) and **FaceTracker** (locks that model to footage over time) — a 14-day free trial is available; this was the author's first project using it
 - **Reused technique from another tutorial in this KB:** frequency separation, applied here not for skin retouching but as a general-purpose "grab lighting, discard detail" integration trick — same underlying math (blur + divide/multiply), different purpose
 - **Cross-app note:** the subdivided high-res head was built in Maya; the author notes a Subdivide/Smooth modifier in Blender achieves the same result
@@ -954,10 +965,42 @@ Opens with a **shot-analysis methodology**: before touching any tracker, look at
 Expert — assumes working knowledge of SmartVector, ST maps, UV-space compositing, and Nuke's 3D system already; the displacement-crack-matte channel-shuffling technique in particular is explicitly flagged by the author as the part most viewers will find confusing.
 
 ### Foundry App & Version
-Nuke / NukeX — `SmartVector` and `VectorDistort` are NukeX-exclusive nodes. Version not stated on screen; per this skill's version-tracker, a 2022 upload falls in the Nuke 13.1 (Nov 2021) → 13.2 (Apr 2022) window. Uses only the Classic 3D system (Project3D, DisplaceGeo, RayRender, ScanlineRender) — predates the 14.0-beta USD 3D overhaul.
+**NukeX — now confirmed rather than inferred.** The title bar reads **`styleframe14.nk [modified] - NukeX`** in all eight frames [frame_000 … frame_007], which settles the app half of this field; `SmartVector` and `VectorDistort` are NukeX-exclusive nodes and this is a NukeX session.
+
+**The version is still not on screen** — Nuke's title bar carries the script name and edition but no version number, and no About dialog appears. The existing 13.1/13.2 reasoning therefore stands unchanged, and the frames add two independent supports for it rather than a reading:
+
+- Only the **Classic 3D** system is used (`Project3D`, `ScanlineRender`, `RayRender`, `DisplaceGeo`, `ReadGeo`, `TransformGeo`, `CameraLink`), with no USD/GeoOp node anywhere in the graphs — consistent with pre-14.0 [frame_004, frame_005, frame_007].
+- The `Shuffle` node uses the **layer-mapping UI** (Input Layer / Output Layer columns) introduced in Nuke 11.0, so the session is 11.0+ [frame_007].
+
+Together those bracket it to **11.0 ≤ version < 14.0**, which contains the 13.1/13.2 estimate without contradicting it. The workstation is a **macOS** machine with an **AMD Radeon Pro 5500M** GPU, named in SmartVector's Local GPU field [frame_002].
 
 ### Tags
 tracking, camera-tracking, 3d-system, projection, channels, grading, digital-matte-painting, advanced
+
+---
+
+## Frame verification (2026-09-02)
+
+| | |
+|---|---|
+| **Confirmed** | this entry holds up better than any other in the batch, and it is the most technically ambitious one. The `AppendClip` FaceBuilder trick, the `uv` projection-mode render, the `Blur` → `divide` → luminance-key frequency separation, the `DisplaceGeo` + `RayRender` AO pass, and the custom-channel Shuffle are **all present, wired as described, and named** [frame_001, frame_004, frame_005, frame_006, frame_007]. `NukeX` is now read off the title bar rather than inferred from node availability. |
+| **Added** | the numbers the entry never had: `SmartVector` at Vector Detail **1** / Strength **3** / **Matte Dilation 34** with its three tolerance weights [frame_002]; the two frame-holds at **340** and **505**; the UV render's **4096×4096** size; the custom channel's actual name, **`crackmatte`**; the AO render's filename `PC_DT_Trois_AO_326.exr`; the `Write` node's full EXR configuration; two Grade values; and the author's own three-part structure, taken from a sticky note in his script [frame_006]. |
+| **Corrected** | a small one: Key Step 3 said the two frame-holds are "pinned to adjacent frame numbers". The captured holds are frames **340** and **505** — 165 apart. Adjacency applies to the `FrameRange` pinning that follows, not to the source frames, and the wording now says so. |
+| **Flagged as unverified** | the KeenTools half — FaceBuilder's pin-fitting, FaceTracker's refinement, and the 14-day trial — appears in no frame; neither does the 3D-lights-parented-to-the-head step, the `IPaint` direction/amount/smoothness controls, or the Maya-subdivided head swap. |
+
+✅ **Both Nuke entries in this batch make the same point from opposite ends.**
+`easy-trick-improve-your-color-grading-skills` had a *false negative* recorded
+against its 256×144 frames — "no OCIO metadata visible" — which the 720p
+re-capture immediately falsified. This entry had a *correct but unsupported*
+inference, and the re-capture supported it without ever showing a version
+string, by bracketing the release from the UI itself.
+
+The batch's version scoreboard is worth stating plainly: of the 22 sets, the
+fields that were **wrong** were the ones written as vague inferences
+(`4.x`, `3.x/4.x`, `5.x`), and the fields that were **right** were the ones
+taken from a video's own title or reasoned from dated evidence. Guessing a
+version from what a technique requires produced a wrong answer nearly every
+time it was checked; reading it, or bracketing it from features, did not.
 
 ---
 
