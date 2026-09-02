@@ -1,6 +1,7 @@
 tutorials/frames/
 cookies.txt
 references/*.pdf
+course-ingest/
 
 cookies.txt.stale-disabled
 __pycache__/
