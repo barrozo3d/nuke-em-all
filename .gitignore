@@ -8,3 +8,4 @@ __pycache__/
 _nuke_urls.txt
 *_batch_ingest.log
 batch_ingest_*.log
+scratch_compact/
