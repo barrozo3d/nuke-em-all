@@ -105,6 +105,25 @@ COURSE = {
     # no tutorials/*.md, no INDEX.md. Phase 3 makes that a composition choice
     # rather than a fork.
     "outputs":      ("subtitles", "translation"),
+    # ── layout + ledger shape, consumed by course_engine.course ──────────────
+    "layout": "numbered",
+    "lesson_slug_fmt": "{prefix} wk{week} {order:02d} {topic_raw}",
+    # ⚠️ KEY ORDER IS LOAD-BEARING -- see houdini-wand's note.
+    "lesson_seed": {
+        "srt_written": False,
+        "transcript_cached": None,
+        "safeguard_warnings": [],
+        "safeguard_critical": [],
+        "needs_review": False,
+        "flagged_segments": [],
+        "flagged_segments_reviewed": False,
+        "flag_resolutions": {},
+        "last_transcribed": None,
+        "pt_br_srt_written": False,
+    },
+    # Empty on purpose: this course runs no knowledge-base module, so finalize
+    # marks only the review flag. §1.4 -- the modules were always separable.
+    "finalize_keys": (),
     "translate_to": "pt-BR",
 }
 
@@ -318,77 +337,21 @@ def flag_segments(segments):
 
 
 def lesson_slug(week, order, topic_raw):
-    # COURSE["lesson_slug_prefix"], NOT COURSE["slug"] — see the note on that key.
-    return ingest.slugify(f"{COURSE['lesson_slug_prefix']} wk{week} {order:02d} {topic_raw}")
+    return _ce.lesson_slug(COURSE, ingest.slugify, week=week, order=order, topic_raw=topic_raw)
 
 
 def scan_course(course_root):
-    """Walk 'Week N'/*.{mp4,mkv,mov}, parse order + topic from each filename's
-    leading number (both '01_topic.ext' and '01 Topic.ext' source-naming
-    styles appear in this course, unlike the pre-normalized Houdini course)."""
-    root = Path(course_root)
-    found = []
-    for week_dir in sorted(root.iterdir()):
-        if not week_dir.is_dir():
-            continue
-        m = WEEK_DIR_RE.match(week_dir.name)
-        if not m:
-            continue
-        week = int(m.group(1))
-        for f in sorted(week_dir.iterdir()):
-            if not f.is_file() or f.suffix.lower() not in VIDEO_EXTS:
-                continue
-            fm = FILE_ORDER_RE.match(f.stem)
-            if not fm:
-                print(f"[WARN] Filename doesn't start with a lesson number: {f.name} - skipping")
-                continue
-            order = int(fm.group(1))
-            topic_raw = fm.group(2)
-            found.append({"week": week, "order": order, "topic_raw": topic_raw, "path": f})
-    found.sort(key=lambda x: (x["week"], x["order"]))
-    return found
+    """Adapter -- the walk lives in course_engine.course, selected by
+    COURSE["layout"] ("numbered" here: `Week N`/`01 Topic.ext`)."""
+    return _ce.scan_course(course_root, COURSE)
 
 
 def ensure_lessons(state, course_root):
-    videos = scan_course(course_root)
-    for v in videos:
-        slug = lesson_slug(v["week"], v["order"], v["topic_raw"])
-        if slug in state["lessons"]:
-            continue
-        rel_path = str(v["path"].relative_to(Path(course_root))).replace("\\", "/")
-        state["lessons"][slug] = {
-            "week": v["week"],
-            "order": v["order"],
-            "topic_raw": v["topic_raw"],
-            "source_file": rel_path,
-            "duration_sec": probe_duration(v["path"]),
-            "srt_written": False,
-            "transcript_cached": None,
-            "safeguard_warnings": [],
-            "safeguard_critical": [],
-            "needs_review": False,
-            "flagged_segments": [],
-            "flagged_segments_reviewed": False,
-            "flag_resolutions": {},
-            "last_transcribed": None,
-            "pt_br_srt_written": False,
-        }
-    return state, videos
+    return _ce.ensure_lessons(state, course_root, COURSE, ingest.slugify)
 
 
 def cmd_finalize(state, course_slug, slug):
-    entry = state["lessons"].get(slug)
-    if entry is None:
-        print(f"ERROR: '{slug}' not found.")
-        sys.exit(1)
-    unresolved = unresolved_flags(entry)
-    if unresolved:
-        print(f"[BLOCKED] {slug} has {len(unresolved)} unresolved flag(s). "
-              f"Run --check-flags {slug} to see them, then --resolve-flag or --bulk-resolve each before finalizing.")
-        sys.exit(1)
-    entry["flagged_segments_reviewed"] = True
-    save_state(course_slug, state)
-    print(f"[FINALIZED] {slug}: {len(entry.get('flagged_segments', []))} flag(s), all resolved.")
+    _ce.finalize(state, slug, COURSE, lambda st: save_state(course_slug, st))
 
 
 def cmd_write_pt_srt(state, course_slug, course_root, slug, json_path):
