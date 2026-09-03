@@ -48,10 +48,59 @@ SKILL_DIR = Path(__file__).parent
 sys.path.insert(0, str(SKILL_DIR))
 import ingest  # reuse WHISPER_VOCAB_HINT, slugify, run_safeguards, _load_whisper_model
 
-DEFAULT_COURSE_ROOT = r"G:\Documentos\Cursos\Rebelway_Compositing in Nuke"
-DEFAULT_COURSE_SLUG = "rebelway-nuke-comp"
-DEFAULT_INSTRUCTOR  = "Rebelway"
-DEFAULT_MODEL       = "large-v3"  # accuracy over speed — precision was the explicit ask
+# ─────────────────────────────────────────────────────────────────────────────
+# PHASE 1 (houdini-wand/ULTIMATE_PIPELINE_PLAN.md §2.1) — name the seams
+# WITHOUT moving code.
+#
+#   COURSE  — what this course IS: root, slug, instructor, on-disk layout,
+#             which output modules run.
+#   PROFILE — everything TUNED AGAINST EVIDENCE from this course's language and
+#             audio: prompt, vocab pools, detector thresholds, detectors on/off.
+#
+# ⚠️ This file is the REASON the split exists. It and course_transcribe.py are
+# "one engine wearing two coats" (§1.3): 19 shared functions, 8 byte-identical,
+# and of the 11 that differ, the causes are language profile / course layout /
+# which output modules run — exactly the three dicts below. Read the two
+# PROFILEs side by side and the §2.1 claim is either obvious or falsified.
+#
+# ⚠️ Nothing has MOVED yet, by design. Phase 2 extracts the engine.
+# ─────────────────────────────────────────────────────────────────────────────
+
+COURSE = {
+    "slug":       "rebelway-nuke-comp",
+    "root":       r"G:\Documentos\Cursos\Rebelway_Compositing in Nuke",
+    "instructor": "Rebelway",
+    "model":      "large-v3",   # accuracy over speed — precision was the explicit ask
+
+    # On-disk layout: `Week N`/ directories (note the space, and the free-form
+    # capitalisation) holding `01_topic.ext` OR `01 Topic.ext` — both source
+    # naming styles appear, unlike the pre-normalized Houdini course whose
+    # filenames were already `..._wk<N>_<topic>.mp4`. This pair of regexes is
+    # the whole of scan_course()'s ~29% divergence from its houdini twin.
+    "week_dir_re":  re.compile(r"^week\s*(\d+)$", re.IGNORECASE),
+    "file_re":      re.compile(r"^(\d+)[\s_.\-]+(.+)$"),
+    "video_exts":   (".mp4", ".mkv", ".mov"),
+
+    # ⚠️ NOT COURSE["slug"], and not equal to it either — lesson_slug() has
+    # always built from the shorter "rebelway-nuke" while the state file and
+    # course-ingest dir use "rebelway-nuke-comp". Deriving one from the other
+    # would rename every finalized lesson. Frozen identity; treat it as data.
+    "lesson_slug_prefix": "rebelway-nuke",
+
+    # Output modules (§2.1 — these COMPOSE). Decision #4: output policy is
+    # per-course, and THIS course got pt-BR while destruction stays English.
+    # ⚠️ The absence of "knowledge-base" here is the whole reason this script
+    # exists separately from course_transcribe.py: subtitles for personal study,
+    # no tutorials/*.md, no INDEX.md. Phase 3 makes that a composition choice
+    # rather than a fork.
+    "outputs":      ("subtitles", "translation"),
+    "translate_to": "pt-BR",
+}
+
+DEFAULT_COURSE_ROOT = COURSE["root"]
+DEFAULT_COURSE_SLUG = COURSE["slug"]
+DEFAULT_INSTRUCTOR  = COURSE["instructor"]
+DEFAULT_MODEL       = COURSE["model"]
 
 # ROOT-CAUSE FIX (2026-08-18), after analyzing Week 1's hallucination clusters:
 # every single low-avg_logprob burst (wk1-04, 08, 09, 12, 13) contained random
@@ -138,9 +187,68 @@ AVG_LOGPROB_FLAG_THRESHOLD = -2.0
 # exceeds this course's observed ceiling.
 COMPRESSION_RATIO_FLAG_THRESHOLD = 3.0
 
-WEEK_DIR_RE = re.compile(r"^week\s*(\d+)$", re.IGNORECASE)
-FILE_ORDER_RE = re.compile(r"^(\d+)[\s_.\-]+(.+)$")
-VIDEO_EXTS = (".mp4", ".mkv", ".mov")
+PROFILE = {
+    "name":     "russian-native",
+    "language": "ru",
+
+    # --- decoder priming -----------------------------------------------------
+    # ⚠️ THE most expensive single line in this pipeline. Feeding ingest.py's
+    # ENGLISH WHISPER_VOCAB_HINT to a RUSSIAN decode caused Week 1's
+    # multilingual-drift disaster (Spanish, Hangul and Chinese bleeding into
+    # five lessons). The prompt belongs to the LANGUAGE — never to the engine,
+    # and never inherited from a sibling skill. See the block above.
+    "initial_prompt":   COURSE_VOCAB_HINT,
+    "near_miss_vocab":  ACCENT_RISK_VOCAB,
+
+    # --- flag 1: Whisper's own confidence signals ----------------------------
+    # -2.0 sits inside a wide EMPTY measured gap (correct speech -0.5..-1.5,
+    # gibberish -4.8..-5.04, nothing between). houdini-wand's English profile
+    # uses -0.35 — the same knob, an order of magnitude apart, which is the
+    # clearest single proof that these thresholds are language-scoped.
+    "avg_logprob_max":       AVG_LOGPROB_FLAG_THRESHOLD,
+    "no_speech_prob_min":    0.5,
+    # Effectively disabled, not deleted: real correct Russian spans the same
+    # 1.24-2.33 range as the transcript max, so English's 2.2 flagged mostly
+    # CORRECT segments. Left as a high ceiling in case a genuinely degenerate
+    # segment ever exceeds this course's observed range.
+    "compression_ratio_min": COMPRESSION_RATIO_FLAG_THRESHOLD,
+    # ⚠️ OFF here, ON in houdini-wand. 51 of 91 flags on the wk1-04 test lesson
+    # were temperature-alone and every sample checked was correct, coherent
+    # speech — Whisper's retry heuristic is tuned around English defaults and
+    # fires constantly on short, rapid Russian technical narration. Pure noise
+    # on this course, informative on the English one.
+    "flag_temperature_fallback": False,
+
+    # --- flag 2: near-miss ---------------------------------------------------
+    # ⚠️ Cyrillic AND Latin: loanwords ("TAP", "premult") appear verbatim in
+    # Latin script mid-sentence, and a Latin-only regex — houdini's — would
+    # never match this course's Cyrillic vocab at all. The CHARSET is part of
+    # the language profile, not an implementation detail.
+    "word_re":           re.compile(r"[a-zA-Zа-яА-ЯёЁ']+"),
+    "near_miss_cutoff":  0.82,
+    "near_miss_suffix_tolerance": 3,
+
+    # --- flags 3 & 7 ---------------------------------------------------------
+    "near_duplicate_ratio": 0.85,
+    "repeat_run_min":       3,   # real finds: "Нюк." 11x over 20s, "Средний
+                                 # клавиша." 6x inside one second.
+
+    # --- flags 4-6: NOT PORTED HERE ------------------------------------------
+    # ⚠️ Recorded as absent rather than silently missing. These three structural
+    # detectors were built in houdini-wand on 2026-09-02 and deliberately not
+    # back-ported in Phase 0, because porting them means re-running flags on 109
+    # finalized Russian lessons and decision #1 forbids retroactive re-runs.
+    # Two of them would also fire ZERO times here by measurement: the Russian
+    # corpus's observed max is 44 c/s against a 100 c/s threshold.
+    # Phase 2 gives them a home; until then this is a knowingly empty seam.
+    "flag_duration_overrun": False,
+    "impossible_rate_cps":   None,
+    "clamped_span":          None,
+}
+
+WEEK_DIR_RE   = COURSE["week_dir_re"]
+FILE_ORDER_RE = COURSE["file_re"]
+VIDEO_EXTS    = COURSE["video_exts"]
 
 
 def flag_segments(segments):
@@ -155,11 +263,11 @@ def flag_segments(segments):
     dup_at = {}  # original segment index -> True if near-duplicate of segments[index-1]
     for i, seg in enumerate(segments):
         reasons = []
-        if seg.get("avg_logprob", 0) <= AVG_LOGPROB_FLAG_THRESHOLD:
+        if seg.get("avg_logprob", 0) <= PROFILE["avg_logprob_max"]:
             reasons.append(f"low avg_logprob ({seg['avg_logprob']:.2f})")
-        if seg.get("no_speech_prob", 0) >= 0.5:
+        if seg.get("no_speech_prob", 0) >= PROFILE["no_speech_prob_min"]:
             reasons.append(f"high no_speech_prob ({seg['no_speech_prob']:.2f})")
-        if seg.get("compression_ratio", 0) >= COMPRESSION_RATIO_FLAG_THRESHOLD:
+        if seg.get("compression_ratio", 0) >= PROFILE["compression_ratio_min"]:
             reasons.append(f"high compression_ratio ({seg['compression_ratio']:.2f})")
         # Dropped "temperature fallback > 0" as a standalone flag reason after
         # sampling: 51 of 91 flags on the wk1-04 test lesson were temperature
@@ -174,9 +282,10 @@ def flag_segments(segments):
         # Cyrillic + Latin (loanwords like "TAP" appear verbatim in Latin
         # script mid-sentence) — a Latin-only regex would never match this
         # course's Russian ACCENT_RISK_VOCAB at all.
-        words = re.findall(r"[a-zA-Zа-яА-ЯёЁ']+", text.lower())
-        single_vocab = [v for v in ACCENT_RISK_VOCAB if " " not in v]
-        multi_vocab = [v for v in ACCENT_RISK_VOCAB if " " in v]
+        words = PROFILE["word_re"].findall(text.lower())
+        vocab = PROFILE["near_miss_vocab"]
+        single_vocab = [v for v in vocab if " " not in v]
+        multi_vocab = [v for v in vocab if " " in v]
         candidates = [(w, single_vocab) for w in words]
         for n in {len(v.split()) for v in multi_vocab}:
             candidates += [(" ".join(words[i:i+n]), multi_vocab) for i in range(len(words) - n + 1)]
@@ -185,12 +294,12 @@ def flag_segments(segments):
         for cand, pool in candidates:
             if cand in pool:
                 continue
-            close = difflib.get_close_matches(cand, pool, n=1, cutoff=0.82)
+            close = difflib.get_close_matches(cand, pool, n=1, cutoff=PROFILE["near_miss_cutoff"])
             if not close:
                 continue
             match = close[0]
             shorter, longer = sorted([cand, match], key=len)
-            if longer.startswith(shorter) and len(longer) - len(shorter) <= 3:
+            if longer.startswith(shorter) and len(longer) - len(shorter) <= PROFILE["near_miss_suffix_tolerance"]:
                 continue
             near_misses.add(f"'{cand}' ~ '{match}'")
         if near_misses:
@@ -199,7 +308,7 @@ def flag_segments(segments):
         if i > 0:
             prev_text = segments[i - 1].get("text", "").strip()
             ratio = difflib.SequenceMatcher(None, prev_text.lower(), text.strip().lower()).ratio()
-            if ratio >= 0.85 and prev_text:
+            if ratio >= PROFILE["near_duplicate_ratio"] and prev_text:
                 dup_at[i] = True
                 reasons.append(f"near-duplicate of previous segment ({ratio:.2f} similarity) — likely decode-window repeat")
 
@@ -236,10 +345,10 @@ def flag_segments(segments):
         if run and idx == run[-1] + 1:
             run.append(idx)
         else:
-            if len(run) >= 3:
+            if len(run) >= PROFILE["repeat_run_min"]:
                 runs.append(run)
             run = [idx]
-    if len(run) >= 3:
+    if len(run) >= PROFILE["repeat_run_min"]:
         runs.append(run)
 
     by_idx = {f["_idx"]: f for f in flagged}
@@ -289,7 +398,8 @@ def save_state(course_slug, state):
 
 
 def lesson_slug(week, order, topic_raw):
-    return ingest.slugify(f"rebelway-nuke wk{week} {order:02d} {topic_raw}")
+    # COURSE["lesson_slug_prefix"], NOT COURSE["slug"] — see the note on that key.
+    return ingest.slugify(f"{COURSE['lesson_slug_prefix']} wk{week} {order:02d} {topic_raw}")
 
 
 def scan_course(course_root):
