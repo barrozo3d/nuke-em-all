@@ -243,6 +243,14 @@ PROFILE = {
     "near_duplicate_ratio": 0.85,
     "repeat_run_min":       3,   # real finds: "Нюк." 11x over 20s, "Средний
                                  # клавиша." 6x inside one second.
+    # ⚠️ NOT cosmetic, and not unifiable with houdini-wand's
+    # "run-start-included". This strategy annotates ONLY records that are already
+    # flagged, never creates one, and does not sort. Its keying by original
+    # transcript index is itself a bug fix: an earlier version used position in
+    # the filtered list and merged wk1-06's 20 genuinely separate near-duplicate
+    # pairs, ~15 min apart, into one fake "20x burst". Switching strategies would
+    # rewrite flags on 109 finalized lessons — decision #1.
+    "repeat_burst_strategy": "flagged-only",
 
     # --- flags 4-6: NOT PORTED HERE ------------------------------------------
     # ⚠️ Recorded as absent rather than silently missing. These three structural
@@ -299,116 +307,14 @@ _flag_key           = _ce.flag_key
 unresolved_flags    = _ce.unresolved_flags
 
 def flag_segments(segments):
-    """Same three-signal triage as houdini-wand/course_transcribe.py's
-    flag_segments() (low-confidence / accent-risk near-miss / decode-window
-    near-duplicate) — see that file's docstring for the evidence behind each
-    threshold. Kept as an independent copy (not shared via import) since the
-    vocab pool differs per course and the two DCC skills stay decoupled."""
-    import difflib
+    """Adapter over course_engine.detect.flag_segments — the SHAPE of the flags
+    lives in the engine; every Russian-tuned threshold, the Cyrillic charset and
+    the repeat-burst strategy arrive from PROFILE above.
 
-    flagged = []
-    dup_at = {}  # original segment index -> True if near-duplicate of segments[index-1]
-    for i, seg in enumerate(segments):
-        reasons = []
-        if seg.get("avg_logprob", 0) <= PROFILE["avg_logprob_max"]:
-            reasons.append(f"low avg_logprob ({seg['avg_logprob']:.2f})")
-        if seg.get("no_speech_prob", 0) >= PROFILE["no_speech_prob_min"]:
-            reasons.append(f"high no_speech_prob ({seg['no_speech_prob']:.2f})")
-        if seg.get("compression_ratio", 0) >= PROFILE["compression_ratio_min"]:
-            reasons.append(f"high compression_ratio ({seg['compression_ratio']:.2f})")
-        # Dropped "temperature fallback > 0" as a standalone flag reason after
-        # sampling: 51 of 91 flags on the wk1-04 test lesson were temperature
-        # fallback alone, and every sample checked was a correct, coherent
-        # sentence. Whisper's own internal retry heuristic (tuned around
-        # English compression-ratio/logprob defaults) triggers far more often
-        # on this course's short, rapid technical narration without it
-        # correlating with an actual transcription error — pure noise here,
-        # unlike houdini-wand's English course where it was informative.
-
-        text = seg.get("text", "")
-        # Cyrillic + Latin (loanwords like "TAP" appear verbatim in Latin
-        # script mid-sentence) — a Latin-only regex would never match this
-        # course's Russian ACCENT_RISK_VOCAB at all.
-        words = PROFILE["word_re"].findall(text.lower())
-        vocab = PROFILE["near_miss_vocab"]
-        single_vocab = [v for v in vocab if " " not in v]
-        multi_vocab = [v for v in vocab if " " in v]
-        candidates = [(w, single_vocab) for w in words]
-        for n in {len(v.split()) for v in multi_vocab}:
-            candidates += [(" ".join(words[i:i+n]), multi_vocab) for i in range(len(words) - n + 1)]
-
-        near_misses = set()
-        for cand, pool in candidates:
-            if cand in pool:
-                continue
-            close = difflib.get_close_matches(cand, pool, n=1, cutoff=PROFILE["near_miss_cutoff"])
-            if not close:
-                continue
-            match = close[0]
-            shorter, longer = sorted([cand, match], key=len)
-            if longer.startswith(shorter) and len(longer) - len(shorter) <= PROFILE["near_miss_suffix_tolerance"]:
-                continue
-            near_misses.add(f"'{cand}' ~ '{match}'")
-        if near_misses:
-            reasons.append("possible mishear: " + ", ".join(sorted(near_misses)))
-
-        if i > 0:
-            prev_text = segments[i - 1].get("text", "").strip()
-            ratio = difflib.SequenceMatcher(None, prev_text.lower(), text.strip().lower()).ratio()
-            if ratio >= PROFILE["near_duplicate_ratio"] and prev_text:
-                dup_at[i] = True
-                reasons.append(f"near-duplicate of previous segment ({ratio:.2f} similarity) — likely decode-window repeat")
-
-        if reasons:
-            flagged.append({
-                "start": seg.get("start"), "end": seg.get("end"),
-                "text": text.strip(), "reasons": reasons, "_idx": i,
-            })
-
-    # Second pass: a lone near-duplicate pair is usually genuine repeated
-    # speech during a live demo (e.g. "Удалим нод." x3 while deleting three
-    # separate nodes). A RUN of 3+ *consecutive original-transcript indices*
-    # all near-duplicating their immediate predecessor (= 4+ total repeated
-    # utterances back to back) is a different, much more dangerous pattern —
-    # real examples found in this course: "Нюк." repeated 11x over 20s,
-    # "Средний клавиша." repeated 6x within the same single second. That's
-    # not natural speech, it's a decode-loop hallucination the low-avg_logprob
-    # check misses entirely (a short correct word like "Нюк" scores fine on
-    # confidence). run_safeguards()'s _detect_hallucination() also misses
-    # these since it only scans the last-50-words tail of the WHOLE
-    # transcript, not a sliding window, so a mid-video burst is invisible.
-    #
-    # Computed from dup_at (keyed by real segment index) rather than from
-    # position within the filtered `flagged` list — an earlier version used
-    # list position and wrongly merged wk1-06's 20 genuinely separate
-    # near-duplicate pairs (scattered across 3:58-19:21, ~15 min apart) into
-    # one fake "20x burst" just because every flagged segment in that lesson
-    # happened to be a near-duplicate, with nothing of a different reason
-    # between them in the filtered list to break the run.
-    dup_indices = sorted(dup_at)
-    runs = []
-    run = []
-    for idx in dup_indices:
-        if run and idx == run[-1] + 1:
-            run.append(idx)
-        else:
-            if len(run) >= PROFILE["repeat_run_min"]:
-                runs.append(run)
-            run = [idx]
-    if len(run) >= PROFILE["repeat_run_min"]:
-        runs.append(run)
-
-    by_idx = {f["_idx"]: f for f in flagged}
-    for run in runs:
-        total_repeats = len(run) + 1  # + the un-flagged first occurrence that started the run
-        for idx in run:
-            by_idx[idx]["reasons"].append(
-                f"part of a {total_repeats}x repeat-loop burst — check with --lesson --force"
-            )
-
-    for f in flagged:
-        f.pop("_idx", None)
-    return flagged
+    ⚠️ No `duration_sec` parameter, deliberately: this profile leaves the
+    structural detectors (4-6) off, so there is nothing here to pass it to. See
+    the PROFILE note on why they were not back-ported."""
+    return _ce.flag_segments(segments, PROFILE)
 
 
 def lesson_slug(week, order, topic_raw):
