@@ -1,0 +1,6 @@
+GENERATED FILE - DO NOT EDIT
+Regenerate with: python _shared/sync_vendor.py
+
+source     : https://github.com/barrozo3d/course-engine.git
+digest     : b128ed72a1db
+generated  : 2026-09-03T17:16:14.488682+00:00

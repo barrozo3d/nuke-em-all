@@ -348,3 +348,50 @@ Report. Turn it off to skip one extra yt-dlp call per ingest.
 > result can also mean the video simply has no caption track — **no witness
 > available is not the same as no problems found**, and the run prints which of
 > the two it got.
+
+## Shared engine (`_shared/course_engine`)
+
+The local-course pipeline's core lives in a **sibling repo**, not in this one:
+
+```
+~/.claude/skills/
+  _shared/          <- github.com/barrozo3d/course-engine
+  houdini-wand/
+  nuke-em-all/
+```
+
+Clone it once per machine, beside the skills:
+
+```powershell
+git clone https://github.com/barrozo3d/course-engine.git "$HOME\.claude\skills\_shared"
+```
+
+**You do not have to.** Each skill ships a generated snapshot at
+`vendor/course_engine/`, so a standalone `git clone <this skill>` runs fine
+without `_shared/`. Cloning `_shared/` is what you want when you intend to
+*change* the engine — a fix made there reaches every skill at once, which is the
+entire reason it is one repo rather than a copy per skill.
+
+Every run prints which one it loaded:
+
+```
+[engine] course_engine 0.1.0 from _shared/     <- editable, shared
+[engine] course_engine 0.1.0 from vendor/      <- snapshot, standalone clone
+```
+
+> ⚠️ That line is not noise, and `INGEST_ENGINE_QUIET=1` suppressing it is a
+> trade you should make deliberately. A vendored snapshot quietly standing in for
+> a newer shared engine is the same failure this repo keeps meeting in other
+> forms — an empty Prefetch folder reading as "nothing ran", a permission-denied
+> log reading as "no events". Missing evidence must not look like a clean result.
+
+After changing anything in `_shared/course_engine/`, regenerate the snapshots and
+commit them with your change:
+
+```powershell
+python "$HOME\.claude\skills\_shared\sync_vendor.py"          # write
+python "$HOME\.claude\skills\_shared\sync_vendor.py" --check  # report drift only
+```
+
+`vendor/` is **generated — never hand-edit it.** An edit there is lost on the
+next sync and silently diverges from `_shared/` until then.

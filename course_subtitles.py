@@ -87,6 +87,17 @@ COURSE = {
     # would rename every finalized lesson. Frozen identity; treat it as data.
     "lesson_slug_prefix": "rebelway-nuke",
 
+    # Seed for a state.json that does not exist yet. ⚠️ KEY ORDER IS LOAD-BEARING
+    # -- see the note in houdini-wand's COURSE dict.
+    "state_defaults": {
+        "course": "Rebelway Compositing in Nuke",
+        "instructor": "Rebelway",
+        "source_root": None,
+        "whisper_model": "large-v3",
+        "lessons": {},
+        "last_updated": None,
+    },
+
     # Output modules (§2.1 — these COMPOSE). Decision #4: output policy is
     # per-course, and THIS course got pt-BR while destruction stays English.
     # ⚠️ The absence of "knowledge-base" here is the whole reason this script
@@ -251,6 +262,42 @@ FILE_ORDER_RE = COURSE["file_re"]
 VIDEO_EXTS    = COURSE["video_exts"]
 
 
+
+# ── Phase 2: the shared engine (ULTIMATE_PIPELINE_PLAN.md §2.2) ───────────────
+#
+# These operations used to live here as a full second copy of the same code that
+# sits in the sibling course script. They now come from `_shared/course_engine`,
+# per decision #2 (shared, NOT cloned): one place to fix a bug, one place to keep
+# the explanation of why a threshold is what it is.
+#
+# ⚠️ The names below are re-bound at module level ON PURPOSE, so every existing
+# call site in this file keeps working untouched. That is what "thin adapter"
+# means here — the engine moved, the script's own shape did not.
+#
+# ⚠️ Provenance is PRINTED on every run (_shared/ vs vendor/). A vendored
+# snapshot silently standing in for a newer shared engine is the same
+# missing-evidence-as-clean-result shape this project keeps getting bitten by.
+
+from course_engine_loader import load_course_engine
+_ce = load_course_engine(SKILL_DIR)
+
+_ENGINE = _ce.CourseEngine(SKILL_DIR, COURSE["state_defaults"])
+
+course_ingest_dir   = _ENGINE.course_ingest_dir
+state_path          = _ENGINE.state_path
+load_state          = _ENGINE.load_state
+save_state          = _ENGINE.save_state
+cmd_check_flags     = _ENGINE.cmd_check_flags
+cmd_resolve_flag    = _ENGINE.cmd_resolve_flag
+cmd_resolve_range   = _ENGINE.cmd_resolve_range
+cmd_bulk_resolve    = _ENGINE.cmd_bulk_resolve
+
+probe_duration      = _ce.probe_duration
+format_srt_timestamp = _ce.format_srt_timestamp
+write_srt           = _ce.write_srt
+_flag_key           = _ce.flag_key
+unresolved_flags    = _ce.unresolved_flags
+
 def flag_segments(segments):
     """Same three-signal triage as houdini-wand/course_transcribe.py's
     flag_segments() (low-confidence / accent-risk near-miss / decode-window
@@ -364,39 +411,6 @@ def flag_segments(segments):
     return flagged
 
 
-def course_ingest_dir(course_slug):
-    return SKILL_DIR / "course-ingest" / course_slug
-
-
-def state_path(course_slug):
-    return course_ingest_dir(course_slug) / "state.json"
-
-
-def load_state(course_slug, course_root):
-    p = state_path(course_slug)
-    if p.exists():
-        return json.loads(p.read_text(encoding="utf-8"))
-    return {
-        "course": "Rebelway Compositing in Nuke",
-        "instructor": DEFAULT_INSTRUCTOR,
-        "source_root": course_root,
-        "whisper_model": DEFAULT_MODEL,
-        "lessons": {},
-        "last_updated": None,
-    }
-
-
-def save_state(course_slug, state):
-    """Atomic write — see houdini-wand/course_transcribe.py's save_state() for
-    why (avoids a truncated read if two processes touch state.json at once)."""
-    state["last_updated"] = datetime.now(timezone.utc).isoformat() + "Z"
-    p = state_path(course_slug)
-    p.parent.mkdir(parents=True, exist_ok=True)
-    tmp = p.with_suffix(".json.tmp")
-    tmp.write_text(json.dumps(state, indent=2, ensure_ascii=False), encoding="utf-8")
-    os.replace(tmp, p)
-
-
 def lesson_slug(week, order, topic_raw):
     # COURSE["lesson_slug_prefix"], NOT COURSE["slug"] — see the note on that key.
     return ingest.slugify(f"{COURSE['lesson_slug_prefix']} wk{week} {order:02d} {topic_raw}")
@@ -429,17 +443,6 @@ def scan_course(course_root):
     return found
 
 
-def probe_duration(video_path):
-    out = subprocess.run(
-        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(video_path)],
-        capture_output=True, text=True
-    ).stdout.strip()
-    try:
-        return float(out)
-    except ValueError:
-        return None
-
-
 def ensure_lessons(state, course_root):
     videos = scan_course(course_root)
     for v in videos:
@@ -465,105 +468,6 @@ def ensure_lessons(state, course_root):
             "pt_br_srt_written": False,
         }
     return state, videos
-
-
-def format_srt_timestamp(seconds):
-    if seconds < 0:
-        seconds = 0
-    ms = int(round((seconds - int(seconds)) * 1000))
-    s = int(seconds)
-    h, s = divmod(s, 3600)
-    m, s = divmod(s, 60)
-    return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
-
-
-def write_srt(segments, srt_path):
-    lines = []
-    for i, seg in enumerate(segments, start=1):
-        start = format_srt_timestamp(seg["start"])
-        end = format_srt_timestamp(seg["end"])
-        text = seg["text"].strip()
-        lines.append(str(i))
-        lines.append(f"{start} --> {end}")
-        lines.append(text)
-        lines.append("")
-    srt_path.write_text("\n".join(lines), encoding="utf-8")
-
-
-def _flag_key(flag):
-    return str(flag["start"])
-
-
-def unresolved_flags(entry):
-    resolutions = entry.get("flag_resolutions", {})
-    return [f for f in entry.get("flagged_segments", []) if _flag_key(f) not in resolutions]
-
-
-def cmd_check_flags(state, slug_filter):
-    lessons = state["lessons"] if slug_filter in (None, "all") else {slug_filter: state["lessons"].get(slug_filter)}
-    if slug_filter not in (None, "all") and lessons.get(slug_filter) is None:
-        print(f"ERROR: '{slug_filter}' not found.")
-        sys.exit(1)
-    any_unresolved = False
-    for slug, entry in lessons.items():
-        if entry is None:
-            continue
-        unresolved = unresolved_flags(entry)
-        if not unresolved:
-            continue
-        any_unresolved = True
-        print(f"{slug}: {len(unresolved)} unresolved flag(s)")
-        for f in unresolved:
-            mm, ss = int(f["start"]) // 60, int(f["start"]) % 60
-            print(f"    [{mm}:{ss:02d}] {f['text'][:90]}")
-            print(f"        reasons: {f['reasons']}")
-    if not any_unresolved:
-        print("[CLEAN] No unresolved flags.")
-
-
-def cmd_resolve_flag(state, course_slug, slug, start, note):
-    entry = state["lessons"].get(slug)
-    if entry is None:
-        print(f"ERROR: '{slug}' not found.")
-        sys.exit(1)
-    matches = [f for f in entry.get("flagged_segments", []) if abs(f["start"] - start) < 0.5]
-    if not matches:
-        print(f"ERROR: no flagged segment near start={start} in {slug}.")
-        sys.exit(1)
-    entry.setdefault("flag_resolutions", {})
-    for f in matches:
-        entry["flag_resolutions"][_flag_key(f)] = note
-    save_state(course_slug, state)
-    print(f"Resolved {len(matches)} flag(s) at ~{start}s in {slug}: {note}")
-
-
-def cmd_resolve_range(state, course_slug, slug, start, end, note):
-    entry = state["lessons"].get(slug)
-    if entry is None:
-        print(f"ERROR: '{slug}' not found.")
-        sys.exit(1)
-    entry.setdefault("flag_resolutions", {})
-    matches = [f for f in entry.get("flagged_segments", []) if start <= f["start"] <= end]
-    if not matches:
-        print(f"ERROR: no flagged segments in [{start}, {end}]s in {slug}.")
-        sys.exit(1)
-    for f in matches:
-        entry["flag_resolutions"][_flag_key(f)] = note
-    save_state(course_slug, state)
-    print(f"Resolved {len(matches)} flag(s) in [{start}, {end}]s in {slug}: {note}")
-
-
-def cmd_bulk_resolve(state, course_slug, slug, note):
-    entry = state["lessons"].get(slug)
-    if entry is None:
-        print(f"ERROR: '{slug}' not found.")
-        sys.exit(1)
-    entry.setdefault("flag_resolutions", {})
-    unresolved = unresolved_flags(entry)
-    for f in unresolved:
-        entry["flag_resolutions"][_flag_key(f)] = note
-    save_state(course_slug, state)
-    print(f"Bulk-resolved {len(unresolved)} flag(s) in {slug}: {note}")
 
 
 def cmd_finalize(state, course_slug, slug):
