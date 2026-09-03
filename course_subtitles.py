@@ -325,7 +325,7 @@ write_srt           = _ce.write_srt
 _flag_key           = _ce.flag_key
 unresolved_flags    = _ce.unresolved_flags
 
-def flag_segments(segments):
+def flag_segments(segments, week=None):
     """Adapter over course_engine.detect.flag_segments — the SHAPE of the flags
     lives in the engine; every Russian-tuned threshold, the Cyrillic charset and
     the repeat-burst strategy arrive from PROFILE above.
@@ -333,7 +333,7 @@ def flag_segments(segments):
     ⚠️ No `duration_sec` parameter, deliberately: this profile leaves the
     structural detectors (4-6) off, so there is nothing here to pass it to. See
     the PROFILE note on why they were not back-ported."""
-    return _ce.flag_segments(segments, PROFILE)
+    return _ce.flag_segments(segments, PROFILE, week=week)
 
 
 def lesson_slug(week, order, topic_raw):
@@ -500,7 +500,7 @@ def main():
             if not cache_path.exists():
                 continue
             cached = json.loads(cache_path.read_text(encoding="utf-8"))
-            flagged = flag_segments(cached.get("segments", []))
+            flagged = flag_segments(cached.get("segments", []), entry.get("week"))
             entry["flagged_segments"] = flagged
             entry.setdefault("flagged_segments_reviewed", False)
             if flagged:
@@ -580,7 +580,7 @@ def main():
         warnings, critical = ingest.run_safeguards(ch_transcripts)
         ingest._print_safeguard_report(warnings, critical)
 
-        flagged = flag_segments(result.get("segments", []))
+        flagged = flag_segments(result.get("segments", []), entry.get("week"))
         if flagged:
             print(f"      [ACCENT CHECK] {len(flagged)} segment(s) flagged for manual review:")
             for f in flagged[:5]:
