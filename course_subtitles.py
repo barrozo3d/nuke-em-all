@@ -577,7 +577,8 @@ def main():
         cache_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
 
         ch_transcripts = ingest.segment_by_chapters(result, None)
-        warnings, critical = ingest.run_safeguards(ch_transcripts)
+        warnings, critical = ingest.run_safeguards(ch_transcripts,
+                                                   entry.get("duration_sec"))
         ingest._print_safeguard_report(warnings, critical)
 
         flagged = flag_segments(result.get("segments", []), entry.get("week"))
