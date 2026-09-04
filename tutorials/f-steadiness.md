@@ -4,10 +4,10 @@ source: Article
 url: file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_steadiness.html
 author: Nuke 17.1v1 bundled documentation
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "NukeX (FurnaceCore)"
+version: "Nuke 17.1v1 (bundled documentation, Documentation/html/content)"
+tags: [furnace, nukex, stabilization, tracking, nuke-17, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/f-steadiness/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,63 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Stabilise a single shot with **Global Motion Estimation** — either *smoothing* camera motion over a range of frames while keeping the move, or *locking* every frame to one chosen frame to remove it entirely.
 
 ### Summary
-[PENDING EXTRACTION]
+F_Steadiness is F_Align's single-clip sibling: the same GME four-corner-pin machinery, aimed at one Src. **Mode** is the decision that shapes everything. `Smooth` (default) keeps the overall camera move and irons out bumps over the **Smoothing** range (default `10` frames). `Incremental Lock` accumulates GME frame-by-frame from the lock frame outward; `Absolute Lock` estimates each frame directly against the lock frame — a genuine difference in failure behaviour, since incremental drifts over long ranges while absolute degrades as frames diverge from the lock. **Auto Scale** (default `1`) handles the black edges stabilisation exposes by scaling up until none are visible, and `0` disables it. ⚠️ **`Lock Frame` is zero-based while NukeX's timeline is one-based** — the docs state plainly that frame 0 here is frame 1 in NukeX, so locking to what the Viewer calls frame 3 means entering `2`.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Connect the shot to **Src**.
+2. Choose **Mode**: `Smooth` to keep the move and remove bumps, `Incremental Lock` or `Absolute Lock` to remove camera motion by locking to a frame.
+3. For `Smooth`, set **Smoothing** (default `10`) — the range of frames motion is averaged over.
+4. For either lock mode, set **Lock Frame** (default `0`) — ⚠️ **subtract one from the Viewer frame number**; frame 0 here is frame 1 in NukeX.
+5. Set **Analysis Range** — `Source Clip Range` (default) or `Specified Range` with **Analysis Start** / **Analysis Stop**.
+6. Constrain the pin: **Rotate** and **Translate** on by default, **Scale** and **Perspective** off.
+7. Place the **Analysis Region** over the area to hold — for frame locking, do it on the lock frame.
+8. Press **Analyse** (**Render During Analysis** on to watch, off for speed; **Clear Analysis** to force a redo). Raise **Accuracy** (default `0.6`, lower than F_Align's `0.9`) for a better solve at more cost.
+9. Set **Auto Scale** (default `1`) to hide the black edges by scaling up, or `0` to leave them for a manual solution.
+10. Enable **Invert** to apply the inverse pin — the docs note this works best with the lock modes and is how you **track a static locked-off plate back into a moving shot**.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **F_Steadiness** (NukeX / FurnaceCore). Input: **Src**.
+- **Mode** (`mode`, `Smooth` | `Incremental Lock` | `Absolute Lock`), **Smoothing** (`smooth`, `10`), **Lock Frame** (`lockFrame`, `0`, zero-based).
+- **Analyse** (`analyse`), **Render During Analysis** (`renderOn`, on), **Clear Analysis** (`clear`).
+- **Analysis Range** (`range`, `Source Clip Range`), **Analysis Start** (`start`, 0), **Analysis Stop** (`stop`, 100).
+- **Scale** (`scale`, off), **Rotate** (`rotate`, on), **Translate** (`translate`, on), **Perspective** (`perspective`, off).
+- **Analysis Region BL / TR** (`regionBL`, `regionTR`).
+- **Accuracy** (`accuracy`, `0.6`), **Filtering** (`filtering`, `Medium`), **Invert** (`invert`, off), **Auto Scale** (`autoScale`, `1`).
+- **Four Corner Pin**: `pinBL`, `pinBR`, `pinTL`, `pinTR`. **About** (`about`).
+- Step-by-step guide: *Using F_Steadiness*.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+NukeX 17.1v1 (FurnaceCore).
 
 ### Tags
-[PENDING EXTRACTION]
+`furnace`, `nukex`, `stabilization`, `tracking`, `nuke-17`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [F_Align](f-align.md) — the two-clip version of the same GME four-corner-pin solve.
+- [F_RigRemoval](f-rigremoval.md) — often paired with a stabilise/destabilise sandwich around a repair.
+
+---
+
+> **Provenance.** Ingested from the documentation **bundled inside Nuke 17.1v1**
+> on this machine (`Documentation/html/content/`), so the `url:` is a local
+> `file://` path and is not reachable from another machine. It is first-party
+> Foundry documentation for the exact installed build, which makes it a better
+> version witness than the public docs site: what is written here is what this
+> Nuke does. The page's own footer stamp (`Nuke 17.1v1 docs`) is preserved in the
+> Raw Data.
+
+> **On the Furnace suite.** These are the **FurnaceCore** nodes bundled with
+> **NukeX** — the surviving subset of the original Furnace plug-in suite, which
+> is why this skill's gap list called them "legacy and partly superseded". They
+> are not deprecated: they ship in 17.1 and several remain the fastest route to a
+> result the modern toolset reaches only through much more setup. Where a newer
+> node genuinely supersedes one, the docs say so themselves in a *See also* line,
+> preserved in each entry.

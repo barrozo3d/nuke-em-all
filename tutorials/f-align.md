@@ -4,10 +4,10 @@ source: Article
 url: file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_align.html
 author: Nuke 17.1v1 bundled documentation
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "NukeX (FurnaceCore)"
+version: "Nuke 17.1v1 (bundled documentation, Documentation/html/content)"
+tags: [furnace, nukex, tracking, nuke-17, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/f-align/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,61 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Line up two sequences shot of the same scene by using **Global Motion Estimation (GME)** to calculate a four-corner pin that repositions the **Src** clip onto the **Ref** clip, frame by frame.
 
 ### Summary
-[PENDING EXTRACTION]
+F_Align solves the two-plate alignment problem — a witness camera, a second take, a re-shoot element — by analysing global motion between the reference and the source and baking the result into an animated four-corner pin. Which transform components the pin is allowed to use is explicit: **Rotate** and **Translate** are on by default, **Scale** and **Perspective** are off, so the solve is constrained to what you actually expect to differ unless you widen it. The **Analysis Region** box matters more than its plain name suggests — for frame locking you go to the lock frame, look at the reference, and place the box over the area that must stay locked. Analysis is a discrete pass driven by the **Analyse** button, interrupting it keeps the keys already calculated, and **Clear Analysis** is the deliberate way to force a redo.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Connect **Ref** (the image to align *to*) and **Src** (the image to be moved). The output is Src repositioned onto Ref.
+2. Set **Analysis Range** — `Source Clip Range` (default, derived from the Src length), `Specified Range` (uses **Analysis Start** / **Analysis Stop**, defaults 0 and 100), or `Current Frame` to fix a single bad frame after a full pass.
+3. Constrain the solve: **Rotate** and **Translate** default **on**, **Scale** and **Perspective** default **off**. Enable only what the shot genuinely contains.
+4. Place the **Analysis Region** with **Analysis Region BL** / **TR** — for frame locking, do this on the lock frame while looking at the reference clip, over the area you want held.
+5. Press **Analyse**. Leave **Render During Analysis** on to watch progress in the Viewer, or disable it to speed the analysis up.
+6. Raise **Accuracy** (default `0.9`) for a better solve at the cost of time; set **Filtering** to `High` (sinc) for the sharpest result, `Medium` (bilinear) as the default compromise, `Low` for speed.
+7. Inspect or hand-correct the baked result in **Advanced Four Corner Pin** — `pinBL`, `pinBR`, `pinTL`, `pinTR` hold the animated corners.
+8. Enable **Invert** to apply the inverse of the calculated pin at render — the route for pushing something back into the original plate's space.
+9. Use **Clear Analysis** to delete all corner-pin keys and force a clean re-analysis.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **F_Align** (NukeX / FurnaceCore). Inputs: **Ref**, **Src**.
+- **Analyse** (`analyse`), **Render During Analysis** (`renderOn`, on), **Clear Analysis** (`clear`).
+- **Analysis Range** (`range`, `Source Clip Range`) with **Analysis Start** (`start`, 0) / **Analysis Stop** (`stop`, 100).
+- Transform components: **Scale** (`scale`, off), **Rotate** (`rotate`, on), **Translate** (`translate`, on), **Perspective** (`perspective`, off).
+- **Analysis Region BL / TR** (`regionBL`, `regionTR`).
+- **Accuracy** (`accuracy`, `0.9`), **Filtering** (`filtering`, `Medium` — Low / Medium bilinear / High sinc), **Invert** (`invert`, off).
+- **Four Corner Pin**: `pinBL`, `pinBR`, `pinTL`, `pinTR`. **About** (`about`).
+- Step-by-step guide referenced by the page: *Using F_Align*.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+NukeX 17.1v1 — FurnaceCore nodes are NukeX, not base Nuke.
 
 ### Tags
-[PENDING EXTRACTION]
+`furnace`, `nukex`, `tracking`, `nuke-17`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [F_Steadiness](f-steadiness.md) — the same GME four-corner-pin machinery aimed at one clip instead of two.
+- [F_RigRemoval](f-rigremoval.md), [F_WireRemoval](f-wireremoval.md) — the repair half of the FurnaceCore set.
+
+---
+
+> **Provenance.** Ingested from the documentation **bundled inside Nuke 17.1v1**
+> on this machine (`Documentation/html/content/`), so the `url:` is a local
+> `file://` path and is not reachable from another machine. It is first-party
+> Foundry documentation for the exact installed build, which makes it a better
+> version witness than the public docs site: what is written here is what this
+> Nuke does. The page's own footer stamp (`Nuke 17.1v1 docs`) is preserved in the
+> Raw Data.
+
+> **On the Furnace suite.** These are the **FurnaceCore** nodes bundled with
+> **NukeX** — the surviving subset of the original Furnace plug-in suite, which
+> is why this skill's gap list called them "legacy and partly superseded". They
+> are not deprecated: they ship in 17.1 and several remain the fastest route to a
+> result the modern toolset reaches only through much more setup. Where a newer
+> node genuinely supersedes one, the docs say so themselves in a *See also* line,
+> preserved in each entry.

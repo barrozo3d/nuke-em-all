@@ -1279,77 +1279,84 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_align.html
 - **Author:** Nuke 17.1v1 bundled documentation
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** NukeX (FurnaceCore)
+- **Version:** Nuke 17.1v1 (bundled documentation, Documentation/html/content)
+- **Tags:** furnace, nukex, tracking, nuke-17, intermediate
+- **Summary:** F_Align (NukeX FurnaceCore): lines up two sequences shot of the same scene, using Global Motion Estimation to calculate an animated four-corner pin that repositions the Src clip onto the Ref clip. Rotate and Translate are enabled by default, Scale and Perspective are not, so the solve is constrained unless widened. Covers the Analyse pass and Clear Analysis, Analysis Range modes including Current Frame for fixing single bad frames, placing the Analysis Region on the lock frame, Accuracy 0.9, Filtering low/bilinear/sinc, Invert to apply the inverse pin, and the baked pinBL/pinBR/pinTL/pinTR knobs.
 - **File:** tutorials/f-align.md
+- **Related:** F_Steadiness (`f-steadiness.md`) — shares `furnace`, `nukex`, `tracking`; the same GME four-corner-pin solve on one clip. F_RigRemoval (`f-rigremoval.md`), F_WireRemoval (`f-wireremoval.md`) — share `furnace`, `nukex`.
 
 
 ### F_DeFlicker2
 - **Source:** Article
 - **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_deflicker2.html
 - **Author:** Nuke 17.1v1 bundled documentation
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** NukeX (FurnaceCore)
+- **Version:** Nuke 17.1v1 (bundled documentation, Documentation/html/content)
+- **Tags:** furnace, nukex, denoise, nuke-17, intermediate
+- **Summary:** F_DeFlicker2 (NukeX FurnaceCore): removes LOCALISED flicker that depends on scene geometry - an unsynchronised fluorescent tube, not a whole-frame level shift. Block Size 9.6 default is tuned between detail loss and noisy motion fields and rarely needs changing; Use Motion adds a second motion-compensated pass that recovers fast-motion areas the first pass blurred, with Vector Detail 0.2 meaning a vector every fifth pixel. Analysis Range searches 2 frames each side by default. Performance warning worth heeding: it reads neighbouring frames, so more than two instances in a tree dramatically increases render time and Foundry advises rendering each separately.
 - **File:** tutorials/f-deflicker2.md
+- **Related:** F_ReGrain (`f-regrain.md`) — shares `furnace`, `nukex`; the other FurnaceCore node working on image statistics over time. F_Align (`f-align.md`) — shares `furnace`, `nukex`.
 
 
 ### F_ReGrain
 - **Source:** Article
 - **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_regrain.html
 - **Author:** Nuke 17.1v1 bundled documentation
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** NukeX (FurnaceCore)
+- **Version:** Nuke 17.1v1 (bundled documentation, Documentation/html/content)
+- **Tags:** furnace, nukex, grain, nuke-17, intermediate
+- **Summary:** F_ReGrain (NukeX FurnaceCore): samples grain from a detail-free patch of one image, or from a film stock preset, and synthesises unlimited grain with the same statistics onto another. The verification trick is Output > Grain Plate: when the inner section is indistinguishable from the flat surround, the sample is good. Covers the Grain/Src inputs and automatic switch to From Grain Clip, the Analysis Region that must contain only grain, Grain Colour Space vs Apply Grain In, per-channel process/amount/size for R, G and B, Low/Mid/High Gain, and the optional sampled response curve (accumulating on repeated Sample clicks).
 - **File:** tutorials/f-regrain.md
+- **Related:** F_DeFlicker2 (`f-deflicker2.md`), F_WireRemoval (`f-wireremoval.md`) — share `furnace`, `nukex`; F_WireRemoval's Filter Size exists because a repair filter can mistake wire detail for grain.
 
 
 ### F_RigRemoval
 - **Source:** Article
 - **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_rigremoval.html
 - **Author:** Nuke 17.1v1 bundled documentation
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** NukeX (FurnaceCore)
+- **Version:** Nuke 17.1v1 (bundled documentation, Documentation/html/content)
+- **Tags:** furnace, nukex, clean-plate, roto, nuke-17, advanced
+- **Summary:** F_RigRemoval (NukeX FurnaceCore): removes a rig or unwanted object WITHOUT accurate roto or keying by estimating background motion around it and searching forwards and backwards for the real background to fill the hole. Rig Region can be a box, the Src alpha, or RigMask luminance/alpha, each also inverted. Red pixels mark a failed repair and the documented fix is to raise Frame Range (default 4). Frames Used in Range trades quality for speed; Max Rig Movement (30px) constrains the search band to avoid perspective error; Overlap Correct blends the slices the repair is assembled from; alpha is written white where the repair failed unless Preserve Alpha is on.
 - **File:** tutorials/f-rigremoval.md
+- **Related:** F_WireRemoval (`f-wireremoval.md`) — shares `furnace`, `nukex`, `clean-plate`, `roto`; the thin-wire version with its own tracker. F_Align (`f-align.md`), F_Steadiness (`f-steadiness.md`) — share `furnace`, `nukex`.
 
 
 ### F_Steadiness
 - **Source:** Article
 - **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_steadiness.html
 - **Author:** Nuke 17.1v1 bundled documentation
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** NukeX (FurnaceCore)
+- **Version:** Nuke 17.1v1 (bundled documentation, Documentation/html/content)
+- **Tags:** furnace, nukex, stabilization, tracking, nuke-17, intermediate
+- **Summary:** F_Steadiness (NukeX FurnaceCore): stabilises a single shot with Global Motion Estimation, either smoothing the camera move over a frame range or locking every frame to one frame to remove it. Incremental Lock accumulates GME outward from the lock frame; Absolute Lock estimates each frame directly against it - a real difference in how they fail. Auto Scale 1 hides the black edges by scaling up. Trap worth knowing: Lock Frame is ZERO-BASED while the NukeX timeline is one-based, so locking to Viewer frame 3 means entering 2. Invert works best with the lock modes and is how a static locked-off plate is tracked back into a shot.
 - **File:** tutorials/f-steadiness.md
+- **Related:** F_Align (`f-align.md`) — shares `furnace`, `nukex`, `tracking`; the two-clip version. F_RigRemoval (`f-rigremoval.md`) — shares `furnace`, `nukex`.
 
 
 ### F_WireRemoval
 - **Source:** Article
 - **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_wireremoval.html
 - **Author:** Nuke 17.1v1 bundled documentation
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** NukeX (FurnaceCore)
+- **Version:** Nuke 17.1v1 (bundled documentation, Documentation/html/content)
+- **Tags:** furnace, nukex, clean-plate, roto, tracking, nuke-17, advanced
+- **Summary:** F_WireRemoval (NukeX FurnaceCore): tracks a wire with a 2/3/5-point on-screen tool that has its own tracker panel (step, track, Smart track, Snap to wire, user key frames and a full family of key-deletion commands) and repairs underneath with one of four algorithms - Spatial (current frame only), Temporal With Static Scene (LME), Temporal With Moving Scene (GME), or a warped Clean Plate. Best on wires over heavy motion blur, smoke, dust or cloud. Start/End/Overall Width widen the repair band where the wire motion-blurs; reduce Filter Size when wire detail is mistaken for grain; Output can render Wire Matte or Repair Matted so a well-tracked wire is still useful when the repair itself fails.
 - **File:** tutorials/f-wireremoval.md
+- **Related:** F_RigRemoval (`f-rigremoval.md`) — shares `furnace`, `nukex`, `clean-plate`, `roto`. F_ReGrain (`f-regrain.md`), F_Steadiness (`f-steadiness.md`) — share `furnace`, `nukex`; F_Steadiness covers the GME behind the Temporal With Moving Scene repair.
 
 
 ### Download Pre-Trained Models from Foundry's Cattery
 - **Source:** Article
 - **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/comp_environment/air_tools/cattery.html
 - **Author:** Nuke 17.1v1 bundled documentation
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke
+- **Version:** Nuke 17.1v1 (bundled documentation, Documentation/html/content)
+- **Tags:** copycat, ai-tools, machine-learning, gizmo, nuke-17, beginner
+- **Summary:** The Cattery - Foundry's library of free third-party machine-learning models built with CopyCat (segmentation, depth estimation, optical flow, upscaling, denoising, style transfer), at community.foundry.com/cattery or the Cattery toolbar icon. Installing one is a plug-in-path operation: unzip the download, paste the Cattery directory into .nuke, then Cattery icon > Update, and the model appears in the Cattery menu as a GIZMO you click into the Node Graph. Includes the OS-specific .nuke paths and the Windows detail that actually costs time - .nuke sits under HOME if set and USERPROFILE if not, which it commonly is not; check with %HOME% or %USERPROFILE% in the Explorer address bar.
 - **File:** tutorials/download-pre-trained-models-from-foundrys-cattery.md
+- **Related:** Inference (`inference.md`) — shares `copycat`, `ai-tools`, `machine-learning`; the node that runs these models, whose coverage note recorded this page as the missing piece. CopyCat (`copycat.md`) — the trainer every Cattery model was built with. Installing Plug-ins (`installing-plug-ins.md`) — the general `.nuke`/`NUKE_PATH` mechanism this install is one instance of.
 
 ---
 

@@ -76,13 +76,15 @@ Nuke, NukeX and Nuke Studio — unlike CopyCat, Inference is not NukeX-restricte
 
 ---
 
-> **Coverage note — what these two pages do NOT cover.** Together they close the
-> *CopyCat training workflow* half of knowledge gap #3, but only part of the
-> *Cattery models* half. Neither page documents the **Cattery library itself**:
-> browsing or downloading Foundry's pretrained community models, where the
-> downloaded `.cat`/`.cattery` files are installed on the plug-in path, or the
-> per-model notes those downloads carry. What is covered here is applying a
-> `.cat` once you have one, plus CopyCat's four built-in starting weightings
-> (`Deblur`, `Upscale`, `Human Matting`, `Checkpoint`), which are pretrained
-> weights for *training*, not the Cattery catalogue. Recorded rather than
-> inferred, per the D4b convention.
+> **Coverage note — CLOSED the same day it was written.** This note originally
+> recorded that neither this page nor `copycat.md` documented **the Cattery
+> library itself** — browsing or downloading Foundry's pretrained community
+> models, or where the downloaded files install. That gap is now filled by
+> [Download Pre-Trained Models from Foundry's Cattery](download-pre-trained-models-from-foundrys-cattery.md),
+> ingested from the Nuke 17.1v1 bundled documentation on this machine.
+>
+> The distinction the original note drew still holds and is worth keeping:
+> CopyCat's `Deblur` / `Upscale` / `Human Matting` / `Checkpoint` weightings are
+> pretrained starting points for **training**, and are **not** the Cattery
+> catalogue — the Cattery ships finished models you install as gizmos and run
+> through this node. Two different things that sound alike.

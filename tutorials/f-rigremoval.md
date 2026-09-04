@@ -4,10 +4,10 @@ source: Article
 url: file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_rigremoval.html
 author: Nuke 17.1v1 bundled documentation
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "NukeX (FurnaceCore)"
+version: "Nuke 17.1v1 (bundled documentation, Documentation/html/content)"
+tags: [furnace, nukex, clean-plate, roto, nuke-17, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/f-rigremoval/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,60 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Remove a rig or unwanted object **without accurate roto or keying** by estimating background motion around it, then looking forwards and backwards through the sequence for the real background to fill the hole.
 
 ### Summary
-[PENDING EXTRACTION]
+F_RigRemoval's premise is that the background behind a rig is usually visible in *some other frame*, so the repair should be found rather than painted. It estimates background motion between successive frames while ignoring the foreground object, then reaches `Frame Range` frames in either direction (default `4`) to source the fill. The region to repair can come from a simple **Box** or from six mask routes — the Src alpha, the RigMask luminance or alpha, and the inverse of each. The two controls that decide whether it works are **Frame Range** and **Max Rig Movement** (default `30` px), the latter constraining the search to an area immediately around the rig so perspective changes do not corrupt the fill; fast movement needs a larger value. Failure is visible rather than silent: **red pixels mark where the repair failed**, the docs' own advice being to increase Frame Range when they appear, and **Repair Fail Marker Opacity** controls how strongly they show.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Connect **Src** (containing the rig) and optionally **RigMask**.
+2. Choose **Rig Region**: `Box` (drag `regionBL`/`regionTR` or the on-screen box), `Src Alpha`, `Src Inverted Alpha`, `RigMask Luminance`, `RigMask Inverted Luminance`, `RigMask Alpha`, or `RigMask Inverted Alpha`.
+3. Set **Frames Searched** — `Forward and Backward` (default), or one direction only when the far side of the shot has no usable background.
+4. Set **Frame Range** (default `4`). ⚠️ **Red pixels in the output mean the repair failed — the documented fix is to raise this value.**
+5. Control cost with **Frames Used in Range**: `All Frames`, `Half of Frames` (default), `Quarter of Frames`, `10% of Frames`, or `Max 25 Frames` for a very large range. Skipping frames is faster and may reduce quality.
+6. Set **Max Rig Movement** (default `30` px) to the width of the search band around the rig — raise it for fast movement, keep it tight to avoid perspective error.
+7. In **Advanced**, set **Filtering** (`Low` / `Medium` bilinear / `High` sinc), and enable **Luminance Correct** when the lighting changes across the sequence and **Perspective Correct** for minor perspective change.
+8. Tune **Overlap Correct** (default `1`) — the repair is assembled from overlapping slices taken from other frames; more overlap blends more naturally but too much degrades sharpness.
+9. Set **Repair Fail Marker Opacity** (default `0.5`) to control the red failure overlay, and enable **Preserve Alpha** if the original alpha must survive — by default alpha is written white where the repair failed and black elsewhere, which doubles as a failure matte.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **F_RigRemoval** (NukeX / FurnaceCore). Inputs: **RigMask** (optional), **Src**. *See also* **RotoPaint** and **Project3D** (the page's own cross-reference).
+- **Rig Region** (`rigRegion`, `Box`) with the seven region sources; **Rig Region BL / TR** (`regionBL`, `regionTR`).
+- **Frames Searched** (`framesSearched`, `Forward and Backward`), **Frame Range** (`frameRange`, `4`), **Frames Used in Range** (`framesUsed`, `Half of Frames`).
+- **Max Rig Movement** (`maxRigMove`, `30`).
+- **Filtering** (`filtering`, `Medium`), **Luminance Correct** (`lumCorrect`, off), **Perspective Correct** (`perspCorrect`, off), **Overlap Correct** (`overlapCorrect`, `1`).
+- **Repair Fail Marker Opacity** (`failOpacity`, `0.5`), **Preserve Alpha** (`preserveAlpha`, off). **About** (`about`).
+- Step-by-step guide: *Using F_RigRemoval*.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+NukeX 17.1v1 (FurnaceCore).
 
 ### Tags
-[PENDING EXTRACTION]
+`furnace`, `nukex`, `clean-plate`, `roto`, `nuke-17`, `advanced`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [F_WireRemoval](f-wireremoval.md) — the same repair problem for thin wires, with its own tracker and four repair algorithms.
+- [F_Align](f-align.md) — GME alignment, useful when a clean plate has to be brought into the shot.
+
+---
+
+> **Provenance.** Ingested from the documentation **bundled inside Nuke 17.1v1**
+> on this machine (`Documentation/html/content/`), so the `url:` is a local
+> `file://` path and is not reachable from another machine. It is first-party
+> Foundry documentation for the exact installed build, which makes it a better
+> version witness than the public docs site: what is written here is what this
+> Nuke does. The page's own footer stamp (`Nuke 17.1v1 docs`) is preserved in the
+> Raw Data.
+
+> **On the Furnace suite.** These are the **FurnaceCore** nodes bundled with
+> **NukeX** — the surviving subset of the original Furnace plug-in suite, which
+> is why this skill's gap list called them "legacy and partly superseded". They
+> are not deprecated: they ship in 17.1 and several remain the fastest route to a
+> result the modern toolset reaches only through much more setup. Where a newer
+> node genuinely supersedes one, the docs say so themselves in a *See also* line,
+> preserved in each entry.

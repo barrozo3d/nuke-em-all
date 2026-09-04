@@ -4,10 +4,10 @@ source: Article
 url: file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_deflicker2.html
 author: Nuke 17.1v1 bundled documentation
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "NukeX (FurnaceCore)"
+version: "Nuke 17.1v1 (bundled documentation, Documentation/html/content)"
+tags: [furnace, nukex, denoise, nuke-17, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/f-deflicker2/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,56 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Remove **localised** flicker — flicker that depends on scene geometry rather than affecting the whole frame — with a block-based analysis, optionally refined by a second motion-compensated pass.
 
 ### Summary
-[PENDING EXTRACTION]
+F_DeFlicker2 targets the case a global level-match cannot fix: an unsynchronised fluorescent tube, or any flicker that varies across the image. It analyses a control block around each pixel (**Block Size**, default `9.6` px, which the docs say rarely needs adjusting because higher *and* lower values both cost — detail loss on one side, noisy motion fields on the other), searches **Analysis Range** frames either side of the current one (default `2`), and can run a second pass on motion-compensated frames via **Use Motion** to fix the blurring the first pass can introduce in fast motion. The most operationally important line on the page is a performance warning: F_DeFlicker2 reads frames outside the current one, so **more than two instances in a node tree dramatically increases render time**, and Foundry strongly advises rendering each instance out separately.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Connect the flickering sequence to **Src**.
+2. Set **DeFlicker Amount** (default `0.3`) — it *reduces* rather than eliminates; lower values deliberately leave more flicker behind.
+3. Leave **Block Size** at `9.6` unless there is a reason: the default is tuned between detail loss and noisy motion fields.
+4. Keep **Use Motion** enabled to run the second, motion-compensated pass — this is what recovers areas of fast motion the first pass blurred.
+5. Tune **Vector Detail** (default `0.2` = a vector every fifth pixel; `1` = one vector per pixel, most accurate and slowest) when Use Motion is on.
+6. Raise **Analysis Range** (default `2` frames either side) for a better estimate, accepting that too wide a range pulls in erroneous information and costs time.
+7. ⚠️ **Keep to at most two instances per script**, and render each one separately — the node reads neighbouring frames, so instances compound.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **F_DeFlicker2** (NukeX / FurnaceCore). Input: **Src**.
+- **DeFlicker Amount** (`amount`, `0.3`), **Block Size** (`blockSize`, `9.6`).
+- **Use Motion** (`useMotion`, enabled), **Vector Detail** (`vectorDetail`, `0.2`).
+- **Analysis Range** (`range`, `2`) — frames searched each side of the current frame.
+- **About** (`about`). Step-by-step guide: *Using F_DeFlicker2*.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+NukeX 17.1v1 (FurnaceCore).
 
 ### Tags
-[PENDING EXTRACTION]
+`furnace`, `nukex`, `denoise`, `nuke-17`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [F_ReGrain](f-regrain.md) — the other FurnaceCore node concerned with per-frame image statistics.
+- [F_Align](f-align.md) — FurnaceCore's alignment node.
+
+---
+
+> **Provenance.** Ingested from the documentation **bundled inside Nuke 17.1v1**
+> on this machine (`Documentation/html/content/`), so the `url:` is a local
+> `file://` path and is not reachable from another machine. It is first-party
+> Foundry documentation for the exact installed build, which makes it a better
+> version witness than the public docs site: what is written here is what this
+> Nuke does. The page's own footer stamp (`Nuke 17.1v1 docs`) is preserved in the
+> Raw Data.
+
+> **On the Furnace suite.** These are the **FurnaceCore** nodes bundled with
+> **NukeX** — the surviving subset of the original Furnace plug-in suite, which
+> is why this skill's gap list called them "legacy and partly superseded". They
+> are not deprecated: they ship in 17.1 and several remain the fastest route to a
+> result the modern toolset reaches only through much more setup. Where a newer
+> node genuinely supersedes one, the docs say so themselves in a *See also* line,
+> preserved in each entry.

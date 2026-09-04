@@ -4,10 +4,10 @@ source: Article
 url: file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_wireremoval.html
 author: Nuke 17.1v1 bundled documentation
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "NukeX (FurnaceCore)"
+version: "Nuke 17.1v1 (bundled documentation, Documentation/html/content)"
+tags: [furnace, nukex, clean-plate, roto, tracking, nuke-17, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/f-wireremoval/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,66 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Track a wire with an on-screen 2/3/5-point tool that has its own tracker panel, then repair underneath it with one of four algorithms — spatial interpolation, two motion-compensated temporal methods, or a supplied clean plate warped onto the frame.
 
 ### Summary
-[PENDING EXTRACTION]
+F_WireRemoval is the FurnaceCore node with the most workflow in it, and the docs single out where it excels: wires over **heavy motion blur, smoke, dust or cloud** — exactly the backgrounds that defeat paint. The wire is described by an on-screen tool of **Two Points** (straight), **Three Points** (simple curve, the default) or **Five Points** (s-curve), with **Start Width**, **End Width** and **Overall Width** so the repair band can widen where the wire motion-blurs. A built-in tracker — shown in the Viewer when **Show On Screen Controls** is enabled — offers step, track, **Smart track** (which tracks the range in an intelligent order rather than linearly), **Snap to wire** (finds the wire edges and snaps the region onto them), user key frames, and a full family of key-deletion commands. **Repair** picks the algorithm: `Spatial` (current frame only, a slope-dependent filter interpolating across the wire), `Temporal With Static Scene` (**LME**, for non-uniform scene motion), `Temporal With Moving Scene` (**GME**, for fairly uniform scene motion), or `Clean Plate` (warps the supplied plate onto the frame). **Output** can render `Source`, `Repair`, `Wire Matte`, or `Repair Matted` — so when the repair fails, the tracked matte is still a deliverable for another technique.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Connect **Source** (with the wire) and optionally **CleanPlate**.
+2. Set **Output** to `Source` first — that mode exists so you can position the on-screen wire tool over the untouched image.
+3. Choose **Type**: `Two Points` for a straight wire, `Three Points` (default) for a simple curve, `Five Points` for an s-curve. Place `point1`–`point5`.
+4. Set the repair band: **Start Width** and **End Width** (both `15.56`) to widen one end where the wire blurs, **Overall Width** to scale the whole band across all key frames.
+5. Enable **Show On Screen Controls** to float the tracker panel in the Viewer, and use **Snap to wire** to fit the region to the wire's actual edges.
+6. Track with **Track forwards / backwards**, **Step forward / backward**, or **Smart track** (tracks the range in an intelligent order). Set **Track Range** to `Source Clip Range` or `Specified Range` with **Track Start** / **Track End**.
+7. Manage keys deliberately: **Create / Delete user key frame**, and the track-key commands — delete forwards, backwards, one key, key-and-step either way, all track keys, or all track *and* user keys. Deleting track keys stops at a user key frame.
+8. Choose **Repair**: `Spatial` (default; current frame only), `Temporal With Static Scene` (LME — non-uniform scene motion), `Temporal With Moving Scene` (GME — fairly uniform scene motion), or `Clean Plate`.
+9. For either temporal method set **Temporal Offset** (default `1`) — which frames before and after supply the background.
+10. Reduce **Filter Size** (default `5`) when the wire has internal detail — a steel wire whose threads catch light can be mistaken for grain and left behind.
+11. Enable **Luminance Correct** for global luminance shifts between frames or against a clean plate (⚠️ it does **not** benefit `Spatial`), and adjust **Lum Block Size** (`31.12`) if the correction misbehaves.
+12. Set **Output** to `Repair`, or to `Wire Matte` / `Repair Matted` when the wire tracks well but needs another technique to finish.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **F_WireRemoval** (NukeX / FurnaceCore). Inputs: **CleanPlate** (optional), **Source**. *See also* **RotoPaint**.
+- Tracker commands: `setUserKeyFrame`, `deleteUserKeyFrame`, `snapToWire`, `trackBwd`, `stepBwd`, `stepFwd`, `trackFwd`, `smartTrack`, `deleteTrackKeysBwd`, `deleteTrackKeyStepBwd`, `deleteTrackKey`, `deleteTrackKeyStepFwd`, `deleteTrackKeysFwd`, `deleteAllTrackKeys`, `deleteAll`.
+- **Type** (`wireType`, `Three Points`), **On-Screen Wire** (`onScreenWire`, `Show` | `Hide` | `Points only`), **Show On Screen Controls** (`showUI`, off).
+- **Output** (`output`, `Source` | `Repair` | `Wire Matte` | `Repair Matted`).
+- **Track Range** (`range`), **Track Start** (`start`, 0), **Track End** (`end`, 100).
+- **Repair** (`repairMethod`, `Spatial` | `Temporal With Static Scene` (LME) | `Temporal With Moving Scene` (GME) | `Clean Plate`), **Temporal Offset** (`tempOffset`, `1`).
+- **Filter Size** (`filterSize`, `5`), **Luminance Correct** (`lumCorrect`, off), **Lum Block Size** (`lumBlockSize`, `31.12`).
+- Points `point1`–`point5`; **Start Width** / **End Width** / **Overall Width** (`startWidth`, `endWidth`, `overallWidth`, all `15.56`). **About** (`about`).
+- Step-by-step guide: *Using F_WireRemoval*.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+NukeX 17.1v1 (FurnaceCore).
 
 ### Tags
-[PENDING EXTRACTION]
+`furnace`, `nukex`, `clean-plate`, `roto`, `tracking`, `nuke-17`, `advanced`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [F_RigRemoval](f-rigremoval.md) — the same repair-from-other-frames idea for larger objects, without the dedicated tracker.
+- [F_ReGrain](f-regrain.md) — the grain/detail distinction behind this node's **Filter Size** control.
+- [F_Steadiness](f-steadiness.md) — GME, the estimator behind `Temporal With Moving Scene`.
+
+---
+
+> **Provenance.** Ingested from the documentation **bundled inside Nuke 17.1v1**
+> on this machine (`Documentation/html/content/`), so the `url:` is a local
+> `file://` path and is not reachable from another machine. It is first-party
+> Foundry documentation for the exact installed build, which makes it a better
+> version witness than the public docs site: what is written here is what this
+> Nuke does. The page's own footer stamp (`Nuke 17.1v1 docs`) is preserved in the
+> Raw Data.
+
+> **On the Furnace suite.** These are the **FurnaceCore** nodes bundled with
+> **NukeX** — the surviving subset of the original Furnace plug-in suite, which
+> is why this skill's gap list called them "legacy and partly superseded". They
+> are not deprecated: they ship in 17.1 and several remain the fastest route to a
+> result the modern toolset reaches only through much more setup. Where a newer
+> node genuinely supersedes one, the docs say so themselves in a *See also* line,
+> preserved in each entry.

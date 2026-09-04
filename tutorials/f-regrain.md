@@ -4,10 +4,10 @@ source: Article
 url: file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_regrain.html
 author: Nuke 17.1v1 bundled documentation
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "NukeX (FurnaceCore)"
+version: "Nuke 17.1v1 (bundled documentation, Documentation/html/content)"
+tags: [furnace, nukex, grain, nuke-17, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/f-regrain/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,62 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Sample grain from a clean, detail-free patch of one image — or from a supplied film stock preset — and synthesise unlimited grain with the same statistics onto another image.
 
 ### Summary
-[PENDING EXTRACTION]
+F_ReGrain is the classic regrain workflow: match the grain of a plate onto a CG element so the two sit in the same stock. It works either from a **Grain** input (sampling an **Analysis Region** that must contain *only grain, no image detail*) or from a **Preset Stock** list, defaulting to `FUJIF250under 2K`, and it switches to the sampled route automatically when a Grain input is connected. The verification tool is **Output → Grain Plate**: a test image made of a section of the input surrounded by a flat colour sampled from it, with the grain applied — **if the inner area is indistinguishable from the outer area, the sample is good.** Beyond amount and size it exposes full per-channel control (red, green and blue each with their own process toggle, amount and size), a **Grain Colour Space** for where the sample originated and an **Apply Grain In** space for where it is re-applied, and tonal shaping through Low/Mid/High Gain plus an optional **sampled response** curve that scales grain brightness by the luminance of the Grain image.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Connect **Src** (the image to receive grain) and, for sampled grain, **Grain** (the image to sample from). Connecting Grain switches **Grain Type** to `From Grain Clip` automatically.
+2. Place the **Analysis Region** (`regionBL` / `regionTR`) over a patch containing **no image detail, only grain**, and set **Analysis Frame** (default `1`).
+3. Set **Grain Colour Space** (`Cineon` / `sRGB` / `Linear`, default `sRGB`) to whatever the grain sample was in when it originated — getting this wrong exaggerates the grain through the colour-space conversion.
+4. Or skip sampling: leave **Grain Type** on `Preset Stock` and choose from **Preset Stock** (default `FUJIF250under 2K`).
+5. Set **Grain Amount** (`1`; `0` adds none) and **Grain Size** (`1`; larger = bigger and softer granules).
+6. **Verify with Output → Grain Plate** — when the inner section is indistinguishable from the surrounding flat colour, the sample is right. Switch back to `Result` for the real output.
+7. Press **Analyse** when the input clip has changed but you do not want to move the analysis region to trigger re-analysis (a warning appears when the input changes).
+8. Refine per channel: **Process Red / Green / Blue** with individual **Amount** and **Size** — the route for matching a stock whose grain is not neutral across channels.
+9. Shape tonally with **Low Gain**, **Mid Gain**, **High Gain**, and set **Apply Grain In** to the space the grain should be re-applied in.
+10. For a luminance-dependent response, enable **Use Sampled Response**, click **Sample Grain Response** (repeated clicks *accumulate* rather than reset), blend with **Sampled Response Mix**, inspect with **Draw Response**, and start over with **Reset Grain Response**.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **F_ReGrain** (NukeX / FurnaceCore). Inputs: **Grain**, **Src**. *See also* **Grain** and **ScannedGrain** (the page's own cross-reference).
+- **Grain Type** (`grainType`, `Preset Stock` | `From Grain Clip`), **Preset Stock** (`presetStock`, `FUJIF250under 2K`).
+- **Grain Amount** (`amount`, `1`), **Grain Size** (`size`, `1`), **Output** (`output`, `Result` | `Grain Plate`), **Analyse** (`analyse`).
+- **Analysis Region BL / TR** (`regionBL`, `regionTR`), **Analysis Frame** (`frame`, `1`), **Grain Colour Space** (`grainColourSpace`, `sRGB`).
+- Per channel: `processRed`/`redAmount`/`redSize`, `processGreen`/`greenAmount`/`greenSize`, `processBlue`/`blueAmount`/`blueSize`.
+- **Apply Grain In** (`srcColourSpace`), **Low/Mid/High Gain** (`lowGain`, `midGain`, `highGain`).
+- **Use Sampled Response** (`useResponse`), **Sampled Response Mix** (`responseMix`, `1`), **Sample Grain Response** (`sample`), **Reset Grain Response** (`reset`), **Draw Response** (`drawResponse`).
+- Step-by-step guide: *Using F_ReGrain*.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+NukeX 17.1v1 (FurnaceCore). The page names **Grain** and **ScannedGrain** as the alternatives in the same area.
 
 ### Tags
-[PENDING EXTRACTION]
+`furnace`, `nukex`, `grain`, `nuke-17`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [F_DeFlicker2](f-deflicker2.md) — the other FurnaceCore node working on image statistics over time.
+- [F_WireRemoval](f-wireremoval.md) — its **Filter Size** control exists precisely because a repair filter can mistake wire detail for grain.
+
+---
+
+> **Provenance.** Ingested from the documentation **bundled inside Nuke 17.1v1**
+> on this machine (`Documentation/html/content/`), so the `url:` is a local
+> `file://` path and is not reachable from another machine. It is first-party
+> Foundry documentation for the exact installed build, which makes it a better
+> version witness than the public docs site: what is written here is what this
+> Nuke does. The page's own footer stamp (`Nuke 17.1v1 docs`) is preserved in the
+> Raw Data.
+
+> **On the Furnace suite.** These are the **FurnaceCore** nodes bundled with
+> **NukeX** — the surviving subset of the original Furnace plug-in suite, which
+> is why this skill's gap list called them "legacy and partly superseded". They
+> are not deprecated: they ship in 17.1 and several remain the fastest route to a
+> result the modern toolset reaches only through much more setup. Where a newer
+> node genuinely supersedes one, the docs say so themselves in a *See also* line,
+> preserved in each entry.

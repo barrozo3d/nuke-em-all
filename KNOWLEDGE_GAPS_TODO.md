@@ -264,7 +264,7 @@ Mari release-notes files exist against that.
 - [ ] **Mari projection painting** — camera projection, image manager, paint
       buffer, and the bake-down to channels
 
-### 3. 🟡 CopyCat / Cattery — **2 tutorials** (was 1, and that 1 was not real)
+### 3. ✅ CopyCat / Cattery — **CLOSED 2026-09-04** — **3 tutorials** (was recorded as 1; really 0)
 
 > **2026-09-04 — partly closed, and the old count was wrong.** This item read
 > "1 tutorial". Re-measured against the 100 files as they stood: `copycat|cattery|inference`
@@ -289,23 +289,28 @@ Mari release-notes files exist against that.
       early can mean the model never trains at full resolution); checkpoint `.cat`
       every 1000 steps and contact-sheet `.png` every 100; the Progress tab's
       Step/Loss curve with Log Scale, Smoothness 0.6 and Show Original Curve.
-- [~] **Cattery models** — installing/using pretrained models (upscale, matte,
+- [x] **Cattery models** — installing/using pretrained models (upscale, matte,
       depth) via the Inference node
       ✅ `inference.md` — the **applying** half: Model File, read-only Channels
       In/Out, GPU controls, and Optimize for Speed and Memory (16-bit half float
       instead of 32-bit — faster, less GPU memory, larger images, artifacts with
-      some networks). Two placement facts worth keeping: Inference is **not**
-      NukeX-restricted, so a `.cat` trained on a NukeX seat applies on a base
-      Nuke seat; and the timeline version of the node drops the GPU controls.
-      Also names *Import Pre-Trained PyTorch Models* as the route for externally
-      trained models.
-      ❌ Still missing: **the Cattery library itself** — browsing or downloading
-      Foundry's pretrained community models, where the downloaded files install
-      on the plug-in path, and the per-model notes those downloads carry.
-      CopyCat's Deblur/Upscale/Human Matting weightings are pretrained starting
-      points for *training* and are **not** the Cattery catalogue; treating them
-      as the same thing would be manufacturing coverage. A coverage note in
-      `inference.md` records this too, so the entry cannot be misread as complete.
+      some networks). Inference is **not** NukeX-restricted, so a `.cat` trained
+      on a NukeX seat applies on a base Nuke seat; the timeline version of the
+      node drops the GPU controls.
+      ✅ `download-pre-trained-models-from-foundrys-cattery.md` — **the library
+      itself**, which the first pass recorded as missing: the catalogue
+      (segmentation, depth estimation, optical flow, upscaling, denoising, style
+      transfer) at `community.foundry.com/cattery` or the toolbar icon; install
+      by unzipping and pasting the `Cattery` directory into `.nuke`; then
+      **Cattery icon → Update**, after which the model appears in the Cattery
+      menu and drops into the Node Graph as a **gizmo**. Includes the OS-specific
+      `.nuke` paths and the Windows trap: `.nuke` sits under `HOME` when that is
+      set and `USERPROFILE` when it is not, which it commonly is not.
+
+      ⚠️ **Still worth keeping straight:** CopyCat's `Deblur` / `Upscale` /
+      `Human Matting` / `Checkpoint` weightings are pretrained starting points
+      for *training*. They are **not** the Cattery catalogue, which ships
+      finished models. Two different things that sound alike.
 
 ### 4. ✅ `menu.py` / `init.py` pipeline customisation — **CLOSED 2026-09-04** (was ZERO)
 
@@ -345,11 +350,53 @@ Three Foundry Python dev-guide pages ingested and extracted (text-only), taking
 > docs carry clean titles and need no override — the difference is per-doc-set,
 > not per-site.
 
-### 5. Furnace / F_ plugin suite (NukeX) — **ZERO**
+### 5. ✅ Furnace / F_ plugin suite (NukeX) — **CLOSED 2026-09-04** (was ZERO)
 
-`furnace|f_` matches **0 of 85**. Low priority — the Furnace tools are legacy
-and partly superseded — but it is a genuine zero in an advertised NukeX area.
-Ingest only if a good source appears; do not manufacture coverage.
+The item said *"Ingest only if a good source appears; do not manufacture
+coverage."* A good source appeared — it had been on the disk the whole time.
+**Nuke 17.1v1 is installed on this machine** and ships **1,818 pages** of
+first-party documentation at `Documentation/html/content/`, including the
+complete FurnaceCore reference at `reference_guide/furnacecore_nodes/`.
+`furnace|f_` goes from **0 of 85** to **6 of 113**.
+
+- [x] **The FurnaceCore suite** — all six bundled nodes, one entry each:
+      ✅ `f-align.md` — GME four-corner pin aligning a Src clip onto a Ref clip;
+      Rotate/Translate on by default, Scale/Perspective off.
+      ✅ `f-steadiness.md` — the single-clip sibling: Smooth vs Incremental Lock
+      vs Absolute Lock, Auto Scale for the black edges, and the **zero-based
+      Lock Frame against a one-based NukeX timeline**.
+      ✅ `f-regrain.md` — sample grain from a detail-free patch or a stock preset;
+      **Output → Grain Plate** is the verification (indistinguishable inner and
+      outer means a good sample); full per-channel and tonal response control.
+      ✅ `f-deflicker2.md` — localised, geometry-dependent flicker; the
+      motion-compensated second pass; and the warning that **more than two
+      instances in a tree dramatically increases render time**.
+      ✅ `f-rigremoval.md` — repair from other frames without roto; **red pixels
+      mean the repair failed and the fix is to raise Frame Range**.
+      ✅ `f-wireremoval.md` — the 2/3/5-point wire tool, its own tracker with
+      Smart track and Snap to wire, and four repair algorithms (Spatial, LME,
+      GME, Clean Plate).
+
+> **On "legacy and partly superseded".** That framing was fair and is kept in
+> each entry, but it is not the same as deprecated: these ship in 17.1, and where
+> a newer node genuinely supersedes one the docs say so themselves in a *See
+> also* line (F_ReGrain → Grain / ScannedGrain; F_RigRemoval → RotoPaint,
+> Project3D; F_WireRemoval → RotoPaint), which is preserved per entry.
+
+> 🔴 **Why this sat at ZERO for two weeks: a false claim about the machine.**
+> The skill's own memory recorded "no Nuke installed on this machine", written at
+> scaffolding time and never re-checked. It was wrong, and it is the **second**
+> such claim to fail on 2026-09-04 — the Substance Painter one in `paint-me`
+> blocked that skill's biggest gap the same way. **A claim about the local
+> environment is a measurement, not a fact.** Record the command that settles it,
+> not the conclusion.
+
+> ⚙️ **1,812 more local pages are available by the same route.** The `file://`
+> recipe (`ingest.py "file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/..." --skip-video`)
+> works against any of them, and these pages carry **clean `<title>`s needing no
+> `--title` override** — unlike `learn.foundry.com/nuke/developers/**`. Bundled
+> docs are also a better version witness than the public site: they describe the
+> exact installed build, and each page footer stamps `Nuke 17.1v1 docs`.
 
 ## Notes on what is NOT a gap
 
