@@ -1274,6 +1274,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/inference.md
 - **Related:** CopyCat (`copycat.md`) — shares `copycat`, `ai-tools`, `machine-learning`; produces the .cat file this node consumes. How SMART is State of the Art A.I Rotoscoping? (`how-smart-is-state-of-the-art-ai-rotoscoping.md`) — shares `ai-tools`.
 
+
+### F_Align
+- **Source:** Article
+- **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_align.html
+- **Author:** Nuke 17.1v1 bundled documentation
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/f-align.md
+
 ---
 
 ## Tag Reference
