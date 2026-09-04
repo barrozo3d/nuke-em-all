@@ -1258,6 +1258,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/copycat.md
 
+
+### Inference
+- **Source:** Article
+- **URL:** https://learn.foundry.com/nuke/content/reference_guide/air_nodes/inference.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/inference.md
+
 ---
 
 ## Tag Reference
