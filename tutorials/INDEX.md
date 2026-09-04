@@ -1296,6 +1296,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/f-deflicker2.md
 
+
+### F_ReGrain
+- **Source:** Article
+- **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_regrain.html
+- **Author:** Nuke 17.1v1 bundled documentation
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/f-regrain.md
+
 ---
 
 ## Tag Reference
