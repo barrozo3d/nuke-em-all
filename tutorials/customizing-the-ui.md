@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/nuke/developers/latest/pythondevguide/custom_ui.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX / Nuke Studio (interactive sessions only)"
+version: "not specified (dev guide served at /latest/; the page's own plug-in-path examples are Nuke 6.2v4-era)"
+tags: [python-scripting, pipeline, hotkeys, nuke-startup, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/customizing-the-ui/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,42 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Building Nuke's interface from `menu.py` — `nuke.menu()` to reach one of the eight named menus, `nuke.toolbar()` for a new toolbar, `addCommand()` to place an item, and a third `addCommand()` argument to bind its hotkey.
 
 ### Summary
-[PENDING EXTRACTION]
+This page is the menu/toolbar/hotkey API that `menu.py` exists to hold. It names the eight addressable menus (**Nuke**, **Windows**, **Nodes**, **Properties**, **Animation**, **Viewer**, **Node Graph**, **Axis**), then covers creating menus and toolbars, adding items with icons and explicit positions, finding and invoking or disabling existing items, and assigning hotkeys with `ctrl+`/`^`, `alt+`/`#`, `shift+`/`+` modifiers. Two details are easy to miss and expensive to rediscover: assigning a hotkey to an existing command means **replacing the whole menu item**, and disabling an item with `setEnabled(False)` **does not disable its hotkey**, which keeps firing. The page ends with `nuke.knobDefault()`, the one piece here that belongs in `init.py` rather than `menu.py`.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Address a menu with **`nuke.menu("<name>")`** — `Nuke` (app menu bar), `Windows`, `Nodes` (the toolbar *and* the Node Graph right-click), `Properties`, `Animation`, `Viewer`, `Node Graph`, `Axis`.
+2. **Create a custom menu:** `m = nuke.menu("Viewer")` then `myMenu = m.addMenu("MyStuff")`, optionally `addMenu("MyStuff", icon="ohu_icon.png")` — the icon is resolved from the plug-in path.
+3. **Create a custom toolbar:** `myToolbar = nuke.toolbar("My nodes")`. An item added with no sub-menu in its path becomes a **button**; one added as `"My Other Tools/tool A"` becomes a **menu**.
+4. To give a toolbar sub-menu an icon, create it explicitly first — `myMenu = myToolbar.addMenu("My Other Tools", icon="ohu_icon.png")` — then add commands to `myMenu`.
+5. **Add an item:** `nuke.menu("Nuke").addCommand("MyMenu/my tool 1", lambda: nuke.message("yay, it works"))`. Intermediate menus named in the path are created on the fly. The command may be a `lambda`/callable or a **string** of Python evaluated at invoke time.
+6. Control placement and appearance with **`icon=`** and **`index=`** (`index=1` inserts at position 1), and separate groups with **`m.addSeparator()`** after locating the menu via `findItem`.
+7. **Find, run or disable an existing item:** `m = nuke.menu("Nuke").findItem("Edit/Node/Filename/Show")` then `m.invoke()`; or `nuke.menu("Nuke").findItem("Render/Proxy Mode").setEnabled(False)`. ⚠️ The hotkey of a disabled item **still works**.
+8. **Assign a hotkey by replacing the item:** `nuke.menu("Nodes").addCommand("3D/Axis", lambda: nuke.createNode("Axis2"), "a")` re-registers the existing *3D ▸ Axis* item with `a` bound. Modifiers: `ctrl+a` or `^a`, `alt+a` or `#a`, `shift+a` or `+a`.
+9. **Change knob defaults** with `nuke.knobDefault("Blur.size", "77")` — per class, or `nuke.knobDefault("channels", "rgba")` with the class omitted to hit every knob of that name on creation. Put this in `init.py` so command-line renders get it too.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **The eight menus:** `Nuke`, `Windows`, `Nodes`, `Properties`, `Animation`, `Viewer`, `Node Graph`, `Axis`.
+- **`nuke.menu(name)`**, **`nuke.toolbar(name)`**, **`.addMenu(name, icon=)`**, **`.addCommand(path, cmd, hotkey, icon=, index=)`**, **`.addSeparator()`**, **`.findItem(path)`**, **`.invoke()`**, **`.setEnabled(bool)`**.
+- **`nuke.knobDefault("<Class>.<knob>", "<value>")`** — e.g. `Blur.size` → `77`; class omitted applies to all knobs of that name (`channels` → `rgba`).
+- **Hotkey modifier syntax:** `ctrl+` / `^`, `alt+` / `#`, `shift+` / `+`.
+- **`nuke.message()`**, **`nuke.createNode()`** — used as the example payloads.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX / Nuke Studio, interactive sessions only — none of this loads in a command-line session, which is precisely why it belongs in `menu.py`. Version not specified (dev guide `/latest/` path).
 
 ### Tags
-[PENDING EXTRACTION]
+`python-scripting`, `pipeline`, `hotkeys`, `nuke-startup`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Start-up Scripts](start-up-scripts.md) — why this code goes in `menu.py` and never in `init.py`.
+- [Installing Plug-ins](installing-plug-ins.md) — putting the gizmo on the path that these menu items then instantiate.
+
+> **Note on code in the Raw Data.** The article fetcher strips quote characters out of inline code, so the captured page text reads `nuke.menu( Nodes ).addCommand( ... )`. Quotes are restored in the notes above; the identifiers, argument order and values are unchanged from the source page.

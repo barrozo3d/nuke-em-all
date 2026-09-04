@@ -1219,33 +1219,36 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/nuke/developers/latest/pythondevguide/startup.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX / Nuke Studio (start-up mechanism is common to all)
+- **Version:** not specified (dev guide served at /latest/; the page's own plug-in-path examples are Nuke 6.2v4-era)
+- **Tags:** python-scripting, pipeline, gizmo, nuke-startup, intermediate
+- **Summary:** init.py vs menu.py, NUKE_PATH, and the plug-in path: what Nuke runs at start-up and in what order. init.py is read in EVERY session including command-line renders; menu.py only in an interactive GUI session, and UI code placed in init.py can error or prevent Nuke launching. Initialization scripts run in reverse plug-in-path order, so ~/.nuke executes last and overrides facility settings. Covers nuke.pluginPath(), nuke.pluginAddPath() (prefix), nuke.pluginAppendPath() (append), knob defaults and formats.
 - **File:** tutorials/start-up-scripts.md
+- **Related:** Installing Plug-ins (`installing-plug-ins.md`), Customizing the UI (`customizing-the-ui.md`) — shares `python-scripting`, `pipeline`, `nuke-startup`; the three together are this skill's studio-customisation set.
 
 
 ### Installing Plug-ins
 - **Source:** Article
 - **URL:** https://learn.foundry.com/nuke/developers/latest/pythondevguide/installing_plugins.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX / Nuke Studio
+- **Version:** not specified (dev guide served at /latest/; the page's own plug-in-path examples are Nuke 6.2v4-era)
+- **Tags:** python-scripting, pipeline, gizmo, nuke-startup, intermediate
+- **Summary:** Installing gizmos, plug-ins and Python scripts so Nuke can find them: the ~/.nuke home directory, typed sub-directories registered with nuke.pluginAddPath() from init.py, and a shared network repository exported through NUKE_PATH. Also the menu.py side that makes an installed file clickable - nuke.menu(Nodes).addCommand() with nuke.createNode(), and importing a Python module to bind a callable. Includes per-user (os.getenv USER) and per-show (SHOW) plug-in-path patterns, and the warning never to install into Nuke's own application directory.
 - **File:** tutorials/installing-plug-ins.md
+- **Related:** Start-up Scripts (`start-up-scripts.md`), Customizing the UI (`customizing-the-ui.md`) — shares `python-scripting`, `pipeline`, `gizmo`, `nuke-startup`.
 
 
 ### Customizing the UI
 - **Source:** Article
 - **URL:** https://learn.foundry.com/nuke/developers/latest/pythondevguide/custom_ui.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX / Nuke Studio (interactive sessions only)
+- **Version:** not specified (dev guide served at /latest/; the page's own plug-in-path examples are Nuke 6.2v4-era)
+- **Tags:** python-scripting, pipeline, hotkeys, nuke-startup, intermediate
+- **Summary:** menu.py UI customisation for Nuke: nuke.menu(), nuke.toolbar(), addCommand(), addMenu(), addSeparator(), findItem(), invoke(), setEnabled() and nuke.knobDefault(). Names the eight addressable menus - Nuke, Windows, Nodes, Properties, Animation, Viewer, Node Graph, Axis - and the hotkey modifier syntax (ctrl+ or ^, alt+ or #, shift+ or +). Two traps worth the read: binding a hotkey means replacing the whole menu item, and an item disabled with setEnabled(False) keeps firing its hotkey.
 - **File:** tutorials/customizing-the-ui.md
+- **Related:** Start-up Scripts (`start-up-scripts.md`), Installing Plug-ins (`installing-plug-ins.md`) — shares `python-scripting`, `pipeline`, `nuke-startup`.
 
 
 ### CopyCat

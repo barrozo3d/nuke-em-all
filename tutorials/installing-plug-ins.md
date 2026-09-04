@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/nuke/developers/latest/pythondevguide/installing_plugins.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX / Nuke Studio"
+version: "not specified (dev guide served at /latest/; the page's own plug-in-path examples are Nuke 6.2v4-era)"
+tags: [python-scripting, pipeline, gizmo, nuke-startup, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/installing-plug-ins/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,45 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Three escalating ways to make Nuke see a gizmo, plug-in or Python script — the `~/.nuke` home directory, sub-directories added with `nuke.pluginAddPath()` from `init.py`, and a shared network repository pointed at by `NUKE_PATH` — plus the `menu.py` entry that turns an installed file into something artists can actually click.
 
 ### Summary
-[PENDING EXTRACTION]
+Installing a Nuke plug-in is two separate problems: making the file *discoverable* on the plug-in path, and making it *reachable* from a menu. The page walks the discovery half from the single-user case (`~/.nuke`, created on first launch and always first on the plug-in path) up to a multi-user facility (a network directory exported through `NUKE_PATH`), and warns explicitly against the tempting wrong answer — dropping plug-ins into Nuke's own install directory, which brings permission problems and breaks on every version upgrade. It closes with two genuinely pipeline-shaped patterns: a per-user directory added only `if os.path.isdir()` finds it, and per-show tool directories resolved from a `SHOW` environment variable at start-up.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. **Single user:** drop the `.gizmo`, plug-in or `.py` file into **`~/.nuke`** — created automatically on first launch and always at the *start* of the plug-in path, so it overrides facility defaults.
+2. Verify with **`nuke.pluginPath()`**; for quick debugging only, force everything into a menu with **Other ▸ All Plugins ▸ Update**. The page calls this "fine for quick debugging or testing, but not an acceptable workflow solution."
+3. **Make it reachable:** add a command in `menu.py` — `nuke.menu("Nodes").addCommand("Other/MyGizmo", lambda: nuke.createNode("MyGizmo"))`, where the second `MyGizmo` is the *filename* (`~/.nuke/MyGizmo.gizmo`).
+4. For a Python module `~/.nuke/myFunctions.py` holding `doCoolStuff()`: `import myFunctions` then `nuke.menu("Nuke").addCommand("My Cool Functions/do cool stuff", myFunctions.doCoolStuff)` — pass the callable, do not call it.
+5. **Organise by type:** create `gizmos`, `python`, `plugins` sub-directories and register them from **`init.py`** with `nuke.pluginAddPath("./gizmos")` etc. Relative and absolute paths both work; `pluginAddPath` *prefixes*, `pluginAppendPath` appends.
+6. **Multi-user:** point every artist at a shared network directory, either by calling `nuke.pluginAddPath()` in each user's `~/.nuke/init.py` or — better — by setting **`NUKE_PATH`** in the shell environment. `~/.nuke` stays first regardless, so per-user overrides keep working.
+7. **Per-user sandbox inside a shared repo:** in the top-level `init.py`, read `os.getenv("USER")`, join it under a `Users` directory, and `nuke.pluginAddPath(userPath)` **only** `if os.path.isdir(userPath)`.
+8. **Per-show tools:** read `os.getenv("SHOW")`, build `/projects/<show>/nuke`, and add it if it exists — or loop `os.listdir("/projects")` and add every show's `nuke` directory when artists need to borrow tools across shows.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **`~/.nuke`** — per-user plug-in directory, created on first launch, always first on the plug-in path.
+- **`NUKE_PATH`** — environment variable for a shared/network plug-in repository.
+- **`nuke.pluginPath()`** / **`nuke.pluginAddPath()`** (prefix) / **`nuke.pluginAppendPath()`** (append).
+- **`nuke.menu("Nodes").addCommand(path, cmd)`** — adds to the Nodes toolbar; **`nuke.menu("Nuke")`** — the application menu bar.
+- **`nuke.createNode("<name>")`** — instantiates the gizmo/plug-in by filename.
+- **Other ▸ All Plugins ▸ Update** — force-loads everything on the path; debugging aid only.
+- `os.getenv("USER")`, `os.getenv("SHOW")`, `os.path.isdir()`, `os.path.join()`, `os.listdir()` — the guards that keep a facility `init.py` from failing on a machine where a directory is absent.
+- ⚠️ **Do not install into Nuke's own application directory** — permission/security issues, and the plug-ins do not carry across Nuke versions.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke / NukeX / Nuke Studio. Version not specified — served from the `/latest/` dev-guide path while the printed `nuke.pluginPath()` results are Nuke 6.2v3/6.2 era. The API calls and `NUKE_PATH` behaviour are current.
 
 ### Tags
-[PENDING EXTRACTION]
+`python-scripting`, `pipeline`, `gizmo`, `nuke-startup`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Start-up Scripts](start-up-scripts.md) — the evaluation order that decides which of these directories wins.
+- [Customizing the UI](customizing-the-ui.md) — the full menu/toolbar/hotkey API this page only samples.
+- [Break up your "PERFECT CG" Renders with this FREE Plugin](break-up-your-perfect-cg-renders-with-this-free-plugin.md) — a real third-party plug-in to install by this route.
+
+> **Note on code in the Raw Data.** The article fetcher strips quote characters out of inline code, so the captured page text reads `nuke.menu( Nodes ).addCommand( ... )`. Quotes are restored in the notes above; the identifiers, argument order and values are unchanged from the source page.
