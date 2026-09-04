@@ -264,26 +264,86 @@ Mari release-notes files exist against that.
 - [ ] **Mari projection painting** — camera projection, image manager, paint
       buffer, and the bake-down to channels
 
-### 3. CopyCat / Cattery — **1 tutorial** (Nuke's ML toolset)
+### 3. 🟡 CopyCat / Cattery — **2 tutorials** (was 1, and that 1 was not real)
 
-`copycat|cattery|inference` matches **1 of 85**. This is a flagship modern Nuke
-feature (train a network on a few hand-done frames, infer the rest) and the
-library has effectively nothing on it.
+> **2026-09-04 — partly closed, and the old count was wrong.** This item read
+> "1 tutorial". Re-measured against the 100 files as they stood: `copycat|cattery|inference`
+> matched **0** in tutorial *bodies*. The 1 was an `INDEX.md` tag hit, which this
+> file's own header warns about ("INDEX.md, which counts tags rather than
+> content"). The gap was a true zero, slightly worse than recorded.
+>
+> Two Foundry reference-guide pages ingested and extracted (text-only):
+> `copycat.md` and `inference.md`.
 
-- [ ] **CopyCat training workflow** — data prep, crop, epochs, reading the loss
+- [x] **CopyCat training workflow** — data prep, crop, epochs, reading the loss
       curve, when it beats roto by hand
-- [ ] **Cattery models** — installing/using pretrained models (upscale, matte,
+      ✅ `copycat.md` — **NukeX and Nuke Studio only** (absent from base Nuke).
+      Input / Ground Truth / Preview (Preview is held *outside* the data set and
+      only appears once the first two are connected); `Total Steps = Epochs *
+      Data Set / Batch Size`; Epochs default 10000; Batch Size Auto or manual
+      (docs report 4–16 typical, must be ≤ the number of image pairs); Crop Size
+      256 and named as the first knob to reduce when memory or time bites; Model
+      Size small/medium/large; Initial Weights None / Checkpoint / Deblur /
+      Upscale / Human Matting; multi-resolution training (up to 2× faster, three
+      stages at 1/4, 1/2 and full res, **disable above ~100 pairs**, and stopping
+      early can mean the model never trains at full resolution); checkpoint `.cat`
+      every 1000 steps and contact-sheet `.png` every 100; the Progress tab's
+      Step/Loss curve with Log Scale, Smoothness 0.6 and Show Original Curve.
+- [~] **Cattery models** — installing/using pretrained models (upscale, matte,
       depth) via the Inference node
+      ✅ `inference.md` — the **applying** half: Model File, read-only Channels
+      In/Out, GPU controls, and Optimize for Speed and Memory (16-bit half float
+      instead of 32-bit — faster, less GPU memory, larger images, artifacts with
+      some networks). Two placement facts worth keeping: Inference is **not**
+      NukeX-restricted, so a `.cat` trained on a NukeX seat applies on a base
+      Nuke seat; and the timeline version of the node drops the GPU controls.
+      Also names *Import Pre-Trained PyTorch Models* as the route for externally
+      trained models.
+      ❌ Still missing: **the Cattery library itself** — browsing or downloading
+      Foundry's pretrained community models, where the downloaded files install
+      on the plug-in path, and the per-model notes those downloads carry.
+      CopyCat's Deblur/Upscale/Human Matting weightings are pretrained starting
+      points for *training* and are **not** the Cattery catalogue; treating them
+      as the same thing would be manufacturing coverage. A coverage note in
+      `inference.md` records this too, so the entry cannot be misread as complete.
 
-### 4. `menu.py` / `init.py` pipeline customisation — **ZERO**
+### 4. ✅ `menu.py` / `init.py` pipeline customisation — **CLOSED 2026-09-04** (was ZERO)
 
-`menu.py|init.py` matches **0 of 85**. `references/nuke-python-scripting.md`
-covers the API itself, and 26 tutorials use `nuke.*` calls — but nothing covers
-**where studio customisation actually lives**: plugin paths, menu building,
-toolbars, startup scripts.
+Three Foundry Python dev-guide pages ingested and extracted (text-only), taking
+`menu.py|init.py` from **0 of 85** to **3 of 100**:
 
-- [ ] **Nuke startup/customisation** — `init.py` vs `menu.py`, `NUKE_PATH`,
+- [x] **Nuke startup/customisation** — `init.py` vs `menu.py`, `NUKE_PATH`,
       plugin discovery, adding menus and shortcuts
+      ✅ `start-up-scripts.md` — the evaluation order (initialization scripts run
+      in **reverse** plug-in-path order, so `~/.nuke` runs last and overrides
+      facility settings), `init.py` in every session including command-line
+      renders vs `menu.py` in interactive sessions only, and the rule that UI
+      code in `init.py` "may lead to errors or prevent NUKE from launching".
+      `nuke.pluginPath()` / `pluginAddPath()` (prefix) / `pluginAppendPath()`
+      (append) / `NUKE_PATH`.
+      ✅ `installing-plug-ins.md` — `~/.nuke`, typed sub-directories registered
+      from `init.py`, a shared network repository via `NUKE_PATH`, the `menu.py`
+      `addCommand` + `nuke.createNode` entry that makes a gizmo clickable,
+      per-user (`os.getenv("USER")`) and per-show (`SHOW`) path patterns guarded
+      by `os.path.isdir`, and the explicit warning never to install into Nuke's
+      own application directory.
+      ✅ `customizing-the-ui.md` — the eight addressable menus (Nuke, Windows,
+      Nodes, Properties, Animation, Viewer, Node Graph, Axis), `nuke.menu` /
+      `nuke.toolbar` / `addMenu` / `addCommand` / `addSeparator` / `findItem` /
+      `invoke` / `setEnabled`, icons and `index=`, hotkey modifiers (`ctrl+`/`^`,
+      `alt+`/`#`, `shift+`/`+`), and `nuke.knobDefault`. Two traps recorded:
+      binding a hotkey means **replacing the whole menu item**, and an item
+      disabled with `setEnabled(False)` **keeps firing its hotkey**.
+
+> ⚠️ **Ingest lesson — the Nuke dev guide puts site chrome in its `<title>`.**
+> The first collect landed as `start-up-scripts-nuke-python-api-reference.md`
+> ("Start-up Scripts — Nuke Python API Reference"). A slug built from chrome is
+> frozen identity the moment it is committed, so the collect was **reverted** and
+> re-run with `--title "Start-up Scripts"`. **Always pass `--title` for
+> `learn.foundry.com/nuke/developers/**` pages.** The *reference guide*
+> (`/nuke/content/reference_guide/**`, e.g. CopyCat, Inference) and the Katana
+> docs carry clean titles and need no override — the difference is per-doc-set,
+> not per-site.
 
 ### 5. Furnace / F_ plugin suite (NukeX) — **ZERO**
 
