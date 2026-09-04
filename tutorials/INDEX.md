@@ -1255,22 +1255,24 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/nuke/content/reference_guide/air_nodes/copycat.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** NukeX / Nuke Studio only (CopyCat is not available in base Nuke)
+- **Version:** Nuke 17 (the page cites the Nuke 17 Release Notes for supported GPUs)
+- **Tags:** copycat, ai-tools, machine-learning, nuke-17, intermediate
+- **Summary:** CopyCat machine-learning training in NukeX and Nuke Studio (not base Nuke): feed an Input sequence and a hand-worked Ground Truth sequence, train a network, and write a .cat file for the Inference node. Covers Epochs (default 10000), Total Steps = Epochs * Data Set / Batch Size, Batch Size (Auto, or 4-16 manual), Crop Size (256), Model Size small/medium/large, the Deblur / Upscale / Human Matting / Checkpoint Initial Weights, multi-resolution training (up to 2x faster, disable above ~100 pairs), checkpoint .cat every 1000 steps, contact-sheet .png every 100 steps, and reading the Step/Loss curve with log scale and smoothing.
 - **File:** tutorials/copycat.md
+- **Related:** Inference (`inference.md`) — shares `copycat`, `ai-tools`, `machine-learning`; trains the .cat file Inference applies. How SMART is State of the Art A.I Rotoscoping? (`how-smart-is-state-of-the-art-ai-rotoscoping.md`), Did Corridor Crew SOLVE Greenscreen? (`did-corridor-crew-solve-greenscreen.md`) — share `ai-tools`.
 
 
 ### Inference
 - **Source:** Article
 - **URL:** https://learn.foundry.com/nuke/content/reference_guide/air_nodes/inference.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Nuke / NukeX / Nuke Studio (a timeline version exists with GPU controls removed)
+- **Version:** Nuke 17 (the page cites the Nuke 17 Release Notes for supported GPUs)
+- **Tags:** copycat, ai-tools, machine-learning, nuke-17, beginner
+- **Summary:** The Inference node applies a trained CopyCat .cat file across a sequence. Model File, read-only Channels In / Channels Out, GPU selection, and Optimize for Speed and Memory (16-bit half float instead of 32-bit: faster, less GPU memory, larger images, possible artifacts). Unlike CopyCat it is not NukeX-only, so a model trained on a NukeX seat can be applied on base Nuke; the timeline version of the node drops the GPU controls. Also the entry point for externally trained models via the Import Pre-Trained PyTorch Models guide.
 - **File:** tutorials/inference.md
+- **Related:** CopyCat (`copycat.md`) — shares `copycat`, `ai-tools`, `machine-learning`; produces the .cat file this node consumes. How SMART is State of the Art A.I Rotoscoping? (`how-smart-is-state-of-the-art-ai-rotoscoping.md`) — shares `ai-tools`.
 
 ---
 

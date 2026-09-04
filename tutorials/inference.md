@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/nuke/content/reference_guide/air_nodes/inference.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Nuke / NukeX / Nuke Studio (a timeline version exists with GPU controls removed)"
+version: "Nuke 17 (the page cites the Nuke 17 Release Notes for supported GPUs)"
+tags: [copycat, ai-tools, machine-learning, nuke-17, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/inference/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,52 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Apply a trained `.cat` file across a whole sequence with a single node: point **Model File** at the network CopyCat produced and let **Inference** reproduce the learned effect on its Input.
 
 ### Summary
-[PENDING EXTRACTION]
+Inference is the playback half of Nuke's CopyCat workflow — it takes one image input and one `.cat` model file and applies the modelled effect. Its control set is deliberately small: **Model File**, the read-only **Channels In** / **Channels Out** the model expects, GPU selection, and **Optimize for Speed and Memory**, which drops from Nuke's standard 32-bit float to 16-bit half float for faster, lighter, larger-image inference at the risk of artifacts with some trained networks. Two placement details matter in practice: the **timeline version of the node omits the GPU controls**, and the node is not restricted to CopyCat's own output — the page's step-by-step guide is *Import Pre-Trained PyTorch Models*, so externally trained models converted to `.cat` run through this same node.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Connect the image to process to **Input**.
+2. Set **Model File** to the `.cat` file — type the path or click the directory icon. Coming from CopyCat, its **Create Inference** button builds this node with the path already filled in.
+3. Check **Channels In** and **Channels Out** — read-only, reporting what the model expects to receive and produce. A channel mismatch here is the first thing to check when output looks wrong.
+4. Leave **Use GPU if available** enabled and confirm **Local GPU** names a real device; it reads `Not available` when Preferences' default blink device is CPU, when no suitable GPU is present, or when a context could not be created (usually insufficient GPU memory). A GPU change requires restarting Nuke.
+5. Enable **Optimize for Speed and Memory** for 16-bit half-float inference when speed, GPU memory or image size is the constraint — and check for artifacts, since not every trained network survives the precision drop. The control is hidden when GPU use is disabled.
+6. Rendering from the command line: enable **Use GPU if available** and pass `--gpu`.
+7. To run a model trained outside Nuke, follow the page's linked step-by-step guide **Import Pre-Trained PyTorch Models** and load the resulting `.cat` here.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Inference** — single **Input**; a timeline version of the node exists with GPU-related controls unavailable.
+- **Model File** (`modelFile`) — path to the `.cat` file.
+- **Channels In** (`channelsIn`) / **Channels Out** (`channelsOut`) — default `None`; the channels the model expects in and out.
+- **Optimize for Speed and Memory** (`inferencePrecision`, disabled) — 16-bit half float instead of 32-bit; faster, less GPU memory, larger images, possible artifacts. Hidden when **Use GPU if available** is off.
+- **Local GPU** (`gpuName`) / **Use GPU if available** (`useGPUIfAvailable`, enabled) — same semantics and same restart requirement as on CopyCat; also the control to enable for `--gpu` command-line renders.
+- Linked step-by-step guide: **Import Pre-Trained PyTorch Models**.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Nuke, NukeX and Nuke Studio — unlike CopyCat, Inference is not NukeX-restricted, so a `.cat` trained on a NukeX seat can be applied on a base Nuke seat. The timeline version of the node drops the GPU controls. Nuke 17-era documentation (cites the *Nuke 17 Release Notes* for supported GPUs).
 
 ### Tags
-[PENDING EXTRACTION]
+`copycat`, `ai-tools`, `machine-learning`, `nuke-17`, `beginner`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [CopyCat](copycat.md) — trains the `.cat` file this node consumes; read them together.
+- [How SMART is State of the Art A.I Rotoscoping?](how-smart-is-state-of-the-art-ai-rotoscoping.md) — shares `ai-tools`.
+
+---
+
+> **Coverage note — what these two pages do NOT cover.** Together they close the
+> *CopyCat training workflow* half of knowledge gap #3, but only part of the
+> *Cattery models* half. Neither page documents the **Cattery library itself**:
+> browsing or downloading Foundry's pretrained community models, where the
+> downloaded `.cat`/`.cattery` files are installed on the plug-in path, or the
+> per-model notes those downloads carry. What is covered here is applying a
+> `.cat` once you have one, plus CopyCat's four built-in starting weightings
+> (`Deblur`, `Upscale`, `Human Matting`, `Checkpoint`), which are pretrained
+> weights for *training*, not the Cattery catalogue. Recorded rather than
+> inferred, per the D4b convention.

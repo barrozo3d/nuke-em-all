@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/nuke/content/reference_guide/air_nodes/copycat.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "NukeX / Nuke Studio only (CopyCat is not available in base Nuke)"
+version: "Nuke 17 (the page cites the Nuke 17 Release Notes for supported GPUs)"
+tags: [copycat, ai-tools, machine-learning, nuke-17, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/copycat/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,50 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Train a neural network on a handful of hand-worked frames — the **Input** sequence before the effect and the **Ground Truth** sequence after it — and write a `.cat` file that an **Inference** node then applies across the whole shot.
 
 ### Summary
-[PENDING EXTRACTION]
+CopyCat (**NukeX and Nuke Studio only**) copies a sequence-specific effect — garbage matting, beauty repairs, deblurring — from a small number of frames and trains a network to replicate it on the full sequence. Three inputs define the job: **Input** (before), **Ground Truth** (after), and an optional **Preview** frame held *outside* the training set so you can watch generalisation rather than memorisation. Training is governed by **Epochs**, **Batch Size**, **Crop Size** and **Model Size**, and monitored two ways: contact-sheet `.png` files written every 100 steps, and a live **Step/Loss** curve on the Progress tab with log-scale and smoothing controls. Checkpoints land in the **Data Directory** every 1000 steps by default, so a run can be resumed, inspected mid-flight through an Inference node, or used as the **Initial Weights** for a later run. Four pretrained starting points ship with it — **Deblur**, **Upscale**, **Human Matting** (large/medium/small), or **Checkpoint** from your own earlier `.cat`.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Connect **Input** (the sequence before any effects) and **Ground Truth** (the same frames after the effect has been applied by hand). The Ground Truth is what the network is trying to learn.
+2. Optionally connect **Preview** — a sample frame that is *not* part of the data set — to see how the model behaves on unseen frames. It only appears once Input and Ground Truth are both connected.
+3. Set the **Data Directory**: everything the run produces (contact sheets, checkpoint `.cat` files) is written there, and the Progress tab reads its run table from there too.
+4. Set **Epochs** (default `10000`) — the number of passes over the data set. The derived **Total Steps** is `Epochs * Data Set / Batch Size`, shown read-only in the **Channels / trainingInfo** panel alongside Channels and Batch Size.
+5. Choose the **Advanced** trade-offs: **Model Size** (`Small` fastest/least GPU memory, `Medium` default, `Large` potentially better on beauty work or when generalising across shots); **Batch Size** (`Auto` from available GPU memory, or Manual — the docs report **4 to 16** suitable in most scripts, and it must be ≤ the number of image pairs); **Crop Size** (default `256`, the size of random crops taken from each pair — reduce it first when training is slow or runs out of memory).
+6. Pick **Initial Weights**: `None` (from scratch), `Checkpoint` (your own earlier `.cat`, path in **Checkpoint File**), or the pretrained `Deblur` / `Upscale` / `Human Matting` weightings. Human Matting is offered in large, medium and small.
+7. Leave **Use Multi-Resolution Training** on (default) for a speed-up of up to 2× — it trains low (1/4), then medium (1/2), then full resolution. **Disable it for data sets over 100 pairs**, and note that stopping early may leave the model never having trained at full resolution.
+8. Click **Start Training**. Watch the **Step/Loss** graph on the **Progress** tab — **Log Scale** to read low values as loss flattens, **Smoothness** (default `0.6`) to see the trend, **Show Original Curve** to keep the raw points visible. Judge the **contact sheets** written every **100** steps (Contact Sheet Interval).
+9. Inspect mid-training by loading any checkpoint `.cat` (written every **1000** steps, **Checkpoint Interval**) into an Inference node and running it on the full sequence.
+10. Click **Create Inference** to drop an Inference node into the Node Graph with its **Model File** already pointing at this CopyCat's `.cat`. Use **Resume Training** to continue from a checkpoint in the Data Directory.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **CopyCat** — NukeX / Nuke Studio only. Inputs: **Input**, **Ground Truth**, **Preview** (optional, hidden until the first two are connected).
+- **Data Directory** (`dataDirectory`) — destination for contact sheets and `.cat` files.
+- **Epochs** (`epochs`, default `10000`); **Total Steps** = `Epochs * Data Set / Batch Size`; **Channels / Batch Size / Total Steps** read-only via `trainingInfo`.
+- **Start Training** (`startTraining`), **Resume Training** (`resumeTraining`), **Create Inference** (`createInference`).
+- **Initial Weights** (`initialWeights`, default `None`) — `None` | `Checkpoint` | `Deblur` | `Upscale` | `Human Matting` (large/medium/small); **Checkpoint File** (`checkpointFile`).
+- **Model Size** (`modelSize`, default `Medium`) — Small / Medium / Large.
+- **Batch Size** (`batchSizeType`, default `Auto`; `batchSize` when Manual) — 4–16 typical, must be ≤ data-set size.
+- **Crop Size** (`cropSize`, default `256`) — the first knob to reduce when memory or time is the problem.
+- **Checkpoint Interval** (`checkpointInterval`, default `1000` steps) — `.cat` files; **Contact Sheet Interval** (`imageInterval`, default `100` steps) — `.png` contact sheets.
+- **Use Multi-Resolution Training** (`useMultiResolutionTraining`, on) — 1/4 → 1/2 → full; disable above ~100 image pairs.
+- **Progress tab** — run table, **Live Updates** (off; no effect when training locally, it polls a distributed training network), **Log Scale** (`logScale`), **Smoothness** (`smoothness`, `0.6`), **Show Original Curve** (`showOriginal`).
+- **GPU** — **Local GPU** (`gpuName`), **Use GPU if available** (`useGPUIfAvailable`, on). Reads `Not available` when Preferences' default blink device is CPU, no suitable GPU exists, or a context could not be created (typically GPU memory). Changing GPU requires a Nuke restart. Enable it also when rendering from the command line with `--gpu`.
+- **Python tab callbacks** — `beforeRender`, `beforeFrameRender`, `afterFrameRender`, `afterRender`, `renderProgress`; an exception in any of them aborts the render.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+NukeX and Nuke Studio only — CopyCat is absent from base Nuke, which is the first thing to check when the node cannot be found. Nuke 17-era documentation: the GPU control text points at the *Nuke 17 Release Notes* for the list of supported GPUs.
 
 ### Tags
-[PENDING EXTRACTION]
+`copycat`, `ai-tools`, `machine-learning`, `nuke-17`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Inference](inference.md) — the node that applies the `.cat` file this one trains; the pair is one workflow.
+- [How SMART is State of the Art A.I Rotoscoping?](how-smart-is-state-of-the-art-ai-rotoscoping.md) — shares `ai-tools`; the roto problem CopyCat's Human Matting weighting targets.
+- [Did Corridor Crew SOLVE Greenscreen?](did-corridor-crew-solve-greenscreen.md) — shares `ai-tools`; ML-assisted keying/matting in practice.
