@@ -1340,6 +1340,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/f-wireremoval.md
 
+
+### Download Pre-Trained Models from Foundry's Cattery
+- **Source:** Article
+- **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/comp_environment/air_tools/cattery.html
+- **Author:** Nuke 17.1v1 bundled documentation
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/download-pre-trained-models-from-foundrys-cattery.md
+
 ---
 
 ## Tag Reference
