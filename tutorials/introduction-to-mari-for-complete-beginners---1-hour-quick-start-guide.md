@@ -6,7 +6,7 @@ author: FlippedNormals
 ingested: 2026-08-17
 app: Mari
 version: Mari 7 (referenced Bakery feature)
-tags: [interface, hotkeys, paint-buffer, node-graph, merge-node, teleport-nodes, symmetry, triplanar, tile-nodes, paint-through, hand-painting, export-manager, bakery, geo-channels, beginner]
+tags: [interface, hotkeys, paint-buffer, nodegraph, merge-node, teleport-nodes, symmetry, triplanar, tile-nodes, paint-through, hand-painting, export-manager, bakery, geo-channels, beginner]
 extraction_status: complete
 frames_dir: tutorials/frames/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide/
 frame_count: 14

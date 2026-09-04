@@ -1023,7 +1023,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Author:** Voxyde VFX
 - **App:** Nuke
 - **Version:** Not specified (ACES 1.2 OCIO)
-- **Tags:** interface, render-passes, aovs, unpremult-premult, beauty-recreation, utility-layers, normal-pass, depth-pass, world-position-pass, fog, 3d-system, cryptomatte, stmap, uv-mapping, glow, relighting, gizmo, grading, compositing, advanced
+- **Tags:** interface, render-passes, aovs, unpremult-premult, beauty-recreation, utility-layers, normal-pass, depth-pass, world-position-pass, fog, 3d-system, cryptomatte, st-map, uv-mapping, glow, relighting, gizmo, grading, compositing, advanced
 - **Summary:** 4h13m project-based full course (Houdini/Karma-rendered character+environment shot): interface/hotkey basics, Shuffle/AOV beauty recreation (split every render pass, grade independently, plus-recombine), Unpremult/Premult discipline, utility-pass masking (normal/depth/world-position) to build fog and ground smoke that don't exist in the render, Nuke's 3D system (Card/Sphere/ScanlineRender/PositionToPoints) for camera-relative sky and smoke placement, PostageStamp organization, Cryptomatte per-object isolation, STmap UV-driven detail projection, exponential AP_Glow + Cryptomatte-masked emissive breakup, ReLight-node in-comp bounce lighting, frame/random()-expression-driven animation and flicker, and a full finishing stack (diffusion, grade, grain, vignette, 2.35:1 crop). The single most complete CG-compositing fundamentals-to-advanced resource in this collection.
 - **File:** tutorials/intro-to-nuke-for-3d-artists---full-vfx-course.md
 
@@ -1034,7 +1034,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Author:** FlippedNormals
 - **App:** Mari
 - **Version:** Not specified
-- **Tags:** node-based-workflow, texture-projection, teleport-nodes, roughness, high-frequency-detail, character-texturing, look-dev, intermediate
+- **Tags:** node-based-workflow, texture-projection, teleport-nodes, roughness, high-frequency-detail, character-texturing, lookdev, intermediate
 - **Summary:** Studio character-texturing workflow built on Mari's node system: a reusable Color+Paint+Merge mask pattern for every map, photo projection refined with the Warp tool (paints onto a "glass pane" buffer rather than the surface directly), Teleport Broadcaster/Receiver nodes to reuse mask libraries across maps without graph spaghetti, layered base-color building (projection, grade, hand-paint, Tri-Planar, tile overlays, sculpt-integrated polypaint), why roughness maps should never be a desaturated color map (roughness = microsurface scattering, not albedo brightness), LookDev/Arnold-driven value iteration, and projecting high-frequency pore detail straight into a StandardSurface's bump channel as texture-resolution-based (not polycount-based) detail.
 - **File:** tutorials/advanced-character-texturing-in-mari-studio-techniques.md
 
@@ -1045,7 +1045,7 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Author:** FlippedNormals
 - **App:** Mari
 - **Version:** Mari 7 (Bakery feature referenced)
-- **Tags:** interface, hotkeys, paint-buffer, node-graph, merge-node, teleport-nodes, symmetry, triplanar, tile-nodes, paint-through, hand-painting, export-manager, bakery, geo-channels, beginner
+- **Tags:** interface, hotkeys, paint-buffer, nodegraph, merge-node, teleport-nodes, symmetry, triplanar, tile-nodes, paint-through, hand-painting, export-manager, bakery, geo-channels, beginner
 - **Summary:** Zero-to-functional Mari onboarding: project/channel setup, interface & ortho navigation, camera-locked lighting fixes, the paint-buffer concept (paint on a floating 2D "glass pane," committed only on Bake, with critical Manual-bake and Project-On-All settings), node-graph fundamentals (Merge's Base/Over/Mask model, Grade needs an explicit Merge to be maskable), Teleport Broadcaster/Receiver for spaghetti-free mask reuse, symmetry/mirroring, Triplanar (seamless, world-scale) vs. Tile (UV-seam-prone) texture variety, Paint-Through+Warp+Slurp for targeted detail projection, hand-painting hotkeys (critical "Tool on Key Held" preference), and the Export Manager / Bakery (AO, Curvature) → Geo Channels pipeline.
 - **File:** tutorials/introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide.md
 

@@ -6,7 +6,7 @@ author: FlippedNormals
 ingested: 2026-08-17
 app: Mari
 version: unspecified
-tags: [node-based-workflow, texture-projection, teleport-nodes, roughness, high-frequency-detail, character-texturing, look-dev, intermediate]
+tags: [node-based-workflow, texture-projection, teleport-nodes, roughness, high-frequency-detail, character-texturing, lookdev, intermediate]
 extraction_status: complete
 frames_dir: tutorials/frames/advanced-character-texturing-in-mari-studio-techniques/
 frame_count: 10

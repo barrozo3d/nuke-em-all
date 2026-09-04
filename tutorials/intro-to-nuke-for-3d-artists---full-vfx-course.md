@@ -6,7 +6,7 @@ author: Voxyde VFX
 ingested: 2026-08-17
 app: Nuke
 version: unspecified
-tags: [interface, render-passes, aovs, unpremult-premult, beauty-recreation, utility-layers, normal-pass, depth-pass, world-position-pass, fog, 3d-system, cryptomatte, stmap, uv-mapping, glow, relighting, gizmo, grading, compositing, advanced]
+tags: [interface, render-passes, aovs, unpremult-premult, beauty-recreation, utility-layers, normal-pass, depth-pass, world-position-pass, fog, 3d-system, cryptomatte, st-map, uv-mapping, glow, relighting, gizmo, grading, compositing, advanced]
 extraction_status: complete
 frames_dir: tutorials/frames/intro-to-nuke-for-3d-artists---full-vfx-course/
 frame_count: 17
