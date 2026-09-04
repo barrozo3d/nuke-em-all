@@ -1225,6 +1225,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/start-up-scripts.md
 
+
+### Installing Plug-ins
+- **Source:** Article
+- **URL:** https://learn.foundry.com/nuke/developers/latest/pythondevguide/installing_plugins.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/installing-plug-ins.md
+
 ---
 
 ## Tag Reference
