@@ -1307,6 +1307,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/f-regrain.md
 
+
+### F_RigRemoval
+- **Source:** Article
+- **URL:** file:///C:/Program%20Files/Nuke17.1v1/Documentation/html/content/reference_guide/furnacecore_nodes/f_rigremoval.html
+- **Author:** Nuke 17.1v1 bundled documentation
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/f-rigremoval.md
+
 ---
 
 ## Tag Reference
