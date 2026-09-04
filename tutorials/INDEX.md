@@ -1236,6 +1236,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/installing-plug-ins.md
 
+
+### Customizing the UI
+- **Source:** Article
+- **URL:** https://learn.foundry.com/nuke/developers/latest/pythondevguide/custom_ui.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/customizing-the-ui.md
+
 ---
 
 ## Tag Reference
