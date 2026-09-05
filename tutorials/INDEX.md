@@ -1468,6 +1468,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/writing-exr-metadata-from-katana.md
 
+
+### Node Parameters and Interface Controls
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/node_parameters_and_interface_controls.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/node-parameters-and-interface-controls.md
+
 ---
 
 ## Tag Reference
