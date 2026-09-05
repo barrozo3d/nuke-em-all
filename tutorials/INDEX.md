@@ -1413,6 +1413,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/building-materials-using-networkmaterialcreate.md
 
+
+### Adding Multiple Materials
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/multiple_materials_materialstack_node.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/adding-multiple-materials.md
+
 ---
 
 ## Tag Reference
