@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/mari/7.5/Content/user_guide/projectors/projectors.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Mari"
+version: "7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)"
+tags: [mari-texturing, projection, mari-7, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/projectors/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,53 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A **projector** stores a view — rotation, zoom, orientation, paintable area, painting mode and mask settings — as a reusable bookmark, so you can **unproject** what you see to a file, edit it elsewhere, and **project** it back onto exactly the same view.
 
 ### Summary
-[PENDING EXTRACTION]
+This is the camera-projection workflow the gap named. A projector is not a camera so much as a **saved view state plus a file round-trip**: *Unproject* saves everything visible in the paint buffer to a file — a snapshot of the surface as it appears on screen, which may include parts of several meshes — and *Project* reads a file back onto the model. Because restoring the projector restores the exact view, the returning image lands in the right place, which is what makes the Mari↔Photoshop loop practical: set the source and target files once, then it is one click each way. Beyond the basic pair there are **batch modes** (unproject or project across **multiple channels at once**), **Quick modes** that work from the current view without creating a projector at all, support for unprojecting to a **layered `.psd`**, and projection onto models using **`.fbx` files from third-party software such as Maya** — importing model, cameras and textures together to build textured models quickly. Projectors also export **turntables**: **Render turntables** (single channel, your choice of shader and lighting) and **Diagnostic turntables** (a set of channels, default shader and flat lighting, for checking the look), optionally with custom text or reference thumbnails.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Create a projector to bookmark the current view — rotation, zoom, orientation, paintable area, painting mode, mask settings.
+2. **Unproject** to write everything visible in the paint buffer out to your **Output File Path**.
+3. Edit the file in your paint editor of choice.
+4. Return to Mari, restore the projector to guarantee the identical view, and use **Import (to the buffer)** for unbaked paint or **Project (import and bake)** to bake it on.
+5. Set the source and target files **once** — after that the round trip is a single click each way.
+6. Use **batch mode** to unproject several channels at once, or project a set of files back onto several channels together.
+7. Use **Quick** unproject/project when you do not need a saved view — they work straight from the current one.
+8. Unproject to a **layered `.psd`** when the external edit needs layers; this also works in Quick mode.
+9. Project onto models with **`.fbx` files from third-party tools** (e.g. Maya), importing model, cameras and textures together. 💡 For a single viewpoint, the page suggests **Camera › Load Camera** instead of a projector.
+10. Export a **turntable** — **Render** (one channel, chosen shader and lighting) or **Diagnostic** (several channels, default shader, flat lighting) — with optional custom text or reference thumbnails.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Projector** — stores rotation, zoom, orientation, paintable area, painting mode, mask settings.
+- **Unproject** (buffer → file) and **Project** (file → model); **Import (to the buffer)** vs **Project (import and bake)**.
+- **Batch** unproject/project across multiple channels; **Quick** modes with no projector; layered **`.psd`** unproject.
+- **`.fbx`** projection from third-party software; **Camera › Load Camera** for a single viewpoint.
+- **Turntables**: Render (single channel, chosen shader/lighting) and Diagnostic (multiple channels, default shader, flat lighting).
+- The **Projectors palette** lists the projectors defined for the project.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Mari 7.5.
 
 ### Tags
-[PENDING EXTRACTION]
+`mari-texturing`, `projection`, `mari-7`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Projectors Palette](projectors-palette.md) — every control behind these actions, including the colorspace handling.
+- [Painting](painting.md) — the paint buffer a projector snapshots, and the Paint Through alternative.
+- [Channels](channels.md) — what batch project/unproject iterates over.
+
+---
+
+> **Provenance.** `learn.foundry.com/mari/7.5` — Foundry's Mari documentation is
+> **version-pathed** (`/mari/docs` redirects to `/mari/7.5/Content/learnhome/learn_mari.html`),
+> unlike the Katana and Nuke doc sets. Mari is **not installed on this machine**
+> (verified 2026-09-04), so unlike the Nuke pages these come from the public site
+> rather than a bundled copy, and describe 7.5 rather than a build in use here.
+> Several pages carry a note that their embedded video shows the Mari 3
+> workspace while the workflow itself is unchanged.

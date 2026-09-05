@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/mari/7.5/Content/user_guide/managing_projects/managing_projects.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Mari"
+version: "7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)"
+tags: [mari-texturing, udim, mari-7, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/managing-projects/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,51 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Create a Mari project by pointing it at geometry (`.obj`, `.ptx`, `.abc`, `.fbx`), choosing the **mapping scheme** and merge behaviour for that format, then letting the **Channels tab scan a root path** for existing textures to import into the channels it creates.
 
 ### Summary
-[PENDING EXTRACTION]
+The project-setup page, and the one that determines what the rest of the UDIM workflow can do. Mesh options are **format-dependent**: `.obj` offers Mapping Scheme, Selection Groups and Multiple Geometries Per Object; `.ptx` offers a Merge Type deciding whether multiple input files become one object or separate geometries; `.abc` and `.fbx` offer Mapping Scheme, Merge Type, Merge Selection Groups and object-hierarchy selection, with `.fbx` additionally binding an **animation Take at load — a choice that cannot be changed afterwards**. Animated sequences expose Start/End Frame, Single/All Frames, and a Frame Offset for Alembic. A useful constraint to know before planning an asset: **a project can be created from multiple files only for `.obj` and `.ptx`** — exactly one `.abc` or `.fbx` may be loaded at creation. The **Channels** tab is where texture ingest happens: set a **Root Path**, click **Scan**, and Mari marks channels with a **green dot** where matching textures exist, offering to import them, with a **Category** preset template chosen from the available shaders. The page also covers opening, saving, **automatic project backup and restore**, and archiving.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. **File › New**, the toolbar, the Project tab, or **`Ctrl`/`Cmd`+`N`** — the New Project dialog opens.
+2. Set **Project Name** — an identifier for you, **not** a filename.
+3. In the **Geometry** tab choose the file in **Path** (the dropdown holds the last 10 used), then set the mesh options your format exposes.
+4. `.obj` — **Mapping Scheme**, **Selection Groups**, **Multiple Geometries Per Object**. `.ptx` — **Merge Type**. `.abc` / `.fbx` — **Mapping Scheme**, **Merge Type**, **Merge Selection Groups**, plus which objects in the hierarchy to merge.
+5. ⚠️ For `.fbx`, the **animation Take is bound at project creation / object load and cannot be changed again** once selected and loaded.
+6. For animated sequences (`.obj`, `.abc`, `.fbx`), set **Start Frame** / **End Frame** / **Single Frame** / **All Frames**; `.abc` also takes a **Frame Offset**.
+7. ⚠️ Build from **multiple files only with `.obj` and `.ptx`** — only one `.abc` or `.fbx` can be loaded at creation.
+8. In the **Channels** tab set the **Root Path**, click **Scan**, and look for the **green dot** marking channels with existing textures available to import.
+9. Pick a **Category** — a Mari channel preset template drawn from the available shaders.
+10. Use **automatic project backup** and **Restore**, and **archive** the project when it needs to move or be shelved.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **New Project dialog** — Project Name; **Geometry** tab (Path, per-format mesh options); **Channels** tab (Root Path, Scan, Category).
+- Formats and their options: `.obj` (Mapping Scheme, Selection Groups, Multiple Geometries Per Object), `.ptx` (Merge Type), `.abc`/`.fbx` (Mapping Scheme, Merge Type, Merge Selection Groups, object hierarchy), `.fbx` animation **Take** (irreversible at load).
+- Animated sequence controls: Start Frame, End Frame, Single Frame, All Frames, Frame Offset (`.abc`).
+- Multi-file creation: `.obj` and `.ptx` only.
+- Project lifecycle: open, save, **automatic backup**, **restore**, **archive**. Shortcut **`Ctrl`/`Cmd`+`N`**.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Mari 7.5.
 
 ### Tags
-[PENDING EXTRACTION]
+`mari-texturing`, `udim`, `mari-7`, `beginner`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Channels](channels.md) — what the Channels tab creates, and the depth/patch-size choices it makes.
+- [Working With Patches](working-with-patches.md) — the patch resolutions that follow from those choices.
+
+---
+
+> **Provenance.** `learn.foundry.com/mari/7.5` — Foundry's Mari documentation is
+> **version-pathed** (`/mari/docs` redirects to `/mari/7.5/Content/learnhome/learn_mari.html`),
+> unlike the Katana and Nuke doc sets. Mari is **not installed on this machine**
+> (verified 2026-09-04), so unlike the Nuke pages these come from the public site
+> rather than a bundled copy, and describe 7.5 rather than a build in use here.
+> Several pages carry a note that their embedded video shows the Mari 3
+> workspace while the workflow itself is unchanged.

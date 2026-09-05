@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/mari/7.5/Content/reference_guide/projectors_palette.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Mari"
+version: "7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)"
+tags: [mari-texturing, projection, color-management, mari-7, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/projectors-palette/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,49 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+The **Projectors palette** is the control surface for the project/unproject round trip: create, save, load and delete projectors, set the input and output file paths, and — the part that decides whether the returned image is correct — set the input and output **colorspace** handling.
 
 ### Summary
-[PENDING EXTRACTION]
+Where the Projectors user-guide page explains the idea, this is the field-by-field reference, and its weight sits in two places most workflows get wrong. First, **alpha handling on import**: **Input Alpha** chooses `Premultiply` (multiply RGB by the imported alpha), `Leave` (untouched), or `Remove` (drop the alpha) — the difference between a clean return and dark or fringed edges. Second, **colorspace**, which the palette exposes separately for input and output and differently depending on the colour-management mode: in **advanced** mode you set a **Data Colorspace** (what is displayed on screen) and a **Working Colorspace** (used for painting, lighting and filters) on the way in, and a Data plus **Output Colorspace** on the way out; in **intermediate** mode a single **Colorspace** dropdown stands in for each. Both sides carry **Raw Data** (prevent conversion) and **Scalar Data** (treat as non-colour data — masks, heights, normals, depths), which is how a normal or displacement round trip survives the journey. **Frame Offset** shifts the load of an animated object by a frame count or range.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Create a projector with the new button; **save** it to disk, **load** a saved one, or delete it. Name it in **General › Name** — the name identifies it at the top of the palette.
+2. Set **Action › Output File Path**, then **Unproject** to save the current view buffer there.
+3. Set **Action › Input File Path**, then **Import** to load and project as **unbaked** paint, or **Project** to load, project **and bake**. Either button prompts for a path if none is set.
+4. Choose **Input Alpha** deliberately — `Premultiply`, `Leave` or `Remove` — to control how the imported image's alpha is handled.
+5. In **advanced** colour management, set **Input Colorspace › Data Colorspace** (what is shown on screen) and **Working Colorspace** (used for painting, lighting and filters); in **intermediate** mode set the single **Colorspace**.
+6. Set the matching **Output Colorspace › Data Colorspace** and **Output Colorspace** for what is written to disk.
+7. Enable **Raw Data** to block any colorspace conversion, and **Scalar Data** when the image is non-colour — masks, heights, normals, depths.
+8. Use **Action › Frame Offset** to offset the load of an animated object by a number of frames or a frame range.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- Palette actions: **create**, **save** (Save Projector), **load** (Load Projector), **delete**.
+- **General › Name**; **Action › Frame Offset**, **Import**, **Project**, **Input File Path**, **Input Alpha** (`Premultiply` / `Leave` / `Remove`), **Unproject**, **Output File Path**.
+- **Input Colorspace** — Data Colorspace (advanced) or Colorspace (intermediate), **Working Colorspace** (advanced), **Raw Data**, **Scalar Data**.
+- **Output Colorspace** — Data Colorspace (advanced), Output Colorspace (advanced) or Colorspace (intermediate).
+- Distinction to keep: **Import** leaves paint in the buffer; **Project** bakes it.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Mari 7.5. Several controls appear only in **advanced** or **intermediate** colour-management modes, so the palette's contents depend on the project's colour configuration.
 
 ### Tags
-[PENDING EXTRACTION]
+`mari-texturing`, `projection`, `color-management`, `mari-7`, `advanced`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Projectors](projectors.md) — the workflow these controls implement, including batch, Quick and turntable modes.
+- [Image Manager Palette](image-manager-palette.md) — the other place Mari asks for colorspace and Raw Data on incoming images.
+
+---
+
+> **Provenance.** `learn.foundry.com/mari/7.5` — Foundry's Mari documentation is
+> **version-pathed** (`/mari/docs` redirects to `/mari/7.5/Content/learnhome/learn_mari.html`),
+> unlike the Katana and Nuke doc sets. Mari is **not installed on this machine**
+> (verified 2026-09-04), so unlike the Nuke pages these come from the public site
+> rather than a bundled copy, and describe 7.5 rather than a build in use here.
+> Several pages carry a note that their embedded video shows the Mari 3
+> workspace while the workflow itself is unchanged.

@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/mari/7.5/Content/user_guide/painting/painting.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Mari"
+version: "7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)"
+tags: [mari-texturing, projection, mari-7, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/painting/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,52 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Paint into the **paint buffer** with one of Mari's tools, then **bake** it onto the model — with **Paint Through** (an image dragged from the Image Manager onto the canvas) as the projection-painting route.
 
 ### Summary
-[PENDING EXTRACTION]
+The painting overview, and the page that connects the paint buffer to everything else. Most tools work on **unbaked** paint in the buffer; one or two act directly on baked paint on the surface, and each tool shows its option keys at the top of the canvas by default. **Multi-Paint** mode paints into several shader streams at once, which is how texture packs get built without repeating work — the tool list marks which tools support it (most do; Paint Buffer Eraser, Vector Paint, Gradient, Zoom Paint Buffer, Vector Inspector and Eye Dropper are among those listed without the Multi-Paint marker). The section that matters for the projection-painting gap is **"Painting Through" an Image**: load an image into the **Image Manager**, select the **Paint Through** tool, drag the image onto the canvas, then resize, move, rotate and crop it interactively before painting. The shortcut set is worth memorising — **`P`** and **`U`** swap between Paint and Paint Through, holding **`?`** hides the image, **`'`** paints the whole image onto the model in one step, and **`;`** toggles repeat so paint continues past the floating image's edge.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Select a tool from a shelf or the **Tools** toolbar; read its option keys at the top of the canvas.
+2. Paint into the buffer, then **bake** onto the model — most tools never touch baked paint directly.
+3. Use **Multi-Paint** to paint into multiple shader streams simultaneously when building texture packs.
+4. **Customise a brush:** pick a painting tool, open the **Shelf** palette (View › Palettes › Shelf, or right-click the toolbar area), choose a shelf and brush, then edit **Brush Properties** in the **Tool Properties** palette.
+5. Test in the **scratch pad** at the bottom of Tool Properties, then save by dragging the brush icon from the Tool Properties toolbar onto a shelf.
+6. **Paint Through:** open the **Image Manager**, load an image, select the **Paint Through** tool, and drag the image from the palette onto the canvas.
+7. Position it — **resize** by dragging edges/corners or `Ctrl`/`Cmd`+`Shift`+drag; **move** via the centre handle or `Shift`+click-drag; **rotate** by dragging outside the image or `Ctrl`/`Cmd`+drag inside (hold `Shift` for increments); **crop** by double-clicking it in the Image Manager.
+8. Set opacity in **Tool Properties › Texture Preview › Preview Alpha**, and **pre-multiply alpha** if the image has transparency; reset with **Texture Transform › Reset**.
+9. Use the shortcuts: **`P`** / **`U`** to swap Paint and Paint Through, **`?`** (held) to hide the image, **`'`** to paint the whole image in one step, **`;`** to toggle repeat past the image edge.
+10. Paint a straight line by clicking one end, moving, then `Shift`+clicking the second — or `Shift`+drag horizontally/vertically.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Paint tools:** Select, Transform Selected Objects, Paint, Roller, Blur, Paint Buffer Eraser, Vector Paint, **Paint Through**, Gradient, **Clone Stamp**, Warp, Slerp, Pinup, Towbrush, Marquee Select, Transform Paint Buffer, Zoom Paint Buffer, Vector Inspector, Eye Dropper — with per-tool Multi-Paint availability.
+- **Shelf palette** shelves: Menu (the `F9` pie menu), Personal, Basic Brushes, Hard Surface Brushes, Organic Brushes, Brad's New Brushes, Project.
+- **Tool Properties** — Brush Properties (Paint, Pressure, Radius, Rotation, Bitmaps, Geometry, Noise), scratch pad, **Texture Preview › Preview Alpha**, **Texture Transform › Reset**.
+- Shortcuts: `P` / `U`, `?` (hide), `'` (whole image), `;` (repeat), `Shift`-click for straight lines, `F9` pie menu.
+- Related topics on the page: Painting a Constant Color, Clone Stamping, **Baking Paint onto the Model**, Blurring Baked Paint.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Mari 7.5; embedded demo videos show the Mari 3 workspace with the workflow unchanged.
 
 ### Tags
-[PENDING EXTRACTION]
+`mari-texturing`, `projection`, `mari-7`, `beginner`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Image Manager Palette](image-manager-palette.md) — where Paint Through images live and how their colorspace is set.
+- [Painting Palette](painting-palette.md) — paint buffer depth and size, and the source grade applied when cloning or painting through.
+- [Projectors](projectors.md) — the other route for getting an external image onto the model.
+
+---
+
+> **Provenance.** `learn.foundry.com/mari/7.5` — Foundry's Mari documentation is
+> **version-pathed** (`/mari/docs` redirects to `/mari/7.5/Content/learnhome/learn_mari.html`),
+> unlike the Katana and Nuke doc sets. Mari is **not installed on this machine**
+> (verified 2026-09-04), so unlike the Nuke pages these come from the public site
+> rather than a bundled copy, and describe 7.5 rather than a build in use here.
+> Several pages carry a note that their embedded video shows the Mari 3
+> workspace while the workflow itself is unchanged.

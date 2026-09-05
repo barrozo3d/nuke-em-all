@@ -1519,88 +1519,96 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Source:** Article
 - **URL:** https://learn.foundry.com/mari/7.5/Content/user_guide/working_with_patches/working_with_patches.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Mari
+- **Version:** 7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)
+- **Tags:** mari-texturing, udim, mari-7, intermediate
+- **Summary:** Mari UDIM patch management: a model is divided into patches, each stored PER CHANNEL at its own square resolution from 256x256 to 32k x 32k - so the same patch can be 512 in bump and 2k in diffuse, and changing one channel does not affect another. Resolution is set when a channel is created and changeable later, per channel or per patch; all layers follow, and individual layers cannot be resized. Hard patch limit by GPU vendor: 4096 on NVIDIA and AMD, 1024 on Intel, affecting patch visibility, locking and selecting through faces. Whole-patch operations (copy, fill, rotate, flip, mirror, link) apply only to BAKED paint, transform each patch independently, and expose overpaint bleed visible via Display Properties > Render UV Image.
 - **File:** tutorials/working-with-patches.md
+- **Related:** Channels (`channels.md`), Managing Projects (`managing-projects.md`) — share `mari-texturing`, `udim`. Painting Palette (`painting-palette.md`) — Buffer Size is explicitly not patch resolution.
 
 
 ### Managing Projects
 - **Source:** Article
 - **URL:** https://learn.foundry.com/mari/7.5/Content/user_guide/managing_projects/managing_projects.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Mari
+- **Version:** 7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)
+- **Tags:** mari-texturing, udim, mari-7, beginner
+- **Summary:** Creating and managing a Mari project - the setup that determines what the UDIM workflow can do. Mesh options are format-dependent: .obj gives Mapping Scheme, Selection Groups and Multiple Geometries Per Object; .ptx gives Merge Type; .abc and .fbx give Mapping Scheme, Merge Type, Merge Selection Groups and object hierarchy, and .fbx binds an animation Take at load that CANNOT be changed afterwards. Multi-file projects are possible only with .obj and .ptx - exactly one .abc or .fbx at creation. The Channels tab scans a Root Path for existing textures and marks importable channels with a green dot, with a Category preset template. Also opening, saving, automatic backup and restore, and archiving.
 - **File:** tutorials/managing-projects.md
+- **Related:** Channels (`channels.md`), Working With Patches (`working-with-patches.md`) — share `mari-texturing`, `udim`.
 
 
 ### Projectors Palette
 - **Source:** Article
 - **URL:** https://learn.foundry.com/mari/7.5/Content/reference_guide/projectors_palette.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Mari
+- **Version:** 7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)
+- **Tags:** mari-texturing, projection, color-management, mari-7, advanced
+- **Summary:** The Projectors palette reference - every control behind Mari's project/unproject round trip. Create, save, load and delete projectors; Input File Path with Import (to buffer) or Project (import and bake); Output File Path with Unproject; Frame Offset for animated objects. Two groups decide whether the returned image is correct: Input Alpha (Premultiply, Leave, Remove) and the colorspace handling, which differs by colour management mode - advanced exposes Data Colorspace and Working Colorspace on input plus Data and Output Colorspace on output, intermediate collapses each to a single Colorspace dropdown. Raw Data blocks conversion and Scalar Data marks non-colour images such as masks, heights and normals.
 - **File:** tutorials/projectors-palette.md
+- **Related:** Projectors (`projectors-palette.md` → see Projectors, `projectors.md`) — shares `mari-texturing`, `projection`; the workflow these controls implement. Image Manager Palette (`image-manager-palette.md`) — shares `color-management`; the same Raw Data and colorspace decisions on incoming images.
 
 
 ### Projectors
 - **Source:** Article
 - **URL:** https://learn.foundry.com/mari/7.5/Content/user_guide/projectors/projectors.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Mari
+- **Version:** 7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)
+- **Tags:** mari-texturing, projection, mari-7, intermediate
+- **Summary:** Mari projectors - camera projection painting. A projector bookmarks a view (rotation, zoom, orientation, paintable area, painting mode, mask settings) so Unproject can snapshot the paint buffer to a file, you can edit it in Photoshop or elsewhere, and Project brings it back onto exactly the same view. Import loads to the buffer unbaked; Project imports and bakes. Set source and target files once and the round trip is one click each way. Batch modes unproject or project across multiple channels at once, Quick modes work from the current view with no projector at all, unprojecting to a layered .psd is supported, and .fbx files from Maya and similar can drive projection. Also exports Render and Diagnostic turntables.
 - **File:** tutorials/projectors.md
+- **Related:** Projectors Palette (`projectors-palette.md`) — shares `mari-texturing`, `projection`; the full control reference. Painting (`painting.md`), Channels (`channels.md`) — the buffer snapshotted and the channels batched over.
 
 
 ### Image Manager Palette
 - **Source:** Article
 - **URL:** https://learn.foundry.com/mari/7.5/Content/reference_guide/image_manager_palette.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Mari
+- **Version:** 7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)
+- **Tags:** mari-texturing, projection, color-management, mari-7, intermediate
+- **Summary:** The Mari Image Manager palette - storing project images for brushes, painting through, cropping and shader assignment. Per-image Colorspace (Automatic infers from filename, size and data type) and Raw Data, with the documented consequence that a raw image's thumbnail and image viewer disagree; the colorspace list can be restricted studio-wide via registerConfigUiAllowlist() or MARI_COLORSPACE_OCIO_UI_ALLOWLIST. Image Groups carry Shader Model selection (Arnold Standard Surface, USD Preview Surface, Unreal, VRayMtl and more) and Ingest Templates for texture vendors including Substance, Quixel, Poliigon and TexturingXYZ, with Auto-Assign Images matching by filename convention. Also File Space (NORMAL, VECTOR, VECTOR_Y_FLIP, NORMAL_Y_FLIP), three crop modes, and Send Image to 2D Paint.
 - **File:** tutorials/image-manager-palette.md
+- **Related:** Painting (`painting.md`) — shares `mari-texturing`, `projection`; the Paint Through workflow that drags images from here. Projectors Palette (`projectors-palette.md`) — shares `color-management`.
 
 
 ### Painting
 - **Source:** Article
 - **URL:** https://learn.foundry.com/mari/7.5/Content/user_guide/painting/painting.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Mari
+- **Version:** 7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)
+- **Tags:** mari-texturing, projection, mari-7, beginner
+- **Summary:** Painting in Mari - paint into the paint buffer with the tool set (Paint, Roller, Blur, Vector Paint, Paint Through, Gradient, Clone Stamp, Warp, Slerp, Pinup, Towbrush and more), then bake onto the model; Multi-Paint mode paints into several shader streams at once. The projection-painting route is Paint Through: load an image into the Image Manager, pick the Paint Through tool, drag it onto the canvas, then resize, move, rotate and crop it before painting, with opacity via Tool Properties > Texture Preview > Preview Alpha. Shortcuts worth memorising: P and U swap Paint and Paint Through, held ? hides the image, ' paints the whole image in one step, and ; toggles repeat past the image edge. Also brush customisation through the seven Shelf palette shelves and the Tool Properties scratch pad.
 - **File:** tutorials/painting.md
+- **Related:** Painting Palette (`painting-palette.md`), Image Manager Palette (`image-manager-palette.md`), Projectors (`projectors.md`) — share `mari-texturing`, `projection`.
 
 
 ### Painting Palette
 - **Source:** Article
 - **URL:** https://learn.foundry.com/mari/7.5/Content/reference_guide/painting_palette.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Mari
+- **Version:** 7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)
+- **Tags:** mari-texturing, projection, mari-7, intermediate
+- **Summary:** The Mari Painting palette - the paint buffer's own settings plus the treatment of source images. Painter Filtering sets clone-tool interpolation: Nearest preserves edge detail but blocks up, Bilinear is the default, Bicubic avoids square artifacts at extreme zoom. Painter Source Grade is a full grading stack (Blackpoint, Whitepoint, Lift, Gain, Multiply, Offset, Gamma, per-channel RGB, Contrast, Saturation and a Value curve) applied to the source image when cloning from or painting through it, so a mismatched reference is corrected at the point of use. Paint Buffer sets Color Depth 8/16/32-bit and Clamp - and Buffer Size is the ON-SCREEN resolution of the buffer, governing painting detail, NOT the resolution of project patches.
 - **File:** tutorials/painting-palette.md
+- **Related:** Painting (`painting.md`), Image Manager Palette (`image-manager-palette.md`) — share `mari-texturing`, `projection`. Working With Patches (`working-with-patches.md`) — the patch resolution Buffer Size is not.
 
 
 ### Channels
 - **Source:** Article
 - **URL:** https://learn.foundry.com/mari/7.5/Content/user_guide/channels/channels.html
 - **Author:** learn.foundry.com
-- **App:** [PENDING]
-- **Version:** [PENDING]
-- **Tags:** [PENDING]
-- **Summary:** [PENDING EXTRACTION]
+- **App:** Mari
+- **Version:** 7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)
+- **Tags:** mari-texturing, udim, mari-7, beginner
+- **Summary:** Mari channels - the layer stacks (paint layers, procedurals, adjustments) that feed shader inputs, one set per object. Colour depth and patch size are set at creation and changeable later, with all layers in the stack resized automatically. Channels are colour or scalar, the split that separates image data from masks, heights, normals and depths. HDR matters here: 8-bit clamps RGB to 0-1, while 16-bit or 32-bit channels let you clone from or paint through images outside that range. Six creation routes including bulk creation from presets with texture import, and copying or sharing a layer as a new channel.
 - **File:** tutorials/channels.md
+- **Related:** Working With Patches (`working-with-patches.md`), Managing Projects (`managing-projects.md`) — share `mari-texturing`, `udim`. Projectors (`projectors.md`) — batch project/unproject iterates channels.
 
 ---
 

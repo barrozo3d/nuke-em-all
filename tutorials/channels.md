@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/mari/7.5/Content/user_guide/channels/channels.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Mari"
+version: "7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)"
+tags: [mari-texturing, udim, mari-7, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/channels/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,49 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A **channel** holds a layer stack — paint layers, procedurals and adjustments — and feeds shader inputs; each object in a project has its own set, and each channel carries its own colour depth and patch size.
 
 ### Summary
-[PENDING EXTRACTION]
+Channels are the organising unit above layers and below shaders: a project might hold diffuse, dirt, specular, luminescence and displacement channels, each containing its own layers, masks and filters, and each usable as a shader input. New projects start with one and take as many as needed, and **every object in a project has its own set of channels**. Colour depth and patch size are set at creation and changeable later — resizing a channel **automatically resizes every layer in its stack**. Channels are either **colour or scalar**, the distinction that separates image data from masks, heights and normals. The HDR discussion is the practically useful part: 8-bit values represent RGB only within 0–1, while **16-bit or 32-bit channels let you clone from or paint through images outside that range**. The page also draws the line against patches: patch transforms touch one UV patch, whereas a channel transform reaches across every patch and face its layer stack covers.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Create channels for the maps the shader needs — diffuse, dirt, specular, luminescence, displacement.
+2. Set **colour depth** and **patch size** at creation; both can change later, and all layers in the stack resize with the channel.
+3. Choose **colour or scalar** deliberately — scalar for non-colour data such as masks, heights, normals and depths.
+4. Create channels by any of the documented routes: from an existing or recent channel as a template; **in bulk from Mari's presets**, optionally importing textures at the same time; from a preset size/depth/type; fully custom; by **copying** a layer to a new channel; or by **sharing** a layer as a new channel.
+5. Use **16- or 32-bit** channels when you need to clone from or paint through HDR images outside 0–1.
+6. Wire channels into shader inputs to control how much diffuse, specularity and so on the shader receives.
+7. Transform paint at the channel level when the change should span many patches — use patch transforms when it must not.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Channel** — holds a layer stack (paint layers, procedurals, adjustments); per-object; feeds shader inputs.
+- Creation-time settings: **colour depth**, **patch size**; both editable later, with automatic resize of all layers.
+- **Colour vs scalar** channels (see Color Data / Scalar Data).
+- **HDR**: 8-bit clamps to 0–1; 16-bit and 32-bit allow cloning from and painting through out-of-range images.
+- Creation routes: template from existing/recent, bulk from presets (with optional texture import), preset size/depth/type, custom, copy a layer, share a layer.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Mari 7.5.
 
 ### Tags
-[PENDING EXTRACTION]
+`mari-texturing`, `udim`, `mari-7`, `beginner`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Working With Patches](working-with-patches.md) — per-channel patch resolution, and how patch transforms differ from channel transforms.
+- [Managing Projects](managing-projects.md) — the Channels tab that scans a root path for existing textures.
+- [Projectors](projectors.md) — batch unproject/project across multiple channels.
+
+---
+
+> **Provenance.** `learn.foundry.com/mari/7.5` — Foundry's Mari documentation is
+> **version-pathed** (`/mari/docs` redirects to `/mari/7.5/Content/learnhome/learn_mari.html`),
+> unlike the Katana and Nuke doc sets. Mari is **not installed on this machine**
+> (verified 2026-09-04), so unlike the Nuke pages these come from the public site
+> rather than a bundled copy, and describe 7.5 rather than a build in use here.
+> Several pages carry a note that their embedded video shows the Mari 3
+> workspace while the workflow itself is unchanged.

@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/mari/7.5/Content/user_guide/working_with_patches/working_with_patches.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Mari"
+version: "7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)"
+tags: [mari-texturing, udim, mari-7, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/working-with-patches/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,53 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+A Mari model is divided into **patches** (the UDIM tiles), each stored **per channel** at its own square resolution, and editable as a whole — filled, flipped, rotated, mirrored, copied between patches, or linked.
 
 ### Summary
-[PENDING EXTRACTION]
+This is the UDIM patch-management page. The load-bearing fact is that **resolution is per patch *per channel***: the same patch can be 512×512 in the bump channel and 2k×2k in the diffuse channel, because changing it in one channel does not affect another. Resolutions run from **256×256 to 32k×32k** and are **always square**, set when a channel is created and changeable afterwards — either for the whole channel at once or for specific patches within it. All layers in a channel or patch are resized with it, and **individual layers cannot be resized**. There is a hard **patch limit** driven by the graphics card — **4096 patches on NVIDIA and AMD, 1024 on Intel** — which primarily constrains patch visibility, patch locking and selecting through faces; exceeding it may work but is unsupported. Two behaviours catch people out: patch edits apply **only to baked paint** (unbaked paint in the paint buffer is untouched), and transforms apply **within each patch independently**, so flipping two side-by-side patches flips each separately rather than mirroring the pair.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Set resolution when creating a **channel**; change it later either for the entire channel or for **specific patches** — downsizing when files grow, upsizing where the shot needs detail.
+2. Remember resolution is **per channel**: the same patch may legitimately differ between diffuse, bump and displacement.
+3. Accept the square constraint — width always equals height, 256×256 up to 32768×32768.
+4. Resize whole channels or patches, never individual layers — all layers follow the container.
+5. Stay under the **patch limit** for your GPU vendor (4096 NVIDIA/AMD, 1024 Intel) if you rely on patch visibility, locking, or selecting through faces.
+6. Edit patches wholesale: copy textures between patches, fill with a single colour, rotate or flip the paint, mirror one side to the other, or **link patches** together.
+7. ⚠️ **Bake first** — patch edits touch only baked paint; anything still in the paint buffer is unaffected.
+8. Expect edge artifacts when copying between **differently shaped** patches: blank areas where the source texture runs out, and traces of the **overpaint** (the bleed that stops patches showing gaps).
+9. Inspect the overpaint in the **UV view** — right-click the canvas › **Display Properties** › enable **Render UV Image**.
+10. Reduce bake times by **limiting patches in a Bake Point node** when only part of the model needs re-baking.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Patch** = one UDIM tile; resolution per patch **per channel**; square only; 256×256 → 32k×32k.
+- **Patch limit**: 4096 (NVIDIA, AMD) / 1024 (Intel) — affects patch visibility, locking, selecting through faces.
+- Whole-patch operations: copy between patches, fill with colour, rotate, flip, mirror, link.
+- **Overpaint** — the bleed that prevents visible seams; visible via **Display Properties › Render UV Image** in the UV view.
+- **Bake Point node** — limit patches to cut bake times.
+- Constraint: layers cannot be resized individually; the channel or patch carries them.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Mari 7.5. The page notes its linked video shows Mari 3's workspace while the workflow is unchanged.
 
 ### Tags
-[PENDING EXTRACTION]
+`mari-texturing`, `udim`, `mari-7`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Channels](channels.md) — where patch resolution is first set, and the layer stacks that follow a resize.
+- [Managing Projects](managing-projects.md) — mapping scheme and channel setup at project creation.
+- [Introduction to Mari for Complete Beginners - 1 Hour Quick Start Guide](introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide.md) — the same ground, taught rather than referenced.
+
+---
+
+> **Provenance.** `learn.foundry.com/mari/7.5` — Foundry's Mari documentation is
+> **version-pathed** (`/mari/docs` redirects to `/mari/7.5/Content/learnhome/learn_mari.html`),
+> unlike the Katana and Nuke doc sets. Mari is **not installed on this machine**
+> (verified 2026-09-04), so unlike the Nuke pages these come from the public site
+> rather than a bundled copy, and describe 7.5 rather than a build in use here.
+> Several pages carry a note that their embedded video shows the Mari 3
+> workspace while the workflow itself is unchanged.

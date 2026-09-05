@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/mari/7.5/Content/reference_guide/painting_palette.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Mari"
+version: "7.5 (learn.foundry.com/mari/7.5; some embedded videos still show the Mari 3 workspace)"
+tags: [mari-texturing, projection, mari-7, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/painting-palette/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,50 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+The **Painting palette** configures the paint buffer itself — colour depth, on-screen size, clamping and transform — plus the filtering and full **source grade** applied to images used by Clone Stamp and Paint Through.
 
 ### Summary
-[PENDING EXTRACTION]
+Two distinct control groups sit here, and both are easy to overlook. **Painter Filtering › Image** sets how textures are interpolated when the clone tools copy them: **Nearest** preserves edge detail but blocks up, **Bilinear** is the good general choice but can show square artifacts at extreme zoom, and **Bicubic** is rounder and slightly blurrier without those artifacts. **Painter Source Grade** is a complete grading stack applied to the *source* image when cloning from or painting through it — Blackpoint, Whitepoint, Lift, Gain, Multiply, Offset, Gamma, per-channel and overall RGB saturation, Contrast, Saturation and a **Value curve editor** — which means a mismatched reference photograph can be corrected at the point of use rather than in another application. The **Paint Buffer** group carries the fact worth internalising: **Buffer Size is the on-screen resolution of the buffer and controls the detail available while painting — it is not the resolution of the project's patches**. Colour Depth (8, 16 or 32-bit) and a **Clamp** to 0–1 complete it, alongside the buffer's transform readouts.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Set **Painter Filtering › Image** for the clone tools — **Nearest** for hard edge detail, **Bilinear** as the default, **Bicubic** when extreme zoom is producing square artifacts.
+2. Enable **Painter Source Grade** when the source image needs correcting before it lands.
+3. Set **Blackpoint** and **Whitepoint** (the values treated as 100% black and white), then **Lift** (raise black, hold white) and **Gain** (adjust white, hold black).
+4. Use **Multiply** to lighten while preserving the blackpoint, **Offset** to add a fixed value (negative darkens), and **Gamma** for midtones without moving either end.
+5. Adjust colour with **Rgb** (which moves the individual **Red**, **Green**, **Blue** sliders together), plus **Contrast** and **Saturation**; shape response precisely in the **Value** curve editor.
+6. Set the **Paint Buffer › Color Depth** to 8, 16 or 32-bit as the work requires.
+7. ⚠️ Set **Buffer Size** understanding it is the **on-screen resolution of the buffer** — it governs painting detail, **not** patch resolution in the project.
+8. Enable **Clamp** to restrict the buffer to 0–1 when out-of-range values are unwanted.
+9. Read or set the buffer **Transform › Translation** and the rest of the transform readouts when the buffer has been moved from its default.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Painter Filtering › Image**: `Nearest` / `Bilinear` / `Bicubic` — applies to **Clone Stamp** and **Paint Through**.
+- **Painter Source Grade**: Enabled, Blackpoint, Whitepoint, Lift, Gain, Multiply, Offset, Gamma, Rgb, Red, Green, Blue, Contrast, Saturation, **Value** curve editor.
+- **Paint Buffer**: **Color Depth** (8 / 16 / 32-bit), **Buffer Size** (on-screen resolution — not patch resolution), **Clamp** (0–1).
+- **Paint Buffer Transform**: Translation and related readouts.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Mari 7.5.
 
 ### Tags
-[PENDING EXTRACTION]
+`mari-texturing`, `projection`, `mari-7`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Painting](painting.md) — the tools these settings govern, and the Paint Through workflow.
+- [Working With Patches](working-with-patches.md) — patch resolution, which Buffer Size is explicitly *not*.
+- [Image Manager Palette](image-manager-palette.md) — where the source images being graded come from.
+
+---
+
+> **Provenance.** `learn.foundry.com/mari/7.5` — Foundry's Mari documentation is
+> **version-pathed** (`/mari/docs` redirects to `/mari/7.5/Content/learnhome/learn_mari.html`),
+> unlike the Katana and Nuke doc sets. Mari is **not installed on this machine**
+> (verified 2026-09-04), so unlike the Nuke pages these come from the public site
+> rather than a bundled copy, and describe 7.5 rather than a build in use here.
+> Several pages carry a note that their embedded video shows the Mari 3
+> workspace while the workflow itself is unchanged.

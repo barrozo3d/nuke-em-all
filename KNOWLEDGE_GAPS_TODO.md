@@ -106,18 +106,66 @@ end to end apart from two named items that genuinely could not be sourced.
 > Crawl the page you already have before concluding a topic has no page. The
 > same trick found `scene_graph_basics.html` from `user_guide.html`.
 
-### 2. Mari — **2 tutorials** (thin for an advertised application)
+### 2. ✅ Mari — **CLOSED 2026-09-04** — **10 tutorials** (was 2), UDIM **5** (was 2)
 
-Whole-word `\bmari\b` matches **2 of 85** files
-(`advanced-character-texturing-in-mari-studio-techniques.md`,
-`introduction-to-mari-for-complete-beginners---1-hour-quick-start-guide.md`),
-and `\budim\b` also matches only **2**. `references/mari-texturing.md` and five
-Mari release-notes files exist against that.
+`SKILL.md` advertises Mari, and `references/mari-texturing.md` plus five Mari
+release-notes files stood against just **2 of 85** ingested tutorials. Eight
+pages from `learn.foundry.com/mari/7.5` close both bullets.
 
-- [ ] **Mari UDIM workflow in depth** — patch management, resolution per UDIM,
+- [x] **Mari UDIM workflow in depth** — patch management, resolution per UDIM,
       exporting to a renderer
-- [ ] **Mari projection painting** — camera projection, image manager, paint
+      ✅ `working-with-patches.md` — the core: resolution is **per patch per
+      channel** (the same patch can be 512 in bump and 2k in diffuse), always
+      square, 256×256 to 32k×32k, resizable per channel or per patch with all
+      layers following and **no way to resize a layer alone**. The **GPU patch
+      limit** — 4096 NVIDIA/AMD, 1024 Intel — and what it actually constrains
+      (patch visibility, locking, selecting through faces). Whole-patch
+      operations apply to **baked paint only** and transform each patch
+      **independently**; overpaint bleed is inspectable via **Display Properties
+      › Render UV Image**.
+      ✅ `channels.md` — where depth and patch size are first set, colour vs
+      scalar, and the HDR rule: 8-bit clamps to 0–1, 16/32-bit allows cloning
+      from and painting through out-of-range images.
+      ✅ `managing-projects.md` — project creation as it actually constrains the
+      workflow: per-format mesh options, the **`.fbx` animation Take that cannot
+      be changed after load**, multi-file projects **only** for `.obj`/`.ptx`,
+      and the Channels tab's **Root Path → Scan → green dot** texture ingest.
+- [x] **Mari projection painting** — camera projection, image manager, paint
       buffer, and the bake-down to channels
+      ✅ `projectors.md` — a projector as a saved view plus a file round trip:
+      **Unproject** snapshots the paint buffer to disk, **Import** returns it
+      unbaked, **Project** returns and bakes it. Batch modes across multiple
+      channels, Quick modes with no projector, layered `.psd` unproject, `.fbx`
+      projection from Maya and similar, and Render vs Diagnostic turntables.
+      ✅ `projectors-palette.md` — the controls that decide whether the round trip
+      is *correct*: **Input Alpha** (Premultiply / Leave / Remove) and the
+      colorspace split that differs by colour-management mode, plus **Raw Data**
+      and **Scalar Data** for normals, heights and masks.
+      ✅ `image-manager-palette.md` — the image manager: per-image colorspace and
+      Raw Data (and why a raw image's thumbnail and viewer disagree), the
+      `MARI_COLORSPACE_OCIO_UI_ALLOWLIST` restriction, and **Image Groups** with
+      shader models and vendor **Ingest Templates** (Substance, Quixel, Poliigon,
+      TexturingXYZ …) driving **Auto-Assign Images**.
+      ✅ `painting.md` — the paint buffer, the full tool list with Multi-Paint
+      availability, and the **Paint Through** workflow with its shortcut set
+      (`P`/`U`, held `?`, `'`, `;`).
+      ✅ `painting-palette.md` — paint buffer depth, **Clamp**, the clone-tool
+      filtering choice, the full **Painter Source Grade** stack, and the
+      distinction that **Buffer Size is on-screen painting resolution, not patch
+      resolution**.
+
+> ⚙️ **Mari's docs are VERSION-PATHED, unlike Katana's and Nuke's.**
+> `learn.foundry.com/mari/Content/user_guide.html` **404s**; `/mari/docs`
+> redirects to `/mari/7.5/Content/learnhome/learn_mari.html`, and every page
+> hangs off that `7.5` prefix. Getting this wrong reads as "the docs are gone".
+> Palette references live at `reference_guide/<name>_palette.html` — that
+> pattern found `projectors_palette.html` (16,820 chars, the largest page in this
+> batch) after the user-guide crawl had missed it entirely.
+
+> ⚠️ **Mari is not installed on this machine** — checked on 2026-09-04 rather
+> than assumed, on the same day two *unchecked* "not installed" claims turned out
+> to be false. Only Nuke is installed here, so unlike the Nuke pages these come
+> from the public site and describe **7.5**, which may not match a studio build.
 
 ### 3. ✅ CopyCat / Cattery — **CLOSED 2026-09-04** — **3 tutorials** (was recorded as 1; really 0)
 
