@@ -1435,6 +1435,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/performing-a-render.md
 
+
+### Render Types
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/rendering_scene/render_types.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/render-types.md
+
 ---
 
 ## Tag Reference
