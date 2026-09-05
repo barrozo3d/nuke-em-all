@@ -1547,6 +1547,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/projectors-palette.md
 
+
+### Projectors
+- **Source:** Article
+- **URL:** https://learn.foundry.com/mari/7.5/Content/user_guide/projectors/projectors.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/projectors.md
+
 ---
 
 ## Tag Reference
