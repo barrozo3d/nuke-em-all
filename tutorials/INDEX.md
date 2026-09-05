@@ -1490,6 +1490,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/organizing-shading-networks-with-shadinggroup-nodes.md
 
+
+### Editing Materials With The NetworkMaterialEdit Node
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/using_networkmaterialedit.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/editing-materials-with-the-networkmaterialedit-node.md
+
 ---
 
 ## Tag Reference
