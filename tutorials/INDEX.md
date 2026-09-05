@@ -1525,6 +1525,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/working-with-patches.md
 
+
+### Managing Projects
+- **Source:** Article
+- **URL:** https://learn.foundry.com/mari/7.5/Content/user_guide/managing_projects/managing_projects.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/managing-projects.md
+
 ---
 
 ## Tag Reference
