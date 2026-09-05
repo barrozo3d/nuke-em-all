@@ -1358,6 +1358,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/download-pre-trained-models-from-foundrys-cattery.md
 - **Related:** Inference (`inference.md`) — shares `copycat`, `ai-tools`, `machine-learning`; the node that runs these models, whose coverage note recorded this page as the missing piece. CopyCat (`copycat.md`) — the trainer every Cattery model was built with. Installing Plug-ins (`installing-plug-ins.md`) — the general `.nuke`/`NUKE_PATH` mechanism this install is one instance of.
 
+
+### Using the Scene Graph
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/using_scene_graph/scene_graph_basics.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/using-the-scene-graph.md
+
 ---
 
 ## Tag Reference
