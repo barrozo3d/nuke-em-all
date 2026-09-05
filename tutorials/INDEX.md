@@ -1424,6 +1424,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/adding-multiple-materials.md
 
+
+### Performing a Render
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/rendering_scene/performing_render.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/performing-a-render.md
+
 ---
 
 ## Tag Reference
