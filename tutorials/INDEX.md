@@ -1446,6 +1446,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/render-types.md
 
+
+### Controlling Live Rendering
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/rendering_scene/controlling_live_rendering.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/controlling-live-rendering.md
+
 ---
 
 ## Tag Reference
