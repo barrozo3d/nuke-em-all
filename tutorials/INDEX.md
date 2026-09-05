@@ -1457,6 +1457,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/controlling-live-rendering.md
 
+
+### Writing EXR Metadata from Katana
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/rendering_scene/openexr_header_metadata.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/writing-exr-metadata-from-katana.md
+
 ---
 
 ## Tag Reference
