@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/rendering_scene/performing_render.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, lighting, lookdev, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/performing-a-render/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,51 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Start a render from the **Render** menu or a node's right-click menu — **Preview** (static, in the Monitor/Catalog, never written to disk), **Live** (updates as you change flagged objects), or **Disk** (only from a **Render** node).
 
 ### Summary
-[PENDING EXTRACTION]
+The operational counterpart to *Render Types*. Preview Renders can be started at **any 3D node**, generating a scene description up to that node and sending it to the production renderer, with results in the Monitor tab, the Catalog tab and the Monitor Layer of the Hydra Viewer. **Multiple Preview Renders run simultaneously with no limit imposed by Katana** — only by hardware — which the page frames as a lighting workflow: render several camera angles at once rather than waiting. Live Renders require opting objects in via the **Live Render Updates** column in the Scene Graph tab; only those objects trigger a restart when changed, and 3D node parameter values are finalised with all pending changes before the render runs. Disk Renders are structurally different: they come **only from a Render node**, and without a **RenderOutputDefine** upstream the output lands in your temp directory. The page also documents **Nuke Bridge**, which streams Katana Preview and Live renders to Nuke — locally or on the farm — in three modes: **Preview Comp** (snapshot of the render in the composite, Nuke as a background process), **Live Comp** (change the Katana project and see the result return through Nuke, pairs with live rendering), and **Interactive Comp** (Nuke launched so both the Katana scene and the Nuke script can be edited at once).
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Start from **Render ›** an option, or right-click a node — available options depend on the node and on what the renderer plug-in advertises.
+2. **Preview Render:** right-click a 3D node › **Preview Render**, or **Render › Preview Render › View Node**, or **`Ctrl`+`P`**.
+3. Start as many Preview Renders as the hardware allows — both continue to completion; use the **Start Multiple Renders** dialog in the KatanaQueue shelf for a managed version.
+4. **Live Render:** tick the objects in the Scene Graph's **Live Render Updates** column, then right-click the node › **Live Render**, or **Render › Live Render › View Node**, or **`Ctrl`+`Shift`+`P`**. Adjust the opted-in objects and watch the Monitor, Catalog and Monitor Layer update.
+5. **Disk Render:** add a **Render** node where the interactive render looks right, put a **RenderOutputDefine** above it to set output name, format and location, then right-click › **Disk Render** or **Disk Render with Dependencies**. Without RenderOutputDefine the result goes to your temp directory.
+6. **Cancel:** **`Esc`** or **Render › Cancel Current Render**; **`Shift`+`Esc`** or **Render › Cancel All Renders** for everything.
+7. **Repeat** the previous render with **`Ctrl`+`\`** or **Render › Repeat Previous Render**.
+8. **Comp in context with Nuke Bridge:** choose **Preview Comp**, **Live Comp** or **Interactive Comp** depending on whether you want a snapshot, a round-trip that reacts to Katana changes, or simultaneous editing of both applications.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Preview Render** (`Ctrl`+`P`), **Live Render** (`Ctrl`+`Shift`+`P`), **Disk Render** / **Disk Render with Dependencies** (Render nodes only).
+- **Cancel Current Render** (`Esc`), **Cancel All Renders** (`Shift`+`Esc`), **Repeat Previous Render** (`Ctrl`+`\`).
+- **Render** node (the render point), **RenderOutputDefine** (name, format, location — otherwise temp directory).
+- **Live Render Updates** column in the Scene Graph tab — the opt-in that decides what triggers a restart.
+- Destinations: **Monitor tab**, **Catalog tab**, **Monitor Layer** in the Hydra Viewer.
+- **Katana Queue** / KatanaQueue shelf — **Start Multiple Renders** dialog; **Foresight+** for multiple simultaneous Live Renders.
+- **Nuke Bridge** — **Preview Comp**, **Live Comp**, **Interactive Comp**; Nuke local or on the farm.
+- Knowledge Base pointers on the page: *Troubleshooting Rendering Issues in Katana*, *Render Hangs or Never Starts on Linux*.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0.
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `lighting`, `lookdev`, `katana-9`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Render Types](render-types.md) — what each render option actually does.
+- [Controlling Live Rendering](controlling-live-rendering.md) — the Live Render controls in detail.
+- [RenderOutputDefine](renderoutputdefine.md) — the node this page tells you to put above the Render node.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.

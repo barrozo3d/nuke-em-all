@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/using_networkmaterialcreate.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, lookdev, nodegraph, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/building-materials-using-networkmaterialcreate/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,50 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+**NetworkMaterialCreate** is a container node — Group-like, but exclusively for a material network — that folds NetworkMaterial and its supporting nodes into one node with a left-to-right shading-node layout.
 
 ### Summary
-[PENDING EXTRACTION]
+This is the hub page for the modern material workflow, and its value is as a map: it states what NetworkMaterialCreate *is* (a container that minimises how many separate nodes you must create, holding a NetworkMaterial and other nodes inside itself), introduces the **ShadingGroup** node for sectioning a network into sub-levels, notes that a single NetworkMaterialCreate **supports multiple NetworkMaterial locations**, and then names the five child topics that make up the rest of the workflow — creating shading networks, adding multiple NetworkMaterials, using ShadingGroup, the **Node Parameters and Interface Controls**, and NetworkMaterialEdit. The compatibility statement is the practically important one: the workflow is **forward and backward compatible**. Shading networks from previous Katana versions can be copy-pasted into a NetworkMaterialCreate and will appear in the updated node design, correctly connected and giving the same result; and nodes from a new network can be copy-pasted back out to previous versions or to the root of the node graph.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Treat **NetworkMaterialCreate** as the material's container — similar to a Group node, but storing only the material network.
+2. Work **left to right** in the new shading-node design, with exposed ports on the nodes.
+3. Use **ShadingGroup** nodes inside it to section off parts of the network, producing multiple levels and letting you control which shading nodes and parameters remain accessible.
+4. Create **multiple NetworkMaterial locations** in a single NetworkMaterialCreate rather than one node per material.
+5. Promote the parameters artists actually need to the outside via **Node Parameters and Interface Controls**.
+6. Edit an existing network material downstream with **NetworkMaterialEdit**.
+7. **Migrate freely:** paste an old-workflow shading network into a NetworkMaterialCreate — it redraws in the new design, connects correctly and renders the same; paste new-network shading nodes back out to older versions or to the node graph root.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **NetworkMaterialCreate** — container for a material network; incorporates **NetworkMaterial** and supporting nodes.
+- **ShadingGroup** — sections a network into sub-levels (only creatable inside NetworkMaterialCreate).
+- **NetworkMaterialEdit** — downstream editing of an existing network material.
+- **Material Interface** — where promoted parameters surface.
+- Child topics: Creating Shading Networks; Adding Multiple NetworkMaterials; Using the ShadingGroup Node; The Node Parameters and Interface Controls; The NetworkMaterialEdit Node.
+- Compatibility: forward **and** backward, by copy-and-paste, in both directions.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0; the NetworkMaterialCreate workflow dates from Katana 3.2.
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `lookdev`, `nodegraph`, `katana-9`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Creating Shading Networks](creating-shading-networks.md) — the node-building detail this page points to.
+- [Node Parameters and Interface Controls](node-parameters-and-interface-controls.md) — promoting parameters out of the container.
+- [Organizing Shading Networks with ShadingGroup Nodes](organizing-shading-networks-with-shadinggroup-nodes.md)
+- [Editing Materials With The NetworkMaterialEdit Node](editing-materials-with-the-networkmaterialedit-node.md)
+- [Material Basics](material-basics.md) — the legacy workflow this supersedes.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.

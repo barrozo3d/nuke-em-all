@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/multiple_materials_materialstack_node.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, lookdev, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/adding-multiple-materials/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,46 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Use one **MaterialStack** node to hold many materials — including look-file materials and child materials — instead of chaining Material nodes and cluttering the recipe.
 
 ### Summary
-[PENDING EXTRACTION]
+A short, purely operational page, and the answer to a real problem: a chain of Material nodes quickly becomes unreadable. MaterialStack keeps them in a single node's **Add list**, where materials can be created from scratch, created **from a look file**, or nested as **child materials** under an existing entry — with the constraint that the parent must itself be inside the MaterialStack for the child option to appear. Existing Material nodes can be pulled in from the Node Graph by **`Shift`+middle-click-dragging** them into the Add list, and entries can be duplicated, reordered by middle-click-drag, disabled with **Ignore Material** (**`D`**), or deleted.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. **Add a material:** **Add › Add Material**, name it in the `name` parameter, then attach shaders exactly as in *Adding a Shader to a Material Location*.
+2. **Add a look-file material:** **Add › Add Look File Material**, name it, then follow *Creating a Material from a Look File*.
+3. **Nest one:** select an entry in the Add list, then **Add › Add Child Material**. ⚠️ The parent must be **inside** the MaterialStack or the menu option is unavailable.
+4. **Import existing nodes:** **`Shift`**+middle-click-drag Material nodes from the Node Graph into the Add list.
+5. **Duplicate:** right-click the entry › **Duplicate Material**.
+6. **Disable without deleting:** right-click › **Ignore Material**, or press **`D`**.
+7. **Delete:** right-click › **Delete Material**, or press **`Delete`**.
+8. **Reorder:** middle-click and drag within the Add list.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **MaterialStack** node and its **Add list**.
+- Menu: **Add Material**, **Add Look File Material**, **Add Child Material**.
+- Right-click: **Duplicate Material**, **Ignore Material** (**`D`**), **Delete Material** (**`Delete`**).
+- **`Shift`**+middle-click-drag to import Material nodes; middle-click-drag to reorder.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0.
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `lookdev`, `katana-9`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Material Basics](material-basics.md) — the shader-attachment steps this page defers to, and the node it replaces a chain of.
+- [Building Materials Using NetworkMaterialCreate](building-materials-using-networkmaterialcreate.md) — the modern equivalent for multiple materials.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.

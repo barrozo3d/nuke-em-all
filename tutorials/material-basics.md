@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/material_basics.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, lookdev, cel, scenegraph, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/material-basics/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,50 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+The **legacy** material workflow: a **Material** node creates a material *location* under `/root/materials`, shaders are attached to it, and a **MaterialAssign** node binds that location to geometry or lights through a CEL statement.
 
 ### Summary
-[PENDING EXTRACTION]
+⚠️ **The page opens by declaring itself legacy** — as of Katana 3.2, materials are built with **NetworkMaterialCreate**. It remains essential reading because it defines the vocabulary everything else assumes: a material is a *scene graph location* acting as a container for one or more shaders, placed under `/root/materials` (or a nested `namespace` below it), and it is connected to geometry only by the **`materialAssign`** attribute, which an **implicit resolver** acts on at render time by copying the material to the geometry's location. The page distinguishes three operations that are easy to conflate: **edit** (change the material itself, one at a time), **override** (a geometry-specific change stored on the **`materialOverride`** attribute, and you can override many at once), and **assign**. It also covers the pipeline-relevant details — a single material location may hold shaders from **multiple renderers**, with only the relevant ones selected at render time; **MaterialResolve** forces resolution earlier in the recipe; and **face sets** (via **FaceSetCreate**) break a mesh into named face lists so different materials can be assigned to parts of one asset.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. **Create the location:** add a **Material** node — usually in its own branch, joined back with a **Merge** — and press **`Alt`+`E`** to make it editable in the Parameters tab.
+2. Set **`name`** (used for both the node name and the scene graph location; Katana handles clashes gracefully but naming is good practice) and **`namespace`** to place it below `/root/materials/<namespace>`. Nested namespaces work — `geo/metals` yields `/root/materials/geo/metals`.
+3. **Attach shaders:** click **Add shader**, choose a shader *type* (the list depends on installed renderers), then pick the shader from the list or via **Browse…** in the Shader Browser. Expand to set non-default parameters.
+4. Repeat for additional shaders — a surface plus a displacement shader is the page's example. **Shaders from several renderers can coexist** on one material location.
+5. **Edit later** with a second Material node downstream: set **`action`** to `edit material` and point **`location`** at the material to change.
+6. **Override per-geometry** instead: set **`action`** to `override materials`, put the geometry locations in the **CEL** parameter, then middle-click-drag the attribute to override onto the **Drop Attributes Here** hotspot in the `attrs` grouping. Changes are written under **`materialOverride`** on the CEL-matched locations. You can override many materials at once, but edit only one.
+7. **Assign:** add a **MaterialAssign** node downstream of both the geometry and the material, set its **CEL** to the target locations and **`materialAssign`** to the material location. 💡 The page's own tip: **`Shift`+middle-click-drag from the Material node into the `materialAssign` field** to create an expression link rather than a static path.
+8. **Force early resolution** with a **MaterialResolve** node where materials should be resolved, instead of leaving it to the render-time implicit resolver.
+9. **Split an asset by faces:** add **FaceSetCreate**, set **`meshLocation`** to the polymesh or subdivision surface and **`faceSetName`** to the name that will appear under it in the Scene Graph, then assign different materials to the resulting face sets.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Material** node — `name`, `namespace`, `action` (create / `edit material` / `override materials`), `location`, CEL, `attrs`; **`Alt`+`E`** to edit.
+- **MaterialAssign** — CEL + `materialAssign`; **MaterialResolve** — forces early resolution; **MaterialStack** — many materials in one node; **Merge**; **FaceSetCreate** (`meshLocation`, `faceSetName`).
+- Attributes: **`materialAssign`** (the link), **`materialOverride`** (where overrides are stored).
+- `/root/materials` and nested namespaces; the Shader Browser; **implicit resolvers** at render time.
+- ⚠️ Legacy as of Katana 3.2 — the current route is **NetworkMaterialCreate**.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0, documenting a pre-3.2 workflow that is still supported and still defines the underlying model.
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `lookdev`, `cel`, `scenegraph`, `katana-9`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Building Materials Using NetworkMaterialCreate](building-materials-using-networkmaterialcreate.md) — the workflow that supersedes this one.
+- [Adding Multiple Materials](adding-multiple-materials.md) — MaterialStack, referenced here.
+- [Using the Scene Graph](using-the-scene-graph.md) — implicit resolvers, which this page depends on.
+- [GafferThree](gafferthree.md) — Template Materials and light linking on the lighting side.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.

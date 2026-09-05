@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/preface/what_is_katana.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, scenegraph, lookdev, lighting, usd, katana-9, beginner]
+extraction_status: complete
 frames_dir: tutorials/frames/what-is-katana/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,48 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Katana describes a scene as a **tree of filters** handed to the renderer as a single recursive procedural, with scene data generated lazily on demand through **iterators** rather than held in memory.
 
 ### Summary
-[PENDING EXTRACTION]
+The design rationale page, and the one that explains why Katana behaves unlike a conventional 3D application. It was built for scalability and flexibility — look development and lighting over potentially unlimited scene data, with the ability to edit or override anything. Rather than building a scene in memory, Katana leverages renderers' support for **recursive procedurals**: a single powerful procedural is given a tree-based description of filters, and at render time Katana's libraries are called from inside that procedural to calculate scene data as the renderer demands it. The mechanism underneath is the **scene graph iterator** — data is *only* ever accessed through iterators that can be asked what attributes exist at a location, what their values are (as vectors of time-sampled data), and what the child and sibling locations are. Because generation is stateless and lazy, a large scene graph state never has to be held; in the page's own framing, maintaining state is the *calling* process's responsibility. The page is honest about the fallback: with renderers that lack procedurals or deferred evaluation, Katana evaluates the scene graph and writes a scene description file instead — losing the deferred benefits, and producing files that may be very large.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Think in **recipes of filters**, not in a scene you build: nodes define which filters create and modify 3D scene data, and you inspect results interactively.
+2. Bring data in from disk — Alembic geometry caches, camera animation — rather than authoring it.
+3. Create material instances (e.g. a 3Delight shader), cameras and lights, and manipulate their transforms as filter operations.
+4. **Assign materials by rule** using expressions rather than per-object assignment — the scalability argument in practice.
+5. Isolate parts of the scene for **different render passes**, merge components from partial scenes, and specify the **AOVs** for multiple passes in a single render.
+6. Use **Python scripting** for arbitrary attribute manipulation at any location in the hierarchy.
+7. Understand the evaluation contract: the filter tree is handed to the renderer and evaluated **lazily**, per location, on request.
+8. Package higher-level operations into single nodes, and groups of nodes into **compound nodes**, so the final user is not exposed to every atomic filter.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Recursive procedurals** — the renderer-side mechanism Katana targets; the filter tree is handed over and evaluated on demand.
+- **Scene graph iterators** — the only access path to scene data; answer: which named attributes exist here, their values (vectors of time-sampled data), and the child/sibling locations.
+- **Lazy / stateless evaluation** — no large scene graph state held in memory; the calling process maintains its own state.
+- **Scene description fallback** — for renderers without deferred evaluation; loses the benefits, files may be very large.
+- Capability list: Alembic import, shader instances, cameras and lights, transforms, rule-based material assignment, pass isolation, scene merging, **AOVs**, Python attribute manipulation.
+- Noted aside: because filters deliver per-frame scene data in iterable form, Katana can feed processes other than renderers.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Beginner
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0 (page is version-independent design rationale).
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `scenegraph`, `lookdev`, `lighting`, `usd`, `katana-9`, `beginner`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Using the Scene Graph](using-the-scene-graph.md) — the same model from the operator's side.
+- [OpScript Tutorials](opscript-tutorials.md) — the Python/Lua attribute manipulation this page describes in the abstract.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.

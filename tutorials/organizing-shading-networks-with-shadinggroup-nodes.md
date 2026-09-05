@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/using_the_shadinggroup_node.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, lookdev, nodegraph, macro, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/organizing-shading-networks-with-shadinggroup-nodes/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,51 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Group a section of a shading network inside a **ShadingGroup** node, wiring the nodes within it to fixed **INPUT** and **OUTPUT** sidebars so only the ports you choose appear on the group's exterior.
 
 ### Summary
-[PENDING EXTRACTION]
+ShadingGroup is the organisational primitive of the NetworkMaterialCreate workflow, and it **can only be created inside a NetworkMaterialCreate node**. Inside it are fixed input and output bars: you click a node's input parameter and then the INPUT bar to create a port and a path for that specific parameter, and the same on the output side — which means the group's external interface is something you author deliberately rather than inherit. Ports can be reordered by middle-click-dragging within their sidebar, including moving nested ports between or out of groups, and the order is reflected on the node once you exit. Ports right-click to a menu that jumps to the connected node, deletes, or renames — and **renaming with full stops creates nested pages**, the same interface-shaping trick used for promoted parameters. The collapse controls match the rest of the workflow (**`Alt`+`1/2/3`**, with **`X`** held to temporarily expand a collapsed node), and both sidebars are filterable like NetworkMaterialCreate's terminals.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Inside a NetworkMaterialCreate, press **`Tab`**, type and select **ShadingGroup** from the Foundry nodes.
+2. Enter it by holding **`Ctrl`** and clicking the middle mouse button, or with the enter-node button — the same as NetworkMaterialCreate.
+3. Create nodes inside it, or cut and paste existing nodes from the network into the group.
+4. **Wire the inputs:** click the shading node's input parameter, then click anywhere on the fixed **INPUT** bar on the left to create a port and path for that parameter.
+5. **Wire the outputs:** click the output parameter, then anywhere on the fixed **OUTPUT** bar on the right.
+6. Filter long sidebars by typing in the **Filter** bar — they behave like NetworkMaterialCreate terminals.
+7. Exit the group and connect the now-visible external ports to the rest of the network.
+8. **Reorder ports** by middle-click-dragging within a sidebar; nested or grouped ports can be dragged between groups or out of them. The new order shows on the node after exiting.
+9. Right-click a port for **jump to connected node**, **delete**, or **rename** — and use full stops when renaming to create **nested pages**.
+10. Collapse and expand with **`Alt`+`1`**, **`Alt`+`2`**, **`Alt`+`3`**; hold **`X`** over a collapsed node to expand it temporarily.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **ShadingGroup** — created only inside **NetworkMaterialCreate**; fixed **INPUT** / **OUTPUT** sidebars.
+- Navigation: **`Tab`** to create, **`Ctrl`**+middle-click or the enter-node button to enter, **`Alt`+`1/2/3`** collapse states, **`X`** to peek.
+- Port right-click menu: jump to node, delete port, rename port (full stops → nested pages).
+- Middle-click-drag to reorder ports, including across nested groups.
+- Sharing: the page's closing section covers reusing ShadingGroups as **macros**.
+- ⚠️ Mentions **LiveShadingGroups** only in passing — ports can be rearranged in one, but not if it is **locked**.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0.
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `lookdev`, `nodegraph`, `macro`, `katana-9`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Building Materials Using NetworkMaterialCreate](building-materials-using-networkmaterialcreate.md) — the only place a ShadingGroup can be created.
+- [Node Parameters and Interface Controls](node-parameters-and-interface-controls.md) — promotion reaches parameters inside ShadingGroups.
+- [LiveGroups and LiveShadingGroups](livegroups-and-liveshadinggroups.md) — the still-undefined term this page also only references.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.

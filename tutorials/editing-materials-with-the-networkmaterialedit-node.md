@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/using_networkmaterialedit.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, lookdev, nodegraph, katana-9, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/editing-materials-with-the-networkmaterialedit-node/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,47 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+**NetworkMaterialEdit** edits a network material **non-destructively from downstream** — adding, removing, connecting or disconnecting shading nodes and changing parameters — by reading the `material.layout` attribute at a scene graph location rather than opening the original network.
 
 ### Summary
-[PENDING EXTRACTION]
+This is the per-shot override workflow for look development, and the reason it exists is departmental: the scene graph location it edits may have arrived **through a look file, created in a different department, with the original material network in a separate project**. The node reads `material.layout` from that location, so it can reconstruct and present the network without the authoring project — and because it reads that attribute live, **upstream changes to the original network propagate**, updating the NetworkMaterialEdit to reflect them. Its editing state is legible at a glance through node striping: the network starts **dimmed** (nothing changed yet), an edited node gains a **yellow stripe**, a new node a **green stripe**, a node you disconnect a **red stripe**, and nodes that were already disconnected from the output in the original are **disabled and padlocked** — they cannot be edited from here. The **NME Filter** buttons (Edited / New / Unchanged / Disconnected) dim whichever states are toggled off, which is how large networks stay workable. It consolidates what used to be the **NetworkMaterialParameterEdit** and **NetworkMaterialSplice** node types into a UI that matches how the material was actually authored.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Point the node at the **Scene Graph location** of the network material in its Node Parameters — the location carrying `material.layout`.
+2. Expect a faithful layout when the material came from a **NetworkMaterialCreate** (an exact duplicate of the original), and an **automatically arranged** graph when it came from the legacy NetworkMaterial workflow.
+3. Edit freely: add or remove shading nodes, make or break connections, change any parameter — none of it overrides the original network.
+4. **Read the stripes:** yellow = parameters edited, green = newly added, red = disconnected here, padlock = disabled because it was already disconnected from the output upstream.
+5. Use the **NME Filter** buttons — **Edited**, **New**, **Unchanged**, **Disconnected** — to dim the states you are not working on; turn all four on to see everything undimmed.
+6. Rely on live propagation: upstream changes alter `material.layout` and the NetworkMaterialEdit updates to match.
+7. Reach for this rather than duplicating a network when the **same asset needs small per-shot changes across multiple shots**.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **NetworkMaterialEdit** — Scene Graph location parameter; reads the **`material.layout`** attribute.
+- Node state striping: **yellow** (edited), **green** (new), **red** (disconnected), **padlock** (disabled, was already disconnected upstream); whole network **dimmed** until first change.
+- **NME Filter** buttons: Edited / New / Unchanged / Disconnected.
+- Supersedes **NetworkMaterialParameterEdit** and **NetworkMaterialSplice**.
+- Same node drawing style as NetworkMaterialCreate: exposed ports, left-to-right layout.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0.
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `lookdev`, `nodegraph`, `katana-9`, `advanced`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Building Materials Using NetworkMaterialCreate](building-materials-using-networkmaterialcreate.md) — the authoring side whose layout this reproduces.
+- [Node Parameters and Interface Controls](node-parameters-and-interface-controls.md) — promotion works identically here.
+- [LiveGroups and LiveShadingGroups](livegroups-and-liveshadinggroups.md) — the other cross-department sharing mechanism.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.

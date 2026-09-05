@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/node_parameters_and_interface_controls.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, lookdev, nodegraph, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/node-parameters-and-interface-controls/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,51 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+**Promote** a shading node's parameter to the **Material Interface** of its NetworkMaterialCreate (or NetworkMaterialEdit) so artists control the material from outside, without entering the network — and customise its Name, Page and Label as you do.
 
 ### Summary
-[PENDING EXTRACTION]
+This is the page the gap list recorded as *"the step before every Interface Control"*, and it is exactly that. Network materials can hold any number of nodes, and opening the group to reach a parameter is slow; promotion exposes the handful that matter on the parent node's Parameters tab, producing an artist-friendly control surface instead of the full parameter set. Promotion works from **any shading node inside the NetworkMaterialCreate, including nodes nested in ShadingGroups**, and the workflows are identical for NetworkMaterialEdit. The mechanism is the **wrench icon** beside a parameter: *Add to Material Interface* promotes it and turns the wrench **yellow**; *Remove from Material Interface* reverses it; a **green arrow** beside a promoted parameter jumps back to its source node. The synchronisation guarantee is the point — **editing in the Material Interface or at the source node updates both**, so the promoted interface can never drift from the network. Customisation goes through **Edit Material Interface Options**, where **Page** creates a subsection (and a **full stop nests pages** — `Base Layer.Diffuse and Subsurface` makes a *Base Layer* page containing a *Diffuse and Subsurface* subsection) and **Label** sets the displayed text.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Expand the **NetworkMaterialCreate** node to show the nodes inside; if the parameter's owner sits in a **ShadingGroup**, expand that too.
+2. Double-click the node holding the parameter (or press **`E`**) to open its Parameters tab.
+3. **Promote quickly:** click the **wrench icon** to the right of the parameter and choose **Add to Material Interface**. The wrench turns **yellow**.
+4. Open the NetworkMaterialCreate's own **Parameters** tab to see the promoted parameters.
+5. **Promote with customisation instead:** set the edit flag on the shading node, click the wrench, choose **Edit Material Interface Options**, and fill in **Name**, **Page** and **Label**.
+6. Use **Page** to group controls into a dropdown subsection; leave it blank to place the parameter directly on the Parameters tab. **Nest pages with a full stop** — `Base Layer.Diffuse and Subsurface`.
+7. Navigate back with the **green arrow** next to a promoted parameter to open its source node's Parameters.
+8. **Un-promote** with the wrench › **Remove from Material Interface**.
+9. Apply the same steps in **NetworkMaterialEdit** — the page states there are no workflow differences between the two.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Material Interface** — lives on **NetworkMaterialCreate** and **NetworkMaterialEdit**.
+- **Wrench icon** menu: **Add to Material Interface** (wrench turns yellow), **Remove from Material Interface**, **Edit Material Interface Options**.
+- **Material Interface Options** dialog: **Name**, **Page** (subsection; full stop nests), **Label**.
+- **Green arrow** — jump from a promoted parameter to its source node.
+- **`E`** — open a node's parameters. Two-way sync between the interface and the source node.
+- Further topics named on the page: visibility and lock constraints on parameters, changing the order of promoted parameters, custom user interfaces with NetworkMaterialEdit.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0.
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `lookdev`, `nodegraph`, `katana-9`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Building Materials Using NetworkMaterialCreate](building-materials-using-networkmaterialcreate.md) — the container these parameters are promoted out of.
+- [Organizing Shading Networks with ShadingGroup Nodes](organizing-shading-networks-with-shadinggroup-nodes.md) — promotion reaches into ShadingGroups too.
+- [Editing Materials With The NetworkMaterialEdit Node](editing-materials-with-the-networkmaterialedit-node.md)
+- [Creating Shading Networks](creating-shading-networks.md) — the NetworkMaterialCreate interface these controls sit on.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.

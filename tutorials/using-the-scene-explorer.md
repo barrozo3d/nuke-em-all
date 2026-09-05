@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/using_scene_graph/scene-explorer.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, scenegraph, usd, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/using-the-scene-explorer/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,49 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+The Scene Explorer tab shows the **USD Scene Graph** and the **Katana Scene Graph** in one panel, adding USD-specific working sets for payloads and prim activation — and encoding prim specifiers, visibility and instancing directly in the tree's line and font styling.
 
 ### Summary
-[PENDING EXTRACTION]
+Introduced as part of Katana's growing USD support, the Scene Explorer stacks two scene graphs — USD on top for inspecting and manipulating prims in the stage hierarchy, Katana beneath for non-USD items — plus a **Collections** panel above them, collapsed by default. Both share working-set columns for viewer visibility, render inclusion, live render updates and collections; the USD side adds two of its own for **payload management** and **prim activation**. The genuinely useful part is the styling vocabulary, because it turns composition debugging into something you can read at a glance: **defined** prims draw a blue branch in regular font, **abstract (class)** prims draw a purple branch, **instance proxies** draw dotted lines, **over** prims in undefined locations are dimmed, and **inactive** prims are dimmed with a dark strike-through. One structural fact is worth carrying: **locations in USD cannot be deleted** — setting `active` to false is the closest thing, which is why inactive prims get their own styling and their own column.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Show or hide each panel with the three selection buttons at the top of the Scene Explorer — USD Scene Graph, Katana Scene Graph, Collections. A hidden panel's icon greys out.
+2. Identify which graph you are in by the **USD or Katana logo** at the top-left of the panel, next to the Name column; collapse one by dragging the panel bar or toggling its logo.
+3. Read the four USD data columns: **Name**, **Type** (data category), **Kind** (organisational role — `component` for leaf-level, `assembly` for a collection of components, editable with the **UsdKindSet** node), and **Purpose**.
+4. Use **Purpose** correctly — `default` for primary scene elements, `proxy` for viewport-not-render, `render` for render-not-viewport. All purposes display by default; filter with **Display Purposes** in the Viewer tab. ⚠️ Prims added to Katana with the `proxy` purpose have **render visibility turned off by default**.
+5. Drive the shared working sets — **Viewer Visibility**, **Render Inclusion**, **Live Render Updates**, **Collections** — and the two USD-only ones for payloads and activation.
+6. **Debug composition by reading the tree styling:** blue branch = defined; purple branch = abstract `class` (a template for other prims to reference, inherit or specialise — present in the USD document but **not on the stage**, so it cannot be previewed in the Viewer); dotted lines = **instance proxy** (an uneditable copy — downstream changes are ignored).
+7. Read the font cues: **dimmed** = an `over` on a location never defined with `def`; **dimmed with strike-through** = inactive.
+8. Change activation deliberately: the **UsdActiveSet** node makes the change **persist** into the scene and the output USD document, whereas toggling the **Active** working set in the Scene Explorer is **temporary**. Cross-check under **Metadata** in the Attributes tab.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Scene Explorer tab** — USD Scene Graph + Katana Scene Graph + Collections panel.
+- USD data columns: **Name**, **Type**, **Kind** (`component`, `assembly`; set with **UsdKindSet**), **Purpose** (`default`, `proxy`, `render`).
+- Shared working sets: **Viewer Visibility**, **Render Inclusion**, **Live Render Updates**, **Collections**. USD-only: payloads, **Active**.
+- **UsdActiveSet** node — persistent activation change (vs the temporary working-set toggle).
+- Styling: defined = blue branch; abstract `class` = purple branch; instance proxy = dotted; undefined `over` = dimmed; inactive = dimmed + strike-through.
+- **Display Purposes** (Viewer tab). Attributes tab › **Metadata** for active state.
+- ⚠️ **USD locations cannot be deleted** — deactivation is the nearest equivalent.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0. Cross-references Pixar/OpenUSD glossary entries for Kind, Purpose, Specifier and Scenegraph Instancing.
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `scenegraph`, `usd`, `katana-9`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Using the Scene Graph](using-the-scene-graph.md) — the Katana scene graph this panel embeds, and the terminology it assumes.
+- [Loading USD Plug-ins into Katana](loading-usd-plug-ins-into-katana.md) — the USD plug-in prerequisite.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.

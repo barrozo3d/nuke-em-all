@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/rendering_scene/render_types.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, lighting, katana-9, intermediate]
+extraction_status: complete
 frames_dir: tutorials/frames/render-types/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,52 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Katana's render options are **context-sensitive**: renderer plug-ins advertise which methods they support, so the right-click menu shows only what the selected node and the installed plug-in can actually do.
 
 ### Summary
-[PENDING EXTRACTION]
+The reference half of the rendering pair. Every option sends the scene graph *as generated at the selected node* to the production renderer; the default set is **Preview Render** (static, displayed, never written to disk), **Live Render** (the same but updating on changes to camera, lights, materials or geometry transforms), **Preview Render with Profiling** (a normal preview that also captures which Ops ran, the CPU they used to cook locations, and the memory used for attributes and Lua scripts — Geolib3-MT profiling), and the disk family: **Disk Render**, **Disk Render with Dependencies**, **Render Dependencies Only**. Two operational details are easy to lose: **starting a new Live Render automatically stops the previous one**, so it needs no explicit cancel; and **motion blur in Live Rendering is not supported for interactive cameras** — set the camera's `makeInteractive` parameter to **No**, and note that a camera animated in via Alembic or another external file keeps its animation even then. The page also documents dependency behaviour — **Disk Render Dependencies** (render shadow maps and similar before Preview, Live or Profiling renders) and **Disk Render Upstream Render Outputs** (`Unless Already Cached` / `Always` for previews; always, unchangeably, for disk renders) — plus a **Debugging** submenu that opens the Katana filters used to traverse the scene graph, or the renderer's own debug output, in a text editor.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. Right-click the node you want to render from — the options shown depend on the node type and the renderer plug-in's advertised methods.
+2. **Preview Render** for a static image in the Monitor tab, Monitor Layer and Catalog tab; nothing is written to disk.
+3. **Live Render** when you need changes to camera, lights, materials or geometry transforms to update the displayed image.
+4. ⚠️ For motion blur under Live Rendering, set the camera's **`makeInteractive`** to **No** — interactive cameras do not support it. Alembic/external animated cameras keep their animation regardless.
+5. Stop a render with **`Esc`** / **Render › Cancel Current Render**, or all with **`Shift`+`Esc`** — but note **a new Live Render cancels the previous one by itself**.
+6. **Preview Render with Profiling** to capture Ops run, CPU used cooking locations, and memory used by attributes and Lua scripts (see Geolib3-MT Profiling).
+7. **Disk Render** from a Render node; **Disk Render with Dependencies** to include the node's dependencies; **Render Dependencies Only** for just those.
+8. Send work to a farm plug-in, or to the bundled **Katana Queue** (Preview, Live or Disk), and watch it in the Katana Queue tab.
+9. Set **Disk Render Dependencies** per render kind — **Before Preview Renders**, **Before Live Renders**, **Before Profiling Renders**.
+10. Set **Disk Render Upstream Render Outputs** for image dependencies — **Preview Renders: Unless Already Cached**, **Preview Renders: Always**; **Disk Renders: Always** is informational and cannot be changed.
+11. Use the **Debugging** submenu to open the traversal filters, or the renderer's debug file type, in a text editor.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **Preview Render**, **Live Render**, **Preview Render with Profiling**, **Disk Render**, **Disk Render with Dependencies**, **Render Dependencies Only**.
+- **Katana Queue** (ships with Katana) and any configured render farm plug-ins; Katana Queue tab.
+- **`makeInteractive`** camera parameter — set to **No** for motion blur in Live Renders.
+- **Disk Render Dependencies**: Before Preview / Live / Profiling Renders.
+- **Disk Render Upstream Render Outputs**: Unless Already Cached, Always (previews); Always (disk, fixed).
+- **Debugging** submenu — filter text output; renderer debug output.
+- Referenced: *Render Type Availability*, *Geolib3-MT Profiling*, *Setting up Render Dependencies*, *Changing How to Trigger a Live Render*.
 
 ### Difficulty
-[PENDING EXTRACTION]
+Intermediate
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0.
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `lighting`, `katana-9`, `intermediate`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [Performing a Render](performing-a-render.md) — how to actually start each of these.
+- [Controlling Live Rendering](controlling-live-rendering.md) — the Live Render opt-in and update modes.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.

@@ -4,10 +4,10 @@ source: Article
 url: https://learn.foundry.com/katana/Content/ug/rendering_scene/openexr_header_metadata.html
 author: learn.foundry.com
 ingested: 2026-09-04
-app: "[PENDING]"
-version: "[PENDING]"
-tags: []
-extraction_status: pending
+app: "Katana"
+version: "9.0 (learn.foundry.com/katana current docs at ingest; release notes whats_new_9.0)"
+tags: [katana, python-scripting, katana-9, advanced]
+extraction_status: complete
 frames_dir: tutorials/frames/writing-exr-metadata-from-katana/
 frame_count: 0
 frame_status: skipped
@@ -37,27 +37,45 @@ Frame capture was skipped for this ingest (--skip-video). Text-only extraction.
 ## Structured Notes
 
 ### Core Technique
-[PENDING EXTRACTION]
+Write custom OpenEXR metadata from a Katana disk render either declaratively with an **AttributeSet** node under `renderSettings.metadata`, or — RenderMan only — by setting `exrheaders` attributes from an **OpScript**.
 
 ### Summary
-[PENDING EXTRACTION]
+A small page with exact syntax, which is the kind that saves an afternoon. The portable route works in **both Arnold and RenderMan**: an **AttributeSet** node at `/root` sets `renderSettings.metadata.<attrib>.[key|value|prefix]`, where `<attrib>` is an arbitrary identifier and **`key` or `value` must be included for anything to be written**. The `prefix` component decides the property's namespace in the file — with no prefix the property is `exr/katana:key = value`, and with one it becomes `exr/<prefix>:katana:key = value`. The second route is **RenderMan-only** and goes through **OpScript** targeting `/root`, building attributes under `renderSettings.outputs.primary.rendererSettings.exrheaders.*` with `Interface.SetAttr` and typed Lua attribute constructors — `StringAttribute`, `IntAttribute` (scalar and array), `FloatAttribute` (scalar and array) — which is also a compact demonstration of Katana's OpScript typing model.
 
 ### Key Steps
-[PENDING EXTRACTION]
+1. **Portable route:** add an **AttributeSet** node and target **`/root`**.
+2. Set `attributeName` to **`renderSettings.metadata.<attrib>.key`** and/or **`.value`** — an arbitrary `<attrib>` identifier groups them; **omitting both key and value writes nothing**.
+3. Add **`.prefix`** to namespace the property: no prefix yields `exr/katana:key = value`, a prefix yields `exr/<prefix>:katana:key = value`.
+4. ⚠️ **RenderMan-only route:** use an **OpScript** node targeting `/root` and set attributes under `renderSettings.outputs.primary.rendererSettings.exrheaders.<name>`.
+5. Build values with the typed constructors and `Interface.SetAttr` — `StringAttribute("A String")`, `IntAttribute(1)`, `IntAttribute({1,2,3,4})`, `FloatAttribute(1.5)`, `FloatAttribute({2.6,3.8})`.
+6. Note this is a **disk render** feature — the metadata is written into the rendered EXR.
 
 ### Nodes / Tools / Settings
-[PENDING EXTRACTION]
+- **AttributeSet** node at `/root`; `attributeName` = `renderSettings.metadata.<attrib>.[key|value|prefix]`. Supported by **Arnold and RenderMan**.
+- Resulting property form: `exr/katana:key = value`, or `exr/<prefix>:katana:key = value`.
+- **OpScript** node at `/root` (⚠️ **RenderMan only**): `renderSettings.outputs.primary.rendererSettings.exrheaders.<name>`.
+- Lua API: `Interface.SetAttr(path, value)`; `StringAttribute`, `IntAttribute` (scalar / array), `FloatAttribute` (scalar / array).
 
 ### Difficulty
-[PENDING EXTRACTION]
+Advanced
 
 ### Foundry App & Version
-[PENDING EXTRACTION]
+Katana 9.0. The AttributeSet route covers Arnold and RenderMan; the `exrheaders` OpScript route is RenderMan-only, and the page says so explicitly.
 
 ### Tags
-[PENDING EXTRACTION]
+`katana`, `python-scripting`, `katana-9`, `advanced`
 
 ---
 
 ## Related Tutorials
-[PENDING EXTRACTION]
+- [OpScript Tutorials](opscript-tutorials.md) — the `Interface` API and Lua attribute types used here.
+- [RenderOutputDefine](renderoutputdefine.md) — the render outputs whose `rendererSettings` these attributes hang off.
+- [Performing a Render](performing-a-render.md) — the disk render this metadata is written by.
+
+---
+
+> **Provenance.** `learn.foundry.com/katana` (MadCap Flare). Paths in this doc set
+> are not guessable and `Data/Tocs/*` 404s, so this page was reached by crawling
+> from `Content/learn_katana.html` → `user_guide.html`, or from a sibling page's
+> own links. Reference-guide and user-guide pages carry clean `<title>`s and need
+> no `--title` override, unlike `learn.foundry.com/nuke/developers/**`.
