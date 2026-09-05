@@ -1391,6 +1391,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/what-is-katana.md
 
+
+### Material Basics
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/material_basics.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/material-basics.md
+
 ---
 
 ## Tag Reference
