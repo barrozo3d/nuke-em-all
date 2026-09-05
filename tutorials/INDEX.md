@@ -1369,6 +1369,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/using-the-scene-graph.md
 
+
+### Using the Scene Explorer
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/using_scene_graph/scene-explorer.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/using-the-scene-explorer.md
+
 ---
 
 ## Tag Reference
