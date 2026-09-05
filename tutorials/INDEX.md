@@ -1580,6 +1580,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/painting.md
 
+
+### Painting Palette
+- **Source:** Article
+- **URL:** https://learn.foundry.com/mari/7.5/Content/reference_guide/painting_palette.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/painting-palette.md
+
 ---
 
 ## Tag Reference
