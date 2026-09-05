@@ -1514,6 +1514,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **File:** tutorials/editing-materials-with-the-networkmaterialedit-node.md
 - **Related:** Building Materials Using NetworkMaterialCreate (`building-materials-using-networkmaterialcreate.md`), Node Parameters and Interface Controls (`node-parameters-and-interface-controls.md`) — share `katana`, `lookdev`, `nodegraph`. LiveGroups and LiveShadingGroups (`livegroups-and-liveshadinggroups.md`) — the other cross-department sharing route.
 
+
+### Working With Patches
+- **Source:** Article
+- **URL:** https://learn.foundry.com/mari/7.5/Content/user_guide/working_with_patches/working_with_patches.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/working-with-patches.md
+
 ---
 
 ## Tag Reference
