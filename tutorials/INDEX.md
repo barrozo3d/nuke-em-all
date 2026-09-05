@@ -1569,6 +1569,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/image-manager-palette.md
 
+
+### Painting
+- **Source:** Article
+- **URL:** https://learn.foundry.com/mari/7.5/Content/user_guide/painting/painting.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/painting.md
+
 ---
 
 ## Tag Reference
