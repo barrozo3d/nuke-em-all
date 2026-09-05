@@ -1380,6 +1380,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/using-the-scene-explorer.md
 
+
+### What is Katana?
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/preface/what_is_katana.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/what-is-katana.md
+
 ---
 
 ## Tag Reference
