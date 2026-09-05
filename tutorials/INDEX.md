@@ -1558,6 +1558,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/projectors.md
 
+
+### Image Manager Palette
+- **Source:** Article
+- **URL:** https://learn.foundry.com/mari/7.5/Content/reference_guide/image_manager_palette.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/image-manager-palette.md
+
 ---
 
 ## Tag Reference
