@@ -1591,6 +1591,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/painting-palette.md
 
+
+### Channels
+- **Source:** Article
+- **URL:** https://learn.foundry.com/mari/7.5/Content/user_guide/channels/channels.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/channels.md
+
 ---
 
 ## Tag Reference
