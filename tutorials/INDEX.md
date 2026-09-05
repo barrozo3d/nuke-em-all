@@ -1479,6 +1479,17 @@ This is the skill's growing knowledge base, covering Nuke, NukeX, Nuke Studio, M
 - **Summary:** [PENDING EXTRACTION]
 - **File:** tutorials/node-parameters-and-interface-controls.md
 
+
+### Organizing Shading Networks with ShadingGroup Nodes
+- **Source:** Article
+- **URL:** https://learn.foundry.com/katana/Content/ug/adding_assigning_materials/using_the_shadinggroup_node.html
+- **Author:** learn.foundry.com
+- **App:** [PENDING]
+- **Version:** [PENDING]
+- **Tags:** [PENDING]
+- **Summary:** [PENDING EXTRACTION]
+- **File:** tutorials/organizing-shading-networks-with-shadinggroup-nodes.md
+
 ---
 
 ## Tag Reference
